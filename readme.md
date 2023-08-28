@@ -15,3 +15,10 @@ git clone https://github.com/paulatalim/trab_LDDM.git
 cd trab_LDDM
 ```
 
+## Objetivo do projeto
+
+## Publico alvo
+
+## Funcionalidades
+
+## Rascunho das telas
