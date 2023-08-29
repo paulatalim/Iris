@@ -15,10 +15,21 @@ git clone https://github.com/paulatalim/trab_LDDM.git
 cd trab_LDDM
 ```
 
-## Objetivo do projeto
+## Proposta de Desenvolvimento
 
-## Publico alvo
+### Objetivo
 
-## Funcionalidades
+Elaborar um aplicativo que funciona a partir de um sistema de áudio que possibilita o controle da saúde de pessoas com deficiência visual através de hardwares que geram dados sobre altura, peso e temperatura do usuário.
 
-## Rascunho das telas
+### Público-alvo
+
+Pessoas com deficiência visual.
+
+### Funcionalidades
+
+- Conectar com hardwares;
+- Gerar novos dados a partir de dados obtidos (como IMC);
+- Comunicar todos os dados obtidos e gerado através de áudio.
+
+
+### Rascunho das interfaces
