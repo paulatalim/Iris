@@ -1,4 +1,5 @@
-# APP para Cegos
+![header](https://capsule-render.vercel.app/api?type=waving&color=0000ff&fontColor=ffffff&height=220&section=header&text=Iris&fontSize=50&animation=fadeIn&fontAlignY=38&desc=Aplicativo%20de%20saúde%20para%20cegos&descAlignY=55)
+
 
 ## Clonar o projeto
 
@@ -32,4 +33,18 @@ Pessoas com deficiência visual.
 - Comunicar todos os dados obtidos e gerado através de áudio.
 
 
-### Rascunho das interfaces
+### Rascunho das Interfaces
+
+## Créditos
+
+### Integrantes do grupo
+
+- Ana Beatriz
+- [Mariana Aram](https://www.linkedin.com/in/mariana-aram-silva-a766b623b/)
+- [Paula talim](https://www.linkedin.com/in/paulatalim/)
+- Pedro Mafra
+- [Yago Garzon](https://www.linkedin.com/in/yago-garzon-chaves-7b57451b3/)
+
+### Professor orientador
+
+- [Ilo Riveiro](https://github.com/ilorivero)
