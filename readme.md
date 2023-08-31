@@ -45,9 +45,11 @@ Pessoas com deficiência visual.
 - Ana Beatriz
 - [Mariana Aram](https://www.linkedin.com/in/mariana-aram-silva-a766b623b/)
 - [Paula talim](https://www.linkedin.com/in/paulatalim/)
-- Pedro Mafra
+- [Pedro Mafra](https://www.linkedin.com/in/pedro-mafra-vas/)
 - [Yago Garzon](https://www.linkedin.com/in/yago-garzon-chaves-7b57451b3/)
 
 ### Professor orientador
 
 - [Ilo Riveiro](https://github.com/ilorivero)
+
+![footer](https://capsule-render.vercel.app/api?type=waving&color=0000ff&height=150&section=footer)
