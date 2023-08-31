@@ -16,6 +16,12 @@ git clone https://github.com/paulatalim/trab_LDDM.git
 cd trab_LDDM
 ```
 
+## Rascunho das Interfaces
+
+As interfaces estão sendo desenvolvidas no figma, a seguir está o link para acessa-lo
+
+- [Projeto no figma](https://www.figma.com/file/QOylwkU2tY26jnc1m1FKEZ/LDDM_app?type=design&node-id=0%3A1&mode=design&t=tBReYkEVQZiF4Mb0-1)
+
 ## Proposta de Desenvolvimento
 
 ### Objetivo
@@ -31,9 +37,6 @@ Pessoas com deficiência visual.
 - Conectar com hardwares;
 - Gerar novos dados a partir de dados obtidos (como IMC);
 - Comunicar todos os dados obtidos e gerado através de áudio.
-
-
-### Rascunho das Interfaces
 
 ## Créditos
 
