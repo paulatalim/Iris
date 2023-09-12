@@ -10,10 +10,10 @@ Isso serve para você possuir o projeto no seu computador e conseguir programar 
 Para isso coloque os seguintes comando em seu git bash
 
 ```
-git clone https://github.com/paulatalim/trab_LDDM.git
+git clone https://github.com/paulatalim/Iris_aplicativo_saude_cegos.git
 ```
 ```
-cd trab_LDDM
+cd Iris_aplicativo_saude_cegos
 ```
 
 ## Rascunho das Interfaces
