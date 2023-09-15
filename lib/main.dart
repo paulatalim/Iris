@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iris_app/loginmain.dart';
 
 void main() {
   runApp(const MyApp());
@@ -85,6 +87,17 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [
+          IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const TelaLogin()),
+            );
+          }, 
+          icon: Icon(Icons.login)
+          ,)
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -120,6 +133,54 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+
+//Botão para navegar de página (para realizar teste do login)
+class FirstRoute extends StatelessWidget {
+  const FirstRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Tela Inicial'),
+      ),
+      child: Center(
+        child: CupertinoButton(
+          child: const Text('Tela Login'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const TelaLogin()),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+//Tela do login
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Tela Login'),
+      ),
+      child: Center(
+        child: CupertinoButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Voltar'),
+        ),
+      ),
     );
   }
 }

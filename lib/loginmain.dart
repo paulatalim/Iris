@@ -1,47 +1,82 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iris_app/main.dart';
 
-void main() {
-  runApp(Login());
-}
+class TelaLogin extends StatelessWidget {
+  const TelaLogin({super.key});
 
-class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login',
+      title: 'Tela Login/Registro',
       theme: ThemeData(
-        primaryColor: Colors.lightBlueAccent,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+        useMaterial3: true,
       ),
-      home: TelaLogin(),
+      home: const UserLogin(title: 'Entrar'),       
     );
   }
 }
 
-class TelaLogin extends StatelessWidget {
+class UserLogin extends StatefulWidget {
+  const UserLogin({super.key , required this.title});
+  final String title;
   @override
-  WidgetBuild(BuildContext context) {
-    final usuario = TextField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        hintText: "Nome ou E-mail"
-      ),
-    );
+  State<UserLogin> createState() => _UserLogin();
+}
 
-    return Scaffold(
+class _UserLogin extends State<UserLogin> {
+
+  Widget build(BuildContext context) {
+    return Scaffold (
       appBar: AppBar(
-        title: Text("Controle"),
-      ),
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              children: <Widget>[Text('a  ')],
-            ),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context, 
+              CupertinoPageRoute(builder: (context) => const MyApp())
+              );
+          },
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.more_vert),
+          ),
+        ],
       ),
-    ));
+      body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center ,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'E-mail ou Usuário:',
+                hintText: 'nome@exemplo.com',
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Senha:',
+                  hintText: 'Criar senha',
+
+                ),
+              ),
+            ),
+
+          ],
+        ),
+    );
   }
 }
