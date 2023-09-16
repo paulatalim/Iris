@@ -27,6 +27,7 @@ class UserLogin extends StatefulWidget {
 
 class _UserLogin extends State<UserLogin> {
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold (
       appBar: AppBar(
@@ -34,7 +35,7 @@ class _UserLogin extends State<UserLogin> {
         title: Text(widget.title),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.home),
+          icon: const Icon(Icons.home),
           onPressed: () {
             Navigator.push(
               context, 
@@ -45,38 +46,40 @@ class _UserLogin extends State<UserLogin> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
           ),
         ],
       ),
       body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center ,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: TextFormField(
-                decoration: const InputDecoration(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: TextFormField(
+              decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'E-mail ou Usuário:',
+              hintText: 'nome@exemplo.com',
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: TextFormField(
+              obscureText: true,
+              decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'E-mail ou Usuário:',
-                hintText: 'nome@exemplo.com',
-                ),
+                labelText: 'Senha:',
+                hintText: 'Criar senha',
+
               ),
             ),
+          ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Senha:',
-                  hintText: 'Criar senha',
-
-                ),
-              ),
-            ),
-
-          ],
-        ),
+        ],
+      ),
     );
   }
 }

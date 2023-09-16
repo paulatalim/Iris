@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CupertinoPageRoute(builder: (context) => const TelaLogin()),
             );
           }, 
-          icon: Icon(Icons.login)
+          icon: const Icon(Icons.login)
           ,)
         ],
       ),
