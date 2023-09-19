@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:iris_app/main.dart';
 
 class TelaLogin extends StatelessWidget {
@@ -29,86 +30,102 @@ class _UserLogin extends State<UserLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        //Barra superior com botões (temporarios) de menu e outros
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
           centerTitle: true,
+          //Menu de voltar ao menu (temporario)
           leading: IconButton(
             icon: const Icon(Icons.home),
             onPressed: () {
-              Navigator.push(context,
-                  CupertinoPageRoute(builder: (context) => const MyApp()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyApp()),
+              );
             },
           ),
           actions: [
+            //Botao enfeite (somente temporario)
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.more_vert),
             ),
           ],
         ),
-        body: LayoutBuilder(builder: (context, constraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-            constraints: BoxConstraints(
-                minWidth: constraints.maxWidth,
-                minHeight: constraints.maxHeight),
-            child: IntrinsicHeight(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 70.0,
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              //Vertical
+              mainAxisAlignment: MainAxisAlignment.start,
+              //Horizontal
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: 50,
+                ),
+                Image.asset(
+                  'assets/images/sketch.png',
+                  width: 190.0,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'E-mail ou Usuário:',
+                      hintText: 'nome@exemplo.com',
+                    ),
                   ),
-                  Image.asset(
-                    'assets/images/sketch.png',
-                    width: 190.0,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Senha:',
+                      hintText: 'Digite sua senha',
+                    ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'E-mail ou Usuário:',
-                        hintText: 'nome@exemplo.com',
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //Horizontal
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          //Botão para criar uma conta (ainda a ser feito)
+                          'Crie uma conta.',
+                          style:
+                              TextStyle(fontSize: 14, color: Colors.blueGrey),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'Senha:',
-                        hintText: 'Digite sua senha',
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          //Botão para realizar login
+                          'Entrar',
+                          style:
+                              TextStyle(fontSize: 30, color: Colors.lightBlue),
+                        ),
                       ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      //Botão para realizar login
-                      'Entrar',
-                      style: TextStyle(fontSize: 30, color: Colors.lightBlue),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      //Botão para criar uma conta (ainda a ser feito)
-                      'Crie uma conta.',
-                      style: TextStyle(fontSize: 14, color: Colors.blueGrey),
-                      textAlign:
-                          TextAlign.left, //Align não funciona no widget Text
-                    ),
-                  )
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-          ));
-        }));
+          ),
+        ));
   }
 }
