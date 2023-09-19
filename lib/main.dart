@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(const HomeApp());
 
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
             label: 'Aparelhos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(FontAwesomeIcons.gamepad),
             label: 'Dados',
           ),
           BottomNavigationBarItem(
