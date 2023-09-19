@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const BottomNavigationBarExampleApp());
+void main() => runApp(const MenuBarApp());
 
-class BottomNavigationBarExampleApp extends StatelessWidget {
-  const BottomNavigationBarExampleApp({super.key});
+class MenuBarApp extends StatelessWidget {
+  const MenuBarApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: BottomNavigationBarExample(),
+      home: MenuBar(),
     );
   }
 }
 
-class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+class MenuBar extends StatefulWidget {
+  const MenuBar({super.key});
 
   @override
-  State<BottomNavigationBarExample> createState() =>
-      _BottomNavigationBarExampleState();
+  State<MenuBar> createState() => _MenuBarState();
 }
 
-class _BottomNavigationBarExampleState
-    extends State<BottomNavigationBarExample> {
+class _MenuBarState extends State<MenuBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
