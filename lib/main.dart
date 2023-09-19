@@ -59,19 +59,20 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.amber,
-        foregroundColor: Colors.brown,
-        elevation: 10,
+        child: const Icon(FontAwesomeIcons.microphone),
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        elevation: 5,
       ),
       bottomNavigationBar: BottomAppBar(
-          notchMargin: 5.0,
+          notchMargin: 6.0,
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
                 color: _iconColor1,
+                icon: const Icon(FontAwesomeIcons.house),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
@@ -81,10 +82,10 @@ class _HomeState extends State<Home> {
                     _iconColor4 = _iconColorNotPressed;
                   });
                 },
-                icon: const Icon(Icons.home),
               ),
               IconButton(
                 color: _iconColor2,
+                icon: const Icon(FontAwesomeIcons.computer),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 1;
@@ -94,16 +95,16 @@ class _HomeState extends State<Home> {
                     _iconColor4 = _iconColorNotPressed;
                   });
                 },
-                icon: const Icon(Icons.home),
               ),
 
               //Espacamento entre icone e button action bar
               const SizedBox(
-                width: 24,
+                width: 30,
               ),
 
               IconButton(
                 color: _iconColor3,
+                icon: const Icon(FontAwesomeIcons.heartPulse),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 2;
@@ -113,10 +114,10 @@ class _HomeState extends State<Home> {
                     _iconColor4 = _iconColorNotPressed;
                   });
                 },
-                icon: const Icon(Icons.home),
               ),
               IconButton(
                 color: _iconColor4,
+                icon: const Icon(FontAwesomeIcons.lock),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 3;
@@ -126,7 +127,6 @@ class _HomeState extends State<Home> {
                     _iconColor3 = _iconColorNotPressed;
                   });
                 },
-                icon: const Icon(Icons.home),
               ),
             ],
           )),
