@@ -24,14 +24,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
   // Colocar nomes das telas na lista
-  final List<Widget> screens = [];
-
-  final List<Center> tabs = [
-    Center(child: const Text('Home')),
-    Center(child: Text('elicoptero')),
-    Center(child: Text('afonso')),
-    Center(child: Text('genivaldo'))
-  ];
+  // final List<Widget> screens = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +32,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('BottomNavigationBar Sample'),
       ),
-      body: tabs[_currentIndex],
+      // body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
@@ -65,7 +58,7 @@ class _HomeState extends State<Home> {
             label: 'Login',
           ),
         ],
-        onTap: (index) {
+        onTap: (int index) {
           setState(() {
             _currentIndex = index;
           });
