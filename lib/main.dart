@@ -34,6 +34,21 @@ class _HomeState extends State<Home> {
     const Center(child: Text('login'))
   ];
 
+  final Color _iconColorPressed = Colors.red;
+  final Color _iconColorNotPressed = Colors.green;
+
+  Color _iconColor1 = Colors.green;
+  Color _iconColor2 = Colors.green;
+  Color _iconColor3 = Colors.green;
+  Color _iconColor4 = Colors.green;
+
+  // final List<Color> _iconColor = [
+  //   Colors.green,
+  //   Colors.green,
+  //   Colors.green,
+  //   Colors.green
+  // ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,22 +65,33 @@ class _HomeState extends State<Home> {
         elevation: 10,
       ),
       bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
+          notchMargin: 5.0,
+          shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
+                color: _iconColor1,
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
+                    _iconColor1 = _iconColorPressed;
+                    _iconColor2 = _iconColorNotPressed;
+                    _iconColor3 = _iconColorNotPressed;
+                    _iconColor4 = _iconColorNotPressed;
                   });
                 },
                 icon: const Icon(Icons.home),
               ),
               IconButton(
+                color: _iconColor2,
                 onPressed: () {
                   setState(() {
                     _currentIndex = 1;
+                    _iconColor2 = _iconColorPressed;
+                    _iconColor1 = _iconColorNotPressed;
+                    _iconColor3 = _iconColorNotPressed;
+                    _iconColor4 = _iconColorNotPressed;
                   });
                 },
                 icon: const Icon(Icons.home),
@@ -77,53 +103,33 @@ class _HomeState extends State<Home> {
               ),
 
               IconButton(
+                color: _iconColor3,
                 onPressed: () {
                   setState(() {
                     _currentIndex = 2;
+                    _iconColor3 = _iconColorPressed;
+                    _iconColor1 = _iconColorNotPressed;
+                    _iconColor2 = _iconColorNotPressed;
+                    _iconColor4 = _iconColorNotPressed;
                   });
                 },
                 icon: const Icon(Icons.home),
               ),
               IconButton(
+                color: _iconColor4,
                 onPressed: () {
                   setState(() {
                     _currentIndex = 3;
+                    _iconColor4 = _iconColorPressed;
+                    _iconColor1 = _iconColorNotPressed;
+                    _iconColor2 = _iconColorNotPressed;
+                    _iconColor3 = _iconColorNotPressed;
                   });
                 },
                 icon: const Icon(Icons.home),
               ),
             ],
           )),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: _currentIndex,
-      //   type: BottomNavigationBarType.fixed,
-      //   iconSize: 20,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       // icon: Icon(Icons.business),
-      //       icon: Icon(FontAwesomeIcons.house),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(FontAwesomeIcons.computer),
-      //       label: 'Dispositivos',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(FontAwesomeIcons.house),
-      //       label: 'Dados',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(FontAwesomeIcons.lock),
-      //       label: 'Login',
-      //     ),
-      //   ],
-      //   onTap: (int index) {
-      //     setState(() {
-      //       _currentIndex = index;
-      //     });
-      //   },
-      //   selectedItemColor: Colors.amber[800],
-      // ),
     );
   }
 }
