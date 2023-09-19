@@ -21,6 +21,8 @@ class MenuBar extends StatefulWidget {
 }
 
 class _MenuBarState extends State<MenuBar> {
+  int _currentIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,31 +30,38 @@ class _MenuBarState extends State<MenuBar> {
         title: const Text('BottomNavigationBar Sample'),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            // icon: ImageIcon(
-            //   AssetImage("assets/images/sketch.png"),
-            //   size: 20,
-            // ),
+            // icon: Icon(Icons.business),
+            icon: ImageIcon(
+              AssetImage("assets/images/sketch.png"),
+              size: 20,
+            ),
             label: 'Home',
             backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Aparelhos',
-            backgroundColor: Colors.pink,
+            backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Dados',
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Login',
+            backgroundColor: Colors.pink,
           ),
         ],
-        // currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         selectedItemColor: Colors.amber[800],
       ),
     );
