@@ -59,10 +59,13 @@ class _BottomNavigationBarExampleState
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: ImageIcon(
+              AssetImage("assets/images/sketch.png"),
+              size: 20,
+            ),
+            label: 'faculdade',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
