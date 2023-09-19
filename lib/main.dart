@@ -42,12 +42,12 @@ class _HomeState extends State<Home> {
   Color _iconColor3 = Colors.green;
   Color _iconColor4 = Colors.green;
 
-  // final List<Color> _iconColor = [
-  //   Colors.green,
-  //   Colors.green,
-  //   Colors.green,
-  //   Colors.green
-  // ];
+  final List<Color> _iconColor = [
+    Colors.green,
+    Colors.green,
+    Colors.green,
+    Colors.green
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +71,12 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                color: _iconColor1,
+                color: _iconColor[0],
                 icon: const Icon(FontAwesomeIcons.house),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
-                    _iconColor1 = _iconColorPressed;
+                    _iconColor[0] = _iconColorPressed;
                     _iconColor2 = _iconColorNotPressed;
                     _iconColor3 = _iconColorNotPressed;
                     _iconColor4 = _iconColorNotPressed;
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
                 },
               ),
               IconButton(
-                color: _iconColor2,
+                color: _iconColor[1],
                 icon: const Icon(FontAwesomeIcons.computer),
                 onPressed: () {
                   setState(() {
