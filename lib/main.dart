@@ -35,13 +35,13 @@ class _HomeState extends State<Home> {
   ];
 
   final Color _iconColorPressed = const Color(0xFFA000FF);
-  final Color _iconColorNotPressed = const Color(0xFF7C64EB);
+  final Color _iconColorNotPressed = const Color(0xFF6B86EB);
 
   final List<Color> _iconColor = [
     const Color(0xFFA000FF),
-    const Color(0xFF7C64EB),
-    const Color(0xFF7C64EB),
-    const Color(0xFF7C64EB)
+    const Color(0xFF6B86EB),
+    const Color(0xFF6B86EB),
+    const Color(0xFF6B86EB)
   ];
 
   @override
