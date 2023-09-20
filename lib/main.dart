@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iris_app/loginmain.dart';
 
@@ -52,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TelaLogin()),
+                MaterialPageRoute(builder: (context) => const TelaLogin()),
               );
             },
             icon: const Icon(Icons.login),
