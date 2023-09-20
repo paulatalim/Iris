@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:iris_app/creation.dart';
 import 'package:iris_app/main.dart';
 
 class TelaLogin extends StatelessWidget {
@@ -11,7 +10,8 @@ class TelaLogin extends StatelessWidget {
     return MaterialApp(
       title: 'Tela Login/Registro',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Color.fromARGB(0XFF, 0x7C, 0x64, 0xEB)),
         useMaterial3: true,
       ),
       home: const UserLogin(title: 'Entrar'),
@@ -31,31 +31,26 @@ class _UserLogin extends State<UserLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
         //Barra superior com botões (temporarios) de menu e outros
+        //Substituir appbar com bottomnavigationbar
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
           centerTitle: true,
+
           //Menu de voltar ao menu (temporario)
           leading: IconButton(
             icon: const Icon(Icons.home),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyApp()),
+                MaterialPageRoute(builder: (context) => const MyApp()),
               );
             },
           ),
-          actions: [
-            //Botao enfeite (somente temporario)
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               //Vertical
               mainAxisAlignment: MainAxisAlignment.start,
@@ -93,19 +88,27 @@ class _UserLogin extends State<UserLogin> {
                   ),
                 ),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //Vertical
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   //Horizontal
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SingIn()),
+                          );
+                        },
                         child: const Text(
                           //Botão para criar uma conta (ainda a ser feito)
-                          'Crie uma conta.',
-                          style:
-                              TextStyle(fontSize: 14, color: Colors.blueGrey),
+                          'Criar uma conta',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 56, 161, 214)),
                         ),
                       ),
                     ),
@@ -116,8 +119,9 @@ class _UserLogin extends State<UserLogin> {
                         child: const Text(
                           //Botão para realizar login
                           'Entrar',
-                          style:
-                              TextStyle(fontSize: 30, color: Colors.lightBlue),
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Color.fromARGB(255, 168, 3, 244)),
                         ),
                       ),
                     ),
