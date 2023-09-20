@@ -34,20 +34,15 @@ class _HomeState extends State<Home> {
     const Center(child: Text('login'))
   ];
 
-  final Color _iconColorPressed = Colors.red;
-  final Color _iconColorNotPressed = Colors.green;
+  final Color _iconColorPressed = const Color(0xFFA000FF);
+  final Color _iconColorNotPressed = const Color(0xFF7C64EB);
 
-  Color _iconColor1 = Colors.green;
-  Color _iconColor2 = Colors.green;
-  Color _iconColor3 = Colors.green;
-  Color _iconColor4 = Colors.green;
-
-  // final List<Color> _iconColor = [
-  //   Colors.green,
-  //   Colors.green,
-  //   Colors.green,
-  //   Colors.green
-  // ];
+  final List<Color> _iconColor = [
+    const Color(0xFFA000FF),
+    const Color(0xFF7C64EB),
+    const Color(0xFF7C64EB),
+    const Color(0xFF7C64EB)
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,40 +54,47 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(FontAwesomeIcons.microphone),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
-        elevation: 5,
+        elevation: 0,
+        child: const Icon(FontAwesomeIcons.microphone),
       ),
       bottomNavigationBar: BottomAppBar(
+          color: const Color(0xFFE6E6E6),
           notchMargin: 6.0,
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                color: _iconColor1,
+                color: _iconColor[0],
                 icon: const Icon(FontAwesomeIcons.house),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
-                    _iconColor1 = _iconColorPressed;
-                    _iconColor2 = _iconColorNotPressed;
-                    _iconColor3 = _iconColorNotPressed;
-                    _iconColor4 = _iconColorNotPressed;
+                    for (int i = 0; i < _iconColor.length; i++) {
+                      if (i != _currentIndex) {
+                        _iconColor[i] = _iconColorNotPressed;
+                      } else {
+                        _iconColor[i] = _iconColorPressed;
+                      }
+                    }
                   });
                 },
               ),
               IconButton(
-                color: _iconColor2,
+                color: _iconColor[1],
                 icon: const Icon(FontAwesomeIcons.computer),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 1;
-                    _iconColor2 = _iconColorPressed;
-                    _iconColor1 = _iconColorNotPressed;
-                    _iconColor3 = _iconColorNotPressed;
-                    _iconColor4 = _iconColorNotPressed;
+                    for (int i = 0; i < _iconColor.length; i++) {
+                      if (i != _currentIndex) {
+                        _iconColor[i] = _iconColorNotPressed;
+                      } else {
+                        _iconColor[i] = _iconColorPressed;
+                      }
+                    }
                   });
                 },
               ),
@@ -103,28 +105,34 @@ class _HomeState extends State<Home> {
               ),
 
               IconButton(
-                color: _iconColor3,
+                color: _iconColor[2],
                 icon: const Icon(FontAwesomeIcons.heartPulse),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 2;
-                    _iconColor3 = _iconColorPressed;
-                    _iconColor1 = _iconColorNotPressed;
-                    _iconColor2 = _iconColorNotPressed;
-                    _iconColor4 = _iconColorNotPressed;
+                    for (int i = 0; i < _iconColor.length; i++) {
+                      if (i != _currentIndex) {
+                        _iconColor[i] = _iconColorNotPressed;
+                      } else {
+                        _iconColor[i] = _iconColorPressed;
+                      }
+                    }
                   });
                 },
               ),
               IconButton(
-                color: _iconColor4,
+                color: _iconColor[3],
                 icon: const Icon(FontAwesomeIcons.lock),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 3;
-                    _iconColor4 = _iconColorPressed;
-                    _iconColor1 = _iconColorNotPressed;
-                    _iconColor2 = _iconColorNotPressed;
-                    _iconColor3 = _iconColorNotPressed;
+                    for (int i = 0; i < _iconColor.length; i++) {
+                      if (i != _currentIndex) {
+                        _iconColor[i] = _iconColorNotPressed;
+                      } else {
+                        _iconColor[i] = _iconColorPressed;
+                      }
+                    }
                   });
                 },
               ),
