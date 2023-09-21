@@ -25,7 +25,6 @@ class _ConfiguracaoState extends State<Configuracao> {
       pokemonDropdownItems.add(
         CoolDropdownItem<String>(
           label: pokemons[i],
-          // icon: const Icon(Icons.home),
           value: pokemons[i],
         ),
       );
@@ -154,22 +153,31 @@ class _ConfiguracaoState extends State<Configuracao> {
                           }
                         },
                         onOpen: (value) {},
-                        resultOptions: const ResultOptions(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                        resultOptions: ResultOptions(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           width: 80,
                           render: ResultRender.all,
                           placeholder: '1.0 X',
                           isMarquee: true,
+                          // openBoxDecoration: BoxDecoration(
+                          //   color: Colors.green,
+                          // ),
+                          boxDecoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          // boxDecoration: BoxDecoration(color: Colors.amber)
                         ),
                         dropdownOptions: const DropdownOptions(
                             top: 20,
-                            height: 400,
                             gap: DropdownGap.all(5),
+                            color: Colors.red,
                             borderSide:
                                 BorderSide(width: 1, color: Colors.black),
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             align: DropdownAlign.left,
-                            animationType: DropdownAnimationType.size),
+                            animationType: DropdownAnimationType.size,
+                            curve: Curves.bounceInOut),
                         dropdownTriangleOptions: const DropdownTriangleOptions(
                           width: 20,
                           height: 30,
@@ -177,11 +185,15 @@ class _ConfiguracaoState extends State<Configuracao> {
                           borderRadius: 3,
                           left: 20,
                         ),
-                        dropdownItemOptions: const DropdownItemOptions(
+                        dropdownItemOptions: DropdownItemOptions(
                           isMarquee: true,
                           mainAxisAlignment: MainAxisAlignment.start,
                           render: DropdownItemRender.all,
                           height: 50,
+                          boxDecoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
                         ),
                       ),
                     ),
