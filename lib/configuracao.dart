@@ -13,10 +13,6 @@ class _ConfiguracaoState extends State<Configuracao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Configurações'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,11 +35,16 @@ class _ConfiguracaoState extends State<Configuracao> {
 
             // Campo do volume
             Container(
-              color: Colors.blue,
-              width: 800,
-              height: 100,
+              width: 0.7 * MediaQuery.of(context).size.width,
+              height: 0.1 * MediaQuery.of(context).size.height,
+              padding: const EdgeInsets.only(
+                  left: 30, top: 10, right: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Volume'),
                   Slider(
@@ -72,12 +73,16 @@ class _ConfiguracaoState extends State<Configuracao> {
 
             // Compo da velocidade
             Container(
-              color: Colors.blue,
-              width: 900,
-              height: 300,
-              padding: const EdgeInsets.all(100.0),
+              width: 0.7 * MediaQuery.of(context).size.width,
+              height: 0.1 * MediaQuery.of(context).size.height,
+              padding: const EdgeInsets.only(
+                  left: 30, top: 10, right: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Velocidade'),
                   Text('0'),
