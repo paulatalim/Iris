@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iris_app/loginmain.dart';
-import 'package:iris_app/main.dart';
+import 'package:iris_app/user.dart';
 
 class SingIn extends StatelessWidget {
   const SingIn({super.key});
@@ -10,10 +11,11 @@ class SingIn extends StatelessWidget {
     return MaterialApp(
       title: 'Tela Registro',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Color.fromARGB(0XFF, 0x7C, 0x64, 0xEB)),
         useMaterial3: true,
       ),
-      home: const UserSingIn(title: 'Criar uma conta'),
+      home: const UserSingIn(title: ''),
     );
   }
 }
@@ -26,11 +28,14 @@ class UserSingIn extends StatefulWidget {
 }
 
 class _UserSingIn extends State<UserSingIn> {
+  static const int corPadrao = 0XFF7C64EB;
+  static const int corPressionada = 0XFF937CEE;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(0XFF, 0x7C, 0x64, 0xEB),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         centerTitle: true,
 
@@ -47,36 +52,135 @@ class _UserSingIn extends State<UserSingIn> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            //Vertical
-            crossAxisAlignment: CrossAxisAlignment.center,
-            //Horizontal
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Nome:',
+            padding: const EdgeInsets.all(10),
+            child: Column(
+                //Vertical
+                mainAxisAlignment: MainAxisAlignment.center,
+                //Horizontal
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      height: 70,
+                      child: Text(
+                        'Criar um usuário',
+                        style: GoogleFonts.dosis(fontSize: 30),
+                      )),
+                  Image.asset(
+                    'assets/images/acc_finale.png',
+                    width: 210.0,
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Sobrenome:',
+                  //Padding para formatação padronizada
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+                    child: Row(
+                      //Vertical
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      //Horizontal
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //Flexible necessario para realizar integração do TextFormField dentro de uma Row
+                        Flexible(
+                          child: TextFormField(
+                            style: GoogleFonts.dosis(),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              labelText: 'Nome:',
+                            ),
+                          ),
+                        ),
+                        //Container para realizar a separação das caixas de texto
+                        Container(
+                          width: 5,
+                        ),
+                        Flexible(
+                          child: TextFormField(
+                            style: GoogleFonts.dosis(),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              labelText: 'Sobrenome:',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                  // Coluna com demais caixas de texto
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        //Padding para separar das caixas de texto superior - adicionando somente no eixo inferior
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                        child: TextFormField(
+                          style: GoogleFonts.dosis(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            labelText: 'E-mail:',
+                            hintText: 'nome@exemplo.com',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            labelText: 'Senha:',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            labelText: 'Confirme a senha:',
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const User()),
+                          );
+                        },
+                        style: ButtonStyle(
+                            //Tamanho customizado para o botão
+                            fixedSize:
+                                MaterialStateProperty.resolveWith((states) {
+                              if (states.contains(MaterialState.disabled)) {
+                                return Size(100, 50);
+                              }
+                              return Size(120, 50);
+                            }),
+                            //Cor de fundo customizada
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (context) =>
+                                    Color.fromARGB(0XFF, 0x93, 0x7C, 0xEE))),
+                        child: const Text(
+                          //Botão para finalizar a criação da conta
+                          'Criar',
+                          style: TextStyle(fontSize: 25, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  )
+                ])),
       ),
     );
   }
