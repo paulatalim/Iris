@@ -13,19 +13,22 @@ class _ConfiguracaoState extends State<Configuracao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 204, 201, 221),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            const Padding(padding: EdgeInsets.only(top: 100)),
+
             // Informa o titulo da pagina
             const Text(
               "Configuração",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontFamily: 'Calibri',
-                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
                   fontSize: 30,
-                  color: Colors.red),
+                  color: Color(0xFF5100FF)),
             ),
 
             // Gap entre elementos
@@ -40,8 +43,18 @@ class _ConfiguracaoState extends State<Configuracao> {
               padding: const EdgeInsets.only(
                   left: 30, top: 10, right: 30, bottom: 10),
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: const Color(0xFFA99DE6),
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                      color: Color.fromARGB(90, 0, 0, 0),
+                      blurRadius: 15,
+                      offset: Offset(5, 5)),
+                  BoxShadow(
+                      color: Color.fromARGB(200, 255, 255, 255),
+                      blurRadius: 13,
+                      offset: Offset(-5, -5)),
+                ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,16 +63,15 @@ class _ConfiguracaoState extends State<Configuracao> {
                   Slider(
                       value: valor, //definir o valor inicial
                       min: 0,
-                      max: 100,
-                      label: 'Volume', //label dinamico
+                      max: 85,
+                      // label: 'Volume', //label dinamico
                       divisions:
                           10, //define as divisoes entre o minimo e o maximo
-                      activeColor: Colors.red,
+                      activeColor: const Color(0xFF5100FF),
                       inactiveColor: Colors.black12,
                       onChanged: (double novoValor) {
                         setState(() {
                           valor = novoValor;
-                          // label = "seleção: " + novoValor.toString();
                         });
                       }),
                 ],
@@ -68,7 +80,7 @@ class _ConfiguracaoState extends State<Configuracao> {
 
             // Gap entre elementos
             const SizedBox(
-              height: 80,
+              height: 30,
             ),
 
             // Compo da velocidade
@@ -78,8 +90,18 @@ class _ConfiguracaoState extends State<Configuracao> {
               padding: const EdgeInsets.only(
                   left: 30, top: 10, right: 30, bottom: 10),
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: const Color(0xFFA99DE6),
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                      color: Color.fromARGB(90, 0, 0, 0),
+                      blurRadius: 15,
+                      offset: Offset(5, 5)),
+                  BoxShadow(
+                      color: Color.fromARGB(200, 255, 255, 255),
+                      blurRadius: 13,
+                      offset: Offset(-5, -5)),
+                ],
               ),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
