@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cool_dropdown/cool_dropdown.dart';
-import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,18 +9,12 @@ class Configuracao extends StatefulWidget {
   State<Configuracao> createState() => _ConfiguracaoState();
 }
 
-List<String> list = <String>['1.0x', '2.0x', '3.0x'];
+List<String> speeds = <String>['1.0x', '2.0x', '3.0x'];
 
 class _ConfiguracaoState extends State<Configuracao> {
   double valor = 50;
   Color boxColor = const Color(0xFFC7C9FF);
-  List<String> speeds = ['1.0 X', '2.0 X', '3.0 X'];
-  final speedDropdownController = DropdownController();
-  final listDropdownController = DropdownController();
-
-  List<CoolDropdownItem<String>> speedDropdownItems = [];
-
-  String speedOption = list.first;
+  String speedOption = speeds.first;
 
   BoxDecoration styleBox() {
     return BoxDecoration(
@@ -47,19 +39,6 @@ class _ConfiguracaoState extends State<Configuracao> {
         fontWeight: FontWeight.w700,
         letterSpacing: 2,
         color: Color(0xFF373B8A));
-  }
-
-  @override
-  void initState() {
-    for (var i = 0; i < speeds.length; i++) {
-      speedDropdownItems.add(
-        CoolDropdownItem<String>(
-          label: speeds[i],
-          value: speeds[i],
-        ),
-      );
-    }
-    super.initState();
   }
 
   @override
@@ -151,77 +130,10 @@ class _ConfiguracaoState extends State<Configuracao> {
                       style:
                           GoogleFonts.inclusiveSans(textStyle: styleBoxTitle()),
                     ),
-                    // WillPopScope(
-                    //   onWillPop: () async {
-                    //     if (speedDropdownController.isOpen) {
-                    //       speedDropdownController.close();
-                    //       return Future.value(false);
-                    //     } else {
-                    //       return Future.value(true);
-                    //     }
-                    //   },
-                    //   child: CoolDropdown<String>(
-                    //     controller: speedDropdownController,
-                    //     dropdownList: speedDropdownItems,
-                    //     defaultItem: null,
-                    //     onChange: (value) async {
-                    //       if (speedDropdownController.isError) {
-                    //         await speedDropdownController.resetError();
-                    //       }
-                    //     },
-                    //     onOpen: (value) {},
-                    //     resultOptions: ResultOptions(
-                    //         padding: const EdgeInsets.symmetric(horizontal: 10),
-                    //         width: 80,
-                    //         render: ResultRender.all,
-                    //         placeholder: '1.0 X',
-                    //         isMarquee: true,
-                    //         openBoxDecoration: BoxDecoration(
-                    //           color: boxColor,
-                    //           border: Border.all(width: 0),
-                    //           borderRadius: BorderRadius.circular(10),
-                    //         ),
-                    //         boxDecoration: BoxDecoration(
-                    //           color: boxColor,
-                    //           borderRadius: BorderRadius.circular(10),
-                    //           // style: GoogleFonts.poppins(
-                    //           //     textStyle:
-                    //           //         const TextStyle(color: Colors.blue))),
-                    //           // boxDecoration: BoxDecoration(color: Colors.amber)
-                    //         )),
-                    //     dropdownOptions: const DropdownOptions(
-                    //         top: 20,
-                    //         gap: DropdownGap.all(5),
-                    //         color: Colors.red,
-                    //         borderSide:
-                    //             BorderSide(width: 1, color: Colors.black),
-                    //         padding: EdgeInsets.symmetric(horizontal: 10),
-                    //         align: DropdownAlign.left,
-                    //         animationType: DropdownAnimationType.size,
-                    //         curve: Curves.bounceInOut),
-                    //     dropdownTriangleOptions: const DropdownTriangleOptions(
-                    //       width: 20,
-                    //       height: 30,
-                    //       align: DropdownTriangleAlign.left,
-                    //       borderRadius: 3,
-                    //       left: 20,
-                    //     ),
-                    //     dropdownItemOptions: DropdownItemOptions(
-                    //       isMarquee: true,
-                    //       mainAxisAlignment: MainAxisAlignment.start,
-                    //       render: DropdownItemRender.all,
-                    //       height: 50,
-                    //       boxDecoration: BoxDecoration(
-                    //         color: Colors.amber,
-                    //         borderRadius: BorderRadius.circular(100),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       width: 70,
                       child: DropdownButton<String>(
-                        dropdownColor: Color(0xFFb2b4ff),
+                        dropdownColor: const Color(0xFFb2b4ff),
                         // dropdownColor: Color.fromARGB(255, 221, 163, 255),
                         isExpanded: true,
                         value: speedOption,
@@ -244,8 +156,8 @@ class _ConfiguracaoState extends State<Configuracao> {
                             speedOption = value!;
                           });
                         },
-                        items:
-                            list.map<DropdownMenuItem<String>>((String value) {
+                        items: speeds
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
