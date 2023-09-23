@@ -31,6 +31,16 @@ class _HomeState extends State<Home> {
     const Color(0xFF6B86EB)
   ];
 
+  void _colorSelection(int index) {
+    for (int i = 0; i < _iconColor.length; i++) {
+      if (i != index) {
+        _iconColor[i] = _iconColorNotPressed;
+      } else {
+        _iconColor[i] = _iconColorPressed;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,13 +66,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
-                    for (int i = 0; i < _iconColor.length; i++) {
-                      if (i != _currentIndex) {
-                        _iconColor[i] = _iconColorNotPressed;
-                      } else {
-                        _iconColor[i] = _iconColorPressed;
-                      }
-                    }
+                    _colorSelection(_currentIndex);
                   });
                 },
               ),
@@ -72,13 +76,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 1;
-                    for (int i = 0; i < _iconColor.length; i++) {
-                      if (i != _currentIndex) {
-                        _iconColor[i] = _iconColorNotPressed;
-                      } else {
-                        _iconColor[i] = _iconColorPressed;
-                      }
-                    }
+                    _colorSelection(_currentIndex);
                   });
                 },
               ),
@@ -94,13 +92,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 2;
-                    for (int i = 0; i < _iconColor.length; i++) {
-                      if (i != _currentIndex) {
-                        _iconColor[i] = _iconColorNotPressed;
-                      } else {
-                        _iconColor[i] = _iconColorPressed;
-                      }
-                    }
+                    _colorSelection(_currentIndex);
                   });
                 },
               ),
@@ -110,13 +102,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 3;
-                    for (int i = 0; i < _iconColor.length; i++) {
-                      if (i != _currentIndex) {
-                        _iconColor[i] = _iconColorNotPressed;
-                      } else {
-                        _iconColor[i] = _iconColorPressed;
-                      }
-                    }
+                    _colorSelection(_currentIndex);
                   });
                 },
               ),
