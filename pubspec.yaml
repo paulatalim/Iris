@@ -1,6 +1,6 @@
 name: iris_app
-description: A new Flutter project.
-publish_to: 'none' 
+description: Iris, aplicativo mobile para ajudar deficientes visuais a controlar sua saúde. Para seu funcionamento
+publish_to: 'pucminas.br.irisapp' 
 
 version: 1.0.0+1
 
