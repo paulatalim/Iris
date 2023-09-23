@@ -12,6 +12,7 @@ class Configuracao extends StatefulWidget {
 
 class _ConfiguracaoState extends State<Configuracao> {
   double valor = 50;
+  Color boxColor = const Color(0xFFC7C9FF);
   List<String> speeds = ['1.0 X', '2.0 X', '3.0 X'];
   final speedDropdownController = DropdownController();
   final listDropdownController = DropdownController();
@@ -20,7 +21,7 @@ class _ConfiguracaoState extends State<Configuracao> {
 
   BoxDecoration styleBox() {
     return BoxDecoration(
-      color: const Color(0xFFC7C9FF),
+      color: boxColor,
       borderRadius: BorderRadius.circular(20),
       boxShadow: const [
         BoxShadow(
@@ -84,7 +85,6 @@ class _ConfiguracaoState extends State<Configuracao> {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserratAlternates(
                   textStyle: const TextStyle(
-                      // fontFamily: 'Poppins',
                       fontWeight: FontWeight.w700,
                       fontSize: 33,
                       color: Color(0xFF5100FF)),
@@ -135,9 +135,8 @@ class _ConfiguracaoState extends State<Configuracao> {
               // Compo da velocidade
               Container(
                 width: 0.8 * MediaQuery.of(context).size.width,
-                // height: 0.1 * MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.only(
-                    left: 30, top: 30, right: 30, bottom: 30),
+                    left: 30, top: 20, right: 30, bottom: 20),
                 decoration: styleBox(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,20 +166,22 @@ class _ConfiguracaoState extends State<Configuracao> {
                         },
                         onOpen: (value) {},
                         resultOptions: ResultOptions(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          width: 80,
-                          render: ResultRender.all,
-                          placeholder: '1.0 X',
-                          isMarquee: true,
-                          // openBoxDecoration: BoxDecoration(
-                          //   color: Colors.green,
-                          // ),
-                          boxDecoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          // boxDecoration: BoxDecoration(color: Colors.amber)
-                        ),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            width: 80,
+                            render: ResultRender.all,
+                            placeholder: '1.0 X',
+                            isMarquee: true,
+                            // openBoxDecoration: BoxDecoration(
+                            //   color: Colors.green,
+                            // ),
+                            boxDecoration: BoxDecoration(
+                              color: boxColor,
+                              borderRadius: BorderRadius.circular(10),
+                              // style: GoogleFonts.poppins(
+                              //     textStyle:
+                              //         const TextStyle(color: Colors.blue))),
+                              // boxDecoration: BoxDecoration(color: Colors.amber)
+                            )),
                         dropdownOptions: const DropdownOptions(
                             top: 20,
                             gap: DropdownGap.all(5),
