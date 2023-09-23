@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -12,20 +12,44 @@ class Configuracao extends StatefulWidget {
 
 class _ConfiguracaoState extends State<Configuracao> {
   double valor = 50;
-
-  List<String> pokemons = ['1.0 X', '2.0 X', '3.0 X'];
-  final pokemonDropdownController = DropdownController();
+  List<String> speeds = ['1.0 X', '2.0 X', '3.0 X'];
+  final speedDropdownController = DropdownController();
   final listDropdownController = DropdownController();
 
-  List<CoolDropdownItem<String>> pokemonDropdownItems = [];
+  List<CoolDropdownItem<String>> speedDropdownItems = [];
+
+  BoxDecoration styleBox() {
+    return BoxDecoration(
+      color: const Color(0xFFC7C9FF),
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: const [
+        BoxShadow(
+            color: Color.fromARGB(90, 0, 0, 0),
+            blurRadius: 15,
+            offset: Offset(5, 5)),
+        BoxShadow(
+            color: Color.fromARGB(200, 255, 255, 255),
+            blurRadius: 13,
+            offset: Offset(-5, -5)),
+      ],
+    );
+  }
+
+  TextStyle styleBoxTitle() {
+    return const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 2,
+        color: Color(0xFF373B8A));
+  }
 
   @override
   void initState() {
-    for (var i = 0; i < pokemons.length; i++) {
-      pokemonDropdownItems.add(
+    for (var i = 0; i < speeds.length; i++) {
+      speedDropdownItems.add(
         CoolDropdownItem<String>(
-          label: pokemons[i],
-          value: pokemons[i],
+          label: speeds[i],
+          value: speeds[i],
         ),
       );
     }
@@ -34,28 +58,37 @@ class _ConfiguracaoState extends State<Configuracao> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Colors.purple, Colors.orange])),
-      child: Scaffold(
-        body: Center(
+            // Where the linear gradient begins and ends
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+
+            colors: [
+              Color(0xFFDFE0FB),
+              Color(0xFFECCCFF),
+            ],
+          ),
+        ),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               const Padding(padding: EdgeInsets.only(top: 100)),
 
               // Informa o titulo da pagina
-              const Text(
+              Text(
                 "Configuração",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 30,
-                    color: Color(0xFF5100FF)),
+                style: GoogleFonts.montserratAlternates(
+                  textStyle: const TextStyle(
+                      // fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 33,
+                      color: Color(0xFF5100FF)),
+                ),
               ),
 
               // Gap entre elementos
@@ -69,25 +102,14 @@ class _ConfiguracaoState extends State<Configuracao> {
                 // height: 0.2 * MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.only(
                     left: 30, top: 20, right: 30, bottom: 20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFA99DE6),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                        color: Color.fromARGB(90, 0, 0, 0),
-                        blurRadius: 15,
-                        offset: Offset(5, 5)),
-                    BoxShadow(
-                        color: Color.fromARGB(200, 255, 255, 255),
-                        blurRadius: 13,
-                        offset: Offset(-5, -5)),
-                  ],
-                ),
+                decoration: styleBox(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Volume'),
+                    Text('Volume',
+                        style: GoogleFonts.inclusiveSans(
+                            textStyle: styleBoxTitle())),
                     Slider(
                         value: valor, //definir o valor inicial
                         min: 0,
@@ -116,40 +138,31 @@ class _ConfiguracaoState extends State<Configuracao> {
                 // height: 0.1 * MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.only(
                     left: 30, top: 30, right: 30, bottom: 30),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFA99DE6),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                        color: Color.fromARGB(90, 0, 0, 0),
-                        blurRadius: 15,
-                        offset: Offset(5, 5)),
-                    BoxShadow(
-                        color: Color.fromARGB(200, 255, 255, 255),
-                        blurRadius: 13,
-                        offset: Offset(-5, -5)),
-                  ],
-                ),
+                decoration: styleBox(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Velocidade'),
+                    Text(
+                      'Velocidade',
+                      style:
+                          GoogleFonts.inclusiveSans(textStyle: styleBoxTitle()),
+                    ),
                     WillPopScope(
                       onWillPop: () async {
-                        if (pokemonDropdownController.isOpen) {
-                          pokemonDropdownController.close();
+                        if (speedDropdownController.isOpen) {
+                          speedDropdownController.close();
                           return Future.value(false);
                         } else {
                           return Future.value(true);
                         }
                       },
                       child: CoolDropdown<String>(
-                        controller: pokemonDropdownController,
-                        dropdownList: pokemonDropdownItems,
+                        controller: speedDropdownController,
+                        dropdownList: speedDropdownItems,
                         defaultItem: null,
                         onChange: (value) async {
-                          if (pokemonDropdownController.isError) {
-                            await pokemonDropdownController.resetError();
+                          if (speedDropdownController.isError) {
+                            await speedDropdownController.resetError();
                           }
                         },
                         onOpen: (value) {},
