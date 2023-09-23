@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -9,6 +10,8 @@ class Configuracao extends StatefulWidget {
   @override
   State<Configuracao> createState() => _ConfiguracaoState();
 }
+
+List<String> list = <String>['1.0x', '2.0x', '3.0x'];
 
 class _ConfiguracaoState extends State<Configuracao> {
   double valor = 50;
@@ -18,6 +21,8 @@ class _ConfiguracaoState extends State<Configuracao> {
   final listDropdownController = DropdownController();
 
   List<CoolDropdownItem<String>> speedDropdownItems = [];
+
+  String speedOption = list.first;
 
   BoxDecoration styleBox() {
     return BoxDecoration(
@@ -133,85 +138,131 @@ class _ConfiguracaoState extends State<Configuracao> {
               ),
 
               // Compo da velocidade
-              Container(
-                width: 0.8 * MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(
-                    left: 30, top: 20, right: 30, bottom: 20),
-                decoration: styleBox(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Velocidade',
-                      style:
-                          GoogleFonts.inclusiveSans(textStyle: styleBoxTitle()),
-                    ),
-                    WillPopScope(
-                      onWillPop: () async {
-                        if (speedDropdownController.isOpen) {
-                          speedDropdownController.close();
-                          return Future.value(false);
-                        } else {
-                          return Future.value(true);
-                        }
-                      },
-                      child: CoolDropdown<String>(
-                        controller: speedDropdownController,
-                        dropdownList: speedDropdownItems,
-                        defaultItem: null,
-                        onChange: (value) async {
-                          if (speedDropdownController.isError) {
-                            await speedDropdownController.resetError();
-                          }
-                        },
-                        onOpen: (value) {},
-                        resultOptions: ResultOptions(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            width: 80,
-                            render: ResultRender.all,
-                            placeholder: '1.0 X',
-                            isMarquee: true,
-                            // openBoxDecoration: BoxDecoration(
-                            //   color: Colors.green,
-                            // ),
-                            boxDecoration: BoxDecoration(
-                              color: boxColor,
-                              borderRadius: BorderRadius.circular(10),
-                              // style: GoogleFonts.poppins(
-                              //     textStyle:
-                              //         const TextStyle(color: Colors.blue))),
-                              // boxDecoration: BoxDecoration(color: Colors.amber)
-                            )),
-                        dropdownOptions: const DropdownOptions(
-                            top: 20,
-                            gap: DropdownGap.all(5),
-                            color: Colors.red,
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            align: DropdownAlign.left,
-                            animationType: DropdownAnimationType.size,
-                            curve: Curves.bounceInOut),
-                        dropdownTriangleOptions: const DropdownTriangleOptions(
-                          width: 20,
-                          height: 30,
-                          align: DropdownTriangleAlign.left,
-                          borderRadius: 3,
-                          left: 20,
-                        ),
-                        dropdownItemOptions: DropdownItemOptions(
-                          isMarquee: true,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          render: DropdownItemRender.all,
-                          height: 50,
-                          boxDecoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(100),
+              GestureDetector(
+                // onTap: (String value) {
+                //   setState(() {
+                //     speedOption = value!
+                //   });
+                // },
+                child: Container(
+                  width: 0.8 * MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(
+                      left: 30, top: 20, right: 30, bottom: 20),
+                  decoration: styleBox(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Velocidade',
+                        style: GoogleFonts.inclusiveSans(
+                            textStyle: styleBoxTitle()),
+                      ),
+                      // WillPopScope(
+                      //   onWillPop: () async {
+                      //     if (speedDropdownController.isOpen) {
+                      //       speedDropdownController.close();
+                      //       return Future.value(false);
+                      //     } else {
+                      //       return Future.value(true);
+                      //     }
+                      //   },
+                      //   child: CoolDropdown<String>(
+                      //     controller: speedDropdownController,
+                      //     dropdownList: speedDropdownItems,
+                      //     defaultItem: null,
+                      //     onChange: (value) async {
+                      //       if (speedDropdownController.isError) {
+                      //         await speedDropdownController.resetError();
+                      //       }
+                      //     },
+                      //     onOpen: (value) {},
+                      //     resultOptions: ResultOptions(
+                      //         padding: const EdgeInsets.symmetric(horizontal: 10),
+                      //         width: 80,
+                      //         render: ResultRender.all,
+                      //         placeholder: '1.0 X',
+                      //         isMarquee: true,
+                      //         openBoxDecoration: BoxDecoration(
+                      //           color: boxColor,
+                      //           border: Border.all(width: 0),
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         ),
+                      //         boxDecoration: BoxDecoration(
+                      //           color: boxColor,
+                      //           borderRadius: BorderRadius.circular(10),
+                      //           // style: GoogleFonts.poppins(
+                      //           //     textStyle:
+                      //           //         const TextStyle(color: Colors.blue))),
+                      //           // boxDecoration: BoxDecoration(color: Colors.amber)
+                      //         )),
+                      //     dropdownOptions: const DropdownOptions(
+                      //         top: 20,
+                      //         gap: DropdownGap.all(5),
+                      //         color: Colors.red,
+                      //         borderSide:
+                      //             BorderSide(width: 1, color: Colors.black),
+                      //         padding: EdgeInsets.symmetric(horizontal: 10),
+                      //         align: DropdownAlign.left,
+                      //         animationType: DropdownAnimationType.size,
+                      //         curve: Curves.bounceInOut),
+                      //     dropdownTriangleOptions: const DropdownTriangleOptions(
+                      //       width: 20,
+                      //       height: 30,
+                      //       align: DropdownTriangleAlign.left,
+                      //       borderRadius: 3,
+                      //       left: 20,
+                      //     ),
+                      //     dropdownItemOptions: DropdownItemOptions(
+                      //       isMarquee: true,
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       render: DropdownItemRender.all,
+                      //       height: 50,
+                      //       boxDecoration: BoxDecoration(
+                      //         color: Colors.amber,
+                      //         borderRadius: BorderRadius.circular(100),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(
+                        width: 70,
+                        child: DropdownButton<String>(
+                          dropdownColor: Color(0xFFb2b4ff),
+                          // dropdownColor: Color.fromARGB(255, 221, 163, 255),
+                          isExpanded: true,
+                          value: speedOption,
+                          icon: const Icon(FontAwesomeIcons.chevronDown),
+                          iconSize: 15,
+                          iconDisabledColor: const Color(0xFF373B8A),
+                          underline: Container(
+                            color: const Color(0x00000000),
                           ),
+                          elevation: 15,
+                          borderRadius: BorderRadius.circular(10),
+                          style: const TextStyle(
+                              color: Color(0xFF5100FF),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              speedOption = value!;
+                            });
+                          },
+                          onTap: () {
+                            print("clicou");
+                          },
+                          items: list
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
