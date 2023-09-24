@@ -55,7 +55,7 @@ class MyHomePage extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
           ),
-        ),
+        ),git 
         backgroundColor: corLavandaEscura,
       ),
       body: SingleChildScrollView(
