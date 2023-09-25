@@ -15,59 +15,41 @@ class _DevicesState extends State<Devices> {
         decoration: BoxDecoration(color: Colors.blue[900]),
         child: Column(
           children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                decoration: const BoxDecoration(
-                    // color: Color.fromARGB(255, 255, 0, 0),
-                    ),
-                // color: widget.corLavanda, // Usando a cor personalizada
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Centralize verticalmente
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // Centralize horizontalmente
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            top: 40.0, left: 0, right: 0, bottom: 0),
-                        child: Text(
-                          'Nome do dispositivo',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white, // Cor do texto
-                            fontSize: 18, // Tamanho do texto
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 0.0,
-                            left: 20,
-                            right: 0,
-                            bottom: 0), // Adicione o padding desejado aqui
-                        child: Image.asset(
-                          'assets/images/hardware.png',
-                          width: 300,
-                          // height: 300,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            top: 0, left: 0, right: 0, bottom: 0),
-                        child: Text(
-                          'Conectando...',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white, // Cor do texto
-                            fontSize: 18, // Tamanho do texto
-                          ),
-                        ),
-                      ),
-                    ],
+            Container(
+              decoration: const BoxDecoration(
+                  // color: Color.fromARGB(255, 0, 255, 55),
                   ),
-                ),
+              padding: EdgeInsets.only(top: 75, bottom: 60),
+              width: MediaQuery.of(context).size.width,
+              height: 0.6 * MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween, // Centralize verticalmente
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Centralize horizontalmente
+                children: [
+                  Text(
+                    'Nome do dispositivo',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white, // Cor do texto
+                      fontSize: 18, // Tamanho do texto
+                    ),
+                  ),
+                  Image.asset(
+                    'assets/images/hardware.png',
+                    width: 300,
+                    // height: 300,
+                  ),
+                  Text(
+                    'Conectando...',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white, // Cor do texto
+                      fontSize: 18, // Tamanho do texto
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
