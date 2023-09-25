@@ -14,6 +14,7 @@ void main() {
       ),
       useMaterial3: true,
     ),
+    debugShowCheckedModeBanner: false,
     home: MyHomePage(
       title: 'About us',
       corLavanda: Color(0xFF6A5ACD),
