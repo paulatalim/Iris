@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyHomePage extends StatefulWidget {
+class Sobre extends StatefulWidget {
   final Color corLavanda;
   final Color corLavandaEscura;
   final Color corLavandaClaro;
   final String title;
 
-  MyHomePage({
+  Sobre({
     required this.corLavanda,
     required this.corLavandaEscura,
     required this.corLavandaClaro,
@@ -15,10 +15,10 @@ class MyHomePage extends StatefulWidget {
   });
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Sobre> createState() => _SobreState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SobreState extends State<Sobre> {
   TextStyle integranteStyle() {
     return const TextStyle(
       color: Color(0xFF373B8A),
