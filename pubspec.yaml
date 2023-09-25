@@ -53,7 +53,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - lib/irislogo.png
+    - assets/images/irislogo.png
   uses-material-design: true
 
 
