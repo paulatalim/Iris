@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'configuracao.dart';
 import 'menu.dart';
 import 'devices.dart';
-
 import 'home.dart';
-
 import 'sobre.dart';
 
 void main() {
@@ -21,7 +20,7 @@ void main() {
       ),
     ),
     debugShowCheckedModeBanner: false,
-    home: const Configuracao(),
+    home: const Menubar(),
 
     // home: MyHomePage(
     //   title: 'About us',

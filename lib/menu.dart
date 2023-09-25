@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'devices.dart';
+import 'home.dart';
+import 'configuracao.dart';
+
 class Menubar extends StatefulWidget {
   const Menubar({super.key});
 
@@ -12,13 +16,11 @@ class _MenubarState extends State<Menubar> {
   int _currentIndex = 0;
 
   // Colocar nomes das telas na lista
-  // final List<Widget> screens = [];
-
-  final List<Center> tabs = [
-    const Center(child: Text('Home')),
-    const Center(child: Text('dispositivos')),
-    const Center(child: Text('dados')),
-    const Center(child: Text('login'))
+  final List<Widget> screens = [
+    const HomeScreen(),
+    const Devices(),
+    const Configuracao(),
+    const Configuracao(),
   ];
 
   final Color _iconColorPressed = const Color(0xFFA000FF);
@@ -44,7 +46,7 @@ class _MenubarState extends State<Menubar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[_currentIndex],
+      body: screens[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
