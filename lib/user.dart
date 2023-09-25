@@ -27,6 +27,25 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreen extends State<UserScreen> {
   @override
+  Color boxColor = const Color(0xFFC7C9FF);
+
+  BoxDecoration styleBox() {
+    return BoxDecoration(
+      color: boxColor,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: const [
+        BoxShadow(
+            color: Color.fromARGB(90, 0, 0, 0),
+            blurRadius: 15,
+            offset: Offset(5, 5)),
+        BoxShadow(
+            color: Color.fromARGB(200, 255, 255, 255),
+            blurRadius: 13,
+            offset: Offset(-5, -5)),
+      ],
+    );
+  }
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
