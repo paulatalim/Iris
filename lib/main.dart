@@ -3,6 +3,6 @@ import 'menu.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: Home(),
+    home: Menubar(),
   ));
 }
