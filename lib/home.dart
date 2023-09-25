@@ -19,15 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/LOGO IRIS.jpeg',
+                  'assets/images/logo.png',
                   width: 450,
                   height: 500,
                 ),
-                SizedBox(height: 20),
-                Text(
-                  "Clique para continuar",
-                  style: TextStyle(fontSize: 18),
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -37,13 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: const Icon(Icons.settings),
                   onPressed: () {
                     // Ação do primeiro ícone
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.info),
+                  icon: const Icon(Icons.info),
                   onPressed: () {
                     // Ação do segundo ícone
                   },
