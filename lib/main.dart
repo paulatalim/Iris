@@ -3,6 +3,8 @@ import 'configuracao.dart';
 import 'menu.dart';
 import 'devices.dart';
 
+import 'home.dart';
+
 void main() {
   runApp(MaterialApp(
     title: 'Iris',
