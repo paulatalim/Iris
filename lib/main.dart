@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'configuracao.dart';
-
+import 'menu.dart';
 import 'devices.dart';
 
 void main() {
