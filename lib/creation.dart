@@ -70,34 +70,49 @@ class _UserSingIn extends State<UserSingIn> {
         ),
       ),
       body: SingleChildScrollView(
+
+        //Corpo principal
         child: Container(
             padding: const EdgeInsets.all(10),
+
+            //Esqueleto do Corpo
             child: Column(
                 //Vertical
                 mainAxisAlignment: MainAxisAlignment.center,
                 //Horizontal
                 crossAxisAlignment: CrossAxisAlignment.center,
+
                 children: <Widget>[
+
+                  //Texto superior
                   Container(
                       height: 70,
                       child: Text(
                         'Criar um usuário',
                         style: GoogleFonts.dosis(fontSize: 30),
                       )),
+
+                  //Imagem superior
                   Image.asset(
                     'assets/images/acc_finale.png',
                     width: 210.0,
                   ),
+
                   //Padding para formatação padronizada
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
                     child: Row(
+
                       //Vertical
                       crossAxisAlignment: CrossAxisAlignment.end,
                       //Horizontal
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      //Caixas de textos
                       children: [
+
+                        //Caixa de Texto Nome
                         //Flexible necessario para realizar integração do TextFormField dentro de uma Row
                         Flexible(
                           child: TextFormField(
@@ -110,10 +125,13 @@ class _UserSingIn extends State<UserSingIn> {
                             ),
                           ),
                         ),
+
                         //Container para realizar a separação das caixas de texto
                         Container(
                           width: 5,
                         ),
+
+                        //Caixa de Texto Sobrenome
                         Flexible(
                           child: TextFormField(
                             style: GoogleFonts.dosis(),
@@ -128,11 +146,15 @@ class _UserSingIn extends State<UserSingIn> {
                       ],
                     ),
                   ),
+
                   // Coluna com demais caixas de texto
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      //Caixa de texto para e-mail
                       Padding(
+
                         //Padding para separar das caixas de texto superior - adicionando somente no eixo inferior
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: TextFormField(
@@ -146,6 +168,8 @@ class _UserSingIn extends State<UserSingIn> {
                           ),
                         ),
                       ),
+
+                      //Caixa de texto para Senha
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: TextFormField(
@@ -158,6 +182,8 @@ class _UserSingIn extends State<UserSingIn> {
                           ),
                         ),
                       ),
+
+                      //Caixa de texto para Confirmar senha
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
                         child: TextFormField(
@@ -170,6 +196,8 @@ class _UserSingIn extends State<UserSingIn> {
                           ),
                         ),
                       ),
+
+                      //Botão de criação de conta
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -197,6 +225,7 @@ class _UserSingIn extends State<UserSingIn> {
                           style: TextStyle(fontSize: 25, color: Colors.white),
                         ),
                       ),
+                      
                     ],
                   )
                 ])),
