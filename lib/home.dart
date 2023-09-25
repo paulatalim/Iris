@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'configuracao.dart';
+import 'sobre.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -37,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   iconSize: 30,
                   onPressed: () {
-                    // Ação do primeiro ícone
+                    Sobre();
                   },
                 ),
                 const SizedBox(height: 20),
@@ -46,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   iconSize: 30,
                   onPressed: () {
-                    // Ação do segundo ícone
+                    Configuracao();
                   },
                 ),
               ],

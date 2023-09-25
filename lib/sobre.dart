@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Sobre extends StatefulWidget {
-  final Color corLavanda;
-  final Color corLavandaEscura;
-  final Color corLavandaClaro;
-  final String title;
+  const Sobre({super.key});
 
-  Sobre({
-    required this.corLavanda,
-    required this.corLavandaEscura,
-    required this.corLavandaClaro,
-    required this.title,
-  });
+  // final Color corLavanda;
+  // final Color corLavandaEscura;
+  // final Color corLavandaClaro;
+  // final String title;
+
+  // Sobre({
+  //   required this.corLavanda,
+  //   required this.corLavandaEscura,
+  //   required this.corLavandaClaro,
+  //   required this.title,
+  // });
 
   @override
   State<Sobre> createState() => _SobreState();
