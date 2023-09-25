@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'configuracao.dart';
 
 import 'devices.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
+    title: 'Iris',
+    theme: ThemeData(
+      useMaterial3: true,
+      // Define the default brightness and colors.
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.purple,
+      ),
+    ),
     debugShowCheckedModeBanner: false,
-    home: Devices(),
+    home: const Configuracao(),
   ));
 }
