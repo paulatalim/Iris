@@ -44,6 +44,8 @@ class _ConfiguracaoState extends State<Configuracao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: Color(0xFFECCCFF),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

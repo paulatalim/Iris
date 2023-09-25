@@ -4,23 +4,26 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'configuracao.dart';
+import 'sobre.dart';
 
 class Menubar extends StatefulWidget {
-  const Menubar({super.key});
+  int currentIndex;
+
+  Menubar({required this.currentIndex});
 
   @override
   State<Menubar> createState() => _MenubarState();
 }
 
 class _MenubarState extends State<Menubar> {
-  int _currentIndex = 0;
-
   // Colocar nomes das telas na lista
   final List<Widget> screens = [
     const HomeScreen(),
     const Devices(),
     const Configuracao(),
     const Configuracao(),
+    const Configuracao(),
+    const Sobre(),
   ];
 
   final Color _iconColorPressed = const Color(0xFFA000FF);
@@ -45,6 +48,8 @@ class _MenubarState extends State<Menubar> {
 
   @override
   Widget build(BuildContext context) {
+    int _currentIndex = widget.currentIndex;
+
     return Scaffold(
       body: screens[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -68,6 +73,7 @@ class _MenubarState extends State<Menubar> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
+
                     _colorSelection(_currentIndex);
                   });
                 },
@@ -78,6 +84,7 @@ class _MenubarState extends State<Menubar> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 1;
+                    print('${_currentIndex}');
                     _colorSelection(_currentIndex);
                   });
                 },

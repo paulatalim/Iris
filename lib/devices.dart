@@ -33,7 +33,18 @@ class _DevicesState extends State<Devices> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.blue[900]),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            // Where the linear gradient begins and ends
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+
+            colors: [
+              Color(0xFFbabdfa),
+              Color(0xFFdba0ff),
+            ],
+          ),
+        ),
         child: Column(
           children: [
             Container(
@@ -78,7 +89,7 @@ class _DevicesState extends State<Devices> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                    color: Color(0xAAFFFFFF),
+                    color: Color.fromARGB(73, 255, 255, 255),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),

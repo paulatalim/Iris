@@ -100,13 +100,13 @@ class _SobreState extends State<Sobre> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 6.0),
+                          const SizedBox(height: 6.0),
                           Text(
                             'Integrantes',
                             textAlign: TextAlign.center,
                             style: subtitle(),
                           ),
-                          SizedBox(height: 6.0),
+                          const SizedBox(height: 6.0),
 
                           // Espaço entre os textos
                           Text(
@@ -115,7 +115,7 @@ class _SobreState extends State<Sobre> {
                             style: integranteStyle(),
                           ),
 
-                          SizedBox(height: 3.0), // Espaço entre os textos
+                          const SizedBox(height: 3.0), // Espaço entre os textos
 
                           Text(
                             'Mariana Aram',
@@ -123,7 +123,7 @@ class _SobreState extends State<Sobre> {
                             style: integranteStyle(),
                           ),
 
-                          SizedBox(height: 3.0), // Espaço entre os textos
+                          const SizedBox(height: 3.0), // Espaço entre os textos
 
                           Text(
                             'Paula Talim',
@@ -131,7 +131,7 @@ class _SobreState extends State<Sobre> {
                             style: integranteStyle(),
                           ),
 
-                          SizedBox(height: 3.0), // Espaço entre os textos
+                          const SizedBox(height: 3.0), // Espaço entre os textos
 
                           Text(
                             'Pedro Mafra',
@@ -139,7 +139,7 @@ class _SobreState extends State<Sobre> {
                             style: integranteStyle(),
                           ),
 
-                          SizedBox(height: 3.0), // Espaço entre os textos
+                          const SizedBox(height: 3.0), // Espaço entre os textos
 
                           Text(
                             'Yago Garzon',
@@ -147,7 +147,8 @@ class _SobreState extends State<Sobre> {
                             style: integranteStyle(),
                           ),
 
-                          SizedBox(height: 11.0), // Espaço entre os textos
+                          const SizedBox(
+                              height: 11.0), // Espaço entre os textos
 
                           Text(
                             'Orientador',
@@ -155,7 +156,7 @@ class _SobreState extends State<Sobre> {
                             style: subtitle(),
                           ),
 
-                          SizedBox(height: 5.0), // Espaço entre os textos
+                          const SizedBox(height: 5.0), // Espaço entre os textos
                           Text(
                             'Ilo Riveiro',
                             textAlign: TextAlign.center,
