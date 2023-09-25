@@ -45,7 +45,16 @@ flutter:
     - assets/images/logo.png
     - assets/icon/logoIcone.png
     - assets/images/sketch.png
+    - assets/images/irislogo.png
+
   uses-material-design: true
+
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
