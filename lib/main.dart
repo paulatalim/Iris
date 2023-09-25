@@ -10,9 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color minhaCorPersonalizada = Color(0xFF6A5ACD); // Lavanda
-    Color minhaCorEscura = Color(0xFF483D8B); // Lavanda Escuro
-    Color corLavandaClaro =
-        Color(0xFFB49CDC); // Substituído corClara por corLavandaClaro
+    // Substituído corClara por corLavandaClaro
 
     return MaterialApp(
       title: 'Iris',
@@ -25,9 +23,9 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(
         title: 'About us',
-        corLavanda: minhaCorPersonalizada,
-        corLavandaEscura: minhaCorEscura,
-        corLavandaClaro: corLavandaClaro,
+        corLavanda: Color(0xFF6A5ACD),
+        corLavandaEscura: Color(0xFF483D8B),
+        corLavandaClaro: Color(0xFFB49CDC),
       ),
     );
   }
