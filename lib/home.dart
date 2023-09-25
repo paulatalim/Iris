@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,18 +28,23 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned(
-            top: 16,
+            top: 45,
             right: 16,
             child: Column(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.settings),
+                  icon: const Icon(FontAwesomeIcons.gear),
+                  color: Colors.white,
+                  iconSize: 40,
                   onPressed: () {
                     // Ação do primeiro ícone
                   },
                 ),
+                const SizedBox(height: 20),
                 IconButton(
-                  icon: const Icon(Icons.info),
+                  icon: const Icon(FontAwesomeIcons.circleInfo),
+                  color: Colors.white,
+                  iconSize: 40,
                   onPressed: () {
                     // Ação do segundo ícone
                   },
