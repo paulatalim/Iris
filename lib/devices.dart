@@ -7,7 +7,29 @@ class Devices extends StatefulWidget {
   State<Devices> createState() => _DevicesState();
 }
 
+class DispositivosDisponivel {
+  String nome;
+  String imagePath;
+
+  DispositivosDisponivel({required this.nome, required this.imagePath});
+}
+
+List<DispositivosDisponivel> dispositivo = [
+  DispositivosDisponivel(
+      nome: "Selecione um dispositivo",
+      imagePath: 'assets/images/hardware.png'),
+  DispositivosDisponivel(nome: "ESP 32", imagePath: 'assets/images/lamp.png'),
+  DispositivosDisponivel(
+      nome: "Termometro", imagePath: 'assets/images/lamp.png'),
+  DispositivosDisponivel(
+      nome: "Sensor ultrassônico", imagePath: 'assets/images/lamp.png'),
+  DispositivosDisponivel(nome: "Balança", imagePath: 'assets/images/lamp.png')
+];
+
 class _DevicesState extends State<Devices> {
+  DispositivosDisponivel dispositivoSelecionado = DispositivosDisponivel(
+      nome: dispositivo[0].nome, imagePath: dispositivo[0].imagePath);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +41,7 @@ class _DevicesState extends State<Devices> {
               decoration: const BoxDecoration(
                   // color: Color.fromARGB(255, 0, 255, 55),
                   ),
-              padding: EdgeInsets.only(top: 75, bottom: 60),
+              padding: const EdgeInsets.only(top: 75, bottom: 60),
               width: MediaQuery.of(context).size.width,
               height: 0.6 * MediaQuery.of(context).size.height,
               child: Column(
@@ -29,20 +51,19 @@ class _DevicesState extends State<Devices> {
                     CrossAxisAlignment.center, // Centralize horizontalmente
                 children: [
                   Text(
-                    'Nome do dispositivo',
+                    dispositivoSelecionado.nome,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white, // Cor do texto
                       fontSize: 18, // Tamanho do texto
                     ),
                   ),
                   Image.asset(
-                    'assets/images/hardware.png',
-                    width: 300,
-                    // height: 300,
+                    dispositivoSelecionado.imagePath,
+                    height: 200,
                   ),
-                  Text(
-                    'Conectando...',
+                  const Text(
+                    'Status',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white, // Cor do texto
@@ -69,117 +90,187 @@ class _DevicesState extends State<Devices> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Color.fromARGB(90, 0, 0, 0),
-                                  blurRadius: 15,
-                                  offset: Offset(5, 5)),
-                              BoxShadow(
-                                  color: Color.fromARGB(200, 255, 255, 255),
-                                  blurRadius: 13,
-                                  offset: Offset(-5, -5)),
-                            ],
-                          ),
-                          width: 0.85 * MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 17, right: 30, bottom: 17),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .spaceBetween, // Centraliza horizontalmente o Row
-                            children: [
-                              Image.asset(
-                                'assets/images/lamp.png',
-                                width: 40,
-                              ),
-                              const Text(
-                                'Nome do dispositivo',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              dispositivoSelecionado = dispositivo[1];
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Color.fromARGB(90, 0, 0, 0),
+                                    blurRadius: 15,
+                                    offset: Offset(5, 5)),
+                                BoxShadow(
+                                    color: Color.fromARGB(200, 255, 255, 255),
+                                    blurRadius: 13,
+                                    offset: Offset(-5, -5)),
+                              ],
+                            ),
+                            width: 0.85 * MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.only(
+                                left: 30, top: 17, right: 30, bottom: 17),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .start, // Centraliza horizontalmente o Row
+                              children: [
+                                Image.asset(
+                                  dispositivo[1].imagePath,
+                                  width: 40,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 30.0),
+                                Text(
+                                  dispositivo[1].nome,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(height: 30.0),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Color.fromARGB(90, 0, 0, 0),
-                                  blurRadius: 15,
-                                  offset: Offset(5, 5)),
-                              BoxShadow(
-                                  color: Color.fromARGB(200, 255, 255, 255),
-                                  blurRadius: 13,
-                                  offset: Offset(-5, -5)),
-                            ],
-                          ),
-                          width: 0.85 * MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 17, right: 30, bottom: 17),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .spaceBetween, // Centraliza horizontalmente o Row
-                            children: [
-                              Image.asset(
-                                'assets/images/lamp.png',
-                                width: 40,
-                              ),
-                              const Text(
-                                'Nome do dispositivo',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              dispositivoSelecionado = dispositivo[2];
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Color.fromARGB(90, 0, 0, 0),
+                                    blurRadius: 15,
+                                    offset: Offset(5, 5)),
+                                BoxShadow(
+                                    color: Color.fromARGB(200, 255, 255, 255),
+                                    blurRadius: 13,
+                                    offset: Offset(-5, -5)),
+                              ],
+                            ),
+                            width: 0.85 * MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.only(
+                                left: 30, top: 17, right: 30, bottom: 17),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .start, // Centraliza horizontalmente o Row
+                              children: [
+                                Image.asset(
+                                  dispositivo[2].imagePath,
+                                  width: 40,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 30.0),
+                                Text(
+                                  dispositivo[2].nome,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(height: 30.0),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Color.fromARGB(90, 0, 0, 0),
-                                  blurRadius: 15,
-                                  offset: Offset(5, 5)),
-                              BoxShadow(
-                                  color: Color.fromARGB(200, 255, 255, 255),
-                                  blurRadius: 13,
-                                  offset: Offset(-5, -5)),
-                            ],
-                          ),
-                          width: 0.85 * MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 17, right: 30, bottom: 17),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .spaceBetween, // Centraliza horizontalmente o Row
-                            children: [
-                              Image.asset(
-                                'assets/images/lamp.png',
-                                width: 40,
-                              ),
-                              const Text(
-                                'Nome do dispositivo',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              dispositivoSelecionado = dispositivo[3];
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Color.fromARGB(90, 0, 0, 0),
+                                    blurRadius: 15,
+                                    offset: Offset(5, 5)),
+                                BoxShadow(
+                                    color: Color.fromARGB(200, 255, 255, 255),
+                                    blurRadius: 13,
+                                    offset: Offset(-5, -5)),
+                              ],
+                            ),
+                            width: 0.85 * MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.only(
+                                left: 30, top: 17, right: 30, bottom: 17),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .start, // Centraliza horizontalmente o Row
+                              children: [
+                                Image.asset(
+                                  dispositivo[3].imagePath,
+                                  width: 40,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 30.0),
+                                Text(
+                                  dispositivo[3].nome,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30.0),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              dispositivoSelecionado = dispositivo[4];
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Color.fromARGB(90, 0, 0, 0),
+                                    blurRadius: 15,
+                                    offset: Offset(5, 5)),
+                                BoxShadow(
+                                    color: Color.fromARGB(200, 255, 255, 255),
+                                    blurRadius: 13,
+                                    offset: Offset(-5, -5)),
+                              ],
+                            ),
+                            width: 0.85 * MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.only(
+                                left: 30, top: 17, right: 30, bottom: 17),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .start, // Centraliza horizontalmente o Row
+                              children: [
+                                Image.asset(
+                                  dispositivo[4].imagePath,
+                                  width: 40,
+                                ),
+                                const SizedBox(width: 30.0),
+                                Text(
+                                  dispositivo[4].nome,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ]),
