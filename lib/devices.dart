@@ -12,12 +12,15 @@ class _DevicesState extends State<Devices> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.amber),
+        decoration: BoxDecoration(color: Colors.blue[900]),
         child: Column(
           children: [
             Expanded(
               flex: 3,
               child: Container(
+                decoration: const BoxDecoration(
+                    // color: Color.fromARGB(255, 255, 0, 0),
+                    ),
                 // color: widget.corLavanda, // Usando a cor personalizada
                 child: Center(
                   child: Column(
@@ -26,7 +29,7 @@ class _DevicesState extends State<Devices> {
                     crossAxisAlignment:
                         CrossAxisAlignment.center, // Centralize horizontalmente
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(
                             top: 40.0, left: 0, right: 0, bottom: 0),
                         child: Text(
@@ -39,18 +42,18 @@ class _DevicesState extends State<Devices> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 0.0,
                             left: 20,
                             right: 0,
                             bottom: 0), // Adicione o padding desejado aqui
                         child: Image.asset(
-                          'lib/hardware.png',
+                          'assets/images/hardware.png',
                           width: 300,
-                          height: 300,
+                          // height: 300,
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(
                             top: 0, left: 0, right: 0, bottom: 0),
                         child: Text(
@@ -69,132 +72,135 @@ class _DevicesState extends State<Devices> {
             ),
             Expanded(
               flex: 2,
-              child: Container(
-                // color: widget.corLavandaEscura,
-                padding:
-                    EdgeInsets.only(top: 30.0, left: 0, right: 0, bottom: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 30,
-                        height: MediaQuery.of(context).size.height - 720,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                25.0), // Ajuste o raio de arredondamento desejado
+              child: SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Color(0xAAFFFFFF),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30)),
+                    // BorderRadius.circular(20)
+                  ),
+                  padding: const EdgeInsets.only(
+                      top: 50.0, left: 0, right: 0, bottom: 100.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 0, 0, 0),
+                                  blurRadius: 15,
+                                  offset: Offset(5, 5)),
+                              BoxShadow(
+                                  color: Color.fromARGB(200, 255, 255, 255),
+                                  blurRadius: 13,
+                                  offset: Offset(-5, -5)),
+                            ],
                           ),
-                          elevation: 10,
-                          // color: widget.corLavanda,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Centraliza horizontalmente o Row
-                              children: [
-                                Image.asset(
-                                  'lib/lamp.png',
-                                  width:
-                                      40, // Ajuste o tamanho da imagem conforme necessário
-                                  height: 40,
+                          width: 0.85 * MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(
+                              left: 30, top: 17, right: 30, bottom: 17),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .spaceBetween, // Centraliza horizontalmente o Row
+                            children: [
+                              Image.asset(
+                                'assets/images/lamp.png',
+                                width: 40,
+                              ),
+                              const Text(
+                                'Nome do dispositivo',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
-                                SizedBox(
-                                    width:
-                                        6.0), // Espaço entre a imagem e o texto
-                                Text(
-                                  'Nome do dispositivo',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16.0),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 30,
-                        height: MediaQuery.of(context).size.height - 720,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                25.0), // Ajuste o raio de arredondamento desejado
-                          ),
-                          elevation: 10,
-                          // color: widget.corLavanda,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Centraliza horizontalmente o Row
-                              children: [
-                                Image.asset(
-                                  'lib/lamp.png',
-                                  width:
-                                      40, // Ajuste o tamanho da imagem conforme necessário
-                                  height: 40,
-                                ),
-                                SizedBox(
-                                    width:
-                                        6.0), // Espaço entre a imagem e o texto
-                                Text(
-                                  'Nome do dispositivo',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SizedBox(height: 16.0),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 30,
-                        height: MediaQuery.of(context).size.height - 720,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                25.0), // Ajuste o raio de arredondamento desejado
+                        const SizedBox(height: 30.0),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 0, 0, 0),
+                                  blurRadius: 15,
+                                  offset: Offset(5, 5)),
+                              BoxShadow(
+                                  color: Color.fromARGB(200, 255, 255, 255),
+                                  blurRadius: 13,
+                                  offset: Offset(-5, -5)),
+                            ],
                           ),
-                          elevation: 10,
-                          // color: widget.corLavanda,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Centraliza horizontalmente o Row
-                              children: [
-                                Image.asset(
-                                  'lib/lamp.png',
-                                  width:
-                                      40, // Ajuste o tamanho da imagem conforme necessário
-                                  height: 40,
+                          width: 0.85 * MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(
+                              left: 30, top: 17, right: 30, bottom: 17),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .spaceBetween, // Centraliza horizontalmente o Row
+                            children: [
+                              Image.asset(
+                                'assets/images/lamp.png',
+                                width: 40,
+                              ),
+                              const Text(
+                                'Nome do dispositivo',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
-                                SizedBox(
-                                    width:
-                                        6.0), // Espaço entre a imagem e o texto
-                                Text(
-                                  'Nome do dispositivo',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ]),
-                  ],
+                        const SizedBox(height: 30.0),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 0, 0, 0),
+                                  blurRadius: 15,
+                                  offset: Offset(5, 5)),
+                              BoxShadow(
+                                  color: Color.fromARGB(200, 255, 255, 255),
+                                  blurRadius: 13,
+                                  offset: Offset(-5, -5)),
+                            ],
+                          ),
+                          width: 0.85 * MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(
+                              left: 30, top: 17, right: 30, bottom: 17),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .spaceBetween, // Centraliza horizontalmente o Row
+                            children: [
+                              Image.asset(
+                                'assets/images/lamp.png',
+                                width: 40,
+                              ),
+                              const Text(
+                                'Nome do dispositivo',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
                 ),
               ),
             ),
