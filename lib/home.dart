@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Image.asset(
                   'assets/images/logo.png',
-                  width: 200,
+                  width: 230,
                 ),
                 const SizedBox(height: 20),
               ],
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(FontAwesomeIcons.gear),
                   color: Colors.white,
-                  iconSize: 40,
+                  iconSize: 30,
                   onPressed: () {
                     // Ação do primeiro ícone
                   },
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(FontAwesomeIcons.circleInfo),
                   color: Colors.white,
-                  iconSize: 40,
+                  iconSize: 30,
                   onPressed: () {
                     // Ação do segundo ícone
                   },
