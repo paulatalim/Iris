@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iris_app/creation.dart';
 import 'package:iris_app/main.dart';
+import 'package:iris_app/user.dart';
 
 class TelaLogin extends StatelessWidget {
   const TelaLogin({super.key});
@@ -135,7 +136,13 @@ class _UserLogin extends State<UserLogin> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const User()),
+                          );
+                        },
                         child: const Text(
                           //Botão para realizar login
                           'Entrar',
