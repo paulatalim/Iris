@@ -37,10 +37,16 @@ flutter_launcher_icons:
     image_path: "assets\\icon\\logoIcone.png"
 
 flutter:
-  uses-material-design: true
   assets:
+    - assets/images/hardware.png
+    - assets/images/lamp.png
     - assets/images/logo.png
     - assets/icon/logoIcone.png
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
 
   # fonts:
   #   - family: Schyler
