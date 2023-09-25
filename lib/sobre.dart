@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyHomePage extends StatefulWidget {
   final Color corLavanda;
@@ -58,17 +59,20 @@ class _MyHomePageState extends State<MyHomePage> {
               const Padding(padding: EdgeInsets.only(top: 100)),
               Container(
                 // decoration: const BoxDecoration(color: Colors.blue),
-                padding: EdgeInsets.only(left: 30, right: 30),
+                padding: const EdgeInsets.only(left: 30, right: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Iris',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 90,
-                          color: Color(0xFF5100FF)),
+                      style: GoogleFonts.dosis(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 3,
+                            fontSize: 100,
+                            color: Color(0xFF5100FF)),
+                      ),
                     ),
                     const SizedBox(height: 15),
                     Image.asset(
@@ -77,14 +81,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       // height: 100,
                     ),
                     const SizedBox(height: 45),
-                    const Text(
+                    Text(
                       'Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes auditivos, '
                       'fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o '
                       'acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF373B8A),
-                        fontSize: 21,
+                      style: GoogleFonts.inclusiveSans(
+                        textStyle: const TextStyle(
+                          color: Color(0xFF373B8A),
+                          fontSize: 21,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -178,18 +184,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: Text('PUC Minas'),
                         subtitle: Text('Coração Eucarístico'),
                       ),
-                      ListTile(
-                        leading: Icon(Icons.phone),
-                        title: Text('...'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.email),
-                        title: Text('...'),
-                      ),
+                      // ListTile(
+                      //   leading: Icon(Icons.phone),
+                      //   title: Text('...'),
+                      // ),
+                      // ListTile(
+                      //   leading: Icon(Icons.email),
+                      //   title: Text('...'),
+                      // ),
                     ],
                   )),
               Container(
-                padding: const EdgeInsets.only(top: 10.0, left: 30),
+                padding:
+                    const EdgeInsets.only(top: 10.0, left: 30, bottom: 150),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
