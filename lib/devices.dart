@@ -20,15 +20,14 @@ List<DispositivosDisponivel> dispositivo = [
       imagePath: 'assets/images/hardware.png'),
   DispositivosDisponivel(nome: "ESP 32", imagePath: 'assets/images/lamp.png'),
   DispositivosDisponivel(
-      nome: "Termometro", imagePath: 'assets/images/lamp.png'),
+      nome: "Termômetro", imagePath: 'assets/images/lamp.png'),
   DispositivosDisponivel(
       nome: "Sensor ultrassônico", imagePath: 'assets/images/lamp.png'),
   DispositivosDisponivel(nome: "Balança", imagePath: 'assets/images/lamp.png')
 ];
 
 class _DevicesState extends State<Devices> {
-  DispositivosDisponivel dispositivoSelecionado = DispositivosDisponivel(
-      nome: dispositivo[0].nome, imagePath: dispositivo[0].imagePath);
+  DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
 
   @override
   Widget build(BuildContext context) {
