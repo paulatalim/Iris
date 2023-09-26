@@ -43,14 +43,14 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/images/hardware.png
-    - assets/images/lamp.png
     - assets/images/logo.png
     - assets/icon/logoIcone.png
-    - assets/images/sketch.png
-    - assets/images/irislogo.png
-    - assets/images/sketch_temp.png
-    - assets/images/sketch.png
     - assets/images/acc_finale.png
+    - assets/images/balanca.png
+    - assets/images/esp32.png
+    - assets/images/sensor.png
+    - assets/images/termometro.png
+
   uses-material-design: true
     
   # An image asset can refer to one or more resolution-specific "variants", see
