@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'menu.dart';
 
 class Sobre extends StatefulWidget {
   const Sobre({super.key});
-
-  // final Color corLavanda;
-  // final Color corLavandaEscura;
-  // final Color corLavandaClaro;
-  // final String title;
-
-  // Sobre({
-  //   required this.corLavanda,
-  //   required this.corLavandaEscura,
-  //   required this.corLavandaClaro,
-  //   required this.title,
-  // });
 
   @override
   State<Sobre> createState() => _SobreState();
@@ -31,7 +22,7 @@ class _SobreState extends State<Sobre> {
   TextStyle subtitle() {
     return const TextStyle(
         color: Color(0xFF373B8A),
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: FontWeight.bold,
         letterSpacing: 2);
   }
@@ -58,7 +49,28 @@ class _SobreState extends State<Sobre> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.only(top: 100)),
+              Container(
+                padding: const EdgeInsets.only(top: 45, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        icon: const Icon(FontAwesomeIcons.xmark),
+                        color: const Color(0xFF373B8A),
+                        iconSize: 30,
+                        onPressed: () {
+                          (
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Menubar()),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
               Container(
                 // decoration: const BoxDecoration(color: Colors.blue),
                 padding: const EdgeInsets.only(left: 30, right: 30),
@@ -104,7 +116,8 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Integrantes',
                             textAlign: TextAlign.center,
-                            style: subtitle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: subtitle()),
                           ),
                           const SizedBox(height: 6.0),
 
@@ -112,7 +125,8 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Ana Beatriz',
                             textAlign: TextAlign.center,
-                            style: integranteStyle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: integranteStyle()),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -120,7 +134,8 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Mariana Aram',
                             textAlign: TextAlign.center,
-                            style: integranteStyle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: integranteStyle()),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -128,7 +143,8 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Paula Talim',
                             textAlign: TextAlign.center,
-                            style: integranteStyle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: integranteStyle()),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -136,7 +152,8 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Pedro Mafra',
                             textAlign: TextAlign.center,
-                            style: integranteStyle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: integranteStyle()),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -144,23 +161,26 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Yago Garzon',
                             textAlign: TextAlign.center,
-                            style: integranteStyle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: integranteStyle()),
                           ),
 
                           const SizedBox(
-                              height: 11.0), // Espaço entre os textos
+                              height: 20.0), // Espaço entre os textos
 
                           Text(
                             'Orientador',
                             textAlign: TextAlign.center,
-                            style: subtitle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: subtitle()),
                           ),
 
-                          const SizedBox(height: 5.0), // Espaço entre os textos
+                          const SizedBox(height: 8.0), // Espaço entre os textos
                           Text(
                             'Ilo Riveiro',
                             textAlign: TextAlign.center,
-                            style: integranteStyle(),
+                            style: GoogleFonts.inclusiveSans(
+                                textStyle: integranteStyle()),
                           ),
                         ],
                       ),
@@ -168,51 +188,68 @@ class _SobreState extends State<Sobre> {
                   ],
                 ),
               ),
-              const SizedBox(width: 10.0),
+              const SizedBox(height: 40.0),
               Container(
                   padding: const EdgeInsets.only(top: 18.0, left: 30),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Fale Conosco:',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 21.0,
+                        style: GoogleFonts.inclusiveSans(textStyle: subtitle()),
+                      ),
+                      const SizedBox(height: 8),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.location_on,
+                          color: Color(0xFF373B8A),
+                        ),
+                        title: Text(
+                          'PUC Minas',
+                          style: GoogleFonts.inclusiveSans(
+                            textStyle: const TextStyle(
+                              color: Color(0xFF373B8A),
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        subtitle: Text(
+                          'Coração Eucarístico',
+                          style: GoogleFonts.inclusiveSans(
+                            textStyle: const TextStyle(
+                              color: Color(0xFF373B8A),
+                              fontSize: 15,
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8),
-                      ListTile(
-                        leading: Icon(Icons.location_on),
-                        title: Text('PUC Minas'),
-                        subtitle: Text('Coração Eucarístico'),
-                      ),
-                      // ListTile(
-                      //   leading: Icon(Icons.phone),
-                      //   title: Text('...'),
-                      // ),
-                      // ListTile(
-                      //   leading: Icon(Icons.email),
-                      //   title: Text('...'),
-                      // ),
                     ],
                   )),
               Container(
-                padding:
-                    const EdgeInsets.only(top: 10.0, left: 30, bottom: 150),
+                padding: const EdgeInsets.only(top: 10.0, left: 30, bottom: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Veja nosso projeto:',
-                      style: TextStyle(
-                        fontSize: 21.0,
-                      ),
+                      style: GoogleFonts.inclusiveSans(textStyle: subtitle()),
                     ),
                     const SizedBox(height: 8),
                     ListTile(
-                      leading: const Icon(Icons.link),
-                      title: const Text('GitHub'),
+                      leading: const Icon(
+                        Icons.link,
+                        color: Color(0xFF373B8A),
+                      ),
+                      title: Text(
+                        'GitHub',
+                        style: GoogleFonts.inclusiveSans(
+                          textStyle: const TextStyle(
+                            color: Color(0xFF373B8A),
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
                       onTap: () => launchUrl(Uri.parse(
                           'https://github.com/paulatalim/Iris_aplicativo_saude_cegos')),
                     ),

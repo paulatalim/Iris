@@ -45,8 +45,6 @@ class _ConfiguracaoState extends State<Configuracao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Color(0xFFECCCFF),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -65,7 +63,7 @@ class _ConfiguracaoState extends State<Configuracao> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: 45, right: 20),
+                padding: const EdgeInsets.only(top: 45, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,

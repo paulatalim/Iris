@@ -65,7 +65,7 @@ class _UserLogin extends State<UserLogin> {
                 ),
                 const SizedBox(height: 70),
                 Container(
-                  padding: EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Row(
                     //Vertical
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,8 +100,9 @@ class _UserLogin extends State<UserLogin> {
                           //Botão para realizar login
                           'Entrar',
                           style: TextStyle(
-                              fontSize: 25,
-                              color: Color.fromARGB(255, 168, 3, 244)),
+                            fontSize: 25,
+                            color: Color(0xFF373B8A),
+                          ),
                         ),
                       ),
                     ],
