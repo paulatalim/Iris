@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'loginmain.dart';
@@ -26,7 +27,19 @@ class _UserScreen extends State<UserScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        // padding: const EdgeInsets.only(left: 40),
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            // Where the linear gradient begins and ends
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+
+            colors: [
+              Color(0xFFDFE0FB),
+              Color(0xFFECCCFF),
+            ],
+          ),
+        ),
 
         //Esqueleto do Corpo
         child: Column(
@@ -41,27 +54,27 @@ class _UserScreen extends State<UserScreen> {
               children: [
                 RawMaterialButton(
                     onPressed: () {},
-                    elevation: 2.0,
+                    elevation: 10.0,
                     fillColor: Colors.white,
                     padding: const EdgeInsets.all(15.0),
                     shape: const CircleBorder(),
                     child: const Padding(
                       padding: EdgeInsets.all(10),
                       child: Icon(
-                        Icons.person_add,
+                        Icons.person,
+                        color: Color(0xFF373B8A),
                         size: 110.0,
                       ),
                     )),
               ],
             ),
             const SizedBox(height: 70),
-            Container(
-                child: Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Campo de texto Nome usuario
                 Text(
-                  "*Nome do usuário*",
+                  "Nome do usuário",
                   style: GoogleFonts.dosis(
                     textStyle: styleBoxTitle(),
                   ),
@@ -76,11 +89,9 @@ class _UserScreen extends State<UserScreen> {
                   ),
                 ),
               ],
-            )),
-
-            const SizedBox(
-              height: 70,
             ),
+
+            const SizedBox(height: 70),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,13 +103,13 @@ class _UserScreen extends State<UserScreen> {
                       //Tamanho customizado para o botão
                       fixedSize: MaterialStateProperty.resolveWith((states) {
                         if (states.contains(MaterialState.disabled)) {
-                          return Size(100, 50);
+                          return const Size(100, 50);
                         }
-                        return Size(190, 50);
+                        return const Size(190, 50);
                       }),
                       //Cor de fundo customizada
                       backgroundColor: MaterialStateColor.resolveWith(
-                          (context) => Color.fromARGB(0XFF, 0x93, 0x7C, 0xEE))),
+                          (context) => const Color(0xFFA000FF))),
                   child: const Text(
                     'Editar Perfil',
                     style: TextStyle(fontSize: 25, color: Colors.white),

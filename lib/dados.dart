@@ -43,11 +43,12 @@ class _DadosState extends State<Dados> {
         children: <Widget>[
           Text(
             texto, // Exemplo de formatação com 2 casas decimais
-            style: TextStyle(fontSize: 25.0),
+            style: const TextStyle(fontSize: 25.0),
           ),
           Text(
-            '${numero.toStringAsFixed(2)}', // Exemplo de formatação com 2 casas decimais
-            style: TextStyle(fontSize: 25.0),
+            numero.toStringAsFixed(
+                2), // Exemplo de formatação com 2 casas decimais
+            style: const TextStyle(fontSize: 25.0),
           ),
         ],
       ),
@@ -73,7 +74,7 @@ class _DadosState extends State<Dados> {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               boxNumber('Peso: ', peso),
               boxNumber('Altura:', altura),

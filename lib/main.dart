@@ -8,13 +8,10 @@ void main() {
   runApp(MaterialApp(
     title: 'Iris',
     theme: ThemeData(
-      useMaterial3: true,
-      // Define the default brightness and colors.
-      // colorScheme: ColorScheme.fromSwatch(
-      //   primarySwatch: Colors.deepPurple,
-      //   accentColor: minhaCorPersonalizada,
-      // ),
-    ),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFdba0ff),
+        )),
     debugShowCheckedModeBanner: false,
     home: const Menubar(),
   ));
