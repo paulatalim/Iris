@@ -54,7 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                     iconSize: 30,
                     onPressed: () {
-                      // Menubar(currentIndex: 4);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Configuracao()),
+                      );
                     },
                   ),
                   const SizedBox(height: 20),
@@ -63,9 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                     iconSize: 30,
                     onPressed: () {
-                      setState(() {
-                        // Menubar(currentIndex: 5);
-                      });
+                      (Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Sobre()),
+                      ));
                     },
                   ),
                 ],
