@@ -13,21 +13,21 @@ class _UserLogin extends State<UserLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text('Entrar'),
-          centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Menubar()),
-              );
-            },
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            // Where the linear gradient begins and ends
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+
+            colors: [
+              Color(0xFFDFE0FB),
+              Color(0xFFECCCFF),
+            ],
           ),
         ),
-        body: SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -36,46 +36,43 @@ class _UserLogin extends State<UserLogin> {
               //Horizontal
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  height: 50,
-                ),
+                const SizedBox(height: 85),
                 Image.asset(
-                  'assets/images/sketch.png',
+                  'assets/icon/logoIcone.png',
                   width: 190.0,
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'E-mail ou Usuário:',
-                      hintText: 'nome@exemplo.com',
+                const SizedBox(height: 50),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(children: [
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'E-mail ou Usuário:',
+                        hintText: 'nome@exemplo.com',
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Senha:',
-                      hintText: 'Digite sua senha',
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Senha:',
+                        hintText: 'Digite sua senha',
+                      ),
                     ),
-                  ),
+                  ]),
                 ),
-                Row(
-                  //Vertical
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  //Horizontal
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextButton(
+                const SizedBox(height: 70),
+                Container(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Row(
+                    //Vertical
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    //Horizontal
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -87,14 +84,11 @@ class _UserLogin extends State<UserLogin> {
                           //Botão para criar uma conta (ainda a ser feito)
                           'Criar uma conta',
                           style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 20,
                               color: Color.fromARGB(255, 56, 161, 214)),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -106,16 +100,18 @@ class _UserLogin extends State<UserLogin> {
                           //Botão para realizar login
                           'Entrar',
                           style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 25,
                               color: Color.fromARGB(255, 168, 3, 244)),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
