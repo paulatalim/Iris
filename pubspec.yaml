@@ -46,10 +46,11 @@ flutter:
     - assets/icon/logoIcone.png
     - assets/images/sketch.png
     - assets/images/irislogo.png
-
+    - assets/images/sketch_temp.png
+    - assets/images/sketch.png
+    - assets/images/acc_finale.png
   uses-material-design: true
-
-
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
