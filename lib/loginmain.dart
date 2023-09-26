@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iris_app/creation.dart';
-import 'package:iris_app/main.dart';
-import 'package:iris_app/user.dart';
+import 'cadastro.dart';
+import 'perfil.dart';
 
 class TelaLogin extends StatelessWidget {
   const TelaLogin({super.key});

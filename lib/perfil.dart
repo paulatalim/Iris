@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iris_app/creation.dart';
-import 'package:iris_app/main.dart';
+
+import 'cadastro.dart';
 
 class User extends StatelessWidget {
   const User({super.key});

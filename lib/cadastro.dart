@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iris_app/loginmain.dart';
-import 'package:iris_app/user.dart';
+
+import 'loginmain.dart';
+import 'perfil.dart';
 
 class SingIn extends StatelessWidget {
   const SingIn({super.key});
@@ -50,7 +51,7 @@ class _UserSingIn extends State<UserSingIn> {
       ],
     );
   }
-  
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -70,7 +71,6 @@ class _UserSingIn extends State<UserSingIn> {
         ),
       ),
       body: SingleChildScrollView(
-
         //Corpo principal
         child: Container(
             padding: const EdgeInsets.all(10),
@@ -81,9 +81,7 @@ class _UserSingIn extends State<UserSingIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 //Horizontal
                 crossAxisAlignment: CrossAxisAlignment.center,
-
                 children: <Widget>[
-
                   //Texto superior
                   Container(
                       height: 70,
@@ -103,7 +101,6 @@ class _UserSingIn extends State<UserSingIn> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
                     child: Row(
-
                       //Vertical
                       crossAxisAlignment: CrossAxisAlignment.end,
                       //Horizontal
@@ -111,7 +108,6 @@ class _UserSingIn extends State<UserSingIn> {
 
                       //Caixas de textos
                       children: [
-
                         //Caixa de Texto Nome
                         //Flexible necessario para realizar integração do TextFormField dentro de uma Row
                         Flexible(
@@ -151,10 +147,8 @@ class _UserSingIn extends State<UserSingIn> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       //Caixa de texto para e-mail
                       Padding(
-
                         //Padding para separar das caixas de texto superior - adicionando somente no eixo inferior
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: TextFormField(
@@ -225,7 +219,6 @@ class _UserSingIn extends State<UserSingIn> {
                           style: TextStyle(fontSize: 25, color: Colors.white),
                         ),
                       ),
-                      
                     ],
                   )
                 ])),
