@@ -55,7 +55,7 @@ class _UserScreen extends State<UserScreen> {
         letterSpacing: 2,
         color: Color(0xFF373B8A));
   }
-  
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -74,120 +74,113 @@ class _UserScreen extends State<UserScreen> {
           },
         ),
       ),
-
       body: Container(
+        width: double.infinity, //Largura da tela
+        height: double.infinity,
+        padding: const EdgeInsets.all(10),
 
-          width: double.infinity, //Largura da tela
-          height: double.infinity,
-          padding: const EdgeInsets.all(10),
-
-          //Esqueleto do Corpo
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            //Corpo
-            children: <Widget>[
-
-              //Botão de adição de imagem
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  RawMaterialButton(
+        //Esqueleto do Corpo
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          //Corpo
+          children: <Widget>[
+            //Botão de adição de imagem
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RawMaterialButton(
                     onPressed: () {},
                     elevation: 2.0,
                     fillColor: Colors.white,
                     padding: const EdgeInsets.all(15.0),
                     shape: const CircleBorder(),
-                    child: 
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(
-                          Icons.person_add,
-                          size: 110.0,
-                        ),
-                      )     
-                  ),
-                ],
-              ),
-              
-              //Campo de texto Nome usuario
-              Container(
-                width: double.infinity,
-                child: Text(
-                  "*Nome do usuário*",
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
-                ),
-              ),
-
-              //Campo de texto Idade
-              Container(
-                width: double.infinity,
-                child: Text(
-                  "Idade: -1",
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
-                ),
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  Container(height: 7,),
-
-                  //Botão para edição de conta
-                  TextButton(
-                    onPressed: () {/*Adicionar rota para função*/}, 
-
-                    style: ButtonStyle(
-                        //Tamanho customizado para o botão
-                        fixedSize:
-                            MaterialStateProperty.resolveWith((states) {
-                          if (states.contains(MaterialState.disabled)) {
-                            return Size(100, 50);
-                          }
-                          return Size(190, 50);
-                        }),
-                        //Cor de fundo customizada
-                        backgroundColor: MaterialStateColor.resolveWith(
-                            (context) =>
-                                Color.fromARGB(0XFF, 0x93, 0x7C, 0xEE))),
-                    child: const Text(
-                      'Editar Perfil',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-
-
-                  Container(height: 7,),
-
-                  //Botão para realizar log-off
-                  TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyApp()),
-                          );
-                        },
-                        child: const Text(
-                          'Sair',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.red),
-                        ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(
+                        Icons.person_add,
+                        size: 110.0,
                       ),
-                ],
-              ),
+                    )),
+              ],
+            ),
 
-              Container(height: 10,)
-              
-            ],
-          ),
+            //Campo de texto Nome usuario
+            Container(
+              width: double.infinity,
+              child: Text(
+                "*Nome do usuário*",
+                style: GoogleFonts.dosis(
+                  textStyle: styleBoxTitle(),
+                ),
+              ),
+            ),
+
+            //Campo de texto Idade
+            Container(
+              width: double.infinity,
+              child: Text(
+                "Idade: -1",
+                style: GoogleFonts.dosis(
+                  textStyle: styleBoxTitle(),
+                ),
+              ),
+            ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 7,
+                ),
+
+                //Botão para edição de conta
+                TextButton(
+                  onPressed: () {/*Adicionar rota para função*/},
+                  style: ButtonStyle(
+                      //Tamanho customizado para o botão
+                      fixedSize: MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Size(100, 50);
+                        }
+                        return Size(190, 50);
+                      }),
+                      //Cor de fundo customizada
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (context) => Color.fromARGB(0XFF, 0x93, 0x7C, 0xEE))),
+                  child: const Text(
+                    'Editar Perfil',
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                ),
+
+                Container(
+                  height: 7,
+                ),
+
+                //Botão para realizar log-off
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MaterialApp()),
+                    );
+                  },
+                  child: const Text(
+                    'Sair',
+                    style: TextStyle(fontSize: 20, color: Colors.red),
+                  ),
+                ),
+              ],
+            ),
+
+            Container(
+              height: 10,
+            )
+          ],
         ),
+      ),
     );
   }
 }

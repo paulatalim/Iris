@@ -17,7 +17,6 @@ class TelaLogin extends StatelessWidget {
       ),
       home: const UserLogin(title: 'Entrar'),
     );
-    
   }
 }
 
@@ -48,7 +47,7 @@ class _UserLogin extends State<UserLogin> {
       ],
     );
   }
-  
+
   Widget build(BuildContext context) {
     return Scaffold(
         //Barra superior com botões (temporarios) de menu e outros
@@ -64,7 +63,7 @@ class _UserLogin extends State<UserLogin> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MyApp()),
+                MaterialPageRoute(builder: (context) => const MaterialApp()),
               );
             },
           ),
