@@ -29,6 +29,23 @@ List<DispositivosDisponivel> dispositivo = [
 class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
 
+  BoxDecoration styleBox() {
+    return BoxDecoration(
+      color: const Color(0xFFC7C9FF),
+      borderRadius: BorderRadius.circular(20.0),
+      boxShadow: const [
+        BoxShadow(
+            color: Color.fromARGB(90, 0, 0, 0),
+            blurRadius: 15,
+            offset: Offset(5, 5)),
+        BoxShadow(
+            color: Color.fromARGB(200, 255, 255, 255),
+            blurRadius: 13,
+            offset: Offset(-5, -5)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,20 +124,7 @@ class _DevicesState extends State<Devices> {
                             });
                           },
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Color.fromARGB(90, 0, 0, 0),
-                                    blurRadius: 15,
-                                    offset: Offset(5, 5)),
-                                BoxShadow(
-                                    color: Color.fromARGB(200, 255, 255, 255),
-                                    blurRadius: 13,
-                                    offset: Offset(-5, -5)),
-                              ],
-                            ),
+                            decoration: styleBox(),
                             width: 0.85 * MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.only(
                                 left: 30, top: 17, right: 30, bottom: 17),
@@ -153,20 +157,7 @@ class _DevicesState extends State<Devices> {
                             });
                           },
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Color.fromARGB(90, 0, 0, 0),
-                                    blurRadius: 15,
-                                    offset: Offset(5, 5)),
-                                BoxShadow(
-                                    color: Color.fromARGB(200, 255, 255, 255),
-                                    blurRadius: 13,
-                                    offset: Offset(-5, -5)),
-                              ],
-                            ),
+                            decoration: styleBox(),
                             width: 0.85 * MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.only(
                                 left: 30, top: 17, right: 30, bottom: 17),
@@ -199,20 +190,7 @@ class _DevicesState extends State<Devices> {
                             });
                           },
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Color.fromARGB(90, 0, 0, 0),
-                                    blurRadius: 15,
-                                    offset: Offset(5, 5)),
-                                BoxShadow(
-                                    color: Color.fromARGB(200, 255, 255, 255),
-                                    blurRadius: 13,
-                                    offset: Offset(-5, -5)),
-                              ],
-                            ),
+                            decoration: styleBox(),
                             width: 0.85 * MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.only(
                                 left: 30, top: 17, right: 30, bottom: 17),
@@ -245,20 +223,7 @@ class _DevicesState extends State<Devices> {
                             });
                           },
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Color.fromARGB(90, 0, 0, 0),
-                                    blurRadius: 15,
-                                    offset: Offset(5, 5)),
-                                BoxShadow(
-                                    color: Color.fromARGB(200, 255, 255, 255),
-                                    blurRadius: 13,
-                                    offset: Offset(-5, -5)),
-                              ],
-                            ),
+                            decoration: styleBox(),
                             width: 0.85 * MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.only(
                                 left: 30, top: 17, right: 30, bottom: 17),

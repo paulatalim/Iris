@@ -3,8 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'devices.dart';
 import 'home.dart';
-import 'configuracao.dart';
-// import 'sobre.dart';
+import 'dados.dart';
 import 'perfil.dart';
 
 class Menubar extends StatefulWidget {
@@ -21,7 +20,7 @@ class _MenubarState extends State<Menubar> {
   final List<Widget> screens = [
     const HomeScreen(),
     const Devices(),
-    const Configuracao(),
+    const Dados(),
     const UserScreen(title: 'Nome Usuário'),
   ];
 
@@ -62,7 +61,7 @@ class _MenubarState extends State<Menubar> {
           color: const Color(0xFFE6E6E6),
           height: 0.08 * MediaQuery.of(context).size.height,
           notchMargin: 6.0,
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
