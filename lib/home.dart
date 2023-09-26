@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'configuracao.dart';
 import 'sobre.dart';
-import 'menu.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

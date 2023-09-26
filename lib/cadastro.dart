@@ -2,28 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'loginmain.dart';
-import 'perfil.dart';
-
-class SingIn extends StatelessWidget {
-  const SingIn({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tela Registro',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Color.fromARGB(0XFF, 0x7C, 0x64, 0xEB)),
-        useMaterial3: true,
-      ),
-      home: const UserSingIn(title: ''),
-    );
-  }
-}
+import 'menu.dart';
 
 class UserSingIn extends StatefulWidget {
-  const UserSingIn({super.key, required this.title});
-  final String title;
+  const UserSingIn({super.key});
+  // final String title;
   @override
   State<UserSingIn> createState() => _UserSingIn();
 }
@@ -33,9 +16,7 @@ class _UserSingIn extends State<UserSingIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        centerTitle: true,
+        backgroundColor: Colors.transparent,
 
         //Menu de voltar ao menu (temporario)
         leading: IconButton(
@@ -90,6 +71,7 @@ class _UserSingIn extends State<UserSingIn> {
                         //Flexible necessario para realizar integração do TextFormField dentro de uma Row
                         Flexible(
                           child: TextFormField(
+                            keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
@@ -101,13 +83,14 @@ class _UserSingIn extends State<UserSingIn> {
                         ),
 
                         //Container para realizar a separação das caixas de texto
-                        Container(
+                        const SizedBox(
                           width: 5,
                         ),
 
                         //Caixa de Texto Sobrenome
                         Flexible(
                           child: TextFormField(
+                            keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
@@ -130,6 +113,7 @@ class _UserSingIn extends State<UserSingIn> {
                         //Padding para separar das caixas de texto superior - adicionando somente no eixo inferior
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           style: GoogleFonts.dosis(),
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -170,34 +154,41 @@ class _UserSingIn extends State<UserSingIn> {
                       ),
 
                       //Botão de criação de conta
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const UserScreen(title: 'Nome Usuário')),
-                          );
-                        },
-                        style: ButtonStyle(
-                            //Tamanho customizado para o botão
-                            fixedSize:
-                                MaterialStateProperty.resolveWith((states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                return Size(100, 50);
-                              }
-                              return Size(120, 50);
-                            }),
-                            //Cor de fundo customizada
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (context) =>
-                                    Color.fromARGB(0XFF, 0x93, 0x7C, 0xEE))),
-                        child: const Text(
-                          //Botão para finalizar a criação da conta
-                          'Criar',
-                          style: TextStyle(fontSize: 25, color: Colors.white),
-                        ),
-                      ),
+                      Container(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Menubar()),
+                              );
+                            },
+                            style: ButtonStyle(
+                                //Tamanho customizado para o botão
+                                fixedSize:
+                                    MaterialStateProperty.resolveWith((states) {
+                                  if (states.contains(MaterialState.disabled)) {
+                                    return Size(100, 50);
+                                  }
+                                  return Size(120, 50);
+                                }),
+                                //Cor de fundo customizada
+                                backgroundColor: MaterialStateColor.resolveWith(
+                                    (context) => Color.fromARGB(
+                                        0XFF, 0x93, 0x7C, 0xEE))),
+                            child: const Text(
+                              //Botão para finalizar a criação da conta
+                              'Criar',
+                              style:
+                                  TextStyle(fontSize: 25, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      )),
                     ],
                   )
                 ])),

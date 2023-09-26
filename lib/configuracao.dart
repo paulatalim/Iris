@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'menu.dart';
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -63,8 +64,30 @@ class _ConfiguracaoState extends State<Configuracao> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.only(top: 100)),
+              Container(
+                padding: EdgeInsets.only(top: 45, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        icon: const Icon(FontAwesomeIcons.xmark),
+                        color: const Color(0xFF373B8A),
+                        iconSize: 30,
+                        onPressed: () {
+                          (
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Menubar()),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
 
+              const Padding(padding: EdgeInsets.only(top: 50)),
               // Informa o titulo da pagina
               Text(
                 "Configuração",

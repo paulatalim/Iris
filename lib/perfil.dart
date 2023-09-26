@@ -25,7 +25,8 @@ class _UserScreen extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.only(left: 40, right: 40),
+        width: double.infinity,
+        // padding: const EdgeInsets.only(left: 40),
 
         //Esqueleto do Corpo
         child: Column(
@@ -125,7 +126,7 @@ class _UserScreen extends State<UserScreen> {
               ],
             ),
 
-            Container(
+            const SizedBox(
               height: 10,
             )
           ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
-import 'perfil.dart';
+import 'menu.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -13,20 +13,16 @@ class _UserLogin extends State<UserLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //Barra superior com botões (temporarios) de menu e outros
-        //Substituir appbar com bottomnavigationbar
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text('Entrar'),
           centerTitle: true,
-
-          //Menu de voltar ao menu (temporario)
           leading: IconButton(
             icon: const Icon(Icons.home),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MaterialApp()),
+                MaterialPageRoute(builder: (context) => const Menubar()),
               );
             },
           ),
@@ -51,6 +47,7 @@ class _UserLogin extends State<UserLogin> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'E-mail ou Usuário:',
@@ -83,7 +80,7 @@ class _UserLogin extends State<UserLogin> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SingIn()),
+                                builder: (context) => const UserSingIn()),
                           );
                         },
                         child: const Text(
@@ -100,12 +97,10 @@ class _UserLogin extends State<UserLogin> {
                       child: TextButton(
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const UserScreen(
-                                      title: 'Nome Usuário',
-                                    )),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Menubar(),
+                              ));
                         },
                         child: const Text(
                           //Botão para realizar login
