@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class Dados extends StatefulWidget {
@@ -17,7 +18,7 @@ class _DadosState extends State<Dados> {
   final double altura = 00;
   final double imc = 00;
 
-  Container boxNumber(String texto, double numero) {
+  Container boxNumber(String texto, String numero, String unidade) {
     return Container(
       // margin: EdgeInsets.all(30.0), //Espaço entre as caixinhas
       height: 80.0, // Defina a altura desejada, por exemplo, 100.0 pixels
@@ -43,13 +44,36 @@ class _DadosState extends State<Dados> {
         children: <Widget>[
           Text(
             texto, // Exemplo de formatação com 2 casas decimais
-            style: const TextStyle(fontSize: 25.0),
+            style: GoogleFonts.inclusiveSans(
+              textStyle: const TextStyle(
+                fontSize: 22.0,
+                color: Color(0xFF373B8A),
+              ),
+            ),
           ),
-          Text(
-            numero.toStringAsFixed(
-                2), // Exemplo de formatação com 2 casas decimais
-            style: const TextStyle(fontSize: 25.0),
-          ),
+          Row(
+            children: [
+              Text(
+                numero, // Exemplo de formatação com 2 casas decimais
+                style: GoogleFonts.inclusiveSans(
+                  textStyle: const TextStyle(
+                    fontSize: 25.0,
+                    color: Color(0xFF373B8A),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                unidade, // Exemplo de formatação com 2 casas decimais
+                style: GoogleFonts.inclusiveSans(
+                  textStyle: TextStyle(
+                    fontSize: 25.0,
+                    color: Color(0xFF373B8A),
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -76,10 +100,10 @@ class _DadosState extends State<Dados> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              boxNumber('Peso: ', peso),
-              boxNumber('Altura:', altura),
-              boxNumber('Temperatura:', temperatura),
-              boxNumber('IMC:', imc),
+              boxNumber('Peso: ', peso.toStringAsFixed(1), 'Kg'),
+              boxNumber('Altura:', altura.toStringAsFixed(2), 'm'),
+              boxNumber('Temperatura:', temperatura.toStringAsFixed(1), '°'),
+              boxNumber('IMC:', imc.toStringAsFixed(1), ''),
             ],
           ),
         ),
