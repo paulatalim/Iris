@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'configuracao.dart';
 import 'menu.dart';
-import 'devices.dart';
-import 'home.dart';
-import 'sobre.dart';
 
 void main() {
   // Color minhaCorPersonalizada = Color(0xFF6A5ACD);
@@ -20,8 +16,6 @@ void main() {
       // ),
     ),
     debugShowCheckedModeBanner: false,
-    home: Menubar(
-      currentIndex: 0,
-    ),
+    home: const Menubar(),
   ));
 }

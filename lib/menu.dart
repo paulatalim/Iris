@@ -7,15 +7,15 @@ import 'configuracao.dart';
 import 'sobre.dart';
 
 class Menubar extends StatefulWidget {
-  int currentIndex;
-
-  Menubar({required this.currentIndex});
+  const Menubar({super.key});
 
   @override
   State<Menubar> createState() => _MenubarState();
 }
 
 class _MenubarState extends State<Menubar> {
+  int _currentIndex = 0;
+
   // Colocar nomes das telas na lista
   final List<Widget> screens = [
     const HomeScreen(),
@@ -48,8 +48,6 @@ class _MenubarState extends State<Menubar> {
 
   @override
   Widget build(BuildContext context) {
-    int _currentIndex = widget.currentIndex;
-
     return Scaffold(
       body: screens[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -84,7 +82,6 @@ class _MenubarState extends State<Menubar> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 1;
-                    print('${_currentIndex}');
                     _colorSelection(_currentIndex);
                   });
                 },
