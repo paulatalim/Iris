@@ -1,6 +1,7 @@
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "cmake.sourceDirectory": "C:/MeusDocumentos/paula/PUC/LDDM/iris/windows"
 =======
     "cmake.sourceDirectory": "C:/MeusDocumentos/paula/PUC/LDDM/iris/windows/flutter"
@@ -8,4 +9,7 @@
 =======
     "cmake.sourceDirectory": "C:/Users/Pedro/Documents/GitHub/Iris_aplicativo_saude_cegos/windows"
 >>>>>>> login-test-branch
+=======
+    "cmake.sourceDirectory": "C:/MeusDocumentos/paula/PUC/LDDM/iris/windows/flutter"
+>>>>>>> dados
 }
