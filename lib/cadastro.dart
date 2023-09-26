@@ -29,29 +29,7 @@ class UserSingIn extends StatefulWidget {
 }
 
 class _UserSingIn extends State<UserSingIn> {
-  static const int corPadrao = 0XFF7C64EB;
-  static const int corPressionada = 0XFF937CEE;
-
   @override
-  Color boxColor = const Color(0xFFC7C9FF);
-
-  BoxDecoration styleBox() {
-    return BoxDecoration(
-      color: boxColor,
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: const [
-        BoxShadow(
-            color: Color.fromARGB(90, 0, 0, 0),
-            blurRadius: 15,
-            offset: Offset(5, 5)),
-        BoxShadow(
-            color: Color.fromARGB(200, 255, 255, 255),
-            blurRadius: 13,
-            offset: Offset(-5, -5)),
-      ],
-    );
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -197,7 +175,8 @@ class _UserSingIn extends State<UserSingIn> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const User()),
+                                builder: (context) =>
+                                    const UserScreen(title: 'Nome Usuário')),
                           );
                         },
                         style: ButtonStyle(

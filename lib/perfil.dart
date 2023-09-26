@@ -3,51 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'cadastro.dart';
 
-class User extends StatelessWidget {
-  const User({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tela Registro',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Color.fromARGB(0XFF, 0x7C, 0x64, 0xEB)),
-        useMaterial3: true,
-      ),
-      home: const UserScreen(title: ''),
-    );
-  }
-}
-
 class UserScreen extends StatefulWidget {
-  const UserScreen({super.key, required this.title});
   final String title;
+
+  const UserScreen({super.key, required this.title});
+
   @override
   State<UserScreen> createState() => _UserScreen();
 }
 
 class _UserScreen extends State<UserScreen> {
-  @override
-  Color boxColor = const Color(0xFFC7C9FF);
-
-  BoxDecoration styleBox() {
-    return BoxDecoration(
-      color: boxColor,
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: const [
-        BoxShadow(
-            color: Color.fromARGB(90, 0, 0, 0),
-            blurRadius: 15,
-            offset: Offset(5, 5)),
-        BoxShadow(
-            color: Color.fromARGB(200, 255, 255, 255),
-            blurRadius: 13,
-            offset: Offset(-5, -5)),
-      ],
-    );
-  }
-
   TextStyle styleBoxTitle() {
     return const TextStyle(
         fontSize: 20,
@@ -56,6 +21,7 @@ class _UserScreen extends State<UserScreen> {
         color: Color(0xFF373B8A));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
