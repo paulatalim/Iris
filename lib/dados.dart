@@ -66,7 +66,7 @@ class _DadosState extends State<Dados> {
               Text(
                 unidade, // Exemplo de formatação com 2 casas decimais
                 style: GoogleFonts.inclusiveSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 25.0,
                     color: Color(0xFF373B8A),
                   ),
@@ -100,10 +100,10 @@ class _DadosState extends State<Dados> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              boxNumber('Peso: ', peso.toStringAsFixed(1), 'Kg'),
-              boxNumber('Altura:', altura.toStringAsFixed(2), 'm'),
-              boxNumber('Temperatura:', temperatura.toStringAsFixed(1), '°'),
-              boxNumber('IMC:', imc.toStringAsFixed(1), ''),
+              boxNumber('Peso ', peso.toStringAsFixed(1), 'Kg'),
+              boxNumber('Altura', altura.toStringAsFixed(2), 'm'),
+              boxNumber('Temperatura', temperatura.toStringAsFixed(1), '°'),
+              boxNumber('IMC', imc.toStringAsFixed(1), ''),
             ],
           ),
         ),

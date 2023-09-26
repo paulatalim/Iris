@@ -91,7 +91,7 @@ class _SobreState extends State<Sobre> {
                     ),
                     const SizedBox(height: 15),
                     Image.asset(
-                      'assets/images/irislogo.png',
+                      'assets/icon/logoIcone.png',
                       width: 130,
                       // height: 100,
                     ),
