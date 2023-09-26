@@ -4,7 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'configuracao.dart';
-import 'sobre.dart';
+// import 'sobre.dart';
+import 'perfil.dart';
 
 class Menubar extends StatefulWidget {
   const Menubar({super.key});
@@ -21,9 +22,7 @@ class _MenubarState extends State<Menubar> {
     const HomeScreen(),
     const Devices(),
     const Configuracao(),
-    const Configuracao(),
-    const Configuracao(),
-    const Sobre(),
+    const UserScreen(title: 'Nome Usuário'),
   ];
 
   final Color _iconColorPressed = const Color(0xFFA000FF);
@@ -56,11 +55,14 @@ class _MenubarState extends State<Menubar> {
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         elevation: 0,
+        shape: const CircleBorder(),
         child: const Icon(FontAwesomeIcons.microphone),
       ),
       bottomNavigationBar: BottomAppBar(
           color: const Color(0xFFE6E6E6),
+          height: 0.08 * MediaQuery.of(context).size.height,
           notchMargin: 6.0,
+          padding: EdgeInsets.all(0),
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -71,7 +73,6 @@ class _MenubarState extends State<Menubar> {
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0;
-
                     _colorSelection(_currentIndex);
                   });
                 },
