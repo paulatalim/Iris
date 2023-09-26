@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'menu.dart';
 
@@ -226,36 +227,37 @@ class _SobreState extends State<Sobre> {
                       ),
                     ],
                   )),
-              Container(
-                padding: const EdgeInsets.only(top: 10.0, left: 30, bottom: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Veja nosso projeto:',
-                      style: GoogleFonts.inclusiveSans(textStyle: subtitle()),
-                    ),
-                    const SizedBox(height: 8),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.link,
-                        color: Color(0xFF373B8A),
-                      ),
-                      title: Text(
-                        'GitHub',
-                        style: GoogleFonts.inclusiveSans(
-                          textStyle: const TextStyle(
-                            color: Color(0xFF373B8A),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      onTap: () => launchUrl(Uri.parse(
-                          'https://github.com/paulatalim/Iris_aplicativo_saude_cegos')),
-                    ),
-                  ],
-                ),
-              )
+              // Container(
+              //   padding: const EdgeInsets.only(top: 10.0, left: 30),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         'Veja nosso projeto:',
+              //         style: GoogleFonts.inclusiveSans(textStyle: subtitle()),
+              //       ),
+              //       const SizedBox(height: 8),
+              //       ListTile(
+              //         leading: const Icon(
+              //           Icons.link,
+              //           color: Color(0xFF373B8A),
+              //         ),
+              //         title: Text(
+              //           'GitHub',
+              //           style: GoogleFonts.inclusiveSans(
+              //             textStyle: const TextStyle(
+              //               color: Color(0xFF373B8A),
+              //               fontSize: 18,
+              //             ),
+              //           ),
+              //         ),
+              //         onTap: () => launchUrl(Uri.parse(
+              //             'https://github.com/paulatalim/Iris_aplicativo_saude_cegos')),
+              //       ),
+              //     ],
+              //   ),
+              // )
+              const Padding(padding: EdgeInsets.only(bottom: 40)),
             ],
           ),
         ),

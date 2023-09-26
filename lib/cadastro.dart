@@ -154,8 +154,8 @@ class _UserSingIn extends State<UserSingIn> {
                       ),
 
                       //Botão de criação de conta
-                      Container(
-                          child: Row(
+
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -172,13 +172,13 @@ class _UserSingIn extends State<UserSingIn> {
                                 fixedSize:
                                     MaterialStateProperty.resolveWith((states) {
                                   if (states.contains(MaterialState.disabled)) {
-                                    return Size(100, 50);
+                                    return const Size(100, 50);
                                   }
-                                  return Size(120, 50);
+                                  return const Size(120, 50);
                                 }),
                                 //Cor de fundo customizada
                                 backgroundColor: MaterialStateColor.resolveWith(
-                                    (context) => Color.fromARGB(
+                                    (context) => const Color.fromARGB(
                                         0XFF, 0x93, 0x7C, 0xEE))),
                             child: const Text(
                               //Botão para finalizar a criação da conta
@@ -188,7 +188,7 @@ class _UserSingIn extends State<UserSingIn> {
                             ),
                           ),
                         ],
-                      )),
+                      ),
                     ],
                   )
                 ])),

@@ -90,10 +90,11 @@ class _ConfiguracaoState extends State<Configuracao> {
               Text(
                 "Configuração",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.montserratAlternates(
+                style: GoogleFonts.dosis(
                   textStyle: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 33,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 3,
+                      fontSize: 40,
                       color: Color(0xFF5100FF)),
                 ),
               ),
