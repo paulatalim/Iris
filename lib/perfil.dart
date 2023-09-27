@@ -51,6 +51,22 @@ class _UserScreen extends State<UserScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //Campo de texto Nome usuario
+                Text(
+                  "Nome do usuário",
+                  style: GoogleFonts.dosis(
+                    textStyle: styleBoxTitle(),
+                  ),
+                ),
+                const SizedBox(height: 30),
+               
+                
+                
+              ],
+            ),
                 RawMaterialButton(
                     onPressed: () {},
                     elevation: 10.0,
@@ -67,30 +83,9 @@ class _UserScreen extends State<UserScreen> {
                     )),
               ],
             ),
-            const SizedBox(height: 70),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //Campo de texto Nome usuario
-                Text(
-                  "Nome do usuário",
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                //Campo de texto Idade
-                Text(
-                  "Idade: -1",
-                  textAlign: TextAlign.left,
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
-                ),
-              ],
-            ),
+            
 
-            const SizedBox(height: 70),
+            const SizedBox(height: 90),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
