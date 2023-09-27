@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -10,9 +9,6 @@ class Dados extends StatefulWidget {
 }
 
 class _DadosState extends State<Dados> {
-  NumberFormat formatAltura = NumberFormat(
-    "0,00",
-  );
   final double peso = 00;
   double temperatura = 00;
   final double altura = 00;
