@@ -17,6 +17,6 @@ void main() {
         )),
     debugShowCheckedModeBanner: false,
     // home: const Menubar(),
-    home: const SpeechScreen(),
+    home: SpeechScreen(),
   ));
 }
