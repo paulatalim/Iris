@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=0000ff&fontColor=ffffff&height=220&section=header&text=Iris&fontSize=50&animation=fadeIn&fontAlignY=38&desc=Aplicativo%20de%20saúde%20para%20cegos&descAlignY=55)
+![header](https://capsule-render.vercel.app/api?type=waving&color=dba0ff&fontColor=ffffff&height=220&section=header&text=Iris&fontSize=50&animation=fadeIn&fontAlignY=38&desc=Aplicativo%20de%20saúde%20para%20cegos&descAlignY=55)
 
 
 ## Clonar o projeto
@@ -66,4 +66,4 @@ samples, guidance on mobile development, and a full API reference.
 
 - [Ilo Riveiro](https://github.com/ilorivero)
 
-![footer](https://capsule-render.vercel.app/api?type=waving&color=0000ff&height=150&section=footer)
+![footer](https://capsule-render.vercel.app/api?type=waving&color=dba0ff&height=150&section=footer)
