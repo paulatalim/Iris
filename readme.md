@@ -1,5 +1,21 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=dba0ff&fontColor=ffffff&height=220&section=header&text=Iris&fontSize=50&animation=fadeIn&fontAlignY=38&desc=Aplicativo%20de%20saúde%20para%20cegos&descAlignY=55)
 
+## Sobre o projeto
+
+### Objetivo
+Iris está sendo desenvolvida em um trabalho acadêmico da matéria de Laboratório de Desenvolvimento para Dispositivos Móveis do curso de graduação de Engenharia de Computação, ela é um aplicativo mobile para ajudar deficientes visuais a controlar saúde.
+
+Iris funciona a partir de um sistema de áudio que possibilita o controle da saúde de pessoas com deficiência visual através de hardwares que geram dados sobre altura, peso e temperatura do usuário.
+
+### Público-alvo
+
+Pessoas com deficiência visual.
+
+### Funcionalidades
+
+- Conectar com hardwares;
+- Gerar novos dados a partir de dados obtidos (como IMC);
+- Comunicar todos os dados obtidos e gerado através de áudio.
 
 ## Clonar o projeto
 
@@ -21,23 +37,6 @@ cd Iris_aplicativo_saude_cegos
 As interfaces estão sendo desenvolvidas no figma, a seguir está o link para acessa-lo
 
 - [Projeto no figma](https://www.figma.com/file/QOylwkU2tY26jnc1m1FKEZ/LDDM_app?type=design&node-id=0%3A1&mode=design&t=tBReYkEVQZiF4Mb0-1)
-
-## Proposta de Desenvolvimento
-
-### Objetivo
-Iris está sendo desenvolvida em um trabalho acadêmico da matéria de Laboratório de Desenvolvimento para Dispositivos Móveis do curso de graduação de Engenharia de Computação, ela é um aplicativo mobile para ajudar deficientes visuais a controlar saúde.
-
-Iris funciona a partir de um sistema de áudio que possibilita o controle da saúde de pessoas com deficiência visual através de hardwares que geram dados sobre altura, peso e temperatura do usuário.
-
-### Público-alvo
-
-Pessoas com deficiência visual.
-
-### Funcionalidades
-
-- Conectar com hardwares;
-- Gerar novos dados a partir de dados obtidos (como IMC);
-- Comunicar todos os dados obtidos e gerado através de áudio.
 
 ## Orientações do Flutter
 
