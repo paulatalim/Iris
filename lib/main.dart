@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'menu.dart';
+import 'speech.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,7 @@ void main() {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const Menubar(),
+    // home: const Menubar(),
+    home: const SpeechScreen(),
   ));
 }
