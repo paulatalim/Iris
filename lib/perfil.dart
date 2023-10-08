@@ -24,22 +24,10 @@ class _UserScreen extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            // Where the linear gradient begins and ends
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-
-            colors: [
-              Color(0xFFDFE0FB),
-              Color(0xFFECCCFF),
-            ],
-          ),
-        ),
-
         //Esqueleto do Corpo
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,21 +40,18 @@ class _UserScreen extends State<UserScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //Campo de texto Nome usuario
-                Text(
-                  "Nome do usuário",
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //Campo de texto Nome usuario
+                    Text(
+                      "Nome do usuário",
+                      style: GoogleFonts.dosis(
+                        textStyle: styleBoxTitle(),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
                 ),
-                const SizedBox(height: 30),
-               
-                
-                
-              ],
-            ),
                 RawMaterialButton(
                     onPressed: () {},
                     elevation: 10.0,
@@ -83,7 +68,6 @@ class _UserScreen extends State<UserScreen> {
                     )),
               ],
             ),
-            
 
             const SizedBox(height: 90),
 

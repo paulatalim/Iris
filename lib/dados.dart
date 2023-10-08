@@ -77,32 +77,16 @@ class _DadosState extends State<Dados> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            // Where the linear gradient begins and ends
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-
-            colors: [
-              Color(0xFFDFE0FB),
-              Color(0xFFECCCFF),
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              boxNumber('Peso ', peso.toStringAsFixed(1), 'Kg'),
-              boxNumber('Altura', altura.toStringAsFixed(2), 'm'),
-              boxNumber('Temperatura', temperatura.toStringAsFixed(1), '°'),
-              boxNumber('IMC', imc.toStringAsFixed(1), ''),
-            ],
-          ),
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          boxNumber('Peso ', peso.toStringAsFixed(1), 'Kg'),
+          boxNumber('Altura', altura.toStringAsFixed(2), 'm'),
+          boxNumber('Temperatura', temperatura.toStringAsFixed(1), '°'),
+          boxNumber('IMC', imc.toStringAsFixed(1), ''),
+        ],
       ),
     );
   }
