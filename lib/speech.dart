@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:highlight_text/highlight_text.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
+// import 'package:text_to_speech/text_to_speech.dart';
 
 class SpeechScreen extends StatefulWidget {
   @override
@@ -11,23 +12,28 @@ class SpeechScreen extends StatefulWidget {
 
 class _SpeechScreenState extends State<SpeechScreen>
     with WidgetsBindingObserver {
-  bool isLocked = false;
+  // TextToSpeech tts = TextToSpeech();
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
-    super.dispose();
-  }
+  String text = "Hello, Good Morning!";
+  // tts.setLanguage('pt-br');
+// tts.speak(text);
+  // bool isLocked = false;
 
   // @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      if (state != AppLifecycleState.inactive) {
-        _startListening();
-        print('iniciado');
-      }
-    });
-  }
+  // void dispose() {
+  //   WidgetsBinding.instance!.removeObserver(this);
+  //   super.dispose();
+  // }
+
+  // // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   setState(() {
+  //     if (state != AppLifecycleState.inactive) {
+  //       _startListening();
+  //       print('iniciado');
+  //     }
+  //   });
+  // }
 
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
