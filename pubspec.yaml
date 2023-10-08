@@ -1,6 +1,6 @@
 name: iris_app
-description: Iris, aplicativo mobile para ajudar deficientes visuais a controlar sua saúde. Para seu funcionamento
-publish_to: 'pucminas.br.irisapp' 
+description: Iris, aplicativo mobile para ajudar deficientes visuais a controlar sua saúde.
+publish_to: 'com.pucminas.irisapp' 
 
 version: 1.0.0+1
 
@@ -15,16 +15,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   url_launcher: ^6.1.14
   shared_preferences: ^2.2.1
+  # flutter_tts: ^3.8.3
+  avatar_glow: ^2.0.2
+  speech_to_text: ^6.3.0
+  highlight_text: ^1.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.13.1"
-  avatar_glow: ^2.0.2
-  speech_to_text: ^6.3.0
-  highlight_text: ^1.7.0
-
+  
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
