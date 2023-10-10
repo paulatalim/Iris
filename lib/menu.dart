@@ -5,6 +5,7 @@ import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
+import 'voices.dart';
 
 class Menubar extends StatefulWidget {
   const Menubar({super.key});
@@ -14,7 +15,25 @@ class Menubar extends StatefulWidget {
 }
 
 class _MenubarState extends State<Menubar> {
+  RecursoDeVoz voice = RecursoDeVoz();
+
   int _currentIndex = 0;
+  late String resposta;
+
+  void listening() async {
+    print("chamo");
+    resposta = await voice.hear();
+
+    final DateTime timeStart = DateTime.now();
+
+    while (DateTime.now().difference(timeStart).inSeconds > 5) {
+      print(DateTime.now().difference(timeStart).inSeconds);
+      if (DateTime.now().difference(timeStart).inSeconds == 5) {
+        resposta = voice.getResposta();
+        break;
+      }
+    }
+  }
 
   // Colocar nomes das telas na lista
   final List<Widget> screens = [
@@ -76,7 +95,11 @@ class _MenubarState extends State<Menubar> {
         body: screens[_currentIndex],
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            print("clicou");
+            listening();
+            print("retorno: " + resposta);
+          },
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
           elevation: 0,
