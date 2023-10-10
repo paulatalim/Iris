@@ -33,8 +33,8 @@ class _SpeekState extends State<Speek> {
 
   bool get isIOS => !kIsWeb && Platform.isIOS;
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
-  bool get isWindows => !kIsWeb && Platform.isWindows;
-  bool get isWeb => kIsWeb;
+  // bool get isWindows => !kIsWeb && Platform.isWindows;
+  // bool get isWeb => kIsWeb;
 
   @override
   initState() {
