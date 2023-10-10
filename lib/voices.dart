@@ -50,7 +50,7 @@ class RecursoDeVoz {
     await Permission.microphone.request();
   }
 
-  void initSpeech() async {
+  void _initSpeech() async {
     _speechEnabled = await speechToText.initialize();
     print("microfone inicializado");
   }
@@ -60,12 +60,14 @@ class RecursoDeVoz {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
+    print("oiii");
     resposta = "$resposta${result.recognizedWords} ";
     print(resposta);
   }
 
   void _hear() async {
     resposta = '';
+    print("oiii");
     await speechToText.listen(
       onResult: _onSpeechResult,
       listenFor: const Duration(seconds: 5),
@@ -77,56 +79,19 @@ class RecursoDeVoz {
   }
 
   String hear() {
+    _initSpeech();
     _hear();
-    print(resposta);
     return resposta;
   }
 
-  // Future<String> startListening() async {
-  //   late String resposta;
-  //   final now = DateTime.now();
+  bool isNotListening() {
+    print(speechToText.isNotListening);
+    return speechToText.isNotListening;
+  }
 
-  //   double time_limit = 10;
-
-  //   print('microfone aberto');
-
-  //   await speechToText.listen(onResult: (SpeechRecognitionResult result) {
-  //     if (speechToText.isNotListening ||
-  //         DateTime.now().difference(now).inSeconds >= time_limit) {
-  //       print("entro");
-  //       speechToText.stop();
-  //     }
-  //     resposta = result.recognizedWords;
-  //     print('Resposta:  ${resposta}');
-  //   });
-
-  //   print(resposta + 'retornada');
-  //   return Future.value(resposta);
-  // }
-
-  // Future<String> hear() async {
-  //   late String resposta;
-  //   print('inicio');
-  //   if (speechToText.isNotListening) {
-  //     print('oi');
-  //     resposta = await startListening();
-  //     print(resposta);
-  //   } else {
-  //     speechToText.stop();
-  //     print('microfone fechado');
-  //   }
-
-  //   print('fim');
-
-  //   if (speechToText.isListening) {
-  //     print(resposta);
-  //     return Future.value(resposta);
-  //   } else if (_speechEnabled) {
-  //     return Future.value('microfone habilitado');
-  //   }
-
-  //   return Future.value('serviço de escuta nao disponivel');
-  // }
+  String getResposta() {
+    return resposta;
+  }
 
   void setSpeed(double speed) {
     this.speed = speed;
