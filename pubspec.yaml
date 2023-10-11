@@ -1,6 +1,6 @@
 name: iris_app
 description: Iris, aplicativo mobile para ajudar deficientes visuais a controlar sua saúde.
-publish_to: 'com.pucminas.irisapp' 
+publish_to: 'pucminas.br.irisapp' 
 
 version: 1.0.0+1
 
