@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'main.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
-import 'voices.dart';
 
 class Menubar extends StatefulWidget {
   const Menubar({super.key});
@@ -15,8 +15,6 @@ class Menubar extends StatefulWidget {
 }
 
 class _MenubarState extends State<Menubar> {
-  RecursoDeVoz voice = RecursoDeVoz();
-
   int _currentIndex = 0;
   String resposta = '';
 
