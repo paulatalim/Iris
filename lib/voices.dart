@@ -1,28 +1,29 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RecursoDeVoz {
-  late FlutterTts textToSpeech;
-  late SpeechToText speechToText;
-  late double volume;
-  late double speed; //pitch
-  late double tom; // rate
-  late String resposta;
+  late FlutterTts _textToSpeech;
+  late SpeechToText _speechToText;
+  late double _volume;
+  late double _speed; //pitch
+  late double _tom; // rate
+  late String _resposta;
 
   /// Construtor
   RecursoDeVoz() {
     // Inicializa os objetos
-    textToSpeech = FlutterTts();
-    speechToText = SpeechToText();
+    _textToSpeech = FlutterTts();
+    _speechToText = SpeechToText();
 
     // Inicializa os atributos
-    speed = 1.0;
-    tom = 0.5;
-    volume = 0.5;
-    resposta = '';
+    _speed = 1.0;
+    _tom = 0.5;
+    _volume = 0.5;
+    _resposta = '';
 
     // Configurações dos recursos de vozes
     _listenForPermissions();
@@ -30,8 +31,8 @@ class RecursoDeVoz {
 
   /// Inicializa o microfone
   void _initSpeech() async {
-    await speechToText.initialize();
-    print("microfone inicializado");
+    await _speechToText.initialize();
+    debugPrint("microfone inicializado");
   }
 
   /// Requisição da permissao para habilitacao do microfone
@@ -51,33 +52,33 @@ class RecursoDeVoz {
   ///
   /// Passe um texto [text] por parametro para o aplicativo transformar em voz
   void speek(String text) {
-    textToSpeech.setLanguage('pt-br');
-    textToSpeech.setVolume(volume);
-    textToSpeech.setSpeechRate(tom);
-    textToSpeech.setPitch(speed);
+    _textToSpeech.setLanguage('pt-br');
+    _textToSpeech.setVolume(_volume);
+    _textToSpeech.setSpeechRate(_tom);
+    _textToSpeech.setPitch(_speed);
 
-    textToSpeech.speak(text);
+    _textToSpeech.speak(text);
   }
 
   /// Escuta o que o usuario está falando e tranforma em texto
   ///
   /// O resultado [result] capturado em audio é transformado em texto
   void _onSpeechResult(SpeechRecognitionResult result) {
-    resposta = "$resposta${result.recognizedWords} ";
-    print(resposta);
+    _resposta = "$_resposta${result.recognizedWords} ";
+    debugPrint(_resposta);
   }
 
   /// Da uma pausa no aplicativo para as funções serem executadas
   ///
   /// Coloque o tempo de pausa em segundos [seconds] para o tempo de pausa
-  Future<void> delay(int seconds) async {
+  Future<void> _delay(int seconds) async {
     await Future.delayed(Duration(seconds: seconds));
   }
 
   /// Habilita o microfone e captura a voz
   Future<void> _hear() async {
-    resposta = '';
-    await speechToText.listen(
+    _resposta = '';
+    await _speechToText.listen(
       onResult: _onSpeechResult,
       listenFor: const Duration(seconds: 5),
       localeId: "pt-br",
@@ -98,25 +99,25 @@ class RecursoDeVoz {
     await _hear();
 
     // Delay de 5 segundos antes do retorno
-    await delay(5);
+    await _delay(5);
 
-    // Retorno da resposta em String
-    return Future.value(resposta);
+    // Retorno da _resposta em String
+    return Future.value(_resposta);
   }
 
   /// Velocidade da voz do audio
   ///
   /// Aceita valores entre 0.5 e 2.0
-  double get speedVoice => speed;
+  double get speed => _speed;
   set speedVoice(double speed) {
-    this.speed = speed;
+    _speed = speed;
   }
 
-  /// Volume da voz do audio
+  /// _Volume da voz do audio
   ///
   /// Aceita valores entre 0.0 e 1.0
-  double get volumeVoice => volume;
+  double get volume => _volume;
   set volumeVoice(double volume) {
-    this.volume = volume;
+    _volume = volume;
   }
 }
