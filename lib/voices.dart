@@ -65,7 +65,11 @@ class RecursoDeVoz {
     print(resposta);
   }
 
-  void _hear() async {
+  Future<void> delay(int seconds) async {
+    await Future.delayed(Duration(seconds: seconds));
+  }
+
+  Future<void> _hear() async {
     resposta = '';
     print("oiii");
     await speechToText.listen(
@@ -78,19 +82,18 @@ class RecursoDeVoz {
     );
   }
 
-  String hear() {
+  Future<String> hear() async {
+    // Abre o microfone
     _initSpeech();
-    _hear();
-    return resposta;
-  }
 
-  bool isNotListening() {
-    print(speechToText.isNotListening);
-    return speechToText.isNotListening;
-  }
+    // Escuta o usuario
+    await _hear();
 
-  String getResposta() {
-    return resposta;
+    // Delay de 5 segundos antes do retorno
+    await delay(5);
+
+    // Retorno da resposta em String
+    return Future.value(resposta);
   }
 
   void setSpeed(double speed) {
