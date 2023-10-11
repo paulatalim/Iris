@@ -5,7 +5,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RecursoDeVoz {
-  late FlutterTts tts;
+  late FlutterTts textToSpeech;
   late SpeechToText speechToText;
   late double volume;
   late double speed; //pitch
@@ -15,7 +15,7 @@ class RecursoDeVoz {
   /// Construtor
   RecursoDeVoz() {
     // Inicializa os objetos
-    tts = FlutterTts();
+    textToSpeech = FlutterTts();
     speechToText = SpeechToText();
 
     // Inicializa os atributos
@@ -25,16 +25,7 @@ class RecursoDeVoz {
     resposta = '';
 
     // Configurações dos recursos de vozes
-    _initTts();
     _listenForPermissions();
-  }
-
-  /// Configura da voz do app
-  _initTts() {
-    tts.setLanguage('pt-br');
-    tts.setVolume(volume);
-    tts.setSpeechRate(tom);
-    tts.setPitch(speed);
   }
 
   /// Inicializa o microfone
@@ -60,7 +51,12 @@ class RecursoDeVoz {
   ///
   /// Passe um texto [text] por parametro para o aplicativo transformar em voz
   void speek(String text) {
-    tts.speak(text);
+    textToSpeech.setLanguage('pt-br');
+    textToSpeech.setVolume(volume);
+    textToSpeech.setSpeechRate(tom);
+    textToSpeech.setPitch(speed);
+
+    textToSpeech.speak(text);
   }
 
   /// Escuta o que o usuario está falando e tranforma em texto
@@ -114,7 +110,6 @@ class RecursoDeVoz {
   double get speedVoice => speed;
   set speedVoice(double speed) {
     this.speed = speed;
-    tts.setPitch(speed);
   }
 
   /// Volume da voz do audio
@@ -123,6 +118,5 @@ class RecursoDeVoz {
   double get volumeVoice => volume;
   set volumeVoice(double volume) {
     this.volume = volume;
-    tts.setVolume(volume);
   }
 }
