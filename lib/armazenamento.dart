@@ -68,27 +68,25 @@ class Armazenamento {
   }
 
   dynamic listarUsuarios() async {
-    Database database = await _recuperarBancoDados();
     String sql = "SELECT * FROM usuarios";
     //String sql = "SELECT * FROM usuarios WHERE idade=58";
     //String sql = "SELECT * FROM usuarios WHERE idade >=30 AND idade <=58";
     //String sql = "SELECT * FROM usuarios WHERE idade BETWEEN 18 AND 58";
     //String sql = "SELECT * FROM usuarios WHERE nome='Maria Silva'";
-    List usuarios = await database
+    List usuarios = await database!
         .rawQuery(sql); //conseguimos escrever a query que quisermos
     for (var usu in usuarios) {
       print(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} idade: ${usu['idade'].toString()}");
+          " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
     }
   }
 
   dynamic listarUmUsuario(int id) async {
-    Database database = await _recuperarBancoDados();
-    List usuarios = await database.query("usuarios",
+    List usuarios = await database!.query("usuarios",
         columns: ["id", "nome", "idade"], where: "id = ?", whereArgs: [id]);
     for (var usu in usuarios) {
       print(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} idade: ${usu['idade'].toString()}");
+          " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
     }
   }
 
@@ -120,5 +118,30 @@ class Armazenamento {
   }
 
   /// Busca o usuario atraves do email e retorna seu id
-  // void buscarUsuario() {}
+  Future<List> buscarUsuario(String email) async {
+    String criptoEmail = _criptografar(email);
+    List usuarios = await database!.query("usuarios",
+        columns: ["id", "nome", "senha"],
+        where: "email = ?",
+        whereArgs: [criptoEmail]);
+    // for (var usu in usuarios) {
+    //   print(
+    //       " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
+    // }
+
+    return Future.value(usuarios);
+  }
+
+  Future<bool> senhaCorreta(String email, String senha) async {
+    String senhaCripto = _criptografar(senha);
+    String emailCripto = _criptografar(email);
+
+    List usuario = await buscarUsuario(email);
+
+    if (usuario[2].toString().compareTo(senhaCripto) == 0) {
+      return Future.value(true);
+    }
+
+    return Future.value(false);
+  }
 }
