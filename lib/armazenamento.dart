@@ -49,6 +49,12 @@ class Armazenamento {
   }
 
   Future<int> salvarDados(String nome, String email, String senha) async {
+    // Verifica se ja ha registro do email do usuario
+    List usuario = await buscarUsuario(email);
+    if (usuario.isNotEmpty) {
+      return -1;
+    }
+
     // Criptografa as informacoes sensiveis
     var criptoEmail = _criptografar(email);
     var criptoSenha = _criptografar(senha);
@@ -117,26 +123,28 @@ class Armazenamento {
     print("Itens atualizados: " + retorno.toString());
   }
 
-  /// Busca o usuario atraves do email e retorna seu id
+  /// Busca o usuario atraves do [email] e retorna uma lista com suas
+  /// informações ou vazia, caso não encontre o registro
   Future<List> buscarUsuario(String email) async {
     String criptoEmail = _criptografar(email);
     List usuarios = await database!.query("usuarios",
         columns: ["id", "nome", "senha"],
         where: "email = ?",
         whereArgs: [criptoEmail]);
-    // for (var usu in usuarios) {
-    //   print(
-    //       " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
-    // }
 
     return Future.value(usuarios);
   }
 
+  /// Valida a senha do usuario, retorna [true] caso senha e email estejam
+  /// corretos e [false] caso não encontre o email ou a senha estiver incorreta
   Future<bool> senhaCorreta(String email, String senha) async {
     String senhaCripto = _criptografar(senha);
-    String emailCripto = _criptografar(email);
-
     List usuario = await buscarUsuario(email);
+
+    // Caso nao encontrar a senha
+    if (usuario.isEmpty) {
+      return false;
+    }
 
     if (usuario[2].toString().compareTo(senhaCripto) == 0) {
       return Future.value(true);
