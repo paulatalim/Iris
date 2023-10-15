@@ -55,7 +55,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Integrantes do grupo
 
-- Ana Beatriz
+- [Ana Beatriz](https://github.com/Ana-Bea-S)
 - [Mariana Aram](https://www.linkedin.com/in/mariana-aram-silva-a766b623b/)
 - [Paula talim](https://www.linkedin.com/in/paulatalim/)
 - [Pedro Mafra](https://www.linkedin.com/in/pedro-mafra-vas/)
