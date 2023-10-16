@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 import 'devices.dart';
 import 'home.dart';
@@ -50,71 +51,86 @@ class _MenubarState extends State<Menubar> {
       backgroundColor: const Color(0xFFdba0ff),
       body: screens[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        shape: const CircleBorder(),
-        child: const Icon(FontAwesomeIcons.microphone),
+      floatingActionButton: AvatarGlow(
+        animate: true,
+        glowColor: Colors.green,
+        endRadius: 45,
+        duration: Duration(milliseconds: 1000),
+        repeatPauseDuration: Duration(milliseconds: 1000),
+        repeat: true,
+        child: Container(
+          width: 52,
+          height: 52,
+          child: FloatingActionButton(
+              onPressed: () {},
+              elevation: 0,
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              shape: const CircleBorder(),
+              child: const Icon(
+                FontAwesomeIcons.microphone,
+                size: 22,
+              )),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
-          color: const Color(0xFFE6E6E6),
-          height: 0.08 * MediaQuery.of(context).size.height,
-          notchMargin: 6.0,
-          padding: const EdgeInsets.all(0),
-          shape: const CircularNotchedRectangle(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                color: _iconColor[0],
-                icon: const Icon(FontAwesomeIcons.house),
-                onPressed: () {
-                  setState(() {
-                    _currentIndex = 0;
-                    _colorSelection(_currentIndex);
-                  });
-                },
-              ),
-              IconButton(
-                color: _iconColor[1],
-                icon: const Icon(FontAwesomeIcons.computer),
-                onPressed: () {
-                  setState(() {
-                    _currentIndex = 1;
-                    _colorSelection(_currentIndex);
-                  });
-                },
-              ),
+        color: const Color(0xFFE6E6E6),
+        height: 0.08 * MediaQuery.of(context).size.height,
+        notchMargin: 6.0,
+        padding: const EdgeInsets.all(0),
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              color: _iconColor[0],
+              icon: const Icon(FontAwesomeIcons.house),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 0;
+                  _colorSelection(_currentIndex);
+                });
+              },
+            ),
+            IconButton(
+              color: _iconColor[1],
+              icon: const Icon(FontAwesomeIcons.computer),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 1;
+                  _colorSelection(_currentIndex);
+                });
+              },
+            ),
 
-              //Espacamento entre icone e button action bar
-              const SizedBox(
-                width: 30,
-              ),
+            //Espacamento entre icone e button action bar
+            const SizedBox(
+              width: 90,
+            ),
 
-              IconButton(
-                color: _iconColor[2],
-                icon: const Icon(FontAwesomeIcons.heartPulse),
-                onPressed: () {
-                  setState(() {
-                    _currentIndex = 2;
-                    _colorSelection(_currentIndex);
-                  });
-                },
-              ),
-              IconButton(
-                color: _iconColor[3],
-                icon: const Icon(FontAwesomeIcons.lock),
-                onPressed: () {
-                  setState(() {
-                    _currentIndex = 3;
-                    _colorSelection(_currentIndex);
-                  });
-                },
-              ),
-            ],
-          )),
+            IconButton(
+              color: _iconColor[2],
+              icon: const Icon(FontAwesomeIcons.heartPulse),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 2;
+                  _colorSelection(_currentIndex);
+                });
+              },
+            ),
+            IconButton(
+              color: _iconColor[3],
+              icon: const Icon(FontAwesomeIcons.lock),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 3;
+                  _colorSelection(_currentIndex);
+                });
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
