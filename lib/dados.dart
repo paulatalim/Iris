@@ -20,12 +20,12 @@ class _DadosState extends State<Dados> {
       height: 80.0, // Defina a altura desejada, por exemplo, 100.0 pixels
       width: 0.8 * MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: const Color(0xFFC7C9FF),
+        color: const Color(0xFFdadcff),
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: const [
           BoxShadow(
               color: Color.fromARGB(90, 0, 0, 0),
-              blurRadius: 15,
+              blurRadius: 10,
               offset: Offset(5, 5)),
           BoxShadow(
               color: Color.fromARGB(200, 255, 255, 255),
@@ -43,6 +43,7 @@ class _DadosState extends State<Dados> {
             style: GoogleFonts.inclusiveSans(
               textStyle: const TextStyle(
                 fontSize: 22.0,
+                fontWeight: FontWeight.w600,
                 color: Color(0xFF373B8A),
               ),
             ),
@@ -54,6 +55,7 @@ class _DadosState extends State<Dados> {
                 style: GoogleFonts.inclusiveSans(
                   textStyle: const TextStyle(
                     fontSize: 25.0,
+                    fontWeight: FontWeight.w600,
                     color: Color(0xFF373B8A),
                   ),
                 ),
@@ -64,6 +66,7 @@ class _DadosState extends State<Dados> {
                 style: GoogleFonts.inclusiveSans(
                   textStyle: const TextStyle(
                     fontSize: 25.0,
+                    fontWeight: FontWeight.w600,
                     color: Color(0xFF373B8A),
                   ),
                 ),
