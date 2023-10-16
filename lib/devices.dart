@@ -35,6 +35,7 @@ class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
   final scrollControl = ScrollController();
 
+  /// Estiliza um texto
   TextStyle styletext() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
@@ -42,6 +43,7 @@ class _DevicesState extends State<Devices> {
     );
   }
 
+  /// Estiliza os cards dos dispositivos
   BoxDecoration styleBox() {
     return BoxDecoration(
       color: const Color(0xFFdadcff),
@@ -62,7 +64,6 @@ class _DevicesState extends State<Devices> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -84,7 +85,7 @@ class _DevicesState extends State<Devices> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               alignment: Alignment.topCenter,
-              child: Container(
+              child: SizedBox(
                 height: 0.65 * MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -169,7 +170,6 @@ class _DevicesState extends State<Devices> {
                         ],
                       )).frosted(
                     blur: 5,
-                    // borderRadius: BorderRadius.circular(20),
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
@@ -183,7 +183,7 @@ class _DevicesState extends State<Devices> {
     );
   }
 
-  /// Ceia os cards dos dispositivos com as informacoes ligadas ao seu [id]
+  /// Cria os cards dos dispositivos com as informacoes ligadas ao seu [id]
   Widget cardDispositivo(int id) {
     double? largura;
     double? altura = 40;
@@ -204,7 +204,6 @@ class _DevicesState extends State<Devices> {
       child: Container(
         decoration: styleBox(),
         width: 0.85 * MediaQuery.of(context).size.width,
-        // height: 80,
         padding:
             const EdgeInsets.only(left: 30, top: 17, right: 30, bottom: 17),
         child: Row(
