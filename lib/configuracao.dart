@@ -35,11 +35,14 @@ class _ConfiguracaoState extends State<Configuracao> {
   }
 
   TextStyle styleBoxTitle() {
-    return const TextStyle(
+    return GoogleFonts.inclusiveSans(
+      textStyle: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w700,
         letterSpacing: 2,
-        color: Color(0xFF373B8A));
+        color: Color(0xFF373B8A),
+      ),
+    );
   }
 
   @override
@@ -115,9 +118,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Volume',
-                        style: GoogleFonts.inclusiveSans(
-                            textStyle: styleBoxTitle())),
+                    Text('Volume', style: styleBoxTitle()),
                     Slider(
                         value: valor, //definir o valor inicial
                         min: 0,
@@ -151,8 +152,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                   children: [
                     Text(
                       'Velocidade',
-                      style:
-                          GoogleFonts.inclusiveSans(textStyle: styleBoxTitle()),
+                      style: styleBoxTitle(),
                     ),
                     SizedBox(
                       width: 70,

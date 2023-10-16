@@ -14,18 +14,23 @@ class Sobre extends StatefulWidget {
 
 class _SobreState extends State<Sobre> {
   TextStyle integranteStyle() {
-    return const TextStyle(
-      color: Color(0xFF373B8A),
-      fontSize: 20,
+    return GoogleFonts.inclusiveSans(
+      textStyle: const TextStyle(
+        color: Color(0xFF373B8A),
+        fontSize: 20,
+      ),
     );
   }
 
   TextStyle subtitle() {
-    return const TextStyle(
+    return GoogleFonts.inclusiveSans(
+      textStyle: const TextStyle(
         color: Color(0xFF373B8A),
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        letterSpacing: 2);
+        letterSpacing: 2,
+      ),
+    );
   }
 
   @override
@@ -126,8 +131,7 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Ana Beatriz',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: integranteStyle()),
+                            style: integranteStyle(),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -135,8 +139,7 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Mariana Aram',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: integranteStyle()),
+                            style: integranteStyle(),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -144,8 +147,7 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Paula Talim',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: integranteStyle()),
+                            style: integranteStyle(),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -153,8 +155,7 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Pedro Mafra',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: integranteStyle()),
+                            style: integranteStyle(),
                           ),
 
                           const SizedBox(height: 3.0), // Espaço entre os textos
@@ -162,8 +163,7 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Yago Garzon',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: integranteStyle()),
+                            style: integranteStyle(),
                           ),
 
                           const SizedBox(
@@ -172,16 +172,14 @@ class _SobreState extends State<Sobre> {
                           Text(
                             'Orientador',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: subtitle()),
+                            style: subtitle(),
                           ),
 
                           const SizedBox(height: 8.0), // Espaço entre os textos
                           Text(
                             'Ilo Riveiro',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inclusiveSans(
-                                textStyle: integranteStyle()),
+                            style: integranteStyle(),
                           ),
                         ],
                       ),
@@ -198,7 +196,7 @@ class _SobreState extends State<Sobre> {
                       Text(
                         'Fale Conosco:',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inclusiveSans(textStyle: subtitle()),
+                        style: subtitle(),
                       ),
                       const SizedBox(height: 8),
                       ListTile(

@@ -14,11 +14,14 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreen extends State<UserScreen> {
   TextStyle styleBoxTitle() {
-    return const TextStyle(
+    return GoogleFonts.dosis(
+      textStyle: const TextStyle(
         fontSize: 25,
         fontWeight: FontWeight.w700,
         letterSpacing: 2,
-        color: Color(0xFF373B8A));
+        color: Color(0xFF373B8A),
+      ),
+    );
   }
 
   @override
@@ -52,21 +55,16 @@ class _UserScreen extends State<UserScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //Campo de texto Nome usuario
-                Text(
-                  "Nome do usuário",
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //Campo de texto Nome usuario
+                    Text(
+                      "Nome do usuário",
+                      style: styleBoxTitle(),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
                 ),
-                const SizedBox(height: 30),
-               
-                
-                
-              ],
-            ),
                 RawMaterialButton(
                     onPressed: () {},
                     elevation: 10.0,
@@ -83,7 +81,6 @@ class _UserScreen extends State<UserScreen> {
                     )),
               ],
             ),
-            
 
             const SizedBox(height: 90),
 
