@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// import 'sharedpreference.dart';
+import 'loginmain.dart';
 import 'menu.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  bool isUserLoggedIn = false;
 
   runApp(MaterialApp(
     title: 'Iris',
@@ -15,6 +18,6 @@ void main() {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const Menubar(),
+    home: isUserLoggedIn == true ? const Menubar() : const UserLogin(),
   ));
 }
