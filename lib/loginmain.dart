@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
 import 'menu.dart';
+import 'sharedpreference.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -90,6 +91,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
+                          setUserLoggedIn(true);
                           Navigator.push(
                               context,
                               MaterialPageRoute(

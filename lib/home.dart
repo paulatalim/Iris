@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iris_app/loginmain.dart';
+import 'package:iris_app/menu.dart';
 
 import 'configuracao.dart';
 import 'sobre.dart';
@@ -12,8 +14,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isUserLoggedIn = false;
   @override
   Widget build(BuildContext context) {
+    if (isUserLoggedIn = true){
+      MaterialPageRoute(
+         builder: (context) => const Menubar(),
+      );
+    if (isUserLoggedIn = false){
+      MaterialPageRoute(
+        builder: (context) => const UserLogin(),
+      );
+    }
+    }
     return Scaffold(
       backgroundColor: Colors.deepPurpleAccent,
       body: Container(
