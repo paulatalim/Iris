@@ -14,28 +14,39 @@ class UserSingIn extends StatefulWidget {
 
 class _UserSingIn extends State<UserSingIn> {
   Armazenamento storage = Armazenamento();
-  User usuario = User(); //Essa classe provavelmente vai ter que ser mexida pra algum lugar onde ela seja fixa para não perder os dados
 
-  TextEditingController userAcc = TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
-  TextEditingController userPss1 = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
-  TextEditingController userPss2 = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
-  TextEditingController userName = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
-  TextEditingController userSurname = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userAcc =
+      TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
+  TextEditingController userPss1 =
+      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userPss2 =
+      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userName =
+      TextEditingController(); //TextEdinting exclusivo para armazenar o nome do usuario
+  TextEditingController userSurname =
+      TextEditingController(); //TextEdinting exclusivo para armazenar o sobremenome do usuario
 
-  String erroSenha = ''; //Mensagem vazia para realizar alteração caso necessário
+  String erroSenha =
+      ''; //Mensagem vazia para realizar alteração caso necessário
 
-  void igualdadeSenha(){
-    if(userPss1.text == userPss2.text){
-      checarSenha();
-    }
-    else{
-      setState(() {
-        erroSenha = 'As senhas devem ser iguais.';
-      });
-    }
+  void _criarUser() {
+    //Salvando na classe os dados existentes
+    usuario.email = userAcc.text;
+    usuario.nome = userName.text;
+    usuario.sobrenome = userSurname.text;
+
+    //Salvando no banco de dados
+    storage.salvarDados(
+        usuario.nome, userSurname.text, usuario.email, userPss1.text);
+
+    //Redirecionando ao menu
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Menubar()),
+    );
   }
 
-  void checarSenha(){
+  void checarSenha() {
     String password = userPss1.text;
 
     bool hasUppercase = RegExp(r'[A-Z]').hasMatch(password);
@@ -46,26 +57,22 @@ class _UserSingIn extends State<UserSingIn> {
     if (hasUppercase && hasLowercase && hasDigits && hasLenght >= 8) {
       // A senha possui pelo menos uma letra maiúscula, uma letra minúscula e um número
       _criarUser();
-    } 
-    else {
+    } else {
       setState(() {
-        erroSenha = 'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
+        erroSenha =
+            'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
       });
     }
-
   }
 
-  void _criarUser(){
-    //Salvando na classe os dados existentes
-    usuario.email = userAcc.text;
-    usuario.nome = userName.text;
-    usuario.sobrenome = userSurname.text;
-
-    //Salvando no banco de dados
-    storage.salvarDados(usuario.nome, usuario.email, userPss1.text);
-
-    //Redirecionando ao menu
-    MaterialPageRoute(builder: (context) => const Menubar());
+  void validarSenha() {
+    if (userPss1.text.compareTo(userPss2.text) == 0) {
+      checarSenha();
+    } else {
+      setState(() {
+        erroSenha = 'As senhas devem ser iguais.';
+      });
+    }
   }
 
   @override
@@ -219,7 +226,7 @@ class _UserSingIn extends State<UserSingIn> {
                         erroSenha,
                         style: TextStyle(color: Colors.red),
                       ),
-                      
+
                       //Botão de criação de conta
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +234,7 @@ class _UserSingIn extends State<UserSingIn> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              checarSenha();
+                              validarSenha();
                             },
                             style: ButtonStyle(
                                 //Tamanho customizado para o botão
