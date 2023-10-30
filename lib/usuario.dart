@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:js_util';
 
 /*
 * Classe usuario contendo variáveis básicas para o utilização no app
@@ -7,12 +6,32 @@ import 'dart:js_util';
 class User {
   late String nome;
   late String sobrenome;
-  late String id;
+  late int id;
   late String email;
-  late String peso;
-  late String altura;
+  late double _peso;
+  late double _altura;
+  late double _imc;
+  late double _temperatura;
 
-  User(){
-    User(); //Criação de novo objeto
+  User() {
+    nome = '';
+    _peso = 0;
+    _altura = 0;
+    _imc = 0;
+    _temperatura = 0;
   }
+
+  get peso => _peso;
+  set peso(value) => _peso = value;
+
+  get altura => _altura;
+  set altura(value) => _altura = value;
+
+  get imc => _imc;
+  set imc(value) => _imc = value;
+
+  get temperatura => _temperatura;
+  set temperatura(value) => _temperatura = value;
 }
+
+User usuario = new User();
