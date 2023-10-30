@@ -30,6 +30,24 @@ class Armazenamento {
           senha VARCHAR
         );''';
 
+     // Codigo SQL para criar a tabela de informações adicionais com chave estrangeira
+    String infoAdicional = '''CREATE TABLE informacoes_adicionais (
+          id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          peso REAL,
+          temperatura REAL,
+          altura REAL,
+          imc REAL,
+          usuario_id INTEGER,
+          FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        );''';
+
+    // Abre e cria as tabelas
+    database = await openDatabase(localBancoDados, version: 2, // Aumente a versão para refletir a mudança no esquema
+        onCreate: (database, databaseVersaoRecente) {
+      database.execute(conta);
+      database.execute(infoAdicional);
+    });
+
     // Abre e cria a tabela
     database = await openDatabase(localBancoDados, version: 1,
         onCreate: (database, databaseVersaoRecente) {
