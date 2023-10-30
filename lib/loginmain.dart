@@ -87,7 +87,7 @@ class _UserLogin extends State<UserLogin> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
-                        labelText: 'E-mail ou Usuário:',
+                        labelText: 'E-mail:',
                         hintText: 'nome@exemplo.com',
                       ),
                     ),

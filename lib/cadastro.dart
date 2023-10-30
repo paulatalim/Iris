@@ -26,7 +26,7 @@ class _UserSingIn extends State<UserSingIn> {
   TextEditingController userSurname =
       TextEditingController(); //TextEdinting exclusivo para armazenar o sobremenome do usuario
 
-  String erroSenha =
+  String erroCadastro =
       ''; //Mensagem vazia para realizar alteração caso necessário
 
   void _criarUser() {
@@ -46,6 +46,21 @@ class _UserSingIn extends State<UserSingIn> {
     );
   }
 
+  void checarEmail() {
+    String email = userAcc.text;
+
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+
+    if(emailValid){
+      //É um e-mail válido
+      checarSenha();
+    }
+    else{
+      setState(() {
+        erroCadastro = 'Verifique se o e-mail está correto.';
+      });
+    }
+  }
   void checarSenha() {
     String password = userPss1.text;
 
@@ -57,10 +72,10 @@ class _UserSingIn extends State<UserSingIn> {
     if (hasUppercase && hasLowercase && hasDigits && hasLenght >= 8) {
       // A senha possui pelo menos uma letra maiúscula, uma letra minúscula e um número
       _criarUser();
-    } else {
+    } 
+    else {
       setState(() {
-        erroSenha =
-            'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
+        erroCadastro ='A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
       });
     }
   }
@@ -68,9 +83,10 @@ class _UserSingIn extends State<UserSingIn> {
   void validarSenha() {
     if (userPss1.text.compareTo(userPss2.text) == 0) {
       checarSenha();
-    } else {
+    } 
+    else {
       setState(() {
-        erroSenha = 'As senhas devem ser iguais.';
+        erroCadastro = 'As senhas devem ser iguais.';
       });
     }
   }
@@ -223,7 +239,7 @@ class _UserSingIn extends State<UserSingIn> {
 
                       //Caixa de texto que aparecerá uma mensagem caso as senhas estejam erradas
                       Text(
-                        erroSenha,
+                        erroCadastro,
                         style: TextStyle(color: Colors.red),
                       ),
 
