@@ -1,6 +1,10 @@
+import 'dart:core';
+import 'dart:js_util';
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
 import 'menu.dart';
+import 'armazenamento.dart';
+import 'usuario.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -10,6 +14,36 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLogin extends State<UserLogin> {
+  Armazenamento storage = Armazenamento();
+  User usuario = User();
+
+  TextEditingController userAcc = TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
+  TextEditingController userPss = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+
+  String mensagemErro = ''; //Mensagem vazia para realizar alteração caso necessário
+
+  void _login(){
+    String user = userAcc.text;
+    String password = userPss.text;
+    if(storage.senhaCorreta(user, password) == false){
+      setState(() {
+        mensagemErro = 'Usuario ou Senha inválidos.';
+      });
+    }
+    else{
+      List userLoad;
+      userLoad = storage.buscarUsuario(user) as List; //Carregando o usuario existente
+      usuario.id = userLoad[0]; //Carregando o ID
+      usuario.nome = userLoad[1]; //Carregando nome
+      usuario.email = user; //Carregando e-mail
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Menubar()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +80,7 @@ class _UserLogin extends State<UserLogin> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(children: [
                     TextFormField(
+                      controller: userAcc,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
@@ -54,6 +89,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                     ),
                     TextFormField(
+                      controller: userPss,
                       obscureText: true,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
@@ -61,6 +97,10 @@ class _UserLogin extends State<UserLogin> {
                         hintText: 'Digite sua senha',
                       ),
                     ),
+                    Text(
+                      mensagemErro,
+                      style: TextStyle(color: Colors.red),
+                    )
                   ]),
                 ),
                 const SizedBox(height: 70),
@@ -90,11 +130,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Menubar(),
-                              ));
+                          _login(); //Funçaõ de login declarada no inicio da classe
                         },
                         child: const Text(
                           //Botão para realizar login
