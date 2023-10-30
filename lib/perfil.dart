@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'loginmain.dart';
+import 'usuario.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -52,21 +53,18 @@ class _UserScreen extends State<UserScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //Campo de texto Nome usuario
-                Text(
-                  "Nome do usuário",
-                  style: GoogleFonts.dosis(
-                    textStyle: styleBoxTitle(),
-                  ),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //Campo de texto Nome usuario
+                    Text(
+                      usuario.nome,
+                      style: GoogleFonts.dosis(
+                        textStyle: styleBoxTitle(),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
                 ),
-                const SizedBox(height: 30),
-               
-                
-                
-              ],
-            ),
                 RawMaterialButton(
                     onPressed: () {},
                     elevation: 10.0,
@@ -83,7 +81,6 @@ class _UserScreen extends State<UserScreen> {
                     )),
               ],
             ),
-            
 
             const SizedBox(height: 90),
 
