@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'usuario.dart';
+
 class Dados extends StatefulWidget {
   const Dados({super.key});
 
@@ -9,11 +11,6 @@ class Dados extends StatefulWidget {
 }
 
 class _DadosState extends State<Dados> {
-  final double peso = 00;
-  double temperatura = 00;
-  final double altura = 00;
-  final double imc = 00;
-
   Container boxNumber(String texto, String numero, String unidade) {
     return Container(
       // margin: EdgeInsets.all(30.0), //Espaço entre as caixinhas
@@ -96,10 +93,11 @@ class _DadosState extends State<Dados> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              boxNumber('Peso ', peso.toStringAsFixed(1), 'Kg'),
-              boxNumber('Altura', altura.toStringAsFixed(2), 'm'),
-              boxNumber('Temperatura', temperatura.toStringAsFixed(1), '°'),
-              boxNumber('IMC', imc.toStringAsFixed(1), ''),
+              boxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
+              boxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
+              boxNumber(
+                  'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
+              boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
             ],
           ),
         ),
