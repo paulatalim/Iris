@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:js_util';
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
 import 'menu.dart';
@@ -15,31 +14,35 @@ class UserLogin extends StatefulWidget {
 
 class _UserLogin extends State<UserLogin> {
   Armazenamento storage = Armazenamento();
-  User usuario = User(); //Essa classe provavelmente vai ter que ser mexida pra algum lugar onde ela seja fixa para não perder os dados
 
-  TextEditingController userAcc = TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
-  TextEditingController userPss = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userAcc =
+      TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
+  TextEditingController userPss =
+      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
 
-  String mensagemErro = ''; //Mensagem vazia para realizar alteração caso necessário
+  String mensagemErro =
+      ''; //Mensagem vazia para realizar alteração caso necessário
 
-  void _login(){
+  void _login() async {
     String user = userAcc.text;
     String password = userPss.text;
-    if(storage.senhaCorreta(user, password) == false){
+
+    if (await storage.senhaCorreta(user, password) == false) {
       setState(() {
         mensagemErro = 'Usuario ou Senha inválidos.';
       });
-    }
-    else{
+    } else {
+      print('login');
       List userLoad;
-      userLoad = storage.buscarUsuario(user) as List; //Carregando o usuario existente
-      usuario.id = userLoad[0]; //Carregando o ID
-      usuario.nome = userLoad[1]; //Carregando nome
+      userLoad =
+          await storage.buscarUsuario(user); //Carregando o usuario existente
+      usuario.id = userLoad[0]["id"]; //Carregando o ID
+      usuario.nome = userLoad[0]["nome"]; //Carregando nome
       usuario.email = user; //Carregando e-mail
+
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => const Menubar()),
+        MaterialPageRoute(builder: (context) => const Menubar()),
       );
     }
   }
