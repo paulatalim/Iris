@@ -11,21 +11,22 @@ class Armazenamento {
   Armazenamento() {
     if (database == null) {
       _initdatabase();
-      _recuperarBancoDados();
+      // _recuperarBancoDados();
     }
   }
 
   void _initdatabase() async {
-    database = await _recuperarBancoDados();
     caminhoBancoDados = await getDatabasesPath();
-    localBancoDados = join(caminhoBancoDados, "banco3.database");
+    localBancoDados = join(caminhoBancoDados, "dados.db");
+    database = await _recuperarBancoDados();
   }
 
   dynamic _recuperarBancoDados() async {
     // Codigo SQL para criar a tabela
     String conta = '''CREATE TABLE usuarios (
           id INTEGER PRIMARY KEY AUTOINCREMENT, 
-          nome VARCHAR, 
+          nome VARCHAR,
+          sobrenome VARCHAR,
           email VARCHAR, 
           senha VARCHAR
         );''';
@@ -35,6 +36,8 @@ class Armazenamento {
         onCreate: (database, databaseVersaoRecente) {
       database.execute(conta);
     });
+
+    return database;
   }
 
   /// Criptografa informacoes sensiveis
@@ -48,7 +51,8 @@ class Armazenamento {
     return digest;
   }
 
-  Future<int> salvarDados(String nome, String email, String senha) async {
+  Future<int> salvarDados(
+      String nome, String sobrenome, String email, String senha) async {
     // Verifica se ja ha registro do email do usuario
     List usuario = await buscarUsuario(email);
     if (usuario.isNotEmpty) {
@@ -62,8 +66,9 @@ class Armazenamento {
     // Adiciona as informacoes a um objeto
     Map<String, dynamic> dadosUsuario = {
       "nome": nome,
-      "email": criptoEmail,
-      "senha": criptoSenha
+      "sobrenome": sobrenome,
+      "email": criptoEmail.toString(),
+      "senha": criptoSenha.toString()
     };
 
     // Adiciona informacao no banco de dados
@@ -98,24 +103,25 @@ class Armazenamento {
 
   excluirUsuario(String email) async {
     // Cripotografa o email a ser buscado
-    String criptoEmail = _criptografar(email);
+    dynamic criptoEmail = _criptografar(email);
 
     // Busca e exclusão de registro aprtir do email
     int retorno = await database!.delete("usuarios",
         where: "email = ?", //caracter curinga
-        whereArgs: [criptoEmail]);
+        whereArgs: [criptoEmail.toString()]);
     print("Itens excluidos: " + retorno.toString());
   }
 
   dynamic atualizarUsuario(
-      int id, String nome, String email, String senha) async {
-    String emailCripto = _criptografar(email);
-    String senhaCripto = _criptografar(senha);
+      int id, String nome, String sobrenome, String email, String senha) async {
+    dynamic emailCripto = _criptografar(email);
+    dynamic senhaCripto = _criptografar(senha);
 
     Map<String, dynamic> dadosUsuario = {
       "nome": nome,
-      "email": emailCripto,
-      "senha": senhaCripto
+      "sobrenome": sobrenome,
+      "email": emailCripto.toString(),
+      "senha": senhaCripto.toString()
     };
     int retorno = await database!.update("usuarios", dadosUsuario,
         where: "id = ?", //caracter curinga
@@ -126,11 +132,13 @@ class Armazenamento {
   /// Busca o usuario atraves do [email] e retorna uma lista com suas
   /// informações ou vazia, caso não encontre o registro
   Future<List> buscarUsuario(String email) async {
-    String criptoEmail = _criptografar(email);
+    dynamic criptoEmail = _criptografar(email);
     List usuarios = await database!.query("usuarios",
-        columns: ["id", "nome", "senha"],
+        columns: ["id", "nome", "sobrenome", "senha"],
         where: "email = ?",
-        whereArgs: [criptoEmail]);
+        whereArgs: [criptoEmail.toString()]);
+
+    print("oi: " + usuarios[0]["senha"]);
 
     return Future.value(usuarios);
   }
@@ -138,15 +146,14 @@ class Armazenamento {
   /// Valida a senha do usuario, retorna [true] caso senha e email estejam
   /// corretos e [false] caso não encontre o email ou a senha estiver incorreta
   Future<bool> senhaCorreta(String email, String senha) async {
-    String senhaCripto = _criptografar(senha);
+    dynamic senhaCripto = _criptografar(senha);
     List usuario = await buscarUsuario(email);
 
     // Caso nao encontrar a senha
     if (usuario.isEmpty) {
       return false;
     }
-
-    if (usuario[2].toString().compareTo(senhaCripto) == 0) {
+    if (usuario[0]["senha"].toString().compareTo(senhaCripto.toString()) == 0) {
       return Future.value(true);
     }
 
