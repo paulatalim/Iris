@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'armazenamento.dart';
+import 'usuario.dart';
 import 'loginmain.dart';
 import 'menu.dart';
 
@@ -12,6 +13,61 @@ class UserSingIn extends StatefulWidget {
 }
 
 class _UserSingIn extends State<UserSingIn> {
+  Armazenamento storage = Armazenamento();
+  User usuario = User(); //Essa classe provavelmente vai ter que ser mexida pra algum lugar onde ela seja fixa para não perder os dados
+
+  TextEditingController userAcc = TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
+  TextEditingController userPss1 = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userPss2 = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userName = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  TextEditingController userSurname = TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+
+  String erroSenha = ''; //Mensagem vazia para realizar alteração caso necessário
+
+  void igualdadeSenha(){
+    if(userPss1.text == userPss2.text){
+      checarSenha();
+    }
+    else{
+      setState(() {
+        erroSenha = 'As senhas devem ser iguais.';
+      });
+    }
+  }
+
+  void checarSenha(){
+    String password = userPss1.text;
+
+    bool hasUppercase = RegExp(r'[A-Z]').hasMatch(password);
+    bool hasLowercase = RegExp(r'[a-z]').hasMatch(password);
+    bool hasDigits = RegExp(r'\d').hasMatch(password);
+    int hasLenght = password.length;
+
+    if (hasUppercase && hasLowercase && hasDigits && hasLenght >= 8) {
+      // A senha possui pelo menos uma letra maiúscula, uma letra minúscula e um número
+      _criarUser();
+    } 
+    else {
+      setState(() {
+        erroSenha = 'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
+      });
+    }
+
+  }
+
+  void _criarUser(){
+    //Salvando na classe os dados existentes
+    usuario.email = userAcc.text;
+    usuario.nome = userName.text;
+    usuario.sobrenome = userSurname.text;
+
+    //Salvando no banco de dados
+    storage.salvarDados(usuario.nome, usuario.email, userPss1.text);
+
+    //Redirecionando ao menu
+    MaterialPageRoute(builder: (context) => const Menubar());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +127,7 @@ class _UserSingIn extends State<UserSingIn> {
                         //Flexible necessario para realizar integração do TextFormField dentro de uma Row
                         Flexible(
                           child: TextFormField(
+                            controller: userName,
                             keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
                             decoration: const InputDecoration(
@@ -90,6 +147,7 @@ class _UserSingIn extends State<UserSingIn> {
                         //Caixa de Texto Sobrenome
                         Flexible(
                           child: TextFormField(
+                            controller: userSurname,
                             keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
                             decoration: const InputDecoration(
@@ -113,6 +171,7 @@ class _UserSingIn extends State<UserSingIn> {
                         //Padding para separar das caixas de texto superior - adicionando somente no eixo inferior
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: TextFormField(
+                          controller: userAcc,
                           keyboardType: TextInputType.emailAddress,
                           style: GoogleFonts.dosis(),
                           decoration: const InputDecoration(
@@ -129,6 +188,7 @@ class _UserSingIn extends State<UserSingIn> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: TextFormField(
+                          controller: userPss1,
                           obscureText: true,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -143,6 +203,7 @@ class _UserSingIn extends State<UserSingIn> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
                         child: TextFormField(
+                          controller: userPss2,
                           obscureText: true,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -153,19 +214,20 @@ class _UserSingIn extends State<UserSingIn> {
                         ),
                       ),
 
+                      //Caixa de texto que aparecerá uma mensagem caso as senhas estejam erradas
+                      Text(
+                        erroSenha,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      
                       //Botão de criação de conta
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Menubar()),
-                              );
+                              checarSenha();
                             },
                             style: ButtonStyle(
                                 //Tamanho customizado para o botão
