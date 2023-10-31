@@ -84,11 +84,9 @@ class Armazenamento {
     //String sql = "SELECT * FROM usuarios WHERE idade >=30 AND idade <=58";
     //String sql = "SELECT * FROM usuarios WHERE idade BETWEEN 18 AND 58";
     //String sql = "SELECT * FROM usuarios WHERE nome='Maria Silva'";
-    List usuarios = await database!
-        .rawQuery(sql); //conseguimos escrever a query que quisermos
+    List usuarios = await database!.rawQuery(sql);
     for (var usu in usuarios) {
-      print(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
+      print(" email: ${usu['email'].toString()}");
     }
   }
 
@@ -137,8 +135,6 @@ class Armazenamento {
         columns: ["id", "nome", "sobrenome", "senha"],
         where: "email = ?",
         whereArgs: [criptoEmail.toString()]);
-
-    print("oi: " + usuarios[0]["senha"]);
 
     return Future.value(usuarios);
   }
