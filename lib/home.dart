@@ -15,68 +15,54 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            // Where the linear gradient begins and ends
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-
-            colors: [
-              Color(0xFFbabdfa),
-              Color(0xFFdba0ff),
-            ],
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 230,
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 230,
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
+          Positioned(
+            top: 45,
+            right: 16,
+            child: Column(
+              children: [
+                IconButton(
+                  icon: const Icon(FontAwesomeIcons.gear),
+                  color: Colors.white,
+                  iconSize: 30,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Configuracao()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                IconButton(
+                  icon: const Icon(FontAwesomeIcons.circleInfo),
+                  color: Colors.white,
+                  iconSize: 30,
+                  onPressed: () {
+                    (Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Sobre()),
+                    ));
+                  },
+                ),
+              ],
             ),
-            Positioned(
-              top: 45,
-              right: 16,
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: const Icon(FontAwesomeIcons.gear),
-                    color: Colors.white,
-                    iconSize: 30,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Configuracao()),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  IconButton(
-                    icon: const Icon(FontAwesomeIcons.circleInfo),
-                    color: Colors.white,
-                    iconSize: 30,
-                    onPressed: () {
-                      (Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Sobre()),
-                      ));
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

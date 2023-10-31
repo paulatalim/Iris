@@ -78,31 +78,33 @@ class _DadosState extends State<Dados> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            // Where the linear gradient begins and ends
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      backgroundColor: Colors.transparent,
+      body:
+          // Container(
+          // decoration: const BoxDecoration(
+          //   gradient: LinearGradient(
+          //     // Where the linear gradient begins and ends
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight,
 
-            colors: [
-              Color(0xFFDFE0FB),
-              Color(0xFFECCCFF),
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              boxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
-              boxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
-              boxNumber(
-                  'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
-              boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
-            ],
-          ),
+          //     colors: [
+          //       Color(0xFFDFE0FB),
+          //       Color(0xFFECCCFF),
+          //     ],
+          //   ),
+          // ),
+          // child:
+          Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            boxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
+            boxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
+            boxNumber(
+                'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
+            boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
+          ],
         ),
       ),
     );

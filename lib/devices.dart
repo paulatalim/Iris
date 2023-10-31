@@ -64,6 +64,7 @@ class _DevicesState extends State<Devices> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -134,11 +135,9 @@ class _DevicesState extends State<Devices> {
                       width: MediaQuery.of(context).size.width,
                       height: 0.9 * MediaQuery.of(context).size.height,
                       decoration: const BoxDecoration(
-                        // color: Color.fromARGB(200, 255, 255, 255),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30),
                             topRight: Radius.circular(30)),
-                        // BorderRadius.circular(20)
                       ),
                       padding: const EdgeInsets.only(
                           top: 30.0, left: 0, right: 0, bottom: 60.0),
@@ -149,7 +148,7 @@ class _DevicesState extends State<Devices> {
                             width: 50,
                             height: 6,
                             decoration: BoxDecoration(
-                                color: const Color.fromARGB(164, 78, 78, 78),
+                                color: const Color.fromARGB(153, 78, 78, 78),
                                 borderRadius: BorderRadius.circular(50)),
                           ),
                           SizedBox(

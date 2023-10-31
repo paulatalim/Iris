@@ -29,21 +29,10 @@ class _UserScreen extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            // Where the linear gradient begins and ends
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-
-            colors: [
-              Color(0xFFDFE0FB),
-              Color(0xFFECCCFF),
-            ],
-          ),
-        ),
 
         //Esqueleto do Corpo
         child: Column(
