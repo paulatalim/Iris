@@ -42,7 +42,7 @@ class _UserSingIn extends State<UserSingIn> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   //Texto superior
-                  Container(
+                  SizedBox(
                       height: 70,
                       child: Text(
                         'Criar um usuário',
