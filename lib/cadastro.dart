@@ -4,6 +4,7 @@ import 'armazenamento.dart';
 import 'usuario.dart';
 import 'loginmain.dart';
 import 'menu.dart';
+import 'sharedpreference.dart';
 
 class UserSingIn extends StatefulWidget {
   const UserSingIn({super.key});
@@ -38,6 +39,9 @@ class _UserSingIn extends State<UserSingIn> {
     //Salvando no banco de dados
     storage.salvarDados(
         usuario.nome, userSurname.text, usuario.email, userPss1.text);
+
+    // Salva no armazenamento local
+    setUserLoggedIn(usuario.email);
 
     //Redirecionando ao menu
     Navigator.push(
