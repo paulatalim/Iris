@@ -131,7 +131,7 @@ class Armazenamento {
     int retorno = await database!.update(
         "informacoes_adicionais", dadosInfoAdicional,
         where: "id = ?", whereArgs: [id]);
-    print("Info Adicional Atualizada: $retorno");
+    debugPrint("Info Adicional Atualizada: $retorno");
   }
 
   Future<List> buscarInfoAdicional(int usuarioId) async {
@@ -140,7 +140,7 @@ class Armazenamento {
         where: "usuario_id = ?",
         whereArgs: [usuarioId]);
 
-    return Future.value(infoAdicional[0]);
+    return Future.value(infoAdicional);
   }
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas

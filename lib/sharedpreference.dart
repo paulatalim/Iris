@@ -14,8 +14,6 @@ Future<bool> isUserLoggedIn() async {
 
   // Recupera os dados do usuario
   if (email.compareTo('') != 0) {
-    print(email);
-
     List dados = await storage.buscarUsuario(email);
 
     // Verifica se o registro exite
