@@ -12,11 +12,10 @@ class Armazenamento {
   Armazenamento() {
     if (database == null) {
       _initdatabase();
-      // _recuperarBancoDados();
     }
   }
 
-  void _initdatabase() async {
+  Future<void> _initdatabase() async {
     caminhoBancoDados = await getDatabasesPath();
     localBancoDados = join(caminhoBancoDados, "dados.db");
     database = await _recuperarBancoDados();
@@ -135,7 +134,7 @@ class Armazenamento {
     print("Info Adicional Atualizada: $retorno");
   }
 
-  Future<Map> buscarInfoAdicional(int usuarioId) async {
+  Future<List> buscarInfoAdicional(int usuarioId) async {
     List infoAdicional = await database!.query("informacoes_adicionais",
         columns: ["peso", "temperatura", "altura", "imc"],
         where: "usuario_id = ?",
@@ -148,6 +147,11 @@ class Armazenamento {
   /// informações ou vazia, caso não encontre o registro
   Future<List> buscarUsuario(String email) async {
     dynamic criptoEmail = _criptografar(email);
+
+    if (database == null) {
+      await _initdatabase();
+    }
+
     List usuarios = await database!.query("usuarios",
         columns: ["id", "nome", "sobrenome", "senha"],
         where: "email = ?",
