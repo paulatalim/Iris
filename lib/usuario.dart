@@ -34,4 +34,4 @@ class User {
   set temperatura(value) => _temperatura = value;
 }
 
-User usuario = new User();
+User usuario = User();
