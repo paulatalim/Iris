@@ -83,56 +83,19 @@ class Armazenamento {
     int id = await database!.insert("usuarios", dadosUsuario);
     debugPrint("Salvo: $id ");
 
+    // Adiciona as informacoes adinais zeradas
+    Map<String, dynamic> dadosInfoAdicional = {
+      "usuario_id": id,
+      "peso": 0,
+      "temperatura": 0,
+      "altura": 0,
+      "imc": 0,
+    };
+
+    // Adiciona informacoes no banco de dados
+    await database!.insert("informacoes_adicionais", dadosInfoAdicional);
+
     return Future.value(id);
-  }
-
-  Future<int> salvarInfoAdicional(int usuarioId, double peso, double temperatura, double altura, double imc) async {
-  Map<String, dynamic> dadosInfoAdicional = {
-    "usuario_id": usuarioId,
-    "peso": peso,
-    "temperatura": temperatura,
-    "altura": altura,
-    "imc": imc,
-  };
-
-  int id = await database!.insert("informacoes_adicionais", dadosInfoAdicional);
-  print("Info Adicional Salva: $id");
-
-  return Future.value(id);
-}
-
-  dynamic listarUsuarios() async {
-    String sql = "SELECT * FROM usuarios";
-    //String sql = "SELECT * FROM usuarios WHERE idade=58";
-    //String sql = "SELECT * FROM usuarios WHERE idade >=30 AND idade <=58";
-    //String sql = "SELECT * FROM usuarios WHERE idade BETWEEN 18 AND 58";
-    //String sql = "SELECT * FROM usuarios WHERE nome='Maria Silva'";
-    List usuarios = await database!
-        .rawQuery(sql); //conseguimos escrever a query que quisermos
-    for (var usu in usuarios) {
-      debugPrint(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
-    }
-  }
-
-  dynamic listarUmUsuario(int id) async {
-    List usuarios = await database!.query("usuarios",
-        columns: ["id", "nome", "idade"], where: "id = ?", whereArgs: [id]);
-    for (var usu in usuarios) {
-      debugPrint(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
-    }
-  }
-
-  excluirUsuario(String email) async {
-    // Cripotografa o email a ser buscado
-    String criptoEmail = _criptografar(email);
-
-    // Busca e exclusão de registro aprtir do email
-    int retorno = await database!.delete("usuarios",
-        where: "email = ?", //caracter curinga
-        whereArgs: [criptoEmail]);
-    debugPrint("Itens excluidos: ${retorno.toString()}");
   }
 
   dynamic atualizarUsuario(
@@ -151,25 +114,29 @@ class Armazenamento {
     debugPrint("Itens atualizados: ${retorno.toString()}");
   }
 
-  Future<void> atualizarInfoAdicional(int id, double peso, double temperatura, double altura, double imc) async {
-  Map<String, dynamic> dadosInfoAdicional = {
-    "peso": peso,
-    "temperatura": temperatura,
-    "altura": altura,
-    "imc": imc,
-  };
+  Future<void> atualizarInfoAdicional(int id, double peso, double temperatura,
+      double altura, double imc) async {
+    Map<String, dynamic> dadosInfoAdicional = {
+      "peso": peso,
+      "temperatura": temperatura,
+      "altura": altura,
+      "imc": imc,
+    };
 
-  int retorno = await database!.update("informacoes_adicionais", dadosInfoAdicional,
-      where: "id = ?", whereArgs: [id]);
-  print("Info Adicional Atualizada: $retorno");
-}
+    int retorno = await database!.update(
+        "informacoes_adicionais", dadosInfoAdicional,
+        where: "id = ?", whereArgs: [id]);
+    print("Info Adicional Atualizada: $retorno");
+  }
 
-  Future<List<Map<String, dynamic>>> buscarInfoAdicional(int usuarioId) async {
-  String sql = "SELECT * FROM informacoes_adicionais WHERE usuario_id = ?";
-  List<Map<String, dynamic>> infoAdicional = await database!.rawQuery(sql, [usuarioId]);
+  Future<Map> buscarInfoAdicional(int usuarioId) async {
+    List infoAdicional = await database!.query("informacoes_adicionais",
+        columns: ["peso", "temperatura", "altura", "imc"],
+        where: "usuario_id = ?",
+        whereArgs: [usuarioId]);
 
-  return Future.value(infoAdicional);
-}
+    return Future.value(infoAdicional[0]);
+  }
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas
   /// informações ou vazia, caso não encontre o registro
