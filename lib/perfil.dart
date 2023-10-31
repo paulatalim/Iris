@@ -115,7 +115,7 @@ class _UserScreen extends State<UserScreen> {
                 //Botão para realizar log-off
                 TextButton(
                   onPressed: () {
-                    setUserLoggedIn(false);
+                    setUserLoggedIn('');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
