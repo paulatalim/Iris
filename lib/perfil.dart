@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iris_app/sharedpreference.dart';
 
 import 'loginmain.dart';
+import 'usuario.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -59,7 +61,7 @@ class _UserScreen extends State<UserScreen> {
                   children: [
                     //Campo de texto Nome usuario
                     Text(
-                      "Nome do usuário",
+                      usuario.nome,
                       style: styleBoxTitle(),
                     ),
                     const SizedBox(height: 30),
@@ -114,6 +116,7 @@ class _UserScreen extends State<UserScreen> {
                 //Botão para realizar log-off
                 TextButton(
                   onPressed: () {
+                    setUserLoggedIn('');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
