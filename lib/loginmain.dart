@@ -1,9 +1,11 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+
 import 'cadastro.dart';
 import 'menu.dart';
 import 'armazenamento.dart';
 import 'usuario.dart';
+import 'sharedpreference.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -39,6 +41,8 @@ class _UserLogin extends State<UserLogin> {
       usuario.id = userLoad[0]["id"]; //Carregando o ID
       usuario.nome = userLoad[0]["nome"]; //Carregando nome
       usuario.email = user; //Carregando e-mail
+
+      setUserLoggedIn(true);
 
       Navigator.push(
         context,
@@ -133,6 +137,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
+                          setUserLoggedIn(true);
                           _login(); //Funçaõ de login declarada no inicio da classe
                         },
                         child: const Text(

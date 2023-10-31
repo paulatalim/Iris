@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart';
@@ -31,10 +32,22 @@ class Armazenamento {
           senha VARCHAR
         );''';
 
+    // Codigo SQL para criar a tabela de informações adicionais com chave estrangeira
+    String infoAdicional = '''CREATE TABLE informacoes_adicionais (
+          id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          peso REAL,
+          temperatura REAL,
+          altura REAL,
+          imc REAL,
+          usuario_id INTEGER,
+          FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        );''';
+
     // Abre e cria a tabela
     database = await openDatabase(localBancoDados, version: 1,
         onCreate: (database, databaseVersaoRecente) {
       database.execute(conta);
+      database.execute(infoAdicional);
     });
 
     return database;
@@ -73,41 +86,21 @@ class Armazenamento {
 
     // Adiciona informacao no banco de dados
     int id = await database!.insert("usuarios", dadosUsuario);
-    print("Salvo: $id ");
+    debugPrint("Salvo: $id ");
+
+    // Adiciona as informacoes adinais zeradas
+    Map<String, dynamic> dadosInfoAdicional = {
+      "usuario_id": id,
+      "peso": 0,
+      "temperatura": 0,
+      "altura": 0,
+      "imc": 0,
+    };
+
+    // Adiciona informacoes no banco de dados
+    await database!.insert("informacoes_adicionais", dadosInfoAdicional);
 
     return Future.value(id);
-  }
-
-  dynamic listarUsuarios() async {
-    String sql = "SELECT * FROM usuarios";
-    //String sql = "SELECT * FROM usuarios WHERE idade=58";
-    //String sql = "SELECT * FROM usuarios WHERE idade >=30 AND idade <=58";
-    //String sql = "SELECT * FROM usuarios WHERE idade BETWEEN 18 AND 58";
-    //String sql = "SELECT * FROM usuarios WHERE nome='Maria Silva'";
-    List usuarios = await database!.rawQuery(sql);
-    for (var usu in usuarios) {
-      print(" email: ${usu['email'].toString()}");
-    }
-  }
-
-  dynamic listarUmUsuario(int id) async {
-    List usuarios = await database!.query("usuarios",
-        columns: ["id", "nome", "idade"], where: "id = ?", whereArgs: [id]);
-    for (var usu in usuarios) {
-      print(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
-    }
-  }
-
-  excluirUsuario(String email) async {
-    // Cripotografa o email a ser buscado
-    dynamic criptoEmail = _criptografar(email);
-
-    // Busca e exclusão de registro aprtir do email
-    int retorno = await database!.delete("usuarios",
-        where: "email = ?", //caracter curinga
-        whereArgs: [criptoEmail.toString()]);
-    print("Itens excluidos: " + retorno.toString());
   }
 
   dynamic atualizarUsuario(
@@ -124,7 +117,31 @@ class Armazenamento {
     int retorno = await database!.update("usuarios", dadosUsuario,
         where: "id = ?", //caracter curinga
         whereArgs: [id]);
-    print("Itens atualizados: " + retorno.toString());
+    debugPrint("Itens atualizados: ${retorno.toString()}");
+  }
+
+  Future<void> atualizarInfoAdicional(int id, double peso, double temperatura,
+      double altura, double imc) async {
+    Map<String, dynamic> dadosInfoAdicional = {
+      "peso": peso,
+      "temperatura": temperatura,
+      "altura": altura,
+      "imc": imc,
+    };
+
+    int retorno = await database!.update(
+        "informacoes_adicionais", dadosInfoAdicional,
+        where: "id = ?", whereArgs: [id]);
+    print("Info Adicional Atualizada: $retorno");
+  }
+
+  Future<Map> buscarInfoAdicional(int usuarioId) async {
+    List infoAdicional = await database!.query("informacoes_adicionais",
+        columns: ["peso", "temperatura", "altura", "imc"],
+        where: "usuario_id = ?",
+        whereArgs: [usuarioId]);
+
+    return Future.value(infoAdicional[0]);
   }
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas

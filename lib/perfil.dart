@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iris_app/sharedpreference.dart';
 
 import 'loginmain.dart';
 import 'usuario.dart';
@@ -114,6 +115,7 @@ class _UserScreen extends State<UserScreen> {
                 //Botão para realizar log-off
                 TextButton(
                   onPressed: () {
+                    setUserLoggedIn(false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
