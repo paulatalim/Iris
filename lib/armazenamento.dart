@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart';
@@ -30,7 +31,7 @@ class Armazenamento {
           senha VARCHAR
         );''';
 
-     // Codigo SQL para criar a tabela de informações adicionais com chave estrangeira
+    // Codigo SQL para criar a tabela de informações adicionais com chave estrangeira
     String infoAdicional = '''CREATE TABLE informacoes_adicionais (
           id INTEGER PRIMARY KEY AUTOINCREMENT, 
           peso REAL,
@@ -80,7 +81,7 @@ class Armazenamento {
 
     // Adiciona informacao no banco de dados
     int id = await database!.insert("usuarios", dadosUsuario);
-    print("Salvo: $id ");
+    debugPrint("Salvo: $id ");
 
     return Future.value(id);
   }
@@ -94,7 +95,7 @@ class Armazenamento {
     List usuarios = await database!
         .rawQuery(sql); //conseguimos escrever a query que quisermos
     for (var usu in usuarios) {
-      print(
+      debugPrint(
           " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
     }
   }
@@ -103,7 +104,7 @@ class Armazenamento {
     List usuarios = await database!.query("usuarios",
         columns: ["id", "nome", "idade"], where: "id = ?", whereArgs: [id]);
     for (var usu in usuarios) {
-      print(
+      debugPrint(
           " id: ${usu['id'].toString()} nome: ${usu['nome']} email: ${usu['email'].toString()}");
     }
   }
@@ -116,7 +117,7 @@ class Armazenamento {
     int retorno = await database!.delete("usuarios",
         where: "email = ?", //caracter curinga
         whereArgs: [criptoEmail]);
-    print("Itens excluidos: " + retorno.toString());
+    debugPrint("Itens excluidos: ${retorno.toString()}");
   }
 
   dynamic atualizarUsuario(
@@ -132,7 +133,7 @@ class Armazenamento {
     int retorno = await database!.update("usuarios", dadosUsuario,
         where: "id = ?", //caracter curinga
         whereArgs: [id]);
-    print("Itens atualizados: " + retorno.toString());
+    debugPrint("Itens atualizados: ${retorno.toString()}");
   }
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas
