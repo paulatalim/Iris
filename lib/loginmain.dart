@@ -34,15 +34,16 @@ class _UserLogin extends State<UserLogin> {
         mensagemErro = 'Usuario ou Senha inválidos.';
       });
     } else {
-      print('login');
+      debugPrint('login');
       List userLoad;
       userLoad =
           await storage.buscarUsuario(user); //Carregando o usuario existente
       usuario.id = userLoad[0]["id"]; //Carregando o ID
       usuario.nome = userLoad[0]["nome"]; //Carregando nome
+      usuario.sobrenome = userLoad[0]["sobrenome"];
       usuario.email = user; //Carregando e-mail
 
-      setUserLoggedIn(true);
+      setUserLoggedIn(user);
 
       Navigator.push(
         context,
@@ -106,7 +107,7 @@ class _UserLogin extends State<UserLogin> {
                     ),
                     Text(
                       mensagemErro,
-                      style: TextStyle(color: Colors.red),
+                      style: const TextStyle(color: Colors.red),
                     )
                   ]),
                 ),
@@ -137,8 +138,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          setUserLoggedIn(true);
-                          _login(); //Funçaõ de login declarada no inicio da classe
+                          _login();
                         },
                         child: const Text(
                           //Botão para realizar login
