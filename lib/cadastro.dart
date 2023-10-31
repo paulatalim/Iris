@@ -49,18 +49,20 @@ class _UserSingIn extends State<UserSingIn> {
   void checarEmail() {
     String email = userAcc.text;
 
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
 
-    if(emailValid){
+    if (emailValid) {
       //É um e-mail válido
       checarSenha();
-    }
-    else{
+    } else {
       setState(() {
         erroCadastro = 'Verifique se o e-mail está correto.';
       });
     }
   }
+
   void checarSenha() {
     String password = userPss1.text;
 
@@ -72,10 +74,10 @@ class _UserSingIn extends State<UserSingIn> {
     if (hasUppercase && hasLowercase && hasDigits && hasLenght >= 8) {
       // A senha possui pelo menos uma letra maiúscula, uma letra minúscula e um número
       _criarUser();
-    } 
-    else {
+    } else {
       setState(() {
-        erroCadastro ='A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
+        erroCadastro =
+            'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
       });
     }
   }
@@ -83,8 +85,7 @@ class _UserSingIn extends State<UserSingIn> {
   void validarSenha() {
     if (userPss1.text.compareTo(userPss2.text) == 0) {
       checarSenha();
-    } 
-    else {
+    } else {
       setState(() {
         erroCadastro = 'As senhas devem ser iguais.';
       });
@@ -240,7 +241,7 @@ class _UserSingIn extends State<UserSingIn> {
                       //Caixa de texto que aparecerá uma mensagem caso as senhas estejam erradas
                       Text(
                         erroCadastro,
-                        style: TextStyle(color: Colors.red),
+                        style: const TextStyle(color: Colors.red),
                       ),
 
                       //Botão de criação de conta
