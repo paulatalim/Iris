@@ -85,6 +85,21 @@ class Armazenamento {
     return Future.value(id);
   }
 
+  Future<int> salvarInfoAdicional(int usuarioId, double peso, double temperatura, double altura, double imc) async {
+  Map<String, dynamic> dadosInfoAdicional = {
+    "usuario_id": usuarioId,
+    "peso": peso,
+    "temperatura": temperatura,
+    "altura": altura,
+    "imc": imc,
+  };
+
+  int id = await database!.insert("informacoes_adicionais", dadosInfoAdicional);
+  print("Info Adicional Salva: $id");
+
+  return Future.value(id);
+}
+
   dynamic listarUsuarios() async {
     String sql = "SELECT * FROM usuarios";
     //String sql = "SELECT * FROM usuarios WHERE idade=58";
@@ -134,6 +149,26 @@ class Armazenamento {
         whereArgs: [id]);
     print("Itens atualizados: " + retorno.toString());
   }
+
+  Future<void> atualizarInfoAdicional(int id, double peso, double temperatura, double altura, double imc) async {
+  Map<String, dynamic> dadosInfoAdicional = {
+    "peso": peso,
+    "temperatura": temperatura,
+    "altura": altura,
+    "imc": imc,
+  };
+
+  int retorno = await database!.update("informacoes_adicionais", dadosInfoAdicional,
+      where: "id = ?", whereArgs: [id]);
+  print("Info Adicional Atualizada: $retorno");
+}
+
+  Future<List<Map<String, dynamic>>> buscarInfoAdicional(int usuarioId) async {
+  String sql = "SELECT * FROM informacoes_adicionais WHERE usuario_id = ?";
+  List<Map<String, dynamic>> infoAdicional = await database!.rawQuery(sql, [usuarioId]);
+
+  return Future.value(infoAdicional);
+}
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas
   /// informações ou vazia, caso não encontre o registro
