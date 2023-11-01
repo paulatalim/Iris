@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'voices.dart';
 
+
 import 'menu.dart';
 // import 'speech.dart';
 // import 'speek.dart';
@@ -12,6 +13,9 @@ void main() {
   // Configuração que permite a utilizacao do app somente com a tela no modo retrato
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  voice.speek("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  print('oiii');
 
   runApp(MaterialApp(
     title: 'Iris',
