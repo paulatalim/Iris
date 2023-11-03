@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'voices.dart';
 import 'configuracao.dart';
 import 'sobre.dart';
+import 'main.dart';
+
+
+RecursoDeVoz texto_home = RecursoDeVoz();
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -14,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    //texto_home .speek("Teste aplicativo iris ");
     return Stack(
       children: [
         Center(

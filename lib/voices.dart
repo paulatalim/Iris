@@ -21,8 +21,8 @@ class RecursoDeVoz {
 
     // Inicializa os atributos
     _speed = 1.0;
-    _tom = 0.5;
-    _volume = 0.5;
+    _tom = 1.0;
+    _volume = 0.8;
     _resposta = '';
 
     // Configurações dos recursos de vozes
@@ -54,8 +54,8 @@ class RecursoDeVoz {
   void speek(String text) {
     _textToSpeech.setLanguage('pt-br');
     _textToSpeech.setVolume(_volume);
-    _textToSpeech.setSpeechRate(_tom);
-    _textToSpeech.setPitch(_speed);
+    _textToSpeech.setSpeechRate(_speed);
+    _textToSpeech.setPitch(_tom);
 
     _textToSpeech.speak(text);
   }

@@ -14,8 +14,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  voice.speek("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-  print('oiii');
+  voice.speek("Como posso ajudar? ");
 
   runApp(MaterialApp(
     title: 'Iris',
