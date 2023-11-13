@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
 import 'menu.dart';
+import 'voices.dart';
+
+RecursoDeVoz texto_login = RecursoDeVoz();
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -10,8 +13,18 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLogin extends State<UserLogin> {
+
   @override
   Widget build(BuildContext context) {
+
+    texto_login.speek("Entre com a sua conta ou crie uma nova conta!");
+    //Se criar conta: entrar pagina cadastro
+    //se entrar conta:
+    //texto_login.speek("Diga o seu email");
+    //Escuta e escreve no campo email
+    //texto_login.speek("seu email é:" string email);
+
+
     return Scaffold(
       body: Container(
         height: double.infinity,

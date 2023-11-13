@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    //texto_home .speek("Teste aplicativo iris ");
+
     return Stack(
       children: [
         Center(

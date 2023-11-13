@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'voices.dart';
 import 'loginmain.dart';
+
+RecursoDeVoz texto_perfil = RecursoDeVoz();
 
 class UserScreen extends StatefulWidget {
   final String title;

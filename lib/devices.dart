@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'voices.dart';
+
+RecursoDeVoz texto_devices = RecursoDeVoz();
+
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -57,6 +61,17 @@ class _DevicesState extends State<Devices> {
 
   @override
   Widget build(BuildContext context) {
+    ///FALAS
+    //if (todos os 4 dispositivos estiverem conectados nas suas devidas entradas)
+      //esp
+      //sensores da balança
+      //sensor ultrassonico
+      //termometro
+    texto_devices.speek("todos os dispositivos estao conectados!");
+    //else
+      //for (verifica cada uma das entrdas do esp)
+        //texto_devices.speek( x "esta desconectado!");
+
     return Column(
       children: [
         Container(
