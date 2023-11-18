@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 import 'menu.dart';
 
@@ -70,7 +69,7 @@ class _SobreState extends State<Sobre> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Menubar()),
+                                  builder: (context) => const Menu()),
                             ),
                           );
                         }),
