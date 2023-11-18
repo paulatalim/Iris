@@ -17,10 +17,9 @@ class UserLogin extends StatefulWidget {
 class _UserLogin extends State<UserLogin> {
   Armazenamento storage = Armazenamento();
 
-  TextEditingController userAcc =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
-  TextEditingController userPss =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  //TextEdinting exclusivo para armazenar dados do usuario
+  TextEditingController userAcc = TextEditingController(); // email
+  TextEditingController userPss = TextEditingController(); // senha 
 
   //Mensagem vazia para realizar alteração caso necessário
   String mensagemErro = ''; 

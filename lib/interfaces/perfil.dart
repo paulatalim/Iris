@@ -15,6 +15,7 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreen extends State<UserScreen> {
+  /// Estiliza textos na pagina
   TextStyle styleBoxTitle() {
     return GoogleFonts.dosis(
       textStyle: const TextStyle(

@@ -11,6 +11,7 @@ class Dados extends StatefulWidget {
 }
 
 class _DadosState extends State<Dados> {
+  /// Cria o card onde possui os dados do usuario
   Container boxNumber(String texto, String numero, String unidade) {
     return Container(
       // margin: EdgeInsets.all(30.0), //Espaço entre as caixinhas
@@ -79,22 +80,7 @@ class _DadosState extends State<Dados> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body:
-          // Container(
-          // decoration: const BoxDecoration(
-          //   gradient: LinearGradient(
-          //     // Where the linear gradient begins and ends
-          //     begin: Alignment.topLeft,
-          //     end: Alignment.bottomRight,
-
-          //     colors: [
-          //       Color(0xFFDFE0FB),
-          //       Color(0xFFECCCFF),
-          //     ],
-          //   ),
-          // ),
-          // child:
-          Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,

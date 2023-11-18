@@ -12,6 +12,8 @@ class Sobre extends StatefulWidget {
 }
 
 class _SobreState extends State<Sobre> {
+
+  /// Estiliza campo integrantes
   TextStyle integranteStyle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
@@ -21,6 +23,7 @@ class _SobreState extends State<Sobre> {
     );
   }
 
+  // Estiliza subtitulos da pagina
   TextStyle subtitle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
