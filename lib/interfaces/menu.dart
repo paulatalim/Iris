@@ -7,14 +7,14 @@ import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
 
-class Menubar extends StatefulWidget {
-  const Menubar({super.key});
+class Menu extends StatefulWidget {
+  const Menu({super.key});
 
   @override
-  State<Menubar> createState() => _MenubarState();
+  State<Menu> createState() => _MenuState();
 }
 
-class _MenubarState extends State<Menubar> {
+class _MenuState extends State<Menu> {
   int _currentIndex = 0;
 
   // Colocar nomes das telas na lista
