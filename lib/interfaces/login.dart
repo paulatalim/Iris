@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'cadastro.dart';
 import 'menu.dart';
-import 'armazenamento.dart';
-import 'usuario.dart';
-import 'sharedpreference.dart';
+import '../storage/armazenamento.dart';
+import '../storage/usuario.dart';
+import '../storage/sharedpreference.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});

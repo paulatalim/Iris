@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'sharedpreference.dart';
-import 'loginmain.dart';
+import '../storage/sharedpreference.dart';
+import 'login.dart';
 import 'menu.dart';
 
 void main() async {

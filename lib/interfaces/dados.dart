@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'usuario.dart';
+import '../storage/usuario.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
