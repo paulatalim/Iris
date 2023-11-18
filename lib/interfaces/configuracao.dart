@@ -80,7 +80,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Menubar()),
+                                  builder: (context) => const Menu()),
                             ),
                           );
                         }),
