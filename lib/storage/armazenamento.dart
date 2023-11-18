@@ -15,14 +15,16 @@ class Armazenamento {
     }
   }
 
+  /// Inicializa o banco de dados, resgatando dados antigos caso existir
   Future<void> _initdatabase() async {
     caminhoBancoDados = await getDatabasesPath();
     localBancoDados = join(caminhoBancoDados, "dados.db");
     database = await _recuperarBancoDados();
   }
 
+  /// Cria e abre as tabelas do banco de dados
   dynamic _recuperarBancoDados() async {
-    // Codigo SQL para criar a tabela
+    // Codigo SQL para criar a tabela de usuario
     String conta = '''CREATE TABLE usuarios (
           id INTEGER PRIMARY KEY AUTOINCREMENT, 
           nome VARCHAR,
@@ -52,17 +54,20 @@ class Armazenamento {
     return database;
   }
 
-  /// Criptografa informacoes sensiveis
-  dynamic _criptografar(var atribute) {
+  /// Criptografa informacoes sensiveis,
+  /// retona o [atribute], criptografado
+  String _criptografar(var atribute) {
     // Converte a varivel para string e depois para bytes
     var bytes = utf8.encode(atribute.toString());
 
     // Criptografa os bytes na criptografia MD5
     var digest = md5.convert(bytes);
 
-    return digest;
+    return digest.toString();
   }
 
+  /// Salva os dados [nome], [sobrenome], [email] e [senha] em uma nova linha no 
+  /// banco de dados, inicializa as informacoes adicionais como 0 e retorna o id do usuario
   Future<int> salvarDados(
       String nome, String sobrenome, String email, String senha) async {
     // Verifica se ja ha registro do email do usuario
@@ -102,16 +107,17 @@ class Armazenamento {
     return Future.value(id);
   }
 
+  /// Atualiza os dados do usuario
   dynamic atualizarUsuario(
       int id, String nome, String sobrenome, String email, String senha) async {
-    dynamic emailCripto = _criptografar(email);
-    dynamic senhaCripto = _criptografar(senha);
+    String emailCripto = _criptografar(email);
+    String senhaCripto = _criptografar(senha);
 
     Map<String, dynamic> dadosUsuario = {
       "nome": nome,
       "sobrenome": sobrenome,
-      "email": emailCripto.toString(),
-      "senha": senhaCripto.toString()
+      "email": emailCripto,
+      "senha": senhaCripto
     };
     int retorno = await database!.update("usuarios", dadosUsuario,
         where: "id = ?", //caracter curinga
@@ -119,6 +125,7 @@ class Armazenamento {
     debugPrint("Itens atualizados: ${retorno.toString()}");
   }
 
+  /// Atualiza as informacoes adicionais do usuario do [id] no dados do usuario
   Future<void> atualizarInfoAdicional(int id, double peso, double temperatura,
       double altura, double imc) async {
     Map<String, dynamic> dadosInfoAdicional = {
@@ -134,13 +141,14 @@ class Armazenamento {
     debugPrint("Info Adicional Atualizada: $retorno");
   }
 
-  Future<List> buscarInfoAdicional(int usuarioId) async {
+  /// Pesquisa no banco de dados atraves do [id] as informacoes adicionais
+  Future<Map> buscarInfoAdicional(int id) async {
     List infoAdicional = await database!.query("informacoes_adicionais",
         columns: ["peso", "temperatura", "altura", "imc"],
         where: "usuario_id = ?",
-        whereArgs: [usuarioId]);
+        whereArgs: [id]);
 
-    return Future.value(infoAdicional);
+    return Future.value(infoAdicional[0]);
   }
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas
@@ -169,8 +177,8 @@ class Armazenamento {
     // Caso nao encontrar a senha
     if (usuario.isEmpty) {
       return false;
-    }
-    if (usuario[0]["senha"].toString().compareTo(senhaCripto.toString()) == 0) {
+    
+    } else if (usuario[0]["senha"].toString().compareTo(senhaCripto.toString()) == 0) {
       return Future.value(true);
     }
 
