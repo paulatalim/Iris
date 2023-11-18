@@ -16,40 +16,36 @@ class UserSingIn extends StatefulWidget {
 class _UserSingIn extends State<UserSingIn> {
   Armazenamento storage = Armazenamento();
 
-  TextEditingController userAcc =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
-  TextEditingController userPss1 =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
-  TextEditingController userPss2 =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
-  TextEditingController userName =
-      TextEditingController(); //TextEdinting exclusivo para armazenar o nome do usuario
-  TextEditingController userSurname =
-      TextEditingController(); //TextEdinting exclusivo para armazenar o sobremenome do usuario
+  // Armazena os dados do usuarios
+  TextEditingController userAcc = TextEditingController(); // conta
+  TextEditingController userPss1 = TextEditingController(); // senha
+  TextEditingController userPss2 = TextEditingController(); // segunda senha
+  TextEditingController userName = TextEditingController(); // nome
+  TextEditingController userSurname = TextEditingController(); // sobremenome
 
-  String erroCadastro =
-      ''; //Mensagem vazia para realizar alteração caso necessário
+  //Mensagem vazia para realizar alteração caso necessário
+  String erroCadastro = ''; 
 
+  /// Cria conta de usuario e depois redireciona a pagina para o menu
   void _criarUser() {
-    //Salvando na classe os dados existentes
-    usuario.email = userAcc.text;
-    usuario.nome = userName.text;
-    usuario.sobrenome = userSurname.text;
-
-    //Salvando no banco de dados
+    // Salva os dados no banco de dados
     storage.salvarDados(
-        usuario.nome, userSurname.text, usuario.email, userPss1.text);
+        usuario.nome, userSurname.text, userAcc.text, userPss1.text);
 
-    // Salva no armazenamento local
-    setUserLoggedIn(usuario.email);
+    // Salva os dados no armazenamento local
+    setUserLoggedIn(userAcc.text);
+
+    // Salva os dados na memoria principal
+    usuario.importarDados(userAcc.text);
 
     //Redirecionando ao menu
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Menubar()),
+      MaterialPageRoute(builder: (context) => const Menu()),
     );
   }
 
+  /// Valida o email
   void checarEmail() {
     String email = userAcc.text;
 
@@ -67,6 +63,7 @@ class _UserSingIn extends State<UserSingIn> {
     }
   }
 
+  /// Valida a nova senha
   void checarSenha() {
     String password = userPss1.text;
 
@@ -86,6 +83,7 @@ class _UserSingIn extends State<UserSingIn> {
     }
   }
 
+  /// Verifica se as senhas inseridas sao equivalentes
   void validarSenha() {
     if (userPss1.text.compareTo(userPss2.text) == 0) {
       checarSenha();
@@ -281,7 +279,9 @@ class _UserSingIn extends State<UserSingIn> {
                       ),
                     ],
                   )
-                ])),
+                ]
+              )
+            ),
       ),
     );
   }
