@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../storage/armazenamento.dart';
-import '../storage/usuario.dart';
+
 import 'login.dart';
 import 'menu.dart';
+import '../storage/armazenamento.dart';
+import '../storage/usuario.dart';
 import '../storage/sharedpreference.dart';
 
 class UserSingIn extends StatefulWidget {
   const UserSingIn({super.key});
-  // final String title;
+  
   @override
   State<UserSingIn> createState() => _UserSingIn();
 }

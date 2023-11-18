@@ -17,7 +17,10 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   int _currentIndex = 0;
 
-  // Colocar nomes das telas na lista
+  final Color _iconColorPressed = const Color(0xFFA000FF);
+  final Color _iconColorNotPressed = const Color(0xFF6B86EB);
+
+  // Lista das paginas contidas no menu
   final List<Widget> screens = [
     const HomeScreen(),
     const Devices(),
@@ -25,9 +28,7 @@ class _MenuState extends State<Menu> {
     const UserScreen(title: 'Nome Usuário'),
   ];
 
-  final Color _iconColorPressed = const Color(0xFFA000FF);
-  final Color _iconColorNotPressed = const Color(0xFF6B86EB);
-
+  // Lista das cores dos icones no menu
   final List<Color> _iconColor = [
     const Color(0xFFA000FF),
     const Color(0xFF6B86EB),
@@ -35,6 +36,7 @@ class _MenuState extends State<Menu> {
     const Color(0xFF6B86EB)
   ];
 
+  // Lista das cares de fundo das paginas
   final List<Color> _colorScreen = [
     const Color(0xFFbabdfa),
     const Color(0xFFdba0ff),
@@ -44,8 +46,8 @@ class _MenuState extends State<Menu> {
     const Color(0XFFe9edfc),
   ];
 
+  /// verifica o icone selecionado no menu e altera suas cores
   void _colorSelection(int index) {
-    print(_currentIndex);
     for (int i = 0; i < _iconColor.length; i++) {
       if (i != index) {
         _iconColor[i] = _iconColorNotPressed;

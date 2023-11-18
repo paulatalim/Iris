@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'menu.dart';
 
+// Lista das velocidades disponiveis
+List<String> speeds = <String>['1.0x', '2.0x', '3.0x'];
+
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
 
@@ -10,13 +13,12 @@ class Configuracao extends StatefulWidget {
   State<Configuracao> createState() => _ConfiguracaoState();
 }
 
-List<String> speeds = <String>['1.0x', '2.0x', '3.0x'];
-
 class _ConfiguracaoState extends State<Configuracao> {
   double valor = 50;
   Color boxColor = const Color(0xFFC7C9FF);
   String speedOption = speeds.first;
 
+  /// Estiliza os cards das configuracoes
   BoxDecoration styleBox() {
     return BoxDecoration(
       color: boxColor,
@@ -34,6 +36,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     );
   }
 
+  /// Estiliza o texto do item das configuracoes
   TextStyle styleBoxTitle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(

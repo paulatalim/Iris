@@ -1,16 +1,8 @@
-// import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
 
-class Devices extends StatefulWidget {
-  const Devices({super.key});
-
-  @override
-  State<Devices> createState() => _DevicesState();
-}
-
+/// Classe com as propriedades dos dispositivos
 class DispositivosDisponivel {
   String nome;
   String imagePath;
@@ -18,6 +10,7 @@ class DispositivosDisponivel {
   DispositivosDisponivel({required this.nome, required this.imagePath});
 }
 
+// Lista dos dispositivos diponiveis
 List<DispositivosDisponivel> dispositivo = [
   DispositivosDisponivel(
       nome: "Selecione um\ndispositivo",
@@ -30,6 +23,13 @@ List<DispositivosDisponivel> dispositivo = [
   DispositivosDisponivel(
       nome: "Balança", imagePath: 'assets/images/balanca.png')
 ];
+
+class Devices extends StatefulWidget {
+  const Devices({super.key});
+
+  @override
+  State<Devices> createState() => _DevicesState();
+}
 
 class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
