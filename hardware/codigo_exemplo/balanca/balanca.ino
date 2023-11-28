@@ -1,40 +1,77 @@
-/********************************************************************
-* Leitura do sensor de temperatura DS18B20 (v1.0).
-*
-* Realiza a leitura da temperatura utilizando sensor DS18B20.
-* Apos a leitura, no monitor serial ira imprimir os dados lidos.
-*
-* Copyright 2019 RoboCore.
-* Escrito por Renan Piva (10/04/2019).
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version (<https://www.gnu.org/licenses/>).
-*****************************************************************************/
+#include "HX711.h"
 
-// Inclusao das bibliotecas
-#include <OneWire.h>
-#include <DallasTemperature.h>
+#define LOADCELL_DOUT_PIN  23
+#define LOADCELL_SCK_PIN  22
 
-const int PINO_ONEWIRE = 12; // Define pino do sensor
-OneWire oneWire(PINO_ONEWIRE); // Cria um objeto OneWire
-DallasTemperature sensor(&oneWire); // Informa a referencia da biblioteca dallas temperature para Biblioteca onewire
-DeviceAddress endereco_temp; // Cria um endereco temporario da leitura do sensor
+HX711 escala;
+
+float fator_calibracao = - 45000; //-7050 worked for my 440lb max scale setup
+char comando; //declaracao da variavel que ira receber os comandos para alterar o fator de calibracao
+const int TEMPO_ESPERA = 1000; //declaracao da variavel de espera
 
 void setup() {
-  Serial.begin(9600); // Inicia a porta serial
-  Serial.println("Medindo Temperatura"); // Imprime a mensagem inicial
-  sensor.begin(); ; // Inicia o sensor
+  //mensagens do monitor serial
+  Serial.begin(9600);
+  Serial.println("Celula de carga - Calibracao de Peso");
+  Serial.println("Posicione um peso conhecido sobre a celula ao comecar as leituras");
+
+  escala.begin (LOADCELL_DOUT_PIN , LOADCELL_SCK_PIN); //inicializacao e definicao dos pinos DT e SCK dentro do objeto ESCALA
+
+  //realiza uma media entre leituras com a celula sem carga 
+  float media_leitura = escala.read_average(); 
+  Serial.print("Media de leituras com Celula sem carga: ");
+  Serial.print(media_leitura);
+  Serial.println();
+
+  escala.tare(); //zera a escala
 }
+
+void loop ()
+{
+  escala.set_scale(fator_calibracao); //ajusta a escala para o fator de calibracao
+
+  //verifica se o modulo esta pronto para realizar leituras
+  if (escala.is_ready())
+  {
+    //mensagens de leitura no monitor serial
+    Serial.print("Leitura: ");
+    Serial.print(escala.get_units(), 1); //retorna a leitura da variavel escala com a unidade quilogramas
+    Serial.print(" kg");
+    Serial.print(" \t Fator de Calibracao = ");
+    Serial.print(fator_calibracao);
+    Serial.println();
+
+  //alteracao do fator de calibracao
+    if(Serial.available())
+      {
+        comando = Serial.read();
+        switch (comando)
+        {
+          case 'x':
+          fator_calibracao = fator_calibracao - 100;
+          break;
+          case 'c':
+          fator_calibracao = fator_calibracao + 100;
+          break;
+          case 'v':
+          fator_calibracao = fator_calibracao - 10;
+          break;
+          case 'b':
+          fator_calibracao = fator_calibracao + 10;
+          break;
+          case 'n':
+          fator_calibracao = fator_calibracao - 1;
+          break;
+          case 'm':
+          fator_calibracao = fator_calibracao + 1;
+          break;
+        }
+      }
+    }
+    else
+    {
+      Serial.print("HX-711 ocupado");
+    }
+  delay(TEMPO_ESPERA);
   
-void loop() {
-  sensor.requestTemperatures(); // Envia comando para realizar a conversão de temperatura
-  if (!sensor.getAddress(endereco_temp,0)) { // Encontra o endereco do sensor no barramento
-    Serial.println("SENSOR NAO CONECTADO"); // Sensor conectado, imprime mensagem de erro
-  } else {
-    Serial.print("Temperatura = "); // Imprime a temperatura no monitor serial
-    Serial.println(sensor.getTempC(endereco_temp), 1); // Busca temperatura para dispositivo
-  }
-  delay(1000);
 }
