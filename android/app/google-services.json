@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "224015384929",
+    "project_id": "projeto-iris-puc",
+    "storage_bucket": "projeto-iris-puc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224015384929:android:05df23c0399a7c188c4520",
+        "android_client_info": {
+          "package_name": "com.example.iris_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnI2QPa6FOOHbWitvGDrXwgZMklTPJYhc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
