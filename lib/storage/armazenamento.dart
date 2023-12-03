@@ -142,13 +142,13 @@ class Armazenamento {
   }
 
   /// Pesquisa no banco de dados atraves do [id] as informacoes adicionais
-  Future<Map> buscarInfoAdicional(int id) async {
+  Future<List> buscarInfoAdicional(int id) async {
     List infoAdicional = await database!.query("informacoes_adicionais",
         columns: ["peso", "temperatura", "altura", "imc"],
         where: "usuario_id = ?",
         whereArgs: [id]);
 
-    return Future.value(infoAdicional[0]);
+    return Future.value(infoAdicional);
   }
 
   /// Busca o usuario atraves do [email] e retorna uma lista com suas
