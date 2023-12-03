@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 /// Classe com as propriedades dos dispositivos
 class DispositivosDisponivel {
@@ -100,7 +101,8 @@ class _DevicesState extends State<Devices> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          color: Color(0xFF373B8A), // Cor do texto
+                          // color: Color(0xFF373B8A), // Cor do texto
+                          color: Colors.white,
                           fontSize: 40,
                           fontWeight: FontWeight.w600, // Tamanho do texto
                         ),
@@ -115,7 +117,8 @@ class _DevicesState extends State<Devices> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          color: Color(0xFF373B8A), // Cor do texto
+                          // color: Color(0xFF373B8A), // Cor do texto
+                          color: Colors.white,
                           fontSize: 35, // Tamanho do texto
                         ),
                       ),
@@ -172,7 +175,8 @@ class _DevicesState extends State<Devices> {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
-                  ),
+                  ).animate()
+                    .moveY(begin: -600, end: -15, duration: 1500.ms, curve: Curves.decelerate),
                 ],
               ),
             )
