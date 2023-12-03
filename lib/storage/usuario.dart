@@ -28,16 +28,20 @@ class User {
 
     // Recupera os dados do usuario
     List dados = await storage.buscarUsuario(email);
-    id = dados[0]["id"]; //Carregando o ID
-    nome = dados[0]["nome"]; //Carregando nome
-    sobrenome = dados[0]["sobrenome"];
-    email = email;
+    if (dados.isNotEmpty){
+      id = dados[0]["id"]; //Carregando o ID
+      nome = dados[0]["nome"]; //Carregando nome
+      sobrenome = dados[0]["sobrenome"];
+      email = email;
+    }
 
-    Map infoAdicionais = await storage.buscarInfoAdicional(id);
-    peso = infoAdicionais["peso"];
-    altura = infoAdicionais["altura"];
-    temperatura = infoAdicionais["temperatura"];
-    imc = infoAdicionais["imc"];
+    List infoAdicionais = await storage.buscarInfoAdicional(id);
+    if (infoAdicionais.isNotEmpty) {
+      peso = infoAdicionais[0]["peso"];
+      altura = infoAdicionais[0]["altura"];
+      temperatura = infoAdicionais[0]["temperatura"];
+      imc = infoAdicionais[0]["imc"];
+    }
   }
 
   get peso => _peso;
