@@ -42,8 +42,8 @@ class _MenuState extends State<Menu> {
     const Color(0xFFdba0ff),
     const Color(0xFFDFE0FB),
     const Color(0xFFECCCFF),
-    const Color(0XFFf1d9ff),
     const Color(0XFFe9edfc),
+    const Color(0XFFf1d9ff),
   ];
 
   /// verifica o icone selecionado no menu e altera suas cores
@@ -71,12 +71,12 @@ class _MenuState extends State<Menu> {
             _currentIndex == 0
                 ? _colorScreen[0]
                 : _currentIndex == 1
-                    ? _colorScreen[5]
+                    ? _colorScreen[4]
                     : _colorScreen[3],
             _currentIndex == 0
                 ? _colorScreen[1]
                 : _currentIndex == 1
-                    ? _colorScreen[4]
+                    ? _colorScreen[5]
                     : _colorScreen[2]
           ],
         ),
