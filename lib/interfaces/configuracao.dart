@@ -14,7 +14,7 @@ class Configuracao extends StatefulWidget {
 }
 
 class _ConfiguracaoState extends State<Configuracao> {
-  double valor = 50;
+  double valor = 100;
   Color boxColor = const Color(0xFFC7C9FF);
   String speedOption = speeds.first;
 
