@@ -3,15 +3,21 @@
 #include <PubSubClient.h>
 
 /*** Definicoes para o MQTT ***/
-#define TOPICO_SUBSCRIBE_LED "topico_liga_desliga_led"
-#define TOPICO_PUBLISH_TEMPERATURA "topico_sensor_temperatura"
+#define TOPICO_SUBSCRIBE_SISTEMA "iris/atuador/sistema"
+#define TOPICO_SUBSCRIBE_BALANCA "iris/atuador/balanca"
+#define TOPICO_SUBSCRIBE_ALTURA "iris/atuador/altura"
+#define TOPICO_SUBSCRIBE_TEMPERATURA "iris/atuador/temperatura"
+#define TOPICO_PUBLISH_SISTEMA "iris/sensor/sistema"
+#define TOPICO_PUBLISH_BALANCA "iris/sensor/balanca"
+#define TOPICO_PUBLISH_ALTURA "iris/sensor/altura"
+#define TOPICO_PUBLISH_TEMPERATURA "iris/sensor/temperatura"
 #define ID_MQTT "LDDM_Iris"
 #define BROKER_MQTT "test.mosquitto.org"
 #define BROKER_PORT 1883
 
 // Configuracao Wifi
-#define SSID     "NET_2G43C248" // SSID / nome da rede WI-FI que deseja se conectar
-#define PASSWORD "F843C248"  // Senha da rede WI-FI que deseja se conectarz
+#define SSID     "NET_2G43C248" // nome da rede WI-FI que deseja se conectar
+#define PASSWORD "F843C248"  // Senha da rede WI-FI que deseja se conectar
 
 /*** SENSORES E CONTROLES ***/
 #define LED_BUILTIN 2
@@ -77,7 +83,10 @@ void reconnectMQTT() {
 
     if (MQTT.connect(ID_MQTT)) {
       Serial.println("Conectado com sucesso ao broker MQTT!");
-      MQTT.subscribe(TOPICO_SUBSCRIBE_LED);
+      MQTT.subscribe(TOPICO_SUBSCRIBE_SISTEMA);
+      MQTT.subscribe(TOPICO_SUBSCRIBE_BALANCA);
+      MQTT.subscribe(TOPICO_SUBSCRIBE_ALTURA);
+      MQTT.subscribe(TOPICO_SUBSCRIBE_TEMPERATURA);
     } else {
       Serial.println("Falha ao reconectar no broker.");
       Serial.println("Havera nova tentatica de conexao em 2s");
