@@ -1,6 +1,6 @@
+#include <PubSubClient.h>
 #include <arduino.h>
 #include <WiFi.h>
-#include <PubSubClient.h>
 
 /*** Definicoes para o MQTT ***/
 #define TOPICO_SUBSCRIBE_SISTEMA "iris/atuador/sistema"
@@ -28,7 +28,7 @@ WiFiClient espClient;          // Cria o objeto espClient
 PubSubClient MQTT(espClient);  // Instancia o Cliente MQTT passando o objeto espClient
 
 /** 
- * Inicializa e conecta-se na rede WI-FI desejada
+ * @brief Inicializa e conecta-se na rede WI-FI desejada
  */
 void initWiFi(void) {
   delay(10);
@@ -40,15 +40,16 @@ void initWiFi(void) {
 }
 
 /** 
- * Inicializa parâmetros de conexão MQTT
+ * @brief Inicializa parâmetros de conexão MQTT
  */
 void initMQTT(void) {
   MQTT.setServer(BROKER_MQTT, BROKER_PORT);  //informa qual broker e porta deve ser conectado
   MQTT.setCallback(mqtt_callback);
 }
 
-/** 
- * É chamada toda vez que uma informação de um dos tópicos subescritos chega
+/**
+ * @brief esta função é chamada toda vez que uma 
+ * informação de um dos tópicos subescritos chega
  */
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   String msg;
@@ -72,7 +73,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
 }
 
 /** 
- * reconecta-se ao broker MQTT (caso ainda não esteja conectado ou 
+ * @brief Reconecta-se ao broker MQTT (caso ainda não esteja conectado ou 
  * em caso de a conexão cair) em caso de sucesso na conexão ou reconexão, 
  * o subscribe dos tópicos é refeito.
  */
@@ -96,7 +97,7 @@ void reconnectMQTT() {
 }
 
 /** 
- * Verifica o estado das conexões WiFI e ao broker MQTT.
+ * @brief Verifica o estado das conexões WiFI e ao broker MQTT.
  * Em caso de desconexão (qualquer uma das duas), a conexão
  * é refeita.
  */
@@ -108,7 +109,7 @@ void VerificaConexoesWiFIEMQTT() {
 }
 
 /** 
- * Reconecta-se ao WiFi
+ * @brief Reconecta-se ao WiFi
  */
 void reconnectWiFi() {
   //se já está conectado a rede WI-FI, nada é feito.
