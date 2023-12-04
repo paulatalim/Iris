@@ -5,13 +5,13 @@
 /*** Definicoes para o MQTT ***/
 #define TOPICO_SUBSCRIBE_LED "topico_liga_desliga_led"
 #define TOPICO_PUBLISH_TEMPERATURA "topico_sensor_temperatura"
-#define ID_MQTT "LDDM_Iris"  //id mqtt (para identificação de sessão)
-#define BROKER_MQTT "test.mosquitto.org";
-#define BROKER_PORT = 1883;
+#define ID_MQTT "LDDM_Iris"
+#define BROKER_MQTT "test.mosquitto.org"
+#define BROKER_PORT 1883
 
 // Configuracao Wifi
-#define SSID     "NET_2G43C248";  // SSID / nome da rede WI-FI que deseja se conectar
-#define PASSWORD "F843C248";  // Senha da rede WI-FI que deseja se conectarz
+#define SSID     "NET_2G43C248" // SSID / nome da rede WI-FI que deseja se conectar
+#define PASSWORD "F843C248"  // Senha da rede WI-FI que deseja se conectarz
 
 /*** SENSORES E CONTROLES ***/
 #define LED_BUILTIN 2
@@ -22,7 +22,7 @@ WiFiClient espClient;          // Cria o objeto espClient
 PubSubClient MQTT(espClient);  // Instancia o Cliente MQTT passando o objeto espClient
 
 /** 
- * inicializa e conecta-se na rede WI-FI desejada
+ * Inicializa e conecta-se na rede WI-FI desejada
  */
 void initWiFi(void) {
   delay(10);
@@ -33,15 +33,17 @@ void initWiFi(void) {
   reconnectWiFi();
 }
 
-/** inicializa parâmetros de conexão MQTT
-*/
+/** 
+ * Inicializa parâmetros de conexão MQTT
+ */
 void initMQTT(void) {
   MQTT.setServer(BROKER_MQTT, BROKER_PORT);  //informa qual broker e porta deve ser conectado
   MQTT.setCallback(mqtt_callback);
 }
 
-/** É chamada toda vez que uma informação de um dos tópicos subescritos chega
-*/
+/** 
+ * É chamada toda vez que uma informação de um dos tópicos subescritos chega
+ */
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   String msg;
   /* obtem a string do payload recebido */
@@ -64,12 +66,10 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
 }
 
 /** 
- * reconecta-se ao broker MQTT (caso ainda não esteja conectado ou em caso de a
-conexão cair)
- em caso de sucesso na conexão ou reconexão, o subscribe dos tópicos é refeito.
- Parâmetros: nenhum
- Retorno: nenhum
-*/
+ * reconecta-se ao broker MQTT (caso ainda não esteja conectado ou 
+ * em caso de a conexão cair) em caso de sucesso na conexão ou reconexão, 
+ * o subscribe dos tópicos é refeito.
+ */
 void reconnectMQTT() {
   while (!MQTT.connected()) {
     Serial.print("* Tentando se conectar ao Broker MQTT: ");
