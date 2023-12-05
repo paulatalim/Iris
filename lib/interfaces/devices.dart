@@ -40,7 +40,7 @@ class _DevicesState extends State<Devices> {
   TextStyle styletext() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
-          color: Color(0xFF373B8A), fontSize: 18, fontWeight: FontWeight.w600),
+          color: Color(0xFF373B8A), fontSize: 20, fontWeight: FontWeight.w600),
     );
   }
 
@@ -189,42 +189,65 @@ class _DevicesState extends State<Devices> {
   /// Cria os cards dos dispositivos com as informacoes ligadas ao seu [id]
   Widget cardDispositivo(int id) {
     double? largura;
-    double? altura = 40;
+    double? altura = 45;
 
     if (id == 3 || id == 1) {
-      largura = 40;
+      largura = 50;
       altura = null;
     }
 
-    return GestureDetector(
-      onTap: () {
-        setState(() {
+    return Container(
+      width: 0.85 * MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+        boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(90, 0, 0, 0),
+                blurRadius: 10,
+                offset: Offset(5, 5)),
+            BoxShadow(
+                color: Color.fromARGB(174, 255, 255, 255),
+                blurRadius: 20,
+                offset: Offset(-5, -5)),
+            ]),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+            if(states.contains(MaterialState.pressed)) {
+              return const Color.fromARGB(255, 170, 174, 255);
+            }
+            return const Color(0xFFdadcff);
+          }),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            )
+          ),
+        ),
+        onPressed: () {
+          setState(() {
           dispositivoSelecionado = dispositivo[id];
           scrollControl.animateTo(0,
               duration: const Duration(seconds: 1), curve: Curves.ease);
-        });
-      },
-      child: Container(
-        decoration: styleBox(),
-        width: 0.85 * MediaQuery.of(context).size.width,
-        padding:
-            const EdgeInsets.only(left: 30, top: 17, right: 30, bottom: 17),
-        child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Centraliza horizontalmente o Row
-          children: [
-            Image.asset(
-              dispositivo[id].imagePath,
-              width: largura,
-              height: altura,
-            ),
-            const SizedBox(width: 30.0),
-            Text(
-              dispositivo[id].nome,
-              textAlign: TextAlign.center,
-              style: styletext(),
-            ),
-          ],
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start, 
+            children: [
+              Image.asset(
+                dispositivo[id].imagePath,
+                width: largura,
+                height: altura,
+              ),
+              const SizedBox(width: 30.0),
+              Text(
+                dispositivo[id].nome,
+                textAlign: TextAlign.center,
+                style: styletext(),
+              ),
+            ],
+          ),
         ),
       ),
     );
