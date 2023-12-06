@@ -4,7 +4,9 @@ import 'armazenamento.dart';
 import 'usuario.dart';
 import 'loginmain.dart';
 import 'menu.dart';
+import 'main.dart';
 import 'sharedpreference.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserSingIn extends StatefulWidget {
   const UserSingIn({super.key});
@@ -30,24 +32,23 @@ class _UserSingIn extends State<UserSingIn> {
   String erroCadastro =
       ''; //Mensagem vazia para realizar alteração caso necessário
 
-  void _criarUser() {
-    //Salvando na classe os dados existentes
-    usuario.email = userAcc.text;
-    usuario.nome = userName.text;
-    usuario.sobrenome = userSurname.text;
-
-    //Salvando no banco de dados
-    storage.salvarDados(
-        usuario.nome, userSurname.text, usuario.email, userPss1.text);
-
-    // Salva no armazenamento local
-    setUserLoggedIn(usuario.email);
-
-    //Redirecionando ao menu
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Menubar()),
+  void _criarUser() async { //Criando usuario dentro do firebase ccom as informações providenciadas
+    showDialog(
+      context: context,
+      barrierDismissible: false, 
+      builder: (context) => const Center(child: CircularProgressIndicator(),)
     );
+
+    try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: userAcc.text.trim(), 
+        password: userPss1.text.trim(),
+      );
+    } on FirebaseAuthException catch (e){
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   void checarEmail() {
