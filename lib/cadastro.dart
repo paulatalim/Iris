@@ -107,10 +107,8 @@ class _UserSingIn extends State<UserSingIn> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const UserLogin()),
-            );
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => UserLogin()));
           },
         ),
       ),
