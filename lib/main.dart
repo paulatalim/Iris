@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iris_app/home.dart';
 import 'firebase_options.dart';
-import 'sharedpreference.dart';
 import 'loginmain.dart';
-import 'menu.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +13,6 @@ void main() async {
   );
   
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  bool isLogged = await isUserLoggedIn();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -24,7 +22,10 @@ void main() async {
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
 
+  
+
   runApp(MaterialApp(
+    navigatorKey: navigatorKey,
     title: 'Iris',
     theme: ThemeData(
         useMaterial3: true,
@@ -32,16 +33,32 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: MainPage(),
+    home: const MainPage(),
   ));
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MainPage extends StatelessWidget{
+  const MainPage({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
     body: StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+        else if(snapshot.hasError){
+          return Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
+        }
+        if(snapshot.hasData){ //Verifica se usuario está logado
+          return const HomeScreen();
+        }
+        else{
+          return const UserLogin();
+        }
+      },
     )
-  )
+  );
 }

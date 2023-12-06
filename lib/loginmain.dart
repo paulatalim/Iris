@@ -1,12 +1,9 @@
 import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'main.dart';
 import 'cadastro.dart';
-import 'menu.dart';
 import 'armazenamento.dart';
-import 'usuario.dart';
-import 'sharedpreference.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -27,9 +24,20 @@ class _UserLogin extends State<UserLogin> {
       ''; //Mensagem vazia para realizar alteração caso necessário
   
   Future login() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(), 
-      password: passwordController.text.trim());
+    showDialog(
+      context: context,
+      barrierDismissible: false, 
+      builder: (context) => const Center(child: CircularProgressIndicator(),)
+    );
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(), 
+        password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e){
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   final emailController = TextEditingController();

@@ -1,9 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iris_app/sharedpreference.dart';
-
-import 'loginmain.dart';
-import 'usuario.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -25,9 +22,20 @@ class _UserScreen extends State<UserScreen> {
       ),
     );
   }
+  TextStyle styleBoxTitleMenor() {
+    return GoogleFonts.dosis(
+      textStyle: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 2,
+        color: Color(0xFF373B8A),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -50,8 +58,13 @@ class _UserScreen extends State<UserScreen> {
                   children: [
                     //Campo de texto Nome usuario
                     Text(
-                      usuario.nome,
+                      user.displayName!,
                       style: styleBoxTitle(),
+                    ),
+                    const SizedBox(height: 30),
+                    Text(
+                      user.email!,
+                      style: styleBoxTitleMenor(),
                     ),
                     const SizedBox(height: 30),
                   ],
@@ -104,14 +117,7 @@ class _UserScreen extends State<UserScreen> {
 
                 //Botão para realizar log-off
                 TextButton(
-                  onPressed: () {
-                    setUserLoggedIn('');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const UserLogin()),
-                    );
-                  },
+                  onPressed: () => FirebaseAuth.instance.signOut(),
                   child: const Text(
                     'Sair',
                     style: TextStyle(fontSize: 20, color: Colors.red),
