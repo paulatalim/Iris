@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'cadastro.dart';
@@ -24,32 +25,20 @@ class _UserLogin extends State<UserLogin> {
 
   String mensagemErro =
       ''; //Mensagem vazia para realizar alteração caso necessário
+  
+  Future login() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(), 
+      password: passwordController.text.trim());
+  }
 
-  void _login() async {
-    String user = userAcc.text;
-    String password = userPss.text;
-
-    if (await storage.senhaCorreta(user, password) == false) {
-      setState(() {
-        mensagemErro = 'Usuario ou Senha inválidos.';
-      });
-    } else {
-      debugPrint('login');
-      List userLoad;
-      userLoad =
-          await storage.buscarUsuario(user); //Carregando o usuario existente
-      usuario.id = userLoad[0]["id"]; //Carregando o ID
-      usuario.nome = userLoad[0]["nome"]; //Carregando nome
-      usuario.sobrenome = userLoad[0]["sobrenome"];
-      usuario.email = user; //Carregando e-mail
-
-      setUserLoggedIn(user);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Menubar()),
-      );
-    }
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  
+  @override
+  void dispose(){
+    emailController.dispose();
+    passwordController.dispose();
   }
 
   @override
@@ -88,7 +77,7 @@ class _UserLogin extends State<UserLogin> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(children: [
                     TextFormField(
-                      controller: userAcc,
+                      controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
@@ -97,7 +86,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                     ),
                     TextFormField(
-                      controller: userPss,
+                      controller: passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
@@ -138,7 +127,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          _login();
+                          login();
                         },
                         child: const Text(
                           //Botão para realizar login
