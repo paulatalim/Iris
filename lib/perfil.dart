@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iris_app/loginmain.dart';
+import 'package:iris_app/usuario.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -66,8 +67,7 @@ class _UserScreen extends State<UserScreen> {
                   children: [
                     //Campo de texto Nome usuario
                     Text(
-                      
-                      "teste",
+                      usuario.nome + ' ' + usuario.sobrenome,
                       style: styleBoxTitle(),
                     ),
                     const SizedBox(height: 30),

@@ -44,7 +44,7 @@ class _UserSingIn extends State<UserSingIn> {
     } on FirebaseAuthException catch (e){
       print(e);
     }
-
+    storage.salvarDados(userName.text.trim(), userSurname.text.trim(), userAcc.text.trim(), "");
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'cadastro.dart';
 import 'armazenamento.dart';
+import 'usuario.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -33,6 +34,14 @@ class _UserLogin extends State<UserLogin> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(), 
         password: passwordController.text.trim());
+        List userLoad;
+        userLoad = await storage.buscarUsuario(emailController.text.trim()); //Carregando o usuario existente
+        usuario.id = userLoad[0]["id"]; //Carregando o ID
+        usuario.nome = userLoad[0]["nome"]; //Carregando nome
+        print("User nome: " + usuario.nome); 
+        print("DB nome: " + userLoad[0]["nome"]);
+        usuario.sobrenome = userLoad[0]["sobrenome"]; //Carregando sobrenome
+        usuario.email = emailController.text.trim(); //Carregando e-mail
     } on FirebaseAuthException catch (e){
       setState(() {
         erroEmail = '';
