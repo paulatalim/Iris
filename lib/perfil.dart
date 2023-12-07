@@ -38,7 +38,7 @@ class _UserScreen extends State<UserScreen> {
   void _signOut() async {
   await FirebaseAuth.instance.signOut();
   Navigator.of(context).popUntil((route) => route.isFirst);
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => UserLogin()));
+  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
   }
 
   @override

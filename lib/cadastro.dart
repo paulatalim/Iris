@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'armazenamento.dart';
-import 'usuario.dart';
 import 'loginmain.dart';
-import 'menu.dart';
 import 'main.dart';
-import 'sharedpreference.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserSingIn extends StatefulWidget {
@@ -108,7 +105,7 @@ class _UserSingIn extends State<UserSingIn> {
           icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
             Navigator.of(context).popUntil((route) => route.isFirst);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => UserLogin()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
           },
         ),
       ),

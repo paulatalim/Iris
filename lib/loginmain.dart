@@ -105,8 +105,8 @@ class _UserLogin extends State<UserLogin> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         helperText: erroEmail,
-                        helperStyle: TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
-                        border: UnderlineInputBorder(),
+                        helperStyle: const TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
+                        border: const UnderlineInputBorder(),
                         labelText: 'E-mail:',
                         hintText: 'nome@exemplo.com',
                       ),
@@ -116,7 +116,7 @@ class _UserLogin extends State<UserLogin> {
                       obscureText: true,
                       decoration: InputDecoration(
                         helperText: erroSenha,
-                        helperStyle: TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
+                        helperStyle: const TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
                         border: const UnderlineInputBorder(),
                         labelText: 'Senha:',
                         hintText: 'Digite sua senha',

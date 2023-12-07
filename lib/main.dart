@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iris_app/home.dart';
 import 'package:iris_app/menu.dart';
 import 'firebase_options.dart';
 import 'loginmain.dart';
@@ -48,10 +47,10 @@ class MainPage extends StatelessWidget{
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator(),);
+          return const Center(child: CircularProgressIndicator(),);
         }
         else if(snapshot.hasError){
-          return Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
+          return const Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
         }
         if(snapshot.hasData){ //Verifica se usuario está logado
           return const Menubar();
