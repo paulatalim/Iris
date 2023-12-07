@@ -1,40 +1,129 @@
-/********************************************************************
-* Leitura do sensor de temperatura DS18B20 (v1.0).
-*
-* Realiza a leitura da temperatura utilizando sensor DS18B20.
-* Apos a leitura, no monitor serial ira imprimir os dados lidos.
-*
-* Copyright 2019 RoboCore.
-* Escrito por Renan Piva (10/04/2019).
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version (<https://www.gnu.org/licenses/>).
-*****************************************************************************/
-
-// Inclusao das bibliotecas
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-const int PINO_ONEWIRE = 12; // Define pino do sensor
-OneWire oneWire(PINO_ONEWIRE); // Cria um objeto OneWire
-DallasTemperature sensor(&oneWire); // Informa a referencia da biblioteca dallas temperature para Biblioteca onewire
-DeviceAddress endereco_temp; // Cria um endereco temporario da leitura do sensor
+// Data wire is plugged into port 2 on the Arduino
+#define ONE_WIRE_BUS 23
+#define TEMPERATURE_PRECISION 9 // Lower resolution
 
-void setup() {
-  Serial.begin(9600); // Inicia a porta serial
-  Serial.println("Medindo Temperatura"); // Imprime a mensagem inicial
-  sensor.begin(); ; // Inicia o sensor
-}
+// Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
+OneWire oneWire(ONE_WIRE_BUS);
+
+// Pass our oneWire reference to Dallas Temperature. 
+DallasTemperature sensors(&oneWire);
+
+int numberOfDevices; // Number of temperature devices found
+
+DeviceAddress tempDeviceAddress; // We'll use this variable to store a found device address
+
+void setup(void)
+{
+  // start serial port
+  Serial.begin(9600);
+  Serial.println("Dallas Temperature IC Control Library Demo");
+
+  // Start up the library
+  sensors.begin();
   
-void loop() {
-  sensor.requestTemperatures(); // Envia comando para realizar a conversão de temperatura
-  if (!sensor.getAddress(endereco_temp,0)) { // Encontra o endereco do sensor no barramento
-    Serial.println("SENSOR NAO CONECTADO"); // Sensor conectado, imprime mensagem de erro
-  } else {
-    Serial.print("Temperatura = "); // Imprime a temperatura no monitor serial
-    Serial.println(sensor.getTempC(endereco_temp), 1); // Busca temperatura para dispositivo
+  // Grab a count of devices on the wire
+  numberOfDevices = sensors.getDeviceCount();
+  
+  // locate devices on the bus
+  Serial.print("Locating devices...");
+  
+  Serial.print("Found ");
+  Serial.print(numberOfDevices, DEC);
+  Serial.println(" devices.");
+
+  // report parasite power requirements
+  Serial.print("Parasite power is: "); 
+  if (sensors.isParasitePowerMode()) Serial.println("ON");
+  else Serial.println("OFF");
+  
+  // Loop through each device, print out address
+  for(int i=0;i<numberOfDevices; i++)
+  {
+    // Search the wire for address
+    if(sensors.getAddress(tempDeviceAddress, i))
+	{
+		Serial.print("Found device ");
+		Serial.print(i, DEC);
+		Serial.print(" with address: ");
+		printAddress(tempDeviceAddress);
+		Serial.println();
+		
+		Serial.print("Setting resolution to ");
+		Serial.println(TEMPERATURE_PRECISION, DEC);
+		
+		// set the resolution to TEMPERATURE_PRECISION bit (Each Dallas/Maxim device is capable of several different resolutions)
+		sensors.setResolution(tempDeviceAddress, TEMPERATURE_PRECISION);
+		
+		Serial.print("Resolution actually set to: ");
+		Serial.print(sensors.getResolution(tempDeviceAddress), DEC); 
+		Serial.println();
+	}else{
+		Serial.print("Found ghost device at ");
+		Serial.print(i, DEC);
+		Serial.print(" but could not detect address. Check power and cabling");
+	}
   }
-  delay(1000);
+
+}
+
+// function to print the temperature for a device
+void printTemperature(DeviceAddress deviceAddress)
+{
+  // method 1 - slower
+  //Serial.print("Temp C: ");
+  //Serial.print(sensors.getTempC(deviceAddress));
+  //Serial.print(" Temp F: ");
+  //Serial.print(sensors.getTempF(deviceAddress)); // Makes a second call to getTempC and then converts to Fahrenheit
+
+  // method 2 - faster
+  float tempC = sensors.getTempC(deviceAddress);
+  if(tempC == DEVICE_DISCONNECTED_C) 
+  {
+    Serial.println("Error: Could not read temperature data");
+    return;
+  }
+  Serial.print("Temp C: ");
+  Serial.print(tempC);
+  Serial.print(" Temp F: ");
+  Serial.println(DallasTemperature::toFahrenheit(tempC)); // Converts tempC to Fahrenheit
+}
+
+void loop(void)
+{ 
+  // call sensors.requestTemperatures() to issue a global temperature 
+  // request to all devices on the bus
+  Serial.print("Requesting temperatures...");
+  sensors.requestTemperatures(); // Send the command to get temperatures
+  Serial.println("DONE");
+  
+  
+  // Loop through each device, print out temperature data
+  for(int i=0;i<numberOfDevices; i++)
+  {
+    // Search the wire for address
+    if(sensors.getAddress(tempDeviceAddress, i))
+	{
+		// Output the device ID
+		Serial.print("Temperature for device: ");
+		Serial.println(i,DEC);
+		
+		// It responds almost immediately. Let's print out the data
+		printTemperature(tempDeviceAddress); // Use a simple function to print out the data
+	} 
+	//else ghost device! Check your power requirements and cabling
+	
+  }
+}
+
+// function to print a device address
+void printAddress(DeviceAddress deviceAddress)
+{
+  for (uint8_t i = 0; i < 8; i++)
+  {
+    if (deviceAddress[i] < 16) Serial.print("0");
+    Serial.print(deviceAddress[i], HEX);
+  }
 }
