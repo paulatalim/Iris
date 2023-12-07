@@ -34,7 +34,21 @@ class _UserLogin extends State<UserLogin> {
         email: emailController.text.trim(), 
         password: passwordController.text.trim());
     } on FirebaseAuthException catch (e){
-      print(e);
+      setState(() {
+        erroEmail = '';
+        erroSenha = '';
+      });
+      if(e.code == 'invalid-email' || e.code == 'user-not-found'){
+        setState(() {
+          erroEmail = 'E-mail inválido';
+        });
+      }
+      else if(e.code == 'invalid-credential'){
+        setState(() {
+          erroSenha = 'Senha errada';
+        });
+      }
+      else print(e.code);
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -42,6 +56,8 @@ class _UserLogin extends State<UserLogin> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  String erroEmail = '';
+  String erroSenha = '';
   
   @override
   void dispose(){
@@ -87,7 +103,9 @@ class _UserLogin extends State<UserLogin> {
                     TextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        helperText: erroEmail,
+                        helperStyle: TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
                         border: UnderlineInputBorder(),
                         labelText: 'E-mail:',
                         hintText: 'nome@exemplo.com',
@@ -96,8 +114,10 @@ class _UserLogin extends State<UserLogin> {
                     TextFormField(
                       controller: passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
+                      decoration: InputDecoration(
+                        helperText: erroSenha,
+                        helperStyle: TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
+                        border: const UnderlineInputBorder(),
                         labelText: 'Senha:',
                         hintText: 'Digite sua senha',
                       ),

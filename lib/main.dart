@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iris_app/home.dart';
+import 'package:iris_app/menu.dart';
 import 'firebase_options.dart';
 import 'loginmain.dart';
 
@@ -53,7 +54,7 @@ class MainPage extends StatelessWidget{
           return Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
         }
         if(snapshot.hasData){ //Verifica se usuario está logado
-          return const HomeScreen();
+          return const Menubar();
         }
         else{
           return const UserLogin();
