@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import 'sharedpreference.dart';
 import 'loginmain.dart';
 import 'menu.dart';
+
+import './hardware/mqtt/state/MQTTAppState.dart';
+import 'package:provider/provider.dart';
 // import './hardware.dart';
 
 void main() async {
@@ -30,6 +33,10 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: isLogged == true ? const Menubar() : const UserLogin(),
+    home: ChangeNotifierProvider<MQTTAppState>(
+          create: (_) => MQTTAppState(),
+          child: isLogged == true ? const Menubar() : const UserLogin(),
+        )
+    // home: isLogged == true ? const Menubar() : const UserLogin(),
   ));
 }
