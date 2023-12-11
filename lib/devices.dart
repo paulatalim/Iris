@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
 
 import 'package:provider/provider.dart';
-import './hardware/mqtt/MQTTManager.dart';
-import './hardware/mqtt/state/MQTTAppState.dart';
+import 'mqtt/MQTTManager.dart';
+import 'mqtt/state/MQTTAppState.dart';
 import 'usuario.dart';
 
 

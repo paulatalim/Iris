@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'sharedpreference.dart';
 import 'loginmain.dart';
 import 'menu.dart';
-
-import './hardware/mqtt/state/MQTTAppState.dart';
-import 'package:provider/provider.dart';
-// import './hardware.dart';
+import 'mqtt/state/MQTTAppState.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
