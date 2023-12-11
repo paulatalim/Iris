@@ -3,14 +3,9 @@
 #include <WiFi.h>
 
 /*** Definicoes para o MQTT ***/
-#define TOPICO_SUBSCRIBE_SISTEMA "iris/atuador/sistema"
-#define TOPICO_SUBSCRIBE_BALANCA "iris/atuador/balanca"
-#define TOPICO_SUBSCRIBE_ALTURA "iris/atuador/altura"
-#define TOPICO_SUBSCRIBE_TEMPERATURA "iris/atuador/temperatura"
-#define TOPICO_PUBLISH_SISTEMA "iris/sensor/sistema"
-#define TOPICO_PUBLISH_BALANCA "iris/sensor/balanca"
-#define TOPICO_PUBLISH_ALTURA "iris/sensor/altura"
-#define TOPICO_PUBLISH_TEMPERATURA "iris/sensor/temperatura"
+#define TOPICO_SUBSCRIBE_SISTEMA "iris/atuador"
+#define TOPICO_PUBLISH_SISTEMA "iris/sensor"
+
 #define ID_MQTT "LDDM_Iris"
 #define BROKER_MQTT "test.mosquitto.org"
 #define BROKER_PORT 1883
@@ -85,9 +80,7 @@ void reconnectMQTT() {
     if (MQTT.connect(ID_MQTT)) {
       Serial.println("Conectado com sucesso ao broker MQTT!");
       MQTT.subscribe(TOPICO_SUBSCRIBE_SISTEMA);
-      MQTT.subscribe(TOPICO_SUBSCRIBE_BALANCA);
-      MQTT.subscribe(TOPICO_SUBSCRIBE_ALTURA);
-      MQTT.subscribe(TOPICO_SUBSCRIBE_TEMPERATURA);
+      
     } else {
       Serial.println("Falha ao reconectar no broker.");
       Serial.println("Havera nova tentatica de conexao em 2s");
@@ -153,10 +146,10 @@ void loop() {
  numAleatorio = random(10, 101);
  
  // formata a temperatura aleatoria como string
- sprintf(temperatura_str, "%d", numAleatorio);
+ sprintf(temperatura_str, "A%d", numAleatorio);
  /* Publica a temperatura */
 
- MQTT.publish(TOPICO_PUBLISH_TEMPERATURA, temperatura_str);
+ MQTT.publish(TOPICO_PUBLISH_SISTEMA, temperatura_str);
  
  Serial.print("Gerando temperatura aleatoria: ");
  Serial.println(temperatura_str);

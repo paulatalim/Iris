@@ -8,14 +8,9 @@
 #include <WiFi.h>
 
 /*** Definicoes para o MQTT ***/
-#define TOPICO_SUBSCRIBE_SISTEMA "iris/atuador/sistema"
-#define TOPICO_SUBSCRIBE_BALANCA "iris/atuador/balanca"
-#define TOPICO_SUBSCRIBE_ALTURA "iris/atuador/altura"
-#define TOPICO_SUBSCRIBE_TEMPERATURA "iris/atuador/temperatura"
-#define TOPICO_PUBLISH_SISTEMA "iris/sensor/sistema"
-#define TOPICO_PUBLISH_BALANCA "iris/sensor/balanca"
-#define TOPICO_PUBLISH_ALTURA "iris/sensor/altura"
-#define TOPICO_PUBLISH_TEMPERATURA "iris/sensor/temperatura"
+#define TOPICO_SUBSCRIBE_SISTEMA "iris/atuador"
+#define TOPICO_PUBLISH_SISTEMA "iris/sensor"
+
 #define ID_MQTT "LDDM_Iris"
 #define BROKER_MQTT "test.mosquitto.org"
 #define BROKER_PORT 1883
@@ -104,9 +99,6 @@ void reconnectMQTT() {
     if (MQTT.connect(ID_MQTT)) {
       Serial.println("Conectado com sucesso ao broker MQTT!");
       MQTT.subscribe(TOPICO_SUBSCRIBE_SISTEMA);
-      MQTT.subscribe(TOPICO_SUBSCRIBE_BALANCA);
-      MQTT.subscribe(TOPICO_SUBSCRIBE_ALTURA);
-      MQTT.subscribe(TOPICO_SUBSCRIBE_TEMPERATURA);
     } else {
       Serial.println("Falha ao reconectar no broker.");
       Serial.println("Havera nova tentatica de conexao em 2s");
@@ -174,12 +166,20 @@ void setup() {
 }
 
 void loop() {
+  char temperatura_str[10] = {0};
+  char altura_str[10] = {0};
+  char peso_str[10] = {0};
+
+  VerificaConexoesWiFIEMQTT();
 
   //SENSOR DE TEMPERATURA
   sensors.requestTemperatures(); /* Envia o comando para leitura da temperatura */
-  Serial.println("A temperatura é: "); /* Printa "A temperatura é:" */
-  Serial.print(sensors.getTempCByIndex(0)); /* Endereço do sensor */
-  Serial.println(" °C"); 
+  Serial.print("A temperatura é: ");
+  float temperatura = sensors.getTempCByIndex(0);
+  Serial.print(temperatura); /* Endereço do sensor */
+  Serial.println(" °C");
+  sprintf(temperatura_str, "T%f", temperatura);
+  MQTT.publish(TOPICO_PUBLISH_SISTEMA, temperatura_str);
 
   //SENSOR ULTRASSONICO
   hcsr04(); // FAZ A CHAMADA DO MÉTODO "hcsr04()"
@@ -188,6 +188,8 @@ void loop() {
   int altura = 200 - convertido;
   Serial.print(altura); ////IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
   Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
+  sprintf(altura_str, "A%d", altura);
+  MQTT.publish(TOPICO_PUBLISH_SISTEMA, altura_str);
   
   //BALANÇA
   balanca.set_scale(calibration_factor);  // a balanca está em função do fator de calibração
@@ -197,7 +199,9 @@ void loop() {
     //mensagens de leitura no monitor serial
     Serial.print("Leitura: ");
     Serial.print(balanca.get_units(), 1); //retorna a leitura da variavel balanca com a unidade quilogramas
-    Serial.print(" kg");
+    Serial.println(" kg");
+    sprintf(peso_str, "P%f", balanca.get_units());
+    MQTT.publish(TOPICO_PUBLISH_SISTEMA, peso_str);
 
     //alteracao do fator de calibracao
     if (Serial.available()) {
@@ -226,6 +230,8 @@ void loop() {
   } else {
     Serial.println("HX-711 ocupado");
   }
+
+  // MQTT.loop();
 }
 
 //MÉTODO RESPONSÁVEL POR CALCULAR A DISTÂNCIA
