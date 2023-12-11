@@ -36,10 +36,20 @@ HX711 balanca;
 
 String result; 
 int distancia; 
-float peso;
+
 float calibration_factor = - 45000; // Fator de calibração para ajuste da célula 
 char comando;
 
+bool medir_temperatura;
+bool medir_altura;
+bool calibrar_altura;
+bool medir_peso;
+
+
+int altura;
+int altura_calibracao;
+float peso;
+float temperatura;
 
 /** 
  * @brief Inicializa e conecta-se na rede WI-FI desejada
@@ -77,6 +87,13 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   Serial.println(msg);
 
   /* toma ação dependendo da string recebida */
+  if (msg.equals("A")) {
+    medir_altura = true;
+  } else if (msg.equals("P")) {
+    medir_peso = true;
+  } else if (msg.equals("T")) {
+    medir_temperatura = true;
+  }
   // if (msg.equals("L")) {
   //   digitalWrite(PIN_LED, HIGH);
   //   Serial.println("LED aceso mediante comando MQTT");
@@ -163,7 +180,14 @@ void setup() {
   // Inicializa Wifi e broker
   initWiFi();
   initMQTT();
+
+  medir_temperatura = false;
+  medir_altura = false;
+  medir_peso = false;
 }
+
+
+
 
 void loop() {
   char temperatura_str[10] = {0};
@@ -173,65 +197,81 @@ void loop() {
   VerificaConexoesWiFIEMQTT();
 
   //SENSOR DE TEMPERATURA
-  sensors.requestTemperatures(); /* Envia o comando para leitura da temperatura */
-  Serial.print("A temperatura é: ");
-  float temperatura = sensors.getTempCByIndex(0);
-  Serial.print(temperatura); /* Endereço do sensor */
-  Serial.println(" °C");
-  sprintf(temperatura_str, "T%f", temperatura);
-  MQTT.publish(TOPICO_PUBLISH_SISTEMA, temperatura_str);
-
-  //SENSOR ULTRASSONICO
-  hcsr04(); // FAZ A CHAMADA DO MÉTODO "hcsr04()"
-  Serial.print("Sua altura é: "); //IMPRIME O TEXTO NO MONITOR SERIAL
-  int convertido = result.toInt();
-  int altura = 200 - convertido;
-  Serial.print(altura); ////IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
-  Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
-  sprintf(altura_str, "A%d", altura);
-  MQTT.publish(TOPICO_PUBLISH_SISTEMA, altura_str);
-  
-  //BALANÇA
-  balanca.set_scale(calibration_factor);  // a balanca está em função do fator de calibração
-  
-  //verifica se o modulo esta pronto para realizar leituras
-  if (balanca.is_ready()) {
-    //mensagens de leitura no monitor serial
-    Serial.print("Leitura: ");
-    Serial.print(balanca.get_units(), 1); //retorna a leitura da variavel balanca com a unidade quilogramas
-    Serial.println(" kg");
-    sprintf(peso_str, "P%f", balanca.get_units());
-    MQTT.publish(TOPICO_PUBLISH_SISTEMA, peso_str);
-
-    //alteracao do fator de calibracao
-    if (Serial.available()) {
-      comando = Serial.read();
-      switch (comando) {
-        case 'x':
-          calibration_factor = calibration_factor - 100;
-          break;
-        case 'c':
-          calibration_factor = calibration_factor + 100;
-          break;
-        case 'v':
-          calibration_factor = calibration_factor - 10;
-          break;
-        case 'b':
-          calibration_factor = calibration_factor + 10;
-          break;
-        case 'n':
-          calibration_factor = calibration_factor - 1;
-          break;
-        case 'm':
-          calibration_factor = calibration_factor + 1;
-          break;
-      }
-    }
-  } else {
-    Serial.println("HX-711 ocupado");
+  if (medir_temperatura) {
+    sensors.requestTemperatures(); /* Envia o comando para leitura da temperatura */
+    Serial.print("A temperatura é: ");
+    temperatura = sensors.getTempCByIndex(0);
+    Serial.print(temperatura); /* Endereço do sensor */
+    Serial.println(" °C");
+    sprintf(temperatura_str, "T%f", temperatura);
+    MQTT.publish(TOPICO_PUBLISH_SISTEMA, temperatura_str);
+    medir_temperatura = false;
   }
 
-  // MQTT.loop();
+  //SENSOR ULTRASSONICO
+  if (medir_altura) {
+    hcsr04();
+    altura_calibracao = result.toInt();
+    MQTT.publish(TOPICO_PUBLISH_SISTEMA, "C");
+  
+    // esperar 30 segundos
+    delay(30000);
+
+    hcsr04(); // FAZ A CHAMADA DO MÉTODO "hcsr04()"
+    Serial.print("Sua altura é: "); //IMPRIME O TEXTO NO MONITOR SERIAL
+    altura = altura_calibracao - result.toInt();
+    Serial.print(altura); ////IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
+    Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
+    sprintf(altura_str, "A%d", altura);
+    MQTT.publish(TOPICO_PUBLISH_SISTEMA, altura_str);
+    medir_altura = false;
+  }
+  
+  //BALANÇA
+  if (medir_peso) {
+    balanca.set_scale(calibration_factor);  // a balanca está em função do fator de calibração
+    
+    //verifica se o modulo esta pronto para realizar leituras
+    if (balanca.is_ready()) {
+      //mensagens de leitura no monitor serial
+      Serial.print("Leitura: ");
+      peso = balanca.get_units();
+      Serial.print(balanca.get_units(), 1); //retorna a leitura da variavel balanca com a unidade quilogramas
+      Serial.println(" kg");
+      sprintf(peso_str, "P%f", peso);
+      MQTT.publish(TOPICO_PUBLISH_SISTEMA, peso_str);
+
+      //alteracao do fator de calibracao
+      if (Serial.available()) {
+        comando = Serial.read();
+        switch (comando) {
+          case 'x':
+            calibration_factor = calibration_factor - 100;
+            break;
+          case 'c':
+            calibration_factor = calibration_factor + 100;
+            break;
+          case 'v':
+            calibration_factor = calibration_factor - 10;
+            break;
+          case 'b':
+            calibration_factor = calibration_factor + 10;
+            break;
+          case 'n':
+            calibration_factor = calibration_factor - 1;
+            break;
+          case 'm':
+            calibration_factor = calibration_factor + 1;
+            break;
+        }
+      }
+    } else {
+      Serial.println("HX-711 ocupado");
+    }
+    medir_peso = false;
+  }
+
+  MQTT.loop();
 }
 
 //MÉTODO RESPONSÁVEL POR CALCULAR A DISTÂNCIA
