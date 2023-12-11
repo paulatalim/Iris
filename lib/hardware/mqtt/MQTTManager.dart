@@ -8,18 +8,21 @@ class MQTTManager {
   MqttServerClient? _client;
   final String _identifier;
   final String _host;
-  final String _topic;
+  final String _topicPublish;
+  final String _topicSubscribe;
 
   // Constructor
   // ignore: sort_constructors_first
   MQTTManager(
       {required String host,
-      required String topic,
+      required String topicPublish,
+      required String topicSubscribe,
       required String identifier,
       required MQTTAppState state})
       : _identifier = identifier,
         _host = host,
-        _topic = topic,
+        _topicPublish = topicPublish,
+        _topicSubscribe = topicSubscribe,
         _currentState = state;
 
   void initializeMQTTClient() {
@@ -67,7 +70,7 @@ class MQTTManager {
   void publish(String message) {
     final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
     builder.addString(message);
-    _client!.publishMessage(_topic, MqttQos.exactlyOnce, builder.payload!);
+    _client!.publishMessage(_topicPublish, MqttQos.atMostOnce, builder.payload!);
   }
 
   /// The subscribed callback
@@ -89,7 +92,7 @@ class MQTTManager {
   void onConnected() {
     _currentState.setAppConnectionState(MQTTAppConnectionState.connected);
     print('EXAMPLE::Mosquitto client connected....');
-    _client!.subscribe(_topic, MqttQos.atLeastOnce);
+    _client!.subscribe(_topicSubscribe, MqttQos.atLeastOnce);
     _client!.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       // ignore: avoid_as
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
