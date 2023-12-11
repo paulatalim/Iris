@@ -139,9 +139,9 @@ class _DadosState extends State<Dados> {
                 'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
             boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
             GestureDetector(
-              onTap: currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected
-                ? _configureAndConnect
-                : null,
+              onTap: () {
+                _publishMessage('L');
+              },
               child: Container(width: 100, height: 200, color: Colors.red,),
             )
           ],
@@ -151,6 +151,11 @@ class _DadosState extends State<Dados> {
     
   }
 
+  void _publishMessage(String text) {
+    
+    manager.publish(text);
+    
+  }
 
   void _configureAndConnect() {
     // ignore: flutter_style_todos
@@ -161,7 +166,8 @@ class _DadosState extends State<Dados> {
     }
     manager = MQTTManager(
         host: 'test.mosquitto.org',
-        topic: 'iris/sensor',
+        topicPublish: 'iris/atuador',
+        topicSubscribe: 'iris/sensor',
         identifier: osPrefix,
         state: currentAppState);
     manager.initializeMQTTClient();

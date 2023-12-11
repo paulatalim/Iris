@@ -1,8 +1,13 @@
-// import 'dart:js_util';
-
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
+
+import 'package:provider/provider.dart';
+import './hardware/mqtt/MQTTManager.dart';
+import './hardware/mqtt/state/MQTTAppState.dart';
+import 'usuario.dart';
+
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -35,6 +40,14 @@ class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
   final scrollControl = ScrollController();
 
+  late MQTTAppState currentAppState;
+  late MQTTManager manager;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   /// Estiliza um texto
   TextStyle styletext() {
     return GoogleFonts.inclusiveSans(
@@ -61,8 +74,36 @@ class _DevicesState extends State<Devices> {
     );
   }
 
+  int soma = 0;
+
   @override
   Widget build(BuildContext context) {
+    final MQTTAppState appState = Provider.of<MQTTAppState>(context);
+    currentAppState = appState;
+    
+
+if(currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected) {
+        _configureAndConnect();
+                
+    } else {
+      // switch (currentAppState.getReceivedText.trim()[0]) {
+      //   case 'T':
+      //     usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
+      //     break;
+      //   case 'A':
+      //     usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
+      //     usuario.calcular_imc();
+      //     break;
+      //   case 'P':
+      //     usuario.peso = double.parse(currentAppState.getReceivedText.substring(1));
+      //     usuario.calcular_imc();
+      //     break;
+      // }
+      manager.publish(soma.toString());
+soma++;
+print(soma);
+    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -224,5 +265,26 @@ class _DevicesState extends State<Devices> {
         ),
       ),
     );
+  }
+
+  void _publishMessage(String text) {
+    manager.publish(text);
+  }
+
+  void _configureAndConnect() {
+    // ignore: flutter_style_todos
+    // TODO: Use UUID
+    String osPrefix = 'Flutter_iOS';
+    if (Platform.isAndroid) {
+      osPrefix = 'Flutter_Android';
+    }
+    manager = MQTTManager(
+        host: 'test.mosquitto.org',
+        topicPublish: 'iris/atuador',
+        topicSubscribe: 'iris/sensor',
+        identifier: osPrefix,
+        state: currentAppState);
+    manager.initializeMQTTClient();
+    manager.connect();
   }
 }
