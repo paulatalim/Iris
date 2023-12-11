@@ -16,8 +16,8 @@
 #define BROKER_PORT 1883
 
 // Configuracao Wifi
-#define SSID     "NET_2G43C248" // nome da rede WI-FI que deseja se conectar
-#define PASSWORD "F843C248"  // Senha da rede WI-FI que deseja se conectar
+#define SSID     "PP_TALIM_2G_EXT" // nome da rede WI-FI que deseja se conectar
+#define PASSWORD "HOMETP20"  // Senha da rede WI-FI que deseja se conectar
 
 /*** SENSORES E CONTROLES ***/
 #define LED_BUILTIN 2
@@ -131,10 +131,12 @@ void reconnectWiFi() {
   Serial.println("\nIP obtido: ");
   Serial.println(WiFi.localIP());
 }
-
+int numAleatorio;
 void setup() {
   Serial.begin(9600);
   Serial.println("Iris: iniciando sistema iniciando ESP Iris");
+
+randomSeed(analogRead(0));
 
   // Inicializa Wifi e broker
   initWiFi();
@@ -143,20 +145,25 @@ void setup() {
 
 void loop() {
   // cria string para temperatura
-  char temperatura_str[10] = { 0 };
+ char temperatura_str[10] = {0};
+ 
+/* garante funcionamento das conexões WiFi e ao broker MQTT */
+ VerificaConexoesWiFIEMQTT();
+ // gera um valor aleatório de temperatura entre 10 e 100
+ numAleatorio = random(10, 101);
+ 
+ // formata a temperatura aleatoria como string
+ sprintf(temperatura_str, "%d", numAleatorio);
+ /* Publica a temperatura */
 
-  /* garante funcionamento das conexões WiFi e ao broker MQTT */
-  VerificaConexoesWiFIEMQTT();
-
-  // gera um valor aleatório de temperatura entre 10 e 100
-  numAleatorio = random(10, 101);
-
-  // formata a temperatura aleatoria como string
-  sprintf(temperatura_str, "%dC", numAleatorio);
-
-  // Publica a temperatura
-  MQTT.publish(TOPICO_PUBLISH_TEMPERATURA, temperatura_str);
-
-  /* keep-alive da comunicação com broker MQTT */
-  MQTT.loop();
+ MQTT.publish(TOPICO_PUBLISH_TEMPERATURA, temperatura_str);
+ 
+ Serial.print("Gerando temperatura aleatoria: ");
+ Serial.println(temperatura_str);
+ 
+ /* keep-alive da comunicação com broker MQTT */
+ MQTT.loop();
+ 
+delay(2000);
+  
 }

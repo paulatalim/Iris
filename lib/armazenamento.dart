@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart';
 import 'dart:convert';
-import 'hardware.dart'; // Importa o arquivo mqtt.dart
+// import 'hardware.dart'; // Importa o arquivo mqtt.dart
 
 class Armazenamento {
   static Database? database;
@@ -14,7 +14,7 @@ class Armazenamento {
     if (database == null) {
       _initdatabase();
     }
-    _initMqtt();
+    // _initMqtt();
   }
 
   Future<void> _initdatabase() async {
@@ -23,28 +23,28 @@ class Armazenamento {
     database = await _recuperarBancoDados();
   }
 
-  Future<void> _initMqtt() async {
-    // Inicializa a lógica MQTT a partir do arquivo mqtt.dart
-    await MqttHelper().initMqtt();
-  }
+  // Future<void> _initMqtt() async {
+  //   // Inicializa a lógica MQTT a partir do arquivo mqtt.dart
+  //   await MqttHelper().initMqtt();
+  // }
 
-   void atualizarDadosMqtt(String valor) {
-    // Adapte este método para refletir a lógica específica do seu aplicativo
-    // Este é um exemplo básico que adiciona um novo registro na tabela informacoes_adicionais com o valor recebido do MQTT.
-    int usuarioId = 1; // Substitua pelo ID do usuário real
-    double valorConvertido = double.tryParse(valor) ?? 0;
+  //  void atualizarDadosMqtt(String valor) {
+  //   // Adapte este método para refletir a lógica específica do seu aplicativo
+  //   // Este é um exemplo básico que adiciona um novo registro na tabela informacoes_adicionais com o valor recebido do MQTT.
+  //   int usuarioId = 1; // Substitua pelo ID do usuário real
+  //   double valorConvertido = double.tryParse(valor) ?? 0;
 
-    Map<String, dynamic> dadosInfoAdicional = {
-      "usuario_id": usuarioId,
-      "peso": valorConvertido,
-      "temperatura": valorConvertido,
-      "altura": valorConvertido,
-      "imc": valorConvertido,
-    };
+  //   Map<String, dynamic> dadosInfoAdicional = {
+  //     "usuario_id": usuarioId,
+  //     "peso": valorConvertido,
+  //     "temperatura": valorConvertido,
+  //     "altura": valorConvertido,
+  //     "imc": valorConvertido,
+  //   };
 
-    database!.insert("informacoes_adicionais", dadosInfoAdicional);
-    debugPrint("Dados atualizados com valor do MQTT: $valor");
-  }
+  //   database!.insert("informacoes_adicionais", dadosInfoAdicional);
+  //   debugPrint("Dados atualizados com valor do MQTT: $valor");
+  // }
 
   dynamic _recuperarBancoDados() async {
     // Codigo SQL para criar a tabela

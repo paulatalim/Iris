@@ -4,11 +4,15 @@ import 'package:flutter/services.dart';
 import 'sharedpreference.dart';
 import 'loginmain.dart';
 import 'menu.dart';
+// import './hardware.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   bool isLogged = await isUserLoggedIn();
+
+  // MqttHelper mqtt = MqttHelper();
+  // mqtt.initMqtt();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

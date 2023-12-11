@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:math';
 
 /*
 * Classe usuario contendo variáveis básicas para o utilização no app
@@ -19,6 +20,12 @@ class User {
     _altura = 0;
     _imc = 0;
     _temperatura = 0;
+  }
+
+  void calcular_imc() {
+    if (_peso != 0 && _altura !=0) {
+      _imc = peso / pow(_altura,2);
+    }
   }
 
   get peso => _peso;

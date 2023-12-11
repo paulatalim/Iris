@@ -1,7 +1,7 @@
 #include "HX711.h"
 
-#define LOADCELL_DOUT_PIN  23
-#define LOADCELL_SCK_PIN  22
+#define LOADCELL_DOUT_PIN  39
+#define LOADCELL_SCK_PIN  14
 
 HX711 escala;
 
@@ -12,8 +12,7 @@ const int TEMPO_ESPERA = 1000; //declaracao da variavel de espera
 void setup() {
   //mensagens do monitor serial
   Serial.begin(9600);
-  Serial.println("Celula de carga - Calibracao de Peso");
-  Serial.println("Posicione um peso conhecido sobre a celula ao comecar as leituras");
+  
 
   escala.begin (LOADCELL_DOUT_PIN , LOADCELL_SCK_PIN); //inicializacao e definicao dos pinos DT e SCK dentro do objeto ESCALA
 
@@ -24,10 +23,12 @@ void setup() {
   Serial.println();
 
   escala.tare(); //zera a escala
+  Serial.print("oiiiiii");
 }
 
 void loop ()
 {
+  
   escala.set_scale(fator_calibracao); //ajusta a escala para o fator de calibracao
 
   //verifica se o modulo esta pronto para realizar leituras
@@ -70,7 +71,7 @@ void loop ()
     }
     else
     {
-      Serial.print("HX-711 ocupado");
+      Serial.println("HX-711 ocupado");
     }
   delay(TEMPO_ESPERA);
   
