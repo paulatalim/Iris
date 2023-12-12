@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'main.dart';
 import 'cadastro.dart';
 import 'armazenamento.dart';
@@ -178,6 +179,17 @@ class _UserLogin extends State<UserLogin> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 30),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.purple, 
+                      backgroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 45),
+                    ),
+                  onPressed: () {},   
+                  icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red,), 
+                  label: const Text('Entrar com o Google'),
+                )
               ],
             ),
           ),
