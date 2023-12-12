@@ -1,11 +1,13 @@
 import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'main.dart';
 import 'cadastro.dart';
 import 'armazenamento.dart';
 import 'usuario.dart';
+import 'google_sing_in.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -16,6 +18,7 @@ class UserLogin extends StatefulWidget {
 
 class _UserLogin extends State<UserLogin> {
   Armazenamento storage = Armazenamento();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   TextEditingController userAcc =
       TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
@@ -32,7 +35,7 @@ class _UserLogin extends State<UserLogin> {
       builder: (context) => const Center(child: CircularProgressIndicator(),)
     );
     try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: emailController.text.trim(), 
         password: passwordController.text.trim());
         List userLoad;
@@ -186,7 +189,13 @@ class _UserLogin extends State<UserLogin> {
                       backgroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 45),
                     ),
-                  onPressed: () {},   
+                  onPressed: () {
+                    signInWithGoogle().then((result){
+                      if (result != null){
+                        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                      }
+                    });
+                  },   
                   icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red,), 
                   label: const Text('Entrar com o Google'),
                 )
