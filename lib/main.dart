@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'voices.dart';
 import 'menu.dart';
 
 void main() {
   // Configuração que permite a utilizacao do app somente com a tela no modo retrato
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  //voice.initSpeech();
-  // voice.listenForPermissions();
-  //voice.speek("Olá, eu sou a Iris, sua assistente virtual de saúde");
 
   runApp(MaterialApp(
     title: 'Iris',
@@ -20,6 +15,6 @@ void main() {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const Menubar(),
+    home: Menubar(index: 0),
   ));
 }

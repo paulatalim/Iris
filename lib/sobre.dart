@@ -28,18 +28,31 @@ class _SobreState extends State<Sobre> {
         letterSpacing: 2);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    voice.speek("Então deixa eu me apresentar."
-                "Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
+  void dialogo() async {
+    await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
                 "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
                 "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
+    await Future.delayed(Duration(seconds: 20));
+    irUIMenu();
+  }
 
+  void irUIMenu() {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menubar()),
+          builder: (context) => Menubar(index: 0,)),
     );
+  }
+
+  bool dialogoNaoInicializado = true;
+
+  @override
+  Widget build(BuildContext context) {
+
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -72,13 +85,7 @@ class _SobreState extends State<Sobre> {
                         color: const Color(0xFF373B8A),
                         iconSize: 30,
                         onPressed: () {
-                          (
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Menubar()),
-                            ),
-                          );
+                          irUIMenu();
                         }),
                   ],
                 ),
@@ -108,7 +115,7 @@ class _SobreState extends State<Sobre> {
                     ),
                     const SizedBox(height: 45),
                     Text(
-                      'Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes auditivos, '
+                      'Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes visuais, '
                       'fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o '
                       'acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.',
                       textAlign: TextAlign.center,

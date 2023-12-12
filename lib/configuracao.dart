@@ -17,7 +17,7 @@ class _ConfiguracaoState extends State<Configuracao> {
   String resposta = "";
   bool respostaInvalida = true;
   bool configurarVelocidade = false;
-  bool configurarVolume = true;
+  bool configurarVolume = false;
   bool novaConfiguracao = false;
 
   double valor = 100;
@@ -49,21 +49,16 @@ class _ConfiguracaoState extends State<Configuracao> {
         color: Color(0xFF373B8A));
   }
 
-  void listening() async {
-    resposta = await voice.hear();
-  }
-
-  
-
-  @override
-  Widget build(BuildContext context) {
-
-    voice.speek("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
+  void dialogo() async {
+    await voice.speek("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
+    await Future.delayed(Duration(seconds: 10));
 
     do {
+      respostaInvalida = true;
+
       while (respostaInvalida) {
-        listening();
-        resposta = resposta.toLowerCase().trim();
+        await voice.hear();
+        resposta = voice.resposta;
 
         if (resposta.compareTo("velocidade") == 0){
           configurarVelocidade = true;
@@ -72,18 +67,20 @@ class _ConfiguracaoState extends State<Configuracao> {
           configurarVolume = true;
           respostaInvalida= false;
         } else {
-          voice.speek("Hummm não te escutei direito, o que você quer configurar?");
+          await voice.speek("Hummm não te escutei direito, o que você quer configurar?");
+          await Future.delayed(Duration(seconds: 5));
         }
       }
 
       respostaInvalida = true;
 
       if (configurarVelocidade) {
-        voice.speek("Vamos configurar a veocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
-        
+        await voice.speek("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
+        await Future.delayed(Duration(seconds: 10));
+
         while (respostaInvalida) {
-          listening();
-          resposta = resposta.toLowerCase().trim();
+          await voice.hear();
+          resposta = voice.resposta;
 
           if (resposta.compareTo("0,5x") == 0||
             resposta.compareTo("0.5x") == 0||
@@ -98,60 +95,81 @@ class _ConfiguracaoState extends State<Configuracao> {
             voice.speed = 1.0;
             respostaInvalida= false;
           } else {
-            voice.speek("Hummm não te escutei direito, repete de novo?");
+            await voice.speek("Hummm não te escutei direito, pode repetir de novo?");
+            await Future.delayed(Duration(seconds: 5));
           }
         }
         configurarVelocidade = false;
       }
 
       if (configurarVolume) {
-        voice.speek("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
-        
+        await voice.speek("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
+        await Future.delayed(Duration(seconds: 10));
+
         while (respostaInvalida) {
-          listening();
-          resposta = resposta.toLowerCase().trim();
+          await voice.hear();
+          resposta = voice.resposta;
 
           if (resposta.compareTo("alto") == 0) {
-            voice.volume =   0.2;
+            voice.volume =   1.0;
             respostaInvalida = false;
           } else if (resposta.compareTo("médio") == 0 || resposta.compareTo("medio") == 0) {
             voice.volume = 0.5;
             respostaInvalida= false;
           } else if (resposta.compareTo("baixo") == 0) {
-            voice.speed = 1.0;
+            voice.volume = 0.2;
             respostaInvalida= false;
           } else {
             voice.speek("Hummm não te escutei direito, repete de novo?");
+            await Future.delayed(Duration(seconds: 5));
           }
         }
         configurarVolume = false;
       }
 
-      voice.speek("Você deseja realizar mais alguma configuração?");
+      await voice.speek("Você deseja realizar mais alguma configuração?");
+      await Future.delayed(Duration(seconds: 5));
       respostaInvalida = true;
 
       while (respostaInvalida) {
-        listening();
-        resposta = resposta.toLowerCase().trim();
+        await voice.hear();
+        resposta = voice.resposta;
 
         if (resposta.compareTo("sim") == 0) {
-          voice.speek("E o que deseja configurar? A velocidade ou volume da minha voz?");
+          await voice.speek("E o que deseja configurar? A velocidade ou volume da minha voz?");
+          await Future.delayed(Duration(seconds: 5));
+          novaConfiguracao = true;
           respostaInvalida = false;
         } else if (resposta.compareTo("não") == 0) {
           respostaInvalida = false;
           novaConfiguracao = false;
         } else {
-          voice.speek("Hummm não te escutei direito, repete de novo?");
+          await voice.speek("Hummm não te escutei direito, repete de novo?");
+          await Future.delayed(Duration(seconds: 5));
         }
       }
-
     } while (novaConfiguracao);
 
+    irUIMenu();
+  }
+
+  void irUIMenu() {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menubar()),
+          builder: (context) => Menubar(index: 0)),
     );
+  }
+
+  bool dialogoNaoInicializado = true;
+
+  @override
+  Widget build(BuildContext context) {
+
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
 
     return Scaffold(
       body: Container(
@@ -186,7 +204,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Menubar()),
+                                  builder: (context) => Menubar(index: 0,)),
                             ),
                           );
                         }),

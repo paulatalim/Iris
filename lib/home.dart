@@ -3,7 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'voices.dart';
 import 'configuracao.dart';
 import 'sobre.dart';
-import 'menu.dart';
+import 'devices.dart';
+import 'dados.dart';
+import 'perfil.dart';
+import 'control.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,61 +14,101 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+final List<Widget> screens = [
+    const HomeScreen(),
+    const Devices(),
+    const Dados(),
+    const UserScreen(title: 'Nome Usuário'),
+  ];
+
+
 class _HomeScreenState extends State<HomeScreen> {
-  String resposta = "";
-  bool respostaInvalida = true;
+  bool dialogoNaoInicializado = true;
+  bool trocarUI = false;
+  int index = 0;
 
   void listening() async {
-    resposta = await voice.hear();
+    await voice.hear();
+  }
+
+  void dialogo() async {
+    String resposta = "";
+    bool respostaInvalida = true;
+
+    await Future.delayed(Duration(seconds: 5));
+
+    await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
+    await Future.delayed(Duration(seconds: 10));
+    
+    while (respostaInvalida) {
+      print("1");
+      await voice.hear();
+      
+      resposta = voice.resposta;
+      print(resposta);
+      print(resposta.compareTo("sobre"));
+
+      if (resposta.compareTo("configuração") == 0){
+        irUIConfiguracao();
+        respostaInvalida = false;
+      }
+      else if (resposta.compareTo("sobre") == 0) {
+        irUISobre();
+        respostaInvalida= false;
+      }
+      else if (resposta.compareTo("dispositivos") == 0) {
+        
+        irUIMenu(1);
+        respostaInvalida= false;
+      
+      } else if (resposta.compareTo("informações") == 0) {
+        
+        irUIMenu(2);
+        respostaInvalida= false;
+      
+      } else if (resposta.compareTo("perfil") == 0) {
+        //index = 3;
+        irUIMenu(3);
+        respostaInvalida= false;
+      
+      } else {
+        await voice.speek("Não te escutei direito, para qual seção deseja ir?");
+        await Future.delayed(Duration(seconds: 5));
+        print("2");
+      }
+    }
+    dialogoNaoInicializado = true;
+  }
+
+  void irUIMenu (int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+      )
+    );
+  }
+
+  void irUIConfiguracao () {
+    Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Configuracao()),
+        );
+  }
+
+  void irUISobre () {
+    Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Sobre())
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-
-    voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
-
-    while (respostaInvalida) {
-      // listening();
-      // resposta = resposta.toLowerCase().trim();
-
-      // if (resposta.compareTo("configuração") == 0){
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const Configuracao()),
-      //   );
-      //   respostaInvalida = false;
-      // }
-    //   else if (resposta.compareTo("sobre") == 0) {
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(builder: (context) => const Sobre())
-    //     );
-    //     respostaInvalida= false;
-    //   }
-    //   else if (resposta.compareTo("dispositivos") == 0) {
-    //     setState(() {
-    //       currentIndex = 1;
-    //     });
-    //     respostaInvalida= false;
-      
-    //   } else if (resposta.compareTo("informações") == 0) {
-    //     setState(() {
-    //       currentIndex = 2;
-    //     });
-    //     respostaInvalida= false;
-      
-    //   } else if (resposta.compareTo("perfil") == 0) {
-    //     setState(() {
-    //       currentIndex = 3;
-    //     });
-    //     respostaInvalida= false;
-      
-    //   } else {
-    //     voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
-    //   }
+    
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
     }
-
-
 
     return Stack(
       children: [

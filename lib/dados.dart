@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'voices.dart';
 import 'dart:core';
 import 'menu.dart';
+import 'control.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -13,11 +14,12 @@ class Dados extends StatefulWidget {
 
 //Classe dados
 class _DadosState extends State<Dados> {
-  final double peso = 00;
+  final double peso = 50;
   double temperatura = 00;
   final double altura = 00;
   final double imc = 00;
 
+  bool dialogoNaoInicializado = true;
   bool nenhumDadoColetado = true;
   bool respostaInvalida = true;
   String resposta = "";
@@ -108,56 +110,73 @@ class _DadosState extends State<Dados> {
     );
   }
 
-  void listening() async {
-    resposta = await voice.hear();
+  void dialogo() async {
+    if (temperatura > 0) {
+      await voice.speek("A sua temperatura é de $temperatura graus Celsius");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (altura > 0) {
+      await voice.speek("A sua altura é de $altura metros");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (peso > 0) {
+      await voice.speek("A seu peso é de $peso quilos");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (imc > 0) {
+      await voice.speek("A seu IMC é de $imc");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (nenhumDadoColetado) {
+      await voice.speek("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
+      await Future.delayed(Duration(seconds: 10));
+    }
+
+    await voice.speek("Para qual seção deseja ir agora?");
+    await Future.delayed(Duration(seconds: 5));
+
+    while (respostaInvalida) {
+      // print(currentIndex);
+      await voice.hear();
+      resposta = voice.resposta;
+
+      print ("resp: $resposta");
+      print(resposta.compareTo("dispositivos"));
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        irUIMenu(0);
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        irUIMenu(1);
+      } else if (resposta.compareTo("perfil") == 0) {
+        irUIMenu(3);
+      } else if (resposta.compareTo("informações") == 0) {
+        await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
+        await Future.delayed(Duration(seconds: 10));
+      } else {
+        await voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
+  }
+
+  void irUIMenu (int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    if (temperatura > 0) {
-      voice.speek("A sua temperatura é de $temperatura graus Celsius");
-      nenhumDadoColetado = false;
-    }
-    if (altura > 0) {
-      voice.speek("A sua altura é de $altura metros");
-      nenhumDadoColetado = false;
-    }
-    if (peso > 0) {
-      voice.speek("A seu peso é de $peso quilos");
-      nenhumDadoColetado = false;
-    }
-    if (imc > 0) {
-      voice.speek("A seu IMC é de $imc");
-      nenhumDadoColetado = false;
-    }
-    if (nenhumDadoColetado) {
-      voice.speek("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
-    }
-
-    voice.speek("Para qual seção deseja ir agora?");
-
-    while (respostaInvalida) {
-      listening();
-      resposta = resposta.toLowerCase().trim();
-      
-      if (resposta.compareTo("menu principal") == 0) {
-        setState(() {
-          currentIndex = 0;
-        });
-      } else if (resposta.compareTo("dispositivos") == 0) {
-        setState(() {
-          currentIndex = 1;
-        });
-      } else if (resposta.compareTo("perfil") == 0) {
-        setState(() {
-          currentIndex = 2;
-        });
-      } else if (resposta.compareTo("informações") == 0) {
-        voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
-      } else {
-        voice.speek("Hummm não te escutei direito, repete de novo?");
-      }
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
     }
 
     return Center(

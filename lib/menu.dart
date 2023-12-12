@@ -6,10 +6,20 @@ import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
 
-int currentIndex = 0;
+int _index = 0;
+bool trocarTela = false;
+
+void mudarTela (int index) {
+  print("chamo chamoooo $index");
+  _index = index;
+
+  trocarTela = true;
+}
 
 class Menubar extends StatefulWidget {
-  const Menubar({super.key});
+  int index;
+
+  Menubar({required int index}): this.index = index;
 
   @override
   State<Menubar> createState() => _MenubarState();
@@ -17,11 +27,8 @@ class Menubar extends StatefulWidget {
 
 class _MenubarState extends State<Menubar> {
   String resposta = '';
-
-  // void listening() async {
-  //   resposta = await voice.hear();
-  // }
-
+  late int currentIndex;
+  
   // Colocar nomes das telas na lista
   final List<Widget> screens = [
     const HomeScreen(),
@@ -47,6 +54,13 @@ class _MenubarState extends State<Menubar> {
     const Color(0xFFECCCFF),
   ];
 
+  void atualizarValor() {
+    print("helooo");
+    setState(() {
+      currentIndex = _index;
+    });
+  }
+
   void _colorSelection(int index) {
     for (int i = 0; i < _colorIcon.length; i++) {
       if (i != index) {
@@ -57,8 +71,13 @@ class _MenubarState extends State<Menubar> {
     }
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
+    currentIndex = widget.index;
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
