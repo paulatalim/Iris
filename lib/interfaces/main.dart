@@ -34,10 +34,14 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: ChangeNotifierProvider<MQTTAppState>(
+     home: ChangeNotifierProvider<MQTTAppState>(
           create: (_) => MQTTAppState(),
-          child: MainPage(),
+          child: Menu(),
         )
+    // home: ChangeNotifierProvider<MQTTAppState>(
+    //       create: (_) => MQTTAppState(),
+    //       child: MainPage(),
+    //     )
   ));
 }
 
