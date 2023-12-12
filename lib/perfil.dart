@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'voices.dart';
 import 'loginmain.dart';
-
-RecursoDeVoz texto_perfil = RecursoDeVoz();
+import 'menu.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -15,6 +14,8 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreen extends State<UserScreen> {
+  String resposta = "";
+
   TextStyle styleBoxTitle() {
     return const TextStyle(
         fontSize: 25,
@@ -23,8 +24,61 @@ class _UserScreen extends State<UserScreen> {
         color: Color(0xFF373B8A));
   }
 
+   void listening() async {
+    resposta = await voice.hear();
+  }
+
+  bool respostaInvalida = true;
+
   @override
   Widget build(BuildContext context) {
+    voice.speek("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL");
+    voice.speek("Você deseja sair da sua conta?");
+
+    while (respostaInvalida) {
+        listening();
+        resposta = resposta.toLowerCase().trim();
+
+        if (resposta.compareTo("sim") == 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const UserLogin()),
+          );
+        } else if (resposta.compareTo("não") == 0) {
+        
+          respostaInvalida = false;
+        } else {
+          voice.speek("Hummm não te escutei direito, repete de novo?");
+        }
+    }
+
+    voice.speek("Para qual seção deseja ir agora?");
+    respostaInvalida = true;
+
+    while (respostaInvalida) {
+      listening();
+      resposta = resposta.toLowerCase().trim();
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        setState(() {
+          currentIndex = 0;
+        });
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        setState(() {
+          currentIndex = 1;
+        });
+      } else if (resposta.compareTo("informações") == 0) {
+        setState(() {
+          currentIndex = 2;
+        });
+      } else if (resposta.compareTo("perfil") == 0) {
+        voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+      } else {
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(

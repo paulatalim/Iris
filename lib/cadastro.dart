@@ -13,8 +13,63 @@ class UserSingIn extends StatefulWidget {
 }
 
 class _UserSingIn extends State<UserSingIn> {
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool infoErrada = true;
+
+  void listening() async {
+    resposta = await voice.hear();
+  }
+
+  void questionarCampo (String campo) {
+    resposta = "";
+    voice.speek("Agora me fale seu $campo");
+
+    while (infoErrada) {
+      listening();
+      while (respostaInvalida) {
+        voice.speek("$resposta, esse é seu $campo?");
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
+          
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    voice.speek("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
+
+    while (infoErrada) {
+      resposta = "";
+      respostaInvalida = true;
+      infoErrada = true;
+
+      listening();
+
+      while (respostaInvalida) {
+        voice.speek("$resposta, esse é seu nome?");
+
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
+          
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+      }
+    }
+
+    questionarCampo("sobrenome");
+    questionarCampo("email");
+    questionarCampo("senha");
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

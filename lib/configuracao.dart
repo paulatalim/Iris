@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'menu.dart';
+import 'voices.dart';
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -10,10 +11,16 @@ class Configuracao extends StatefulWidget {
   State<Configuracao> createState() => _ConfiguracaoState();
 }
 
-List<String> speeds = <String>['1.0x', '2.0x', '3.0x'];
+List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
 
 class _ConfiguracaoState extends State<Configuracao> {
-  double valor = 50;
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool configurarVelocidade = false;
+  bool configurarVolume = true;
+  bool novaConfiguracao = false;
+
+  double valor = 100;
   Color boxColor = const Color(0xFFC7C9FF);
   String speedOption = speeds.first;
 
@@ -42,8 +49,110 @@ class _ConfiguracaoState extends State<Configuracao> {
         color: Color(0xFF373B8A));
   }
 
+  void listening() async {
+    resposta = await voice.hear();
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
+
+    voice.speek("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
+
+    do {
+      while (respostaInvalida) {
+        listening();
+        resposta = resposta.toLowerCase().trim();
+
+        if (resposta.compareTo("velocidade") == 0){
+          configurarVelocidade = true;
+          respostaInvalida = false;
+        } else if (resposta.compareTo("volume") == 0) {
+          configurarVolume = true;
+          respostaInvalida= false;
+        } else {
+          voice.speek("Hummm não te escutei direito, o que você quer configurar?");
+        }
+      }
+
+      respostaInvalida = true;
+
+      if (configurarVelocidade) {
+        voice.speek("Vamos configurar a veocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
+        
+        while (respostaInvalida) {
+          listening();
+          resposta = resposta.toLowerCase().trim();
+
+          if (resposta.compareTo("0,5x") == 0||
+            resposta.compareTo("0.5x") == 0||
+            resposta.compareTo("zero , cincox") == 0) {
+
+              voice.speed = 0.2;  
+              respostaInvalida = false;
+          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("um x") == 0) {
+            voice.speed = 0.5;
+            respostaInvalida= false;
+          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("dois x") == 0) {
+            voice.speed = 1.0;
+            respostaInvalida= false;
+          } else {
+            voice.speek("Hummm não te escutei direito, repete de novo?");
+          }
+        }
+        configurarVelocidade = false;
+      }
+
+      if (configurarVolume) {
+        voice.speek("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
+        
+        while (respostaInvalida) {
+          listening();
+          resposta = resposta.toLowerCase().trim();
+
+          if (resposta.compareTo("alto") == 0) {
+            voice.volume =   0.2;
+            respostaInvalida = false;
+          } else if (resposta.compareTo("médio") == 0 || resposta.compareTo("medio") == 0) {
+            voice.volume = 0.5;
+            respostaInvalida= false;
+          } else if (resposta.compareTo("baixo") == 0) {
+            voice.speed = 1.0;
+            respostaInvalida= false;
+          } else {
+            voice.speek("Hummm não te escutei direito, repete de novo?");
+          }
+        }
+        configurarVolume = false;
+      }
+
+      voice.speek("Você deseja realizar mais alguma configuração?");
+      respostaInvalida = true;
+
+      while (respostaInvalida) {
+        listening();
+        resposta = resposta.toLowerCase().trim();
+
+        if (resposta.compareTo("sim") == 0) {
+          voice.speek("E o que deseja configurar? A velocidade ou volume da minha voz?");
+          respostaInvalida = false;
+        } else if (resposta.compareTo("não") == 0) {
+          respostaInvalida = false;
+          novaConfiguracao = false;
+        } else {
+          voice.speek("Hummm não te escutei direito, repete de novo?");
+        }
+      }
+
+    } while (novaConfiguracao);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const Menubar()),
+    );
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

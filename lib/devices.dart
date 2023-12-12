@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'voices.dart';
-
-RecursoDeVoz texto_devices = RecursoDeVoz();
-
+import 'menu.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -34,6 +32,9 @@ List<DispositivosDisponivel> dispositivo = [
 
 class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool fazerNovaLeitura = false;
 
   TextStyle styletext() {
     return GoogleFonts.inclusiveSans(
@@ -59,19 +60,78 @@ class _DevicesState extends State<Devices> {
     );
   }
 
+  void listening() async {
+    resposta = await voice.hear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    ///FALAS
-    //if (todos os 4 dispositivos estiverem conectados nas suas devidas entradas)
-      //esp
-      //sensores da balança
-      //sensor ultrassonico
-      //termometro
-    texto_devices.speek("todos os dispositivos estao conectados!");
-    //else
-      //for (verifica cada uma das entrdas do esp)
-        //texto_devices.speek( x "esta desconectado!");
+    
+    voice.speek("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
+    
+    do {
+      while (respostaInvalida) {
+        listening();
+        resposta = resposta.toLowerCase().trim();
 
+        if (resposta.compareTo("peso") == 0){
+          respostaInvalida = false;
+        }
+        else if (resposta.compareTo("altura") == 0) {
+          respostaInvalida= false;
+        }
+        else if (resposta.compareTo("temperatura") == 0) {
+          respostaInvalida= false;
+        } else {
+          voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
+        }
+      }
+      voice.speek("Você deseja realizar uma nova leitura?");
+      respostaInvalida = true;
+
+      while (respostaInvalida) {
+        listening();
+        resposta = resposta.toLowerCase().trim();
+
+        if (resposta.compareTo("sim") == 0) {
+          voice.speek("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
+          respostaInvalida = false;
+        } else if (resposta.compareTo("não") == 0) {
+          fazerNovaLeitura = false;
+          respostaInvalida = false;
+        } else {
+          voice.speek("Hummm não te escutei direito, repete de novo?");
+        }
+        
+      }
+    } while (fazerNovaLeitura);
+    
+    voice.speek("Para qual seção deseja ir agora?");
+    respostaInvalida = true;
+
+    while (respostaInvalida) {
+      listening();
+      resposta = resposta.toLowerCase().trim();
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        setState(() {
+          currentIndex = 0;
+        });
+      } else if (resposta.compareTo("informações") == 0) {
+        setState(() {
+          currentIndex = 2;
+        });
+      } else if (resposta.compareTo("perfil") == 0) {
+        setState(() {
+          currentIndex = 3;
+        });
+      } else if (resposta.compareTo("informações") == 0) {
+        voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+      } else {
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+      }
+    }
+   
     return Column(
       children: [
         Container(

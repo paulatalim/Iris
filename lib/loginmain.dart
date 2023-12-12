@@ -3,8 +3,6 @@ import 'cadastro.dart';
 import 'menu.dart';
 import 'voices.dart';
 
-RecursoDeVoz texto_login = RecursoDeVoz();
-
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
 
@@ -13,17 +11,55 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLogin extends State<UserLogin> {
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool infoErrada = true;
+
+  void listening() async {
+    resposta = await voice.hear();
+  }
+
+  void questionarCampo (String campo, String pronome) {
+    resposta = "";
+    voice.speek("Qual a $pronome $campo?");
+
+    while (infoErrada) {
+      listening();
+      while (respostaInvalida) {
+        voice.speek("$resposta, esse é $pronome $campo?");
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
+          
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    texto_login.speek("Entre com a sua conta ou crie uma nova conta!");
-    //Se criar conta: entrar pagina cadastro
-    //se entrar conta:
-    //texto_login.speek("Diga o seu email");
-    //Escuta e escreve no campo email
-    //texto_login.speek("seu email é:" string email);
+    voice.speek("Entre com a sua conta ou crie uma nova conta!");
+    voice.speek("Voce já possui uma conta aqui?");
+    listening();
 
+    while(respostaInvalida) {
+      if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+        respostaInvalida = false;
+        //Ir menu
+      } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+        // Ir para tela cadastro
+        respostaInvalida = false;
+      }
+
+      voice.speek("Hummm não te escutei direito, repete de novo?");
+    }
+
+    questionarCampo("email", "seu");
+    questionarCampo("senha", "sua");
 
     return Scaffold(
       body: Container(

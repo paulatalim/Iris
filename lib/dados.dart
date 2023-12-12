@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'voices.dart';
 import 'dart:core';
-
-RecursoDeVoz texto_dados = RecursoDeVoz();
+import 'menu.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -18,6 +17,10 @@ class _DadosState extends State<Dados> {
   double temperatura = 00;
   final double altura = 00;
   final double imc = 00;
+
+  bool nenhumDadoColetado = true;
+  bool respostaInvalida = true;
+  String resposta = "";
 
   //Criandos os containers
   Container boxNumber(String texto, String numero, String unidade) {
@@ -86,18 +89,18 @@ class _DadosState extends State<Dados> {
     return GestureDetector(
       onTap: () {
         if (texto== "Peso ") {
-          texto_dados.speek("peso : " + peso.toString() + "quilos");
+          voice.speek("peso : $peso quilos");
         }
         if(texto== "Altura"){
-          texto_dados.speek("altura : "+altura.toString()+"metros.");
+          voice.speek("altura : $altura metros.");
         }
 
         if(texto== "Temperatura"){
-          texto_dados.speek("temperatura : "+temperatura.toString()+"graus.");
+          voice.speek("temperatura : $temperatura graus.");
         }
 
         if(texto== "IMC"){
-          texto_dados.speek("IMC : "+imc.toString());
+          voice.speek("IMC : $imc");
         }
       },
 
@@ -105,9 +108,57 @@ class _DadosState extends State<Dados> {
     );
   }
 
+  void listening() async {
+    resposta = await voice.hear();
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    if (temperatura > 0) {
+      voice.speek("A sua temperatura é de $temperatura graus Celsius");
+      nenhumDadoColetado = false;
+    }
+    if (altura > 0) {
+      voice.speek("A sua altura é de $altura metros");
+      nenhumDadoColetado = false;
+    }
+    if (peso > 0) {
+      voice.speek("A seu peso é de $peso quilos");
+      nenhumDadoColetado = false;
+    }
+    if (imc > 0) {
+      voice.speek("A seu IMC é de $imc");
+      nenhumDadoColetado = false;
+    }
+    if (nenhumDadoColetado) {
+      voice.speek("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
+    }
+
+    voice.speek("Para qual seção deseja ir agora?");
+
+    while (respostaInvalida) {
+      listening();
+      resposta = resposta.toLowerCase().trim();
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        setState(() {
+          currentIndex = 0;
+        });
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        setState(() {
+          currentIndex = 1;
+        });
+      } else if (resposta.compareTo("perfil") == 0) {
+        setState(() {
+          currentIndex = 2;
+        });
+      } else if (resposta.compareTo("informações") == 0) {
+        voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
+      } else {
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+      }
+    }
 
     return Center(
       child: Column(

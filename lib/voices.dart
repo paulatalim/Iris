@@ -20,23 +20,23 @@ class RecursoDeVoz {
     _speechToText = SpeechToText();
 
     // Inicializa os atributos
-    _speed = 1.0;
+    _speed = 0.5;
     _tom = 1.0;
-    _volume = 0.8;
+    _volume = 1.0;
     _resposta = '';
 
     // Configurações dos recursos de vozes
-    _listenForPermissions();
+    listenForPermissions();
   }
 
   /// Inicializa o microfone
-  void _initSpeech() async {
+  Future<void> initSpeech() async {
     await _speechToText.initialize();
     debugPrint("microfone inicializado");
   }
 
   /// Requisição da permissao para habilitacao do microfone
-  void _listenForPermissions() async {
+  void listenForPermissions() async {
     final status = await Permission.microphone.status;
     if (status == PermissionStatus.denied) {
       _requestForPermission();
@@ -68,16 +68,10 @@ class RecursoDeVoz {
     debugPrint(_resposta);
   }
 
-  /// Da uma pausa no aplicativo para as funções serem executadas
-  ///
-  /// Coloque o tempo de pausa em segundos [seconds] para o tempo de pausa
-  Future<void> _delay(int seconds) async {
-    await Future.delayed(Duration(seconds: seconds));
-  }
-
   /// Habilita o microfone e captura a voz
   Future<void> _hear() async {
     _resposta = '';
+    
     await _speechToText.listen(
       onResult: _onSpeechResult,
       listenFor: const Duration(seconds: 5),
@@ -86,6 +80,7 @@ class RecursoDeVoz {
       partialResults: false,
       listenMode: ListenMode.confirmation,
     );
+    
   }
 
   /// Habilita o microfone, captura o voz e transforma em texto
@@ -93,13 +88,13 @@ class RecursoDeVoz {
   /// Retorna o texto em forma de uma [String]
   Future<String> hear() async {
     // Abre o microfone
-    _initSpeech();
+    await initSpeech();
 
     // Escuta o usuario
     await _hear();
 
     // Delay de 5 segundos antes do retorno
-    await _delay(5);
+    Future.delayed(Duration(seconds: 5));
 
     // Retorno da _resposta em String
     return Future.value(_resposta);
@@ -109,15 +104,15 @@ class RecursoDeVoz {
   ///
   /// Aceita valores entre 0.5 e 2.0
   double get speed => _speed;
-  set speedVoice(double speed) {
-    _speed = speed;
-  }
+  set speed(value) => _speed = value;
+  
 
   /// _Volume da voz do audio
   ///
   /// Aceita valores entre 0.0 e 1.0
   double get volume => _volume;
-  set volumeVoice(double volume) {
-    _volume = volume;
-  }
+  set volume(value) => _volume = value;
+  
 }
+
+RecursoDeVoz voice = RecursoDeVoz();

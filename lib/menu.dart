@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'main.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
+
+int currentIndex = 0;
 
 class Menubar extends StatefulWidget {
   const Menubar({super.key});
@@ -15,12 +16,11 @@ class Menubar extends StatefulWidget {
 }
 
 class _MenubarState extends State<Menubar> {
-  int _currentIndex = 0;
   String resposta = '';
 
-  void listening() async {
-    resposta = await voice.hear();
-  }
+  // void listening() async {
+  //   resposta = await voice.hear();
+  // }
 
   // Colocar nomes das telas na lista
   final List<Widget> screens = [
@@ -68,10 +68,10 @@ class _MenubarState extends State<Menubar> {
 
           // Seciona a cor de fundo de acordo com as telas
           colors: [
-            _currentIndex == 0 || _currentIndex == 1
+            currentIndex == 0 || currentIndex == 1
                 ? _colorScreen[0]
                 : _colorScreen[3],
-            _currentIndex == 0 || _currentIndex == 1
+            currentIndex == 0 || currentIndex == 1
                 ? _colorScreen[1]
                 : _colorScreen[2]
           ],
@@ -79,7 +79,7 @@ class _MenubarState extends State<Menubar> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: screens[_currentIndex],
+        body: screens[currentIndex],
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
@@ -103,8 +103,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.house),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 0;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 0;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
@@ -113,8 +113,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.computer),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 1;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 1;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
@@ -129,8 +129,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.heartPulse),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 2;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 2;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
@@ -139,8 +139,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.lock),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 3;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 3;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
