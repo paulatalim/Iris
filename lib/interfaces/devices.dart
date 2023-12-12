@@ -54,8 +54,6 @@ List<DispositivosDisponivel> dispositivo = [
       status: 'Processando ...')
 ];
 
-
-
 class Devices extends StatefulWidget {
   const Devices({super.key});
 
@@ -105,7 +103,6 @@ class _DevicesState extends State<Devices> {
     );
   }
   
-
   void dialogo() async {
     await voice.speek("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
     await Future.delayed(Duration(seconds: 15));
@@ -116,12 +113,44 @@ class _DevicesState extends State<Devices> {
         resposta = voice.resposta;
 
         if (resposta.compareTo("peso") == 0){
+          await voice.speek("Suba na balança");
+          await Future.delayed(Duration(seconds: 10));
+          await voice.speek("Estou medindo seu peso");
+          manager.publish(dispositivo[4].mensage);
+
+          await voice.speek("Seu peso é de ${usuario.peso} quilos");
+          await Future.delayed(Duration(seconds: 5));
+
           respostaInvalida = false;
         }
         else if (resposta.compareTo("altura") == 0) {
+          await voice.speek("Primeiro vou calibrar o sensor, não fique embaixo dele");
+          await Future.delayed(Duration(seconds: 10));
+          
+          await voice.speek("Sensor calibrado, agora fique debaixo do sensor");
+          await Future.delayed(Duration(seconds: 5));
+          manager.publish(dispositivo[2].mensage);
+          
+          await voice.speek("Medindo sua altura");
+          await Future.delayed(Duration(seconds: 30));
+
+          await voice.speek("Sua altura é de ${usuario.altura} metros");
+          await Future.delayed(Duration(seconds: 5));
+
           respostaInvalida= false;
         }
         else if (resposta.compareTo("temperatura") == 0) {
+          await voice.speek("Coloque o sensor debaixo do seu braço");
+          manager.publish(dispositivo[2].mensage);
+          await Future.delayed(Duration(seconds: 5));
+
+          await voice.speek("Estou medindo sua tempearura");
+          await Future.delayed(Duration(seconds: 60));
+          
+
+          await voice.speek("Sua temperatura é de ${usuario.temperatura} graus Celsius");
+          await Future.delayed(Duration(seconds: 5));
+
           respostaInvalida= false;
         } else {
           await voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
@@ -140,8 +169,8 @@ class _DevicesState extends State<Devices> {
 
         if (resposta.compareTo("sim") == 0) {
           await voice.speek("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
-          await Future.delayed(Duration(seconds: 10));
-    
+          await Future.delayed(Duration(seconds: 5));
+
           respostaInvalida = false;
         } else if (resposta.compareTo("não") == 0) {
           fazerNovaLeitura = false;
@@ -225,7 +254,7 @@ class _DevicesState extends State<Devices> {
             usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
             break;
           case 'A':
-          dispositivo[3].status = "Concluído";
+            dispositivo[3].status = "Concluído";
             usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
             usuario.calcular_imc();
             break;
