@@ -1,10 +1,6 @@
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-import 'mqtt/MQTTManager.dart';
-import 'mqtt/state/MQTTAppState.dart';
 import 'usuario.dart';
 
 
@@ -16,9 +12,6 @@ class Dados extends StatefulWidget {
 }
 
 class _DadosState extends State<Dados> {
-  late MQTTAppState currentAppState;
-  late MQTTManager manager;
-
   @override
   void initState() {
     super.initState();
@@ -91,26 +84,6 @@ class _DadosState extends State<Dados> {
 
   @override
   Widget build(BuildContext context) {
-    final MQTTAppState appState = Provider.of<MQTTAppState>(context);
-    currentAppState = appState;
-    if(currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected) {
-        _configureAndConnect();
-                
-    } else {
-      switch (currentAppState.getReceivedText.trim()[0]) {
-        case 'T':
-          usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
-          break;
-        case 'A':
-          usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
-          usuario.calcular_imc();
-          break;
-        case 'P':
-          usuario.peso = double.parse(currentAppState.getReceivedText.substring(1));
-          usuario.calcular_imc();
-          break;
-      }
-    }
     return Scaffold(
       backgroundColor: Colors.transparent,
       body:
@@ -138,39 +111,10 @@ class _DadosState extends State<Dados> {
             boxNumber(
                 'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
             boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
-            GestureDetector(
-              onTap: () {
-                _publishMessage('L');
-              },
-              child: Container(width: 100, height: 200, color: Colors.red,),
-            )
+            
           ],
         ),
       ),
     );
-    
-  }
-
-  void _publishMessage(String text) {
-    
-    manager.publish(text);
-    
-  }
-
-  void _configureAndConnect() {
-    // ignore: flutter_style_todos
-    // TODO: Use UUID
-    String osPrefix = 'Flutter_iOS';
-    if (Platform.isAndroid) {
-      osPrefix = 'Flutter_Android';
-    }
-    manager = MQTTManager(
-        host: 'test.mosquitto.org',
-        topicPublish: 'iris/atuador',
-        topicSubscribe: 'iris/sensor',
-        identifier: osPrefix,
-        state: currentAppState);
-    manager.initializeMQTTClient();
-    manager.connect();
   }
 }
