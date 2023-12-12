@@ -67,6 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '224015384929',
     projectId: 'projeto-iris-puc',
     storageBucket: 'projeto-iris-puc.appspot.com',
+    androidClientId: '224015384929-tggl85tjc45ph3240bcta5n9ka39drgg.apps.googleusercontent.com',
+    iosClientId: '224015384929-32b660psdnkhnqebpv4bpgd3871vpd3b.apps.googleusercontent.com',
     iosBundleId: 'com.example.irisApp',
   );
 
@@ -76,6 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '224015384929',
     projectId: 'projeto-iris-puc',
     storageBucket: 'projeto-iris-puc.appspot.com',
+    androidClientId: '224015384929-tggl85tjc45ph3240bcta5n9ka39drgg.apps.googleusercontent.com',
+    iosClientId: '224015384929-pc8u9900q9aivj8pb47aphi7mtnncjuc.apps.googleusercontent.com',
     iosBundleId: 'com.example.irisApp.RunnerTests',
   );
 }
