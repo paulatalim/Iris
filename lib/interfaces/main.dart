@@ -8,6 +8,7 @@ import 'login.dart';
 import 'menu.dart';
 import '../mqtt/state/MQTTAppState.dart';
 import '../firebase_options.dart';
+import '../storage/usuario.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,9 @@ void main() async {
     systemNavigationBarColor: Color(0xFFddd9e0),
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
+
+  usuario.nome = "Ilo";
+  usuario.email = "iris@gmail.com";
 
   runApp(MaterialApp(
     navigatorKey: navigatorKey,
