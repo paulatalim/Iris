@@ -10,7 +10,6 @@ import '../control.dart';
 import '../mqtt/MQTTManager.dart';
 import '../mqtt/state/MQTTAppState.dart';
 import '../storage/usuario.dart';
-import '../storage/usuario.dart';
 
 /// Classe com as propriedades dos dispositivos
 class DispositivosDisponivel {

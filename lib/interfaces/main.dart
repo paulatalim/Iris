@@ -1,16 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../storage/sharedpreference.dart';
 import 'login.dart';
 import 'menu.dart';
 import '../mqtt/state/MQTTAppState.dart';
+import '../firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  bool isLogged = await isUserLoggedIn();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -21,6 +26,7 @@ void main() async {
   ));
 
   runApp(MaterialApp(
+    navigatorKey: navigatorKey,
     title: 'Iris',
     theme: ThemeData(
         useMaterial3: true,
@@ -30,7 +36,33 @@ void main() async {
     debugShowCheckedModeBanner: false,
     home: ChangeNotifierProvider<MQTTAppState>(
           create: (_) => MQTTAppState(),
-          child: isLogged == true ? Menu(index: 0) : const UserLogin(),
+          child: MainPage(),
         )
   ));
+}
+
+final navigatorKey = GlobalKey<NavigatorState>();
+
+class MainPage extends StatelessWidget{
+  const MainPage({super.key});
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator(),);
+        }
+        else if(snapshot.hasError){
+          return const Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
+        }
+        if(snapshot.hasData){ //Verifica se usuario está logado
+          return Menu(index: 0);
+        }
+        else{
+          return const UserLogin();
+        }
+      },
+    )
+  );
 }

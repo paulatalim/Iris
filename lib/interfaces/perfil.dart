@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iris_app/storage/sharedpreference.dart';
 
 import '../storage/usuario.dart';
 import '../voices.dart';
@@ -31,6 +31,12 @@ class _UserScreen extends State<UserScreen> {
         color: Color(0xFF373B8A),
       ),
     );
+  }
+
+  void _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
   }
 
   void dialogo() async {
@@ -125,7 +131,12 @@ class _UserScreen extends State<UserScreen> {
                   children: [
                     //Campo de texto Nome usuario
                     Text(
-                      usuario.nome,
+                      usuario.nome + ' ' + usuario.sobrenome,
+                      style: styleBoxTitle(),
+                    ),
+                    const SizedBox(height: 30),
+                    Text(
+                      usuario.email,
                       style: styleBoxTitle(),
                     ),
                     const SizedBox(height: 30),
@@ -179,13 +190,8 @@ class _UserScreen extends State<UserScreen> {
 
                 //Botão para realizar log-off
                 TextButton(
-                  onPressed: () {
-                    setUserLoggedIn('');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const UserLogin()),
-                    );
+                  onPressed: (){
+                    _signOut();
                   },
                   child: const Text(
                     'Sair',

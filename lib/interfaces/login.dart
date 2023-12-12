@@ -1,12 +1,16 @@
 import 'dart:core';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../google_sing_in.dart';
 
+import 'main.dart';
 import 'cadastro.dart';
 import 'menu.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
-import '../storage/sharedpreference.dart';
 import '../voices.dart';
+
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -17,42 +21,63 @@ class UserLogin extends StatefulWidget {
 
 class _UserLogin extends State<UserLogin> {
   Armazenamento storage = Armazenamento();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //TextEdinting exclusivo para armazenar dados do usuario
   TextEditingController userAcc = TextEditingController(); // email
   TextEditingController userPss = TextEditingController(); // senha 
 
-  //Mensagem vazia para realizar alteração caso necessário
-  String mensagemErro = ''; 
+  String mensagemErro =
+      ''; //Mensagem vazia para realizar alteração caso necessário
+  
+  Future login() async{
+    showDialog(
+      context: context,
+      barrierDismissible: false, 
+      builder: (context) => const Center(child: CircularProgressIndicator(),)
+    );
+    try{
+      await _auth.signInWithEmailAndPassword(
+        email: emailController.text.trim(), 
+        password: passwordController.text.trim());
+        List userLoad;
+        userLoad = await storage.buscarUsuario(emailController.text.trim()); //Carregando o usuario existente
+        usuario.id = userLoad[0]["id"]; //Carregando o ID
+        usuario.nome = userLoad[0]["nome"]; //Carregando nome
+        print("User nome: " + usuario.nome); 
+        print("DB nome: " + userLoad[0]["nome"]);
+        usuario.sobrenome = userLoad[0]["sobrenome"]; //Carregando sobrenome
+        usuario.email = emailController.text.trim(); //Carregando e-mail
+    } on FirebaseAuthException catch (e){
+      setState(() {
+        erroEmail = '';
+        erroSenha = '';
+      });
+      if(e.code == 'invalid-email' || e.code == 'user-not-found'){
+        setState(() {
+          erroEmail = 'E-mail inválido';
+        });
+      }
+      else if(e.code == 'invalid-credential'){
+        setState(() {
+          erroSenha = 'Senha errada';
+        });
+      }
+      else print(e.code);
+    }
 
-  /// Redireciona a pagina para o menu
-  void _redirecionarPaginaMenu() {
-          
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Menu(index: 0)),
-      );
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  /// Realiza o login da conta no usuario
-  void _login() async {
-    String user = userAcc.text;
-    String password = userPss.text;
-
-    if (await storage.senhaCorreta(user, password) == false) {
-      setState(() {
-        mensagemErro = 'Usuario ou Senha inválidos.';
-      });
-    } else {
-      debugPrint('login');
-      
-      // Salva os dados
-      usuario.importarDados(user);
-      setUserLoggedIn(user);
-
-      _redirecionarPaginaMenu();
-
-    }
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  String erroEmail = '';
+  String erroSenha = '';
+  
+  @override
+  void dispose(){
+    emailController.dispose();
+    passwordController.dispose();
   }
 
   String resposta = "";
@@ -167,19 +192,23 @@ class _UserLogin extends State<UserLogin> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(children: [
                     TextFormField(
-                      controller: userAcc,
+                      controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
+                      decoration: InputDecoration(
+                        helperText: erroEmail,
+                        helperStyle: const TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
+                        border: const UnderlineInputBorder(),
                         labelText: 'E-mail:',
                         hintText: 'nome@exemplo.com',
                       ),
                     ),
                     TextFormField(
-                      controller: userPss,
+                      controller: passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
+                      decoration: InputDecoration(
+                        helperText: erroSenha,
+                        helperStyle: const TextStyle(color: Color.fromARGB(255, 220, 0, 0)),
+                        border: const UnderlineInputBorder(),
                         labelText: 'Senha:',
                         hintText: 'Digite sua senha',
                       ),
@@ -217,7 +246,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          _login();
+                          login();
                         },
                         child: const Text(
                           //Botão para realizar login
@@ -231,6 +260,23 @@ class _UserLogin extends State<UserLogin> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 30),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.purple, 
+                      backgroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 45),
+                    ),
+                  onPressed: () {
+                    signInWithGoogle().then((result){
+                      if (result != null){
+                        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                      }
+                    });
+                  },   
+                  icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red,), 
+                  label: const Text('Entrar com o Google'),
+                )
               ],
             ),
           ),

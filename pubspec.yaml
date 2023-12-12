@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
+  google_sign_in: ^6.1.6
   font_awesome_flutter: ^10.5.0
   # cupertino_icons: ^1.0.2
   shared_preferences: ^2.2.1
@@ -26,6 +27,9 @@ dependencies:
   mqtt5_client: ^4.0.3
   provider: ^6.1.1
   flutter_animate: ^4.2.0+1
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
+  firebase_ui_auth: ^1.10.0
 
 dev_dependencies:
   flutter_test:

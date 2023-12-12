@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "224015384929",
+    "project_id": "projeto-iris-puc",
+    "storage_bucket": "projeto-iris-puc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224015384929:android:05df23c0399a7c188c4520",
+        "android_client_info": {
+          "package_name": "com.example.iris_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224015384929-tggl85tjc45ph3240bcta5n9ka39drgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iris_app",
+            "certificate_hash": "d18a04196e0a3bcdaba3a19e1196bdc40f0857fc"
+          }
+        },
+        {
+          "client_id": "224015384929-m3tng6putafbvilfk1giohv3pjgf7sm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnI2QPa6FOOHbWitvGDrXwgZMklTPJYhc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224015384929-m3tng6putafbvilfk1giohv3pjgf7sm0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "224015384929-32b660psdnkhnqebpv4bpgd3871vpd3b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.irisApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

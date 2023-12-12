@@ -1,4 +1,4 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,8 +6,8 @@ import 'login.dart';
 import 'menu.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
-import '../storage/sharedpreference.dart';
 import '../voices.dart';
+import 'main.dart';
 
 class UserSingIn extends StatefulWidget {
   const UserSingIn({super.key});
@@ -29,23 +29,26 @@ class _UserSingIn extends State<UserSingIn> {
   //Mensagem vazia para realizar alteração caso necessário
   String erroCadastro = ''; 
 
-  /// Cria conta de usuario e depois redireciona a pagina para o menu
-  void _criarUser() {
-    // Salva os dados no banco de dados
-    storage.salvarDados(
-        usuario.nome, userSurname.text, userAcc.text, userPss1.text);
-
-    // Salva os dados no armazenamento local
-    setUserLoggedIn(userAcc.text);
-
-    // Salva os dados na memoria principal
-    usuario.importarDados(userAcc.text);
-
-    //Redirecionando ao menu
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Menu(index: 0)),
+  void _criarUser() async { //Criando usuario dentro do firebase ccom as informações providenciadas
+    showDialog(
+      context: context,
+      barrierDismissible: false, 
+      builder: (context) => const Center(child: CircularProgressIndicator(),)
     );
+
+    try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: userAcc.text.trim(), 
+        password: userPss1.text.trim(),
+      );
+    } on FirebaseAuthException catch (e){
+      print(e);
+    }
+    storage.salvarDados(userName.text.trim(), userSurname.text.trim(), userAcc.text.trim(), "");
+    usuario.email = userAcc.text;
+    usuario.sobrenome = userSurname.text;
+    usuario.nome = userName.text;
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   /// Valida o email
@@ -185,10 +188,8 @@ class _UserSingIn extends State<UserSingIn> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const UserLogin()),
-            );
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
           },
         ),
       ),

@@ -24,33 +24,7 @@ class Armazenamento {
     database = await _recuperarBancoDados();
   }
 
-<<<<<<< HEAD:lib/armazenamento.dart
-  // Future<void> _initMqtt() async {
-  //   // Inicializa a lógica MQTT a partir do arquivo mqtt.dart
-  //   await MqttHelper().initMqtt();
-  // }
-
-  //  void atualizarDadosMqtt(String valor) {
-  //   // Adapte este método para refletir a lógica específica do seu aplicativo
-  //   // Este é um exemplo básico que adiciona um novo registro na tabela informacoes_adicionais com o valor recebido do MQTT.
-  //   int usuarioId = 1; // Substitua pelo ID do usuário real
-  //   double valorConvertido = double.tryParse(valor) ?? 0;
-
-  //   Map<String, dynamic> dadosInfoAdicional = {
-  //     "usuario_id": usuarioId,
-  //     "peso": valorConvertido,
-  //     "temperatura": valorConvertido,
-  //     "altura": valorConvertido,
-  //     "imc": valorConvertido,
-  //   };
-
-  //   database!.insert("informacoes_adicionais", dadosInfoAdicional);
-  //   debugPrint("Dados atualizados com valor do MQTT: $valor");
-  // }
-
-=======
   /// Cria e abre as tabelas do banco de dados
->>>>>>> ajuste-paula:lib/storage/armazenamento.dart
   dynamic _recuperarBancoDados() async {
     // Codigo SQL para criar a tabela de usuario
     String conta = '''CREATE TABLE usuarios (
