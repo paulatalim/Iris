@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'voices.dart';
+import '../voices.dart';
 
 import 'menu.dart';
 
@@ -13,6 +13,8 @@ class Sobre extends StatefulWidget {
 }
 
 class _SobreState extends State<Sobre> {
+
+  /// Estiliza campo integrantes
   TextStyle integranteStyle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
@@ -22,6 +24,7 @@ class _SobreState extends State<Sobre> {
     );
   }
 
+  // Estiliza subtitulos da pagina
   TextStyle subtitle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
@@ -45,7 +48,7 @@ class _SobreState extends State<Sobre> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Menubar(index: 0,)),
+          builder: (context) => Menu(index: 0,)),
     );
   }
 

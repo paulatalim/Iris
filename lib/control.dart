@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'menu.dart';
+import './interfaces/menu.dart';
 
 class ControlScreen extends StatefulWidget {
   int index;
@@ -17,7 +17,7 @@ class _ControlScreenState extends State<ControlScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Menubar(index: index,)),
+          builder: (context) => Menu(index: index,)),
     );
   }
 

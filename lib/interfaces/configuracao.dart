@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'menu.dart';
-import 'voices.dart';
+import '../voices.dart';
+
+// Lista das velocidades disponiveis
+List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -10,8 +13,6 @@ class Configuracao extends StatefulWidget {
   @override
   State<Configuracao> createState() => _ConfiguracaoState();
 }
-
-List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
 
 class _ConfiguracaoState extends State<Configuracao> {
   String resposta = "";
@@ -24,6 +25,7 @@ class _ConfiguracaoState extends State<Configuracao> {
   Color boxColor = const Color(0xFFC7C9FF);
   String speedOption = speeds.first;
 
+  /// Estiliza os cards das configuracoes
   BoxDecoration styleBox() {
     return BoxDecoration(
       color: boxColor,
@@ -41,6 +43,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     );
   }
 
+  /// Estiliza o texto do item das configuracoes
   TextStyle styleBoxTitle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
@@ -160,7 +163,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Menubar(index: 0)),
+          builder: (context) => Menu(index: 0)),
     );
   }
 
@@ -207,7 +210,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Menubar(index: 0,)),
+                                  builder: (context) => Menu(index: 0,)),
                             ),
                           );
                         }),

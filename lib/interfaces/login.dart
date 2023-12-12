@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'cadastro.dart';
 import 'menu.dart';
-import 'armazenamento.dart';
-import 'usuario.dart';
-import 'sharedpreference.dart';
-import 'voices.dart';
+import '../storage/armazenamento.dart';
+import '../storage/usuario.dart';
+import '../storage/sharedpreference.dart';
+import '../voices.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -18,14 +18,23 @@ class UserLogin extends StatefulWidget {
 class _UserLogin extends State<UserLogin> {
   Armazenamento storage = Armazenamento();
 
-  TextEditingController userAcc =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a conta do usuario
-  TextEditingController userPss =
-      TextEditingController(); //TextEdinting exclusivo para armazenar a senha do usuario
+  //TextEdinting exclusivo para armazenar dados do usuario
+  TextEditingController userAcc = TextEditingController(); // email
+  TextEditingController userPss = TextEditingController(); // senha 
 
-  String mensagemErro =
-      ''; //Mensagem vazia para realizar alteração caso necessário
+  //Mensagem vazia para realizar alteração caso necessário
+  String mensagemErro = ''; 
 
+  /// Redireciona a pagina para o menu
+  void _redirecionarPaginaMenu() {
+          
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Menu(index: 0)),
+      );
+  }
+
+  /// Realiza o login da conta no usuario
   void _login() async {
     String user = userAcc.text;
     String password = userPss.text;
@@ -36,17 +45,13 @@ class _UserLogin extends State<UserLogin> {
       });
     } else {
       debugPrint('login');
-      List userLoad;
-      userLoad =
-          await storage.buscarUsuario(user); //Carregando o usuario existente
-      usuario.id = userLoad[0]["id"]; //Carregando o ID
-      usuario.nome = userLoad[0]["nome"]; //Carregando nome
-      usuario.sobrenome = userLoad[0]["sobrenome"];
-      usuario.email = user; //Carregando e-mail
-
+      
+      // Salva os dados
+      usuario.importarDados(user);
       setUserLoggedIn(user);
 
-      irUIMenu();
+      _redirecionarPaginaMenu();
+
     }
   }
 
@@ -116,7 +121,7 @@ class _UserLogin extends State<UserLogin> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Menubar(index: 0),
+        builder: (context) => Menu(index: 0),
       ));
   }
 

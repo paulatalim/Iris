@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'sharedpreference.dart';
-import 'loginmain.dart';
+import '../storage/sharedpreference.dart';
+import 'login.dart';
 import 'menu.dart';
-import 'mqtt/state/MQTTAppState.dart';
+import '../mqtt/state/MQTTAppState.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,7 @@ void main() async {
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.light,
-    systemNavigationBarColor: Color(0xFFE6E6E6),
+    systemNavigationBarColor: Color(0xFFddd9e0),
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
 
@@ -30,7 +30,7 @@ void main() async {
     debugShowCheckedModeBanner: false,
     home: ChangeNotifierProvider<MQTTAppState>(
           create: (_) => MQTTAppState(),
-          child: isLogged == true ? Menubar(index: 0) : const UserLogin(),
+          child: isLogged == true ? Menu(index: 0) : const UserLogin(),
         )
   ));
 }

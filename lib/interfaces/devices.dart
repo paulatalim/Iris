@@ -2,16 +2,17 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
-<<<<<<< HEAD
-import 'voices.dart';
-import 'control.dart';
-=======
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
-import 'mqtt/MQTTManager.dart';
-import 'mqtt/state/MQTTAppState.dart';
-import 'usuario.dart';
+import '../voices.dart';
+import '../control.dart';
+import '../mqtt/MQTTManager.dart';
+import '../mqtt/state/MQTTAppState.dart';
+import '../storage/usuario.dart';
+import '../storage/usuario.dart';
 
+/// Classe com as propriedades dos dispositivos
 class DispositivosDisponivel {
   String nome;
   String imagePath;
@@ -21,6 +22,7 @@ class DispositivosDisponivel {
   DispositivosDisponivel({required this.nome, required this.imagePath, required this.mensage, required this.status});
 }
 
+// Lista dos dispositivos diponiveis
 List<DispositivosDisponivel> dispositivo = [
   DispositivosDisponivel(
       nome: "Selecione um\ndispositivo",
@@ -52,7 +54,8 @@ List<DispositivosDisponivel> dispositivo = [
       mensage: 'P',
       status: 'Processando ...')
 ];
->>>>>>> hardware
+
+
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -67,24 +70,21 @@ class _DevicesState extends State<Devices> {
 
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
   final scrollControl = ScrollController();
-<<<<<<< HEAD
   String resposta = "";
   bool respostaInvalida = true;
   bool fazerNovaLeitura = false;
-=======
   String mqttMensage = "";
 
   @override
   void initState() {
     super.initState();
   }
->>>>>>> hardware
 
   /// Estiliza um texto
   TextStyle styletext() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
-          color: Color(0xFF373B8A), fontSize: 18, fontWeight: FontWeight.w600),
+          color: Color(0xFF373B8A), fontSize: 20, fontWeight: FontWeight.w600),
     );
   }
 
@@ -198,13 +198,11 @@ class _DevicesState extends State<Devices> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     if(dialogoNaoInicializado) {
       dialogoNaoInicializado = false;
       dialogo();
     }
     
-=======
     final MQTTAppState appState = Provider.of<MQTTAppState>(context);
     
     currentAppState = appState;
@@ -247,7 +245,6 @@ class _DevicesState extends State<Devices> {
       }
     }
 
->>>>>>> hardware
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -285,7 +282,8 @@ class _DevicesState extends State<Devices> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          color: Color(0xFF373B8A), // Cor do texto
+                          // color: Color(0xFF373B8A), // Cor do texto
+                          color: Colors.white,
                           fontSize: 40,
                           fontWeight: FontWeight.w600, // Tamanho do texto
                         ),
@@ -300,7 +298,8 @@ class _DevicesState extends State<Devices> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          color: Color(0xFF373B8A), // Cor do texto
+                          // color: Color(0xFF373B8A), // Cor do texto
+                          color: Colors.white,
                           fontSize: 35, // Tamanho do texto
                         ),
                       ),
@@ -357,7 +356,8 @@ class _DevicesState extends State<Devices> {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
-                  ),
+                  ).animate()
+                    .moveY(begin: -600, end: -15, duration: 1500.ms, curve: Curves.decelerate),
                 ],
               ),
             )
@@ -370,45 +370,66 @@ class _DevicesState extends State<Devices> {
   /// Cria os cards dos dispositivos com as informacoes ligadas ao seu [id]
   Widget cardDispositivo(int id) {
     double? largura;
-    double? altura = 40;
+    double? altura = 45;
 
     if (id == 3 || id == 1) {
-      largura = 40;
+      largura = 50;
       altura = null;
     }
 
-    return GestureDetector(
-      onTap: () {
-        setState(() {
+    return Container(
+      width: 0.85 * MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+        boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(90, 0, 0, 0),
+                blurRadius: 10,
+                offset: Offset(5, 5)),
+            BoxShadow(
+                color: Color.fromARGB(174, 255, 255, 255),
+                blurRadius: 20,
+                offset: Offset(-5, -5)),
+            ]),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+            if(states.contains(MaterialState.pressed)) {
+              return const Color.fromARGB(255, 170, 174, 255);
+            }
+            return const Color(0xFFdadcff);
+          }),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            )
+          ),
+        ),
+        onPressed: () {
+          setState(() {
           dispositivoSelecionado = dispositivo[id];
           manager.publish(dispositivo[id].mensage);
           scrollControl.animateTo(0,
-              duration: const Duration(seconds: 1), 
-              curve: Curves.ease
-          );
-        });
-      },
-      child: Container(
-        decoration: styleBox(),
-        width: 0.85 * MediaQuery.of(context).size.width,
-        padding:
-            const EdgeInsets.only(left: 30, top: 17, right: 30, bottom: 17),
-        child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Centraliza horizontalmente o Row
-          children: [
-            Image.asset(
-              dispositivo[id].imagePath,
-              width: largura,
-              height: altura,
-            ),
-            const SizedBox(width: 30.0),
-            Text(
-              dispositivo[id].nome,
-              textAlign: TextAlign.center,
-              style: styletext(),
-            ),
-          ],
+              duration: const Duration(seconds: 1), curve: Curves.ease);
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start, 
+            children: [
+              Image.asset(
+                dispositivo[id].imagePath,
+                width: largura,
+                height: altura,
+              ),
+              const SizedBox(width: 30.0),
+              Text(
+                dispositivo[id].nome,
+                textAlign: TextAlign.center,
+                style: styletext(),
+              ),
+            ],
+          ),
         ),
       
     ));

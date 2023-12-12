@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'voices.dart';
+import '../voices.dart';
 import 'dart:core';
-import 'control.dart';
-
-import 'usuario.dart';
+import '../control.dart';
+import '../storage/usuario.dart';
 
 
 class Dados extends StatefulWidget {
@@ -115,23 +114,23 @@ class _DadosState extends State<Dados> {
   }
 
   void dialogo() async {
-    if (temperatura > 0) {
-      await voice.speek("A sua temperatura é de $temperatura graus Celsius");
+    if (usuario.temperatura > 0) {
+      await voice.speek("A sua temperatura é de ${usuario.temperatura} graus Celsius");
       await Future.delayed(Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
-    if (altura > 0) {
-      await voice.speek("A sua altura é de $altura metros");
+    if (usuario.altura > 0) {
+      await voice.speek("A sua altura é de ${usuario.altura} metros");
       await Future.delayed(Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
-    if (peso > 0) {
-      await voice.speek("A seu peso é de $peso quilos");
+    if (usuario.peso > 0) {
+      await voice.speek("A seu peso é de ${usuario.peso} quilos");
       await Future.delayed(Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
-    if (imc > 0) {
-      await voice.speek("A seu IMC é de $imc");
+    if (usuario.imc > 0) {
+      await voice.speek("A seu IMC é de ${usuario.imc}");
       await Future.delayed(Duration(seconds: 5));
       nenhumDadoColetado = false;
     }

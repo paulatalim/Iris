@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'voices.dart';
+import '../voices.dart';
 import 'configuracao.dart';
 import 'sobre.dart';
 import 'devices.dart';
 import 'dados.dart';
 import 'perfil.dart';
-import 'control.dart';
-import 'voices.dart';
+import '../control.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

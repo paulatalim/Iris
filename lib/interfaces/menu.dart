@@ -7,30 +7,23 @@ import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
 
-int _index = 0;
-bool trocarTela = false;
-
-void mudarTela (int index) {
-  print("chamo chamoooo $index");
-  _index = index;
-
-  trocarTela = true;
-}
-
-class Menubar extends StatefulWidget {
+class Menu extends StatefulWidget {
   int index;
 
-  Menubar({required int index}): this.index = index;
+  Menu({required int index}): this.index = index;
 
   @override
-  State<Menubar> createState() => _MenubarState();
+  State<Menu> createState() => _MenuState();
 }
 
-class _MenubarState extends State<Menubar> {
+class _MenuState extends State<Menu> {
   String resposta = '';
   late int currentIndex;
   
-  // Colocar nomes das telas na lista
+  final Color _colorIconPressed = const Color(0xFFA000FF);
+  final Color _colorIconNotPressed = const Color(0xFF6B86EB);
+
+  // Lista das paginas contidas no menu
   final List<Widget> screens = [
     const HomeScreen(),
     const Devices(),
@@ -38,8 +31,7 @@ class _MenubarState extends State<Menubar> {
     const UserScreen(title: 'Nome Usuário'),
   ];
 
-  final Color _colorIconPressed = const Color(0xFFA000FF);
-  final Color _colorIconNotPressed = const Color(0xFF6B86EB);
+  
 
   final List<Color> _colorIcon = [
     const Color(0xFFA000FF),
@@ -48,15 +40,17 @@ class _MenubarState extends State<Menubar> {
     const Color(0xFF6B86EB)
   ];
 
+  // Lista das cares de fundo das paginas
   final List<Color> _colorScreen = [
     const Color(0xFFbabdfa),
     const Color(0xFFdba0ff),
     const Color(0xFFDFE0FB),
     const Color(0xFFECCCFF),
-    const Color(0XFFf1d9ff),
     const Color(0XFFe9edfc),
+    const Color(0XFFf1d9ff),
   ];
 
+  /// verifica o icone selecionado no menu e altera suas cores
   void _colorSelection(int index) {
     print(currentIndex);
     for (int i = 0; i < _colorIcon.length; i++) {
@@ -67,8 +61,6 @@ class _MenubarState extends State<Menubar> {
       }
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +78,14 @@ class _MenubarState extends State<Menubar> {
           colors: [
             currentIndex == 0 || currentIndex == 1
                 ? _colorScreen[0]
-                : _colorScreen[3],
-            currentIndex == 0 || currentIndex == 1
+                : currentIndex == 1
+                    ? _colorScreen[4]
+                    : _colorScreen[3],
+            currentIndex == 0
                 ? _colorScreen[1]
-                : _colorScreen[2]
+                : currentIndex == 1
+                    ? _colorScreen[5]
+                    : _colorScreen[2]
           ],
         ),
       ),

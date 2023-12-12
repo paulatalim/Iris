@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iris_app/sharedpreference.dart';
+import 'package:iris_app/storage/sharedpreference.dart';
 
-import 'loginmain.dart';
-import 'usuario.dart';
-import 'voices.dart';
-import 'control.dart';
+import '../storage/usuario.dart';
+import '../voices.dart';
+import '../control.dart';
+import 'login.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -21,7 +21,7 @@ class _UserScreen extends State<UserScreen> {
   bool respostaInvalida = true;
   bool dialogoNaoInicializado = true;
 
-
+  /// Estiliza textos na pagina
   TextStyle styleBoxTitle() {
     return GoogleFonts.dosis(
       textStyle: const TextStyle(
