@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
+import 'voices.dart';
+import 'control.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -34,6 +36,9 @@ List<DispositivosDisponivel> dispositivo = [
 class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
   final scrollControl = ScrollController();
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool fazerNovaLeitura = false;
 
   /// Estiliza um texto
   TextStyle styletext() {
@@ -61,8 +66,102 @@ class _DevicesState extends State<Devices> {
     );
   }
 
+  void dialogo() async {
+    await voice.speek("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
+    await Future.delayed(Duration(seconds: 15));
+    
+    do {
+      while (respostaInvalida) {
+        await voice.hear();
+        resposta = voice.resposta;
+
+        if (resposta.compareTo("peso") == 0){
+          respostaInvalida = false;
+        }
+        else if (resposta.compareTo("altura") == 0) {
+          respostaInvalida= false;
+        }
+        else if (resposta.compareTo("temperatura") == 0) {
+          respostaInvalida= false;
+        } else {
+          await voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
+          await Future.delayed(Duration(seconds: 5));
+    
+        }
+      }
+      await voice.speek("Você deseja realizar uma nova leitura?");
+      await Future.delayed(Duration(seconds: 5));
+    
+      respostaInvalida = true;
+
+      while (respostaInvalida) {
+        await voice.hear();
+        resposta = voice.resposta;
+
+        if (resposta.compareTo("sim") == 0) {
+          await voice.speek("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
+          await Future.delayed(Duration(seconds: 10));
+    
+          respostaInvalida = false;
+        } else if (resposta.compareTo("não") == 0) {
+          fazerNovaLeitura = false;
+          respostaInvalida = false;
+        } else {
+          await voice.speek("Hummm não te escutei direito, repete de novo?");
+          await Future.delayed(Duration(seconds: 5));
+    
+        }
+        respostaInvalida = true;
+      }
+    } while (fazerNovaLeitura);
+    
+    await voice.speek("Para qual seção deseja ir agora?");
+    await Future.delayed(Duration(seconds: 5));
+    
+    respostaInvalida = true;
+
+    while (respostaInvalida) {
+      await voice.hear();
+      resposta = voice.resposta;
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        irUIMenu(0);
+        
+      } else if (resposta.compareTo("informações") == 0) {
+        irUIMenu(2);
+        
+      } else if (resposta.compareTo("perfil") == 0) {
+        irUIMenu(3);
+        
+      } else if (resposta.compareTo("informações") == 0) {
+        await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+        await Future.delayed(Duration(seconds: 10));
+    
+      } else {
+        await voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+    
+      }
+    }
+  }
+
+  void irUIMenu (int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+      )
+    );
+  }
+
+  bool dialogoNaoInicializado = true;
+
   @override
   Widget build(BuildContext context) {
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
+    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -222,7 +321,7 @@ class _DevicesState extends State<Devices> {
             ),
           ],
         ),
-      ),
-    );
+      
+    ));
   }
 }

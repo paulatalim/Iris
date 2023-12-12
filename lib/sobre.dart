@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'voices.dart';
 
 import 'menu.dart';
 
@@ -33,8 +33,32 @@ class _SobreState extends State<Sobre> {
     );
   }
 
+  void dialogo() async {
+    await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
+                "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
+                "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
+    await Future.delayed(Duration(seconds: 20));
+    irUIMenu();
+  }
+
+  void irUIMenu() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Menubar(index: 0,)),
+    );
+  }
+
+  bool dialogoNaoInicializado = true;
+
   @override
   Widget build(BuildContext context) {
+
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -66,13 +90,7 @@ class _SobreState extends State<Sobre> {
                         color: const Color(0xFF373B8A),
                         iconSize: 30,
                         onPressed: () {
-                          (
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Menubar()),
-                            ),
-                          );
+                          irUIMenu();
                         }),
                   ],
                 ),
@@ -102,7 +120,7 @@ class _SobreState extends State<Sobre> {
                     ),
                     const SizedBox(height: 45),
                     Text(
-                      'Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes auditivos, '
+                      'Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes visuais, '
                       'fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o '
                       'acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.',
                       textAlign: TextAlign.center,
@@ -225,36 +243,6 @@ class _SobreState extends State<Sobre> {
                       ),
                     ],
                   )),
-              // Container(
-              //   padding: const EdgeInsets.only(top: 10.0, left: 30),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         'Veja nosso projeto:',
-              //         style: GoogleFonts.inclusiveSans(textStyle: subtitle()),
-              //       ),
-              //       const SizedBox(height: 8),
-              //       ListTile(
-              //         leading: const Icon(
-              //           Icons.link,
-              //           color: Color(0xFF373B8A),
-              //         ),
-              //         title: Text(
-              //           'GitHub',
-              //           style: GoogleFonts.inclusiveSans(
-              //             textStyle: const TextStyle(
-              //               color: Color(0xFF373B8A),
-              //               fontSize: 18,
-              //             ),
-              //           ),
-              //         ),
-              //         onTap: () => launchUrl(Uri.parse(
-              //             'https://github.com/paulatalim/Iris_aplicativo_saude_cegos')),
-              //       ),
-              //     ],
-              //   ),
-              // )
               const Padding(padding: EdgeInsets.only(bottom: 40)),
             ],
           ),

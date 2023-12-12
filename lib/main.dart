@@ -26,6 +26,6 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: isLogged == true ? const Menubar() : const UserLogin(),
+    home: isLogged == true ? Menubar(index: 0) : const UserLogin(),
   ));
 }
