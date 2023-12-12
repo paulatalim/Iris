@@ -6,6 +6,7 @@ import 'control.dart';
 
 import 'usuario.dart';
 
+
 class Dados extends StatefulWidget {
   const Dados({super.key});
 
@@ -15,17 +16,16 @@ class Dados extends StatefulWidget {
 
 //Classe dados
 class _DadosState extends State<Dados> {
-  final double peso = 50;
-  double temperatura = 00;
-  final double altura = 00;
-  final double imc = 00;
-
   bool dialogoNaoInicializado = true;
   bool nenhumDadoColetado = true;
   bool respostaInvalida = true;
   String resposta = "";
 
-  //Criandos os containers
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Container boxNumber(String texto, String numero, String unidade) {
     return Container(
       // margin: EdgeInsets.all(30.0), //Espaço entre as caixinhas
@@ -95,18 +95,18 @@ class _DadosState extends State<Dados> {
     return GestureDetector(
       onTap: () {
         if (texto== "Peso ") {
-          voice.speek("peso : $peso quilos");
+          voice.speek("peso : ${usuario.peso} quilos");
         }
         if(texto== "Altura"){
-          voice.speek("altura : $altura metros.");
+          voice.speek("altura : ${usuario.altura} metros.");
         }
 
         if(texto== "Temperatura"){
-          voice.speek("temperatura : $temperatura graus.");
+          voice.speek("temperatura : $usuario.temperatura graus.");
         }
 
         if(texto== "IMC"){
-          voice.speek("IMC : $imc");
+          voice.speek("IMC : ${usuario.imc}");
         }
       },
 
@@ -194,6 +194,7 @@ class _DadosState extends State<Dados> {
             boxNumber(
                 'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
             boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
+            
           ],
         ),
       ),
