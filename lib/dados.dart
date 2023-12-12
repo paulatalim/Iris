@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'voices.dart';
+import 'dart:core';
+import 'menu.dart';
+import 'control.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -8,12 +12,19 @@ class Dados extends StatefulWidget {
   State<Dados> createState() => _DadosState();
 }
 
+//Classe dados
 class _DadosState extends State<Dados> {
-  final double peso = 00;
+  final double peso = 50;
   double temperatura = 00;
   final double altura = 00;
   final double imc = 00;
 
+  bool dialogoNaoInicializado = true;
+  bool nenhumDadoColetado = true;
+  bool respostaInvalida = true;
+  String resposta = "";
+
+  //Criandos os containers
   Container boxNumber(String texto, String numero, String unidade) {
     return Container(
       // margin: EdgeInsets.all(30.0), //Espaço entre as caixinhas
@@ -75,17 +86,108 @@ class _DadosState extends State<Dados> {
     );
   }
 
+  // Container clicável
+  GestureDetector clickableBoxNumber(String texto, String numero, String unidade) {
+    return GestureDetector(
+      onTap: () {
+        if (texto== "Peso ") {
+          voice.speek("peso : $peso quilos");
+        }
+        if(texto== "Altura"){
+          voice.speek("altura : $altura metros.");
+        }
+
+        if(texto== "Temperatura"){
+          voice.speek("temperatura : $temperatura graus.");
+        }
+
+        if(texto== "IMC"){
+          voice.speek("IMC : $imc");
+        }
+      },
+
+      child: boxNumber(texto, numero, unidade),
+    );
+  }
+
+  void dialogo() async {
+    if (temperatura > 0) {
+      await voice.speek("A sua temperatura é de $temperatura graus Celsius");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (altura > 0) {
+      await voice.speek("A sua altura é de $altura metros");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (peso > 0) {
+      await voice.speek("A seu peso é de $peso quilos");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (imc > 0) {
+      await voice.speek("A seu IMC é de $imc");
+      await Future.delayed(Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (nenhumDadoColetado) {
+      await voice.speek("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
+      await Future.delayed(Duration(seconds: 10));
+    }
+
+    await voice.speek("Para qual seção deseja ir agora?");
+    await Future.delayed(Duration(seconds: 5));
+
+    while (respostaInvalida) {
+      // print(currentIndex);
+      await voice.hear();
+      resposta = voice.resposta;
+
+      print ("resp: $resposta");
+      print(resposta.compareTo("dispositivos"));
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        irUIMenu(0);
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        irUIMenu(1);
+      } else if (resposta.compareTo("perfil") == 0) {
+        irUIMenu(3);
+      } else if (resposta.compareTo("informações") == 0) {
+        await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
+        await Future.delayed(Duration(seconds: 10));
+      } else {
+        await voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
+  }
+
+  void irUIMenu (int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          boxNumber('Peso ', peso.toStringAsFixed(1), 'Kg'),
-          boxNumber('Altura', altura.toStringAsFixed(2), 'm'),
-          boxNumber('Temperatura', temperatura.toStringAsFixed(1), '°'),
-          boxNumber('IMC', imc.toStringAsFixed(1), ''),
+          clickableBoxNumber('Peso ', peso.toStringAsFixed(1), 'Kg'),
+          clickableBoxNumber('Altura', altura.toStringAsFixed(2), 'm'),
+          clickableBoxNumber('Temperatura', temperatura.toStringAsFixed(1), '°'),
+          clickableBoxNumber('IMC', imc.toStringAsFixed(1), ''),
         ],
       ),
     );

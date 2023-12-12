@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'voices.dart';
 import 'loginmain.dart';
+import 'control.dart';
 
 class UserScreen extends StatefulWidget {
   final String title;
@@ -13,6 +14,11 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreen extends State<UserScreen> {
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool dialogoNaoInicializado = true;
+
+
   TextStyle styleBoxTitle() {
     return const TextStyle(
         fontSize: 25,
@@ -21,8 +27,77 @@ class _UserScreen extends State<UserScreen> {
         color: Color(0xFF373B8A));
   }
 
+  void dialogo() async {
+    await voice.speek("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
+    await Future.delayed(Duration(seconds: 10));
+
+    while (respostaInvalida) {
+        await voice.hear();
+        resposta = voice.resposta;
+        resposta = resposta.toLowerCase().trim();
+
+        if (resposta.compareTo("sim") == 0) {
+          irUILogin();
+        } else if (resposta.compareTo("não") == 0) {
+        
+          respostaInvalida = false;
+        } else {
+          await voice.speek("Hummm não te escutei direito, repete de novo?");
+          await Future.delayed(Duration(seconds: 5));
+        }
+    }
+
+    await voice.speek("Para qual seção deseja ir agora?");
+    await Future.delayed(Duration(seconds: 5));
+    respostaInvalida = true;
+
+    while (respostaInvalida) {
+      await voice.hear();
+      resposta = voice.resposta;
+      resposta = resposta.toLowerCase().trim();
+      
+      if (resposta.compareTo("menu principal") == 0) {
+        irUIMenu(0);
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        irUIMenu(1);
+        
+      } else if (resposta.compareTo("informações") == 0) {
+        irUIMenu(2);
+        
+      } else if (resposta.compareTo("perfil") == 0) {
+        await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+        await Future.delayed(Duration(seconds: 5));
+      } else {
+        await voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
+  }
+
+  void irUIMenu (int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+      )
+    );
+  }
+
+  void irUILogin() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const UserLogin()),
+    );
+  }
+ 
   @override
   Widget build(BuildContext context) {
+    
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(

@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'voices.dart';
-
 import 'menu.dart';
-// import 'speech.dart';
-// import 'speek.dart';
-
-RecursoDeVoz voice = RecursoDeVoz();
 
 void main() {
   // Configuração que permite a utilizacao do app somente com a tela no modo retrato
@@ -21,8 +15,6 @@ void main() {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const Menubar(),
-    // home: SpeechScreen(),
-    // home: Speek(),
+    home: Menubar(index: 0),
   ));
 }

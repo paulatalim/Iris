@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'main.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
 
+int _index = 0;
+bool trocarTela = false;
+
+void mudarTela (int index) {
+  print("chamo chamoooo $index");
+  _index = index;
+
+  trocarTela = true;
+}
+
 class Menubar extends StatefulWidget {
-  const Menubar({super.key});
+  int index;
+
+  Menubar({required int index}): this.index = index;
 
   @override
   State<Menubar> createState() => _MenubarState();
 }
 
 class _MenubarState extends State<Menubar> {
-  int _currentIndex = 0;
   String resposta = '';
-
-  void listening() async {
-    resposta = await voice.hear();
-  }
-
+  late int currentIndex;
+  
   // Colocar nomes das telas na lista
   final List<Widget> screens = [
     const HomeScreen(),
@@ -47,6 +54,13 @@ class _MenubarState extends State<Menubar> {
     const Color(0xFFECCCFF),
   ];
 
+  void atualizarValor() {
+    print("helooo");
+    setState(() {
+      currentIndex = _index;
+    });
+  }
+
   void _colorSelection(int index) {
     for (int i = 0; i < _colorIcon.length; i++) {
       if (i != index) {
@@ -57,8 +71,13 @@ class _MenubarState extends State<Menubar> {
     }
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
+    currentIndex = widget.index;
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -68,10 +87,10 @@ class _MenubarState extends State<Menubar> {
 
           // Seciona a cor de fundo de acordo com as telas
           colors: [
-            _currentIndex == 0 || _currentIndex == 1
+            currentIndex == 0 || currentIndex == 1
                 ? _colorScreen[0]
                 : _colorScreen[3],
-            _currentIndex == 0 || _currentIndex == 1
+            currentIndex == 0 || currentIndex == 1
                 ? _colorScreen[1]
                 : _colorScreen[2]
           ],
@@ -79,7 +98,7 @@ class _MenubarState extends State<Menubar> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: screens[_currentIndex],
+        body: screens[currentIndex],
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
@@ -103,8 +122,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.house),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 0;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 0;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
@@ -113,8 +132,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.computer),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 1;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 1;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
@@ -129,8 +148,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.heartPulse),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 2;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 2;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),
@@ -139,8 +158,8 @@ class _MenubarState extends State<Menubar> {
                   icon: const Icon(FontAwesomeIcons.lock),
                   onPressed: () {
                     setState(() {
-                      _currentIndex = 3;
-                      _colorSelection(_currentIndex);
+                      currentIndex = 3;
+                      _colorSelection(currentIndex);
                     });
                   },
                 ),

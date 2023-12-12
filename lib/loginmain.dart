@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'cadastro.dart';
 import 'menu.dart';
+import 'voices.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -10,8 +11,84 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLogin extends State<UserLogin> {
+  String resposta = "";
+  bool respostaInvalida = true;
+  
+  bool dialogoNaoInicializado = true;
+
+  void questionarCampo (String campo, String pronome) async {
+    bool infoErrada = true;
+    
+    resposta = "";
+    voice.speek("Qual a $pronome $campo?");
+
+    while (infoErrada) {
+      await voice.hear();
+      resposta = voice.resposta;
+      while (respostaInvalida) {
+        voice.speek("$resposta, esse é $pronome $campo?");
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
+          
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
+  }
+
+  void dialogo() async {
+    voice.speek("Entre com a sua conta ou crie uma nova conta! Voce já possui uma conta aqui?");
+    await Future.delayed(Duration(seconds: 5));
+    await voice.hear();
+      resposta = voice.resposta;
+
+    while(respostaInvalida) {
+      if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+        respostaInvalida = false;
+        //Ir menu
+      } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+        irUICadastro();
+        respostaInvalida = false;
+      }
+
+      voice.speek("Hummm não te escutei direito, repete de novo?");
+      await Future.delayed(Duration(seconds: 5));
+    }
+
+    questionarCampo("email", "seu");
+    questionarCampo("senha", "sua");
+
+    irUIMenu();
+  }
+
+  void irUICadastro() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const UserSingIn()),
+    );
+  }
+
+  void irUIMenu() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Menubar(index: 0),
+      ));
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
+
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -90,11 +167,7 @@ class _UserLogin extends State<UserLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Menubar(),
-                              ));
+                          irUIMenu();
                         },
                         child: const Text(
                           //Botão para realizar login

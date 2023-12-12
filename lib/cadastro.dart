@@ -1,19 +1,98 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'voices.dart';
 import 'loginmain.dart';
 import 'menu.dart';
 
 class UserSingIn extends StatefulWidget {
   const UserSingIn({super.key});
-  // final String title;
+
   @override
   State<UserSingIn> createState() => _UserSingIn();
 }
 
 class _UserSingIn extends State<UserSingIn> {
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool infoErrada = true;
+
+  void questionarCampo(String campo) async {
+    resposta = "";
+    await voice.speek("Agora me fale seu $campo");
+    await Future.delayed(Duration(seconds: 5));
+
+    while (infoErrada) {
+      await voice.hear();
+      resposta = voice.resposta;
+
+      while (respostaInvalida) {
+        await voice.speek("$resposta, esse é seu $campo?");
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
+          
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        await voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
+  }
+
+  void dialogo() async {
+    await voice.speek("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
+    await Future.delayed(Duration(seconds: 5));
+
+    while (infoErrada) {
+      resposta = "";
+      respostaInvalida = true;
+      infoErrada = true;
+
+      resposta = voice.resposta;
+
+      while (respostaInvalida) {
+        await voice.speek("$resposta, esse é seu nome?");
+        await Future.delayed(Duration(seconds: 5));
+
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
+          
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        await voice.speek("Hummm não te escutei direito, repete de novo?");
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
+
+    questionarCampo("sobrenome");
+    questionarCampo("email");
+    questionarCampo("senha");
+
+    irUIMenu();
+  }
+
+  bool dialogoNaoInicializado = true;
+
+  void irUIMenu() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Menubar(index: 0)),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
+
+    if(dialogoNaoInicializado) {
+      dialogoNaoInicializado = false;
+      dialogo();
+    }
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -161,11 +240,7 @@ class _UserSingIn extends State<UserSingIn> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Menubar()),
-                              );
+                              irUIMenu();
                             },
                             style: ButtonStyle(
                                 //Tamanho customizado para o botão
