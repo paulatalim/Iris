@@ -217,8 +217,8 @@ class _MQTTViewState extends State<MQTTView> {
       osPrefix = 'Flutter_Android';
     }
     manager = MQTTManager(
-        host: _hostTextController.text,
-        topic: _topicTextController.text,
+        host: 'test.mosquitto.org',
+        topic: 'iris/sensor/temperatura',
         identifier: osPrefix,
         state: currentAppState);
     manager.initializeMQTTClient();
