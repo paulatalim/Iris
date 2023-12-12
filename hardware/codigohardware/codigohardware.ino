@@ -34,20 +34,16 @@ DallasTemperature sensors(&oneWire);
 Ultrasonic ultrasonic(PIN_HCSR04_TRIG, PIN_HCSR04_ECHO);
 HX711 balanca;  
 
-String result; 
-int distancia; 
-
 float calibration_factor = - 45000; // Fator de calibração para ajuste da célula 
 char comando;
 
 bool medir_temperatura;
 bool medir_altura;
-bool calibrar_altura;
 bool medir_peso;
 
-
-int altura;
 int altura_calibracao;
+int altura_medida;
+int altura;
 float peso;
 float temperatura;
 
@@ -94,13 +90,6 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   } else if (msg.equals("T")) {
     medir_temperatura = true;
   }
-  // if (msg.equals("L")) {
-  //   digitalWrite(PIN_LED, HIGH);
-  //   Serial.println("LED aceso mediante comando MQTT");
-  // } else if (msg.equals("D")) {
-  //   digitalWrite(PIN_LED, LOW);
-  //   Serial.println("LED apagado mediante comando MQTT");
-  // }
 }
 
 /** 
@@ -170,7 +159,6 @@ void setup() {
   //SENSOR ULTRASSONICO
   pinMode(PIN_HCSR04_ECHO, INPUT); //DEFINE O PINO COMO ENTRADA (RECEBE)
   pinMode(PIN_HCSR04_TRIG, OUTPUT); //DEFINE O PINO COMO SAIDA (ENVIA)
-  // distancia = hcsr04();
 
   //BALANÇA
   balanca.begin(PIN_HX711_DT, PIN_HX711_SCK);
@@ -181,13 +169,11 @@ void setup() {
   initWiFi();
   initMQTT();
 
+  //Inicializa as variaveis
   medir_temperatura = false;
-  medir_altura = false;
+  medir_altura = true;
   medir_peso = false;
 }
-
-
-
 
 void loop() {
   char temperatura_str[10] = {0};
@@ -198,6 +184,9 @@ void loop() {
 
   //SENSOR DE TEMPERATURA
   if (medir_temperatura) {
+    //Esperar 1 minuto
+    delay(60000);
+
     sensors.requestTemperatures(); /* Envia o comando para leitura da temperatura */
     Serial.print("A temperatura é: ");
     temperatura = sensors.getTempCByIndex(0);
@@ -211,15 +200,17 @@ void loop() {
   //SENSOR ULTRASSONICO
   if (medir_altura) {
     hcsr04();
-    altura_calibracao = result.toInt();
+    altura_calibracao = altura_medida;
     MQTT.publish(TOPICO_PUBLISH_SISTEMA, "C");
-  
+    Serial.print("Altura de calibração: ");
+    Serial.print(altura_calibracao);
+    
     // esperar 30 segundos
     delay(30000);
 
     hcsr04(); // FAZ A CHAMADA DO MÉTODO "hcsr04()"
     Serial.print("Sua altura é: "); //IMPRIME O TEXTO NO MONITOR SERIAL
-    altura = altura_calibracao - result.toInt();
+    altura = altura_calibracao - altura_medida;
     Serial.print(altura); ////IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
     Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
     sprintf(altura_str, "A%d", altura);
@@ -281,7 +272,6 @@ void hcsr04(){
   digitalWrite(PIN_HCSR04_TRIG, HIGH); //SETA O PINO 6 COM PULSO ALTO "HIGH"
   delayMicroseconds(10); //INTERVALO DE 10 MICROSSEGUNDOS
   digitalWrite(PIN_HCSR04_TRIG, LOW); //SETA O PINO 6 COM PULSO BAIXO "LOW" NOVAMENTE
-  distancia = (ultrasonic.read(CM)); //VARIÁVEL GLOBAL RECEBE O VALOR DA DISTÂNCIA MEDIDA
-  result = String(distancia); //VARIÁVEL GLOBAL DO TIPO STRING RECEBE A DISTÂNCIA(CONVERTIDO DE INTEIRO PARA STRING)
+  altura_medida = (ultrasonic.read(CM)); //VARIÁVEL GLOBAL RECEBE O VALOR DA DISTÂNCIA MEDIDA
   delay(1000); 
 }
