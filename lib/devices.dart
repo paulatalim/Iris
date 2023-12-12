@@ -2,12 +2,52 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:blur/blur.dart';
-
 import 'package:provider/provider.dart';
+
 import 'mqtt/MQTTManager.dart';
 import 'mqtt/state/MQTTAppState.dart';
 import 'usuario.dart';
 
+class DispositivosDisponivel {
+  String nome;
+  String imagePath;
+  String mensage;
+  String status;
+
+  DispositivosDisponivel({required this.nome, required this.imagePath, required this.mensage, required this.status});
+}
+
+List<DispositivosDisponivel> dispositivo = [
+  DispositivosDisponivel(
+      nome: "Selecione um\ndispositivo",
+      imagePath: 'assets/images/hardware.png',
+      mensage: '',
+      status: "Status"),
+
+  DispositivosDisponivel(
+      nome: "ESP 32", 
+      imagePath: 'assets/images/esp32.png', 
+      mensage: '',
+      status: "Status"),
+
+  DispositivosDisponivel(
+      nome: "Termômetro", 
+      imagePath: 'assets/images/termometro.png', 
+      mensage: 'T',
+      status: 'Processando ...'),
+
+  DispositivosDisponivel(
+      nome: "Sensor de Altura", 
+      imagePath: 'assets/images/sensor.png',
+      mensage: 'A',
+      status: 'Calibrando sensor...'),
+
+  DispositivosDisponivel(
+      nome: "Balança", 
+      imagePath: 'assets/images/balanca.png',
+      mensage: 'P',
+      status: 'Processando ...')
+];
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -16,32 +56,13 @@ class Devices extends StatefulWidget {
   State<Devices> createState() => _DevicesState();
 }
 
-class DispositivosDisponivel {
-  String nome;
-  String imagePath;
-
-  DispositivosDisponivel({required this.nome, required this.imagePath});
-}
-
-List<DispositivosDisponivel> dispositivo = [
-  DispositivosDisponivel(
-      nome: "Selecione um\ndispositivo",
-      imagePath: 'assets/images/hardware.png'),
-  DispositivosDisponivel(nome: "ESP 32", imagePath: 'assets/images/esp32.png'),
-  DispositivosDisponivel(
-      nome: "Termômetro", imagePath: 'assets/images/termometro.png'),
-  DispositivosDisponivel(
-      nome: "Sensor ultrassônico", imagePath: 'assets/images/sensor.png'),
-  DispositivosDisponivel(
-      nome: "Balança", imagePath: 'assets/images/balanca.png')
-];
-
 class _DevicesState extends State<Devices> {
-  DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
-  final scrollControl = ScrollController();
-
   late MQTTAppState currentAppState;
   late MQTTManager manager;
+
+  DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
+  final scrollControl = ScrollController();
+  String mqttMensage = "";
 
   @override
   void initState() {
@@ -73,35 +94,50 @@ class _DevicesState extends State<Devices> {
       ],
     );
   }
-
-  int soma = 0;
+  
 
   @override
   Widget build(BuildContext context) {
     final MQTTAppState appState = Provider.of<MQTTAppState>(context);
-    currentAppState = appState;
     
+    currentAppState = appState;
 
-if(currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected) {
-        _configureAndConnect();
+    dispositivo[1].status = _prepareStateMessageFrom(currentAppState.getAppConnectionState);
+
+    if(currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected) {
+      _configureAndConnect();
+      dispositivo[1].status = "Conectado";
                 
     } else {
-      // switch (currentAppState.getReceivedText.trim()[0]) {
-      //   case 'T':
-      //     usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
-      //     break;
-      //   case 'A':
-      //     usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
-      //     usuario.calcular_imc();
-      //     break;
-      //   case 'P':
-      //     usuario.peso = double.parse(currentAppState.getReceivedText.substring(1));
-      //     usuario.calcular_imc();
-      //     break;
-      // }
-      manager.publish(soma.toString());
-soma++;
-print(soma);
+      // Captura da mensagem recebida pelo MQTT
+      mqttMensage = currentAppState.getReceivedText;
+
+      // Verifica se a mensagem eh vazia
+      if (mqttMensage.compareTo("") != 0) {
+        // Atribui o valor a variavel correta
+        switch (currentAppState.getReceivedText.trim()[0]) {
+          case 'T':
+            dispositivo[2].status = "Concluído";
+            usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
+            break;
+          case 'A':
+          dispositivo[3].status = "Concluído";
+            usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
+            usuario.calcular_imc();
+            break;
+          case 'P':
+            dispositivo[4].status = "Concluído";
+            usuario.peso = double.parse(currentAppState.getReceivedText.substring(1));
+            usuario.calcular_imc();
+            break;
+          case 'C':
+            //mensagem de orientacao
+            dispositivo[2].status = "Processando altura...";
+            break;
+        }
+      } else {
+        debugPrint("MQTT ERRO : mensagem captada vazia");
+      }
     }
 
     return Scaffold(
@@ -152,7 +188,7 @@ print(soma);
                       height: 200,
                     ),
                     Text(
-                      'Status',
+                      dispositivoSelecionado.status,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
@@ -237,8 +273,11 @@ print(soma);
       onTap: () {
         setState(() {
           dispositivoSelecionado = dispositivo[id];
+          manager.publish(dispositivo[id].mensage);
           scrollControl.animateTo(0,
-              duration: const Duration(seconds: 1), curve: Curves.ease);
+              duration: const Duration(seconds: 1), 
+              curve: Curves.ease
+          );
         });
       },
       child: Container(
@@ -267,13 +306,21 @@ print(soma);
     );
   }
 
-  void _publishMessage(String text) {
-    manager.publish(text);
+  /// Verifica o status da coneccao do app com o broker e 
+  /// retorna uma string indicando o status
+  String _prepareStateMessageFrom(MQTTAppConnectionState state) {
+    switch (state) {
+      case MQTTAppConnectionState.connected:
+        return 'Conectado';
+      case MQTTAppConnectionState.connecting:
+        return 'Conectando ...';
+      case MQTTAppConnectionState.disconnected:
+        return 'Desconectado';
+    }
   }
 
+  /// Configura e conecta o App com o mqtt
   void _configureAndConnect() {
-    // ignore: flutter_style_todos
-    // TODO: Use UUID
     String osPrefix = 'Flutter_iOS';
     if (Platform.isAndroid) {
       osPrefix = 'Flutter_Android';
