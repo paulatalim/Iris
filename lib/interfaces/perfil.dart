@@ -33,8 +33,14 @@ class _UserScreen extends State<UserScreen> {
     );
   }
 
+  /// Desloga da conta do usuario
   void _signOut() async {
     await FirebaseAuth.instance.signOut();
+    _singOutPageChange();
+  }
+
+  /// Troca de interfaces quendo o usuario desloga da conta
+  void _singOutPageChange() {
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
   }
@@ -105,10 +111,10 @@ class _UserScreen extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
 
     return Scaffold(
       backgroundColor: Colors.transparent,
