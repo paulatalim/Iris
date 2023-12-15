@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
+import '../recurso_de_voz/voices.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
-import '../voices.dart';
 import 'login.dart';
 import 'menu.dart';
 import 'main.dart';

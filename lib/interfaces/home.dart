@@ -1,8 +1,8 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../voices.dart';
-import '../control.dart';
+import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/controlPage.dart';
 
 import 'configuracao.dart';
 import 'devices.dart';

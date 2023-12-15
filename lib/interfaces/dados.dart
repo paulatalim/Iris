@@ -2,9 +2,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import '../recurso_de_voz/controlPage.dart';
+import '../recurso_de_voz/voices.dart';
 import '../storage/usuario.dart';
-import '../control.dart';
-import '../voices.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});

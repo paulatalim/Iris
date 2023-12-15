@@ -7,9 +7,9 @@ import 'dart:io' show Platform;
 
 import '../mqtt/state/MQTTAppState.dart';
 import '../mqtt/MQTTManager.dart';
+import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/controlPage.dart';
 import '../storage/usuario.dart';
-import '../voices.dart';
-import '../control.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
