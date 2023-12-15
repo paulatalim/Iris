@@ -1,14 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
-import 'login.dart';
-import 'menu.dart';
-import '../mqtt/state/MQTTAppState.dart';
+// import 'login.dart';
+// import 'menu.dart';
+// import '../mqtt/state/MQTTAppState.dart';
 import '../firebase_options.dart';
-import '../storage/usuario.dart';
+// import '../storage/usuario.dart';
+import 'firebase_control_page.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +28,6 @@ void main() async {
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
 
-  usuario.nome = "Ilo";
-  usuario.email = "iris@gmail.com";
-
   runApp(MaterialApp(
     navigatorKey: navigatorKey,
     title: 'Iris',
@@ -38,39 +37,14 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-     home: ChangeNotifierProvider<MQTTAppState>(
-          create: (_) => MQTTAppState(),
-          child: Menu(),
-        )
+    home: const MainPage(),
+    //  home: ChangeNotifierProvider<MQTTAppState>(
+    //       create: (_) => MQTTAppState(),
+    //       child: Menu(index: 0),
+        // )
     // home: ChangeNotifierProvider<MQTTAppState>(
     //       create: (_) => MQTTAppState(),
     //       child: MainPage(),
     //     )
   ));
-}
-
-final navigatorKey = GlobalKey<NavigatorState>();
-
-class MainPage extends StatelessWidget{
-  const MainPage({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    body: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator(),);
-        }
-        else if(snapshot.hasError){
-          return const Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
-        }
-        if(snapshot.hasData){ //Verifica se usuario está logado
-          return Menu(index: 0);
-        }
-        else{
-          return const UserLogin();
-        }
-      },
-    )
-  );
 }
