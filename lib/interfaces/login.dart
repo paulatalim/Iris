@@ -1,16 +1,15 @@
-import 'dart:core';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../google_sing_in.dart';
+import 'dart:core';
 
-import 'main.dart';
-import 'cadastro.dart';
-import 'menu.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
+import '../google_sing_in.dart';
 import '../voices.dart';
-
+import 'cadastro.dart';
+import 'main.dart';
+import 'menu.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -153,10 +152,10 @@ class _UserLogin extends State<UserLogin> {
   @override
   Widget build(BuildContext context) {
 
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
 
     return Scaffold(
       body: Container(
