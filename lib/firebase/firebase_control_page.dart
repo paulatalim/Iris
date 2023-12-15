@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'login.dart';
-import 'menu.dart';
+import '../interfaces/login.dart';
+import '../interfaces/menu.dart';
 
 class MainPage extends StatefulWidget{
   const MainPage({super.key});
