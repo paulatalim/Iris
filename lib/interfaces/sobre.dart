@@ -40,7 +40,7 @@ class _SobreState extends State<Sobre> {
     await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
                 "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
                 "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
-    await Future.delayed(Duration(seconds: 20));
+    await Future.delayed(const Duration(seconds: 20));
     irUIMenu();
   }
 
@@ -48,7 +48,7 @@ class _SobreState extends State<Sobre> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Menu(index: 0,)),
+          builder: (context) => const Menu(index: 0,)),
     );
   }
 
@@ -57,10 +57,10 @@ class _SobreState extends State<Sobre> {
   @override
   Widget build(BuildContext context) {
 
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
 
     return Scaffold(
       body: SingleChildScrollView(
