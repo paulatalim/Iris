@@ -6,10 +6,11 @@ import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
 
+@immutable
 class Menu extends StatefulWidget {
-  int index;
+  const Menu({super.key, required this.index});
 
-  Menu({required int index}): this.index = index;
+  final int index;
 
   @override
   State<Menu> createState() => _MenuState();
@@ -17,6 +18,9 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   String resposta = '';
+  bool variavelNaoInicializada = true;
+
+  late int index;
   late int currentIndex;
   
   final Color _colorIconPressed = const Color(0xFFA000FF);
@@ -30,8 +34,7 @@ class _MenuState extends State<Menu> {
     const UserScreen(title: 'Nome Usuário'),
   ];
 
-  
-
+  /// Lista de cores do icones do menu
   final List<Color> _colorIcon = [
     const Color(0xFFA000FF),
     const Color(0xFF6B86EB),
@@ -51,7 +54,7 @@ class _MenuState extends State<Menu> {
 
   /// verifica o icone selecionado no menu e altera suas cores
   void _colorSelection(int index) {
-    print(currentIndex);
+    debugPrint(currentIndex.toString());
     for (int i = 0; i < _colorIcon.length; i++) {
       if (i != index) {
         _colorIcon[i] = _colorIconNotPressed;
@@ -64,7 +67,13 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     
-    currentIndex = widget.index;
+    if (variavelNaoInicializada) {
+      currentIndex = widget.index;
+      index = widget.index;
+      variavelNaoInicializada = false;
+    } else {
+      currentIndex = index;
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -114,7 +123,7 @@ class _MenuState extends State<Menu> {
                   icon: const Icon(FontAwesomeIcons.house),
                   onPressed: () {
                     setState(() {
-                      currentIndex = 0;
+                      index = 0;
                       _colorSelection(currentIndex);
                     });
                   },
@@ -124,7 +133,7 @@ class _MenuState extends State<Menu> {
                   icon: const Icon(FontAwesomeIcons.computer),
                   onPressed: () {
                     setState(() {
-                      currentIndex = 1;
+                      index = 1;
                       _colorSelection(currentIndex);
                     });
                   },
@@ -140,7 +149,7 @@ class _MenuState extends State<Menu> {
                   icon: const Icon(FontAwesomeIcons.heartPulse),
                   onPressed: () {
                     setState(() {
-                      currentIndex = 2;
+                      index = 2;
                       _colorSelection(currentIndex);
                     });
                   },
@@ -150,7 +159,7 @@ class _MenuState extends State<Menu> {
                   icon: const Icon(FontAwesomeIcons.lock),
                   onPressed: () {
                     setState(() {
-                      currentIndex = 3;
+                      index = 3;
                       _colorSelection(currentIndex);
                     });
                   },
