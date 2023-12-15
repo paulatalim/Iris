@@ -1,10 +1,9 @@
 import 'dart:core';
 import 'dart:math';
+
 import 'armazenamento.dart';
 
-/*
-* Classe usuario contendo variáveis básicas para o utilização no app
-*/
+/// Classe usuario contendo variáveis básicas para o utilização no app
 class User {
   late String nome;
   late String sobrenome;

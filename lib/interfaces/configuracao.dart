@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'menu.dart';
-import '../voices.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
-// Lista das velocidades disponiveis
-List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
+import '../voices.dart';
+import 'menu.dart';
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -20,6 +18,7 @@ class _ConfiguracaoState extends State<Configuracao> {
   bool configurarVelocidade = false;
   bool configurarVolume = false;
   bool novaConfiguracao = false;
+  bool dialogoNaoInicializado = true;
 
   double valor = 100;
   Color boxColor = const Color(0xFFC7C9FF);
@@ -156,18 +155,16 @@ class _ConfiguracaoState extends State<Configuracao> {
       }
     } while (novaConfiguracao);
 
-    irUIMenu();
+    _irUIMenu();
   }
 
-  void irUIMenu() {
+  void _irUIMenu() {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Menu(index: 0)),
+          builder: (context) => const Menu(index: 0)),
     );
   }
-
-  bool dialogoNaoInicializado = true;
 
   @override
   Widget build(BuildContext context) {
@@ -205,15 +202,8 @@ class _ConfiguracaoState extends State<Configuracao> {
                         icon: const Icon(FontAwesomeIcons.xmark),
                         color: const Color(0xFF373B8A),
                         iconSize: 30,
-                        onPressed: () {
-                          (
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Menu(index: 0,)),
-                            ),
-                          );
-                        }),
+                        onPressed: () => _irUIMenu()
+                    ),
                   ],
                 ),
               ),
@@ -329,3 +319,6 @@ class _ConfiguracaoState extends State<Configuracao> {
     );
   }
 }
+
+/// Lista das velocidades de voz disponiveis
+List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];

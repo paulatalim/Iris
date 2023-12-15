@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../voices.dart';
+import 'package:flutter/material.dart';
 import 'dart:core';
-import '../control.dart';
-import '../storage/usuario.dart';
 
+import '../storage/usuario.dart';
+import '../control.dart';
+import '../voices.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -13,7 +13,7 @@ class Dados extends StatefulWidget {
   State<Dados> createState() => _DadosState();
 }
 
-//Classe dados
+/// Classe da interface e monitoramento do hardware
 class _DadosState extends State<Dados> {
   bool dialogoNaoInicializado = true;
   bool nenhumDadoColetado = true;
@@ -25,7 +25,8 @@ class _DadosState extends State<Dados> {
     super.initState();
   }
 
-  Container boxNumber(String texto, String numero, String unidade) {
+  /// Cria o card onde possui os dados do usuario
+  Container _boxNumber(String texto, String numero, String unidade) {
     return Container(
       // margin: EdgeInsets.all(30.0), //Espaço entre as caixinhas
       height: 80.0, // Defina a altura desejada, por exemplo, 100.0 pixels
@@ -89,8 +90,10 @@ class _DadosState extends State<Dados> {
     );
   }
 
-  // Container clicável
-  GestureDetector clickableBoxNumber(String texto, String numero, String unidade) {
+  /// Cria um botao que ao ser clicado eh falado o valor do campo para o usuario
+  /// Cria um campo com o nome [texto], o valor [numero] e com sua unidade de medida [unidade]
+  /// Retorna a caixa pronta [GesturesDetector]
+  GestureDetector _clickableBoxNumber(String texto, String numero, String unidade) {
     return GestureDetector(
       onTap: () {
         if (texto== "Peso ") {
@@ -109,7 +112,7 @@ class _DadosState extends State<Dados> {
         }
       },
 
-      child: boxNumber(texto, numero, unidade),
+      child: _boxNumber(texto, numero, unidade),
     );
   }
 
@@ -146,9 +149,6 @@ class _DadosState extends State<Dados> {
       // print(currentIndex);
       await voice.hear();
       resposta = voice.resposta;
-
-      print ("resp: $resposta");
-      print(resposta.compareTo("dispositivos"));
       
       if (resposta.compareTo("menu principal") == 0) {
         irUIMenu(0);
@@ -166,7 +166,7 @@ class _DadosState extends State<Dados> {
     }
   }
 
-  void irUIMenu (int index) {
+  void irUIMenu(int index) {
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ControlScreen(index: index)
@@ -188,11 +188,11 @@ class _DadosState extends State<Dados> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            boxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
-            boxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
-            boxNumber(
+            _clickableBoxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
+            _clickableBoxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
+            _clickableBoxNumber(
                 'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
-            boxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
+            _clickableBoxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
             
           ],
         ),

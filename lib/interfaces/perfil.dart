@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
 import '../storage/usuario.dart';
 import '../voices.dart';
@@ -8,9 +8,7 @@ import '../control.dart';
 import 'login.dart';
 
 class UserScreen extends StatefulWidget {
-  final String title;
-
-  const UserScreen({super.key, required this.title});
+  const UserScreen({super.key});
 
   @override
   State<UserScreen> createState() => _UserScreen();
@@ -47,7 +45,7 @@ class _UserScreen extends State<UserScreen> {
 
   void dialogo() async {
     await voice.speek("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 10));
 
     while (respostaInvalida) {
         await voice.hear();
@@ -55,18 +53,18 @@ class _UserScreen extends State<UserScreen> {
         resposta = resposta.toLowerCase().trim();
 
         if (resposta.compareTo("sim") == 0) {
-          irUILogin();
+          _irUILogin();
         } else if (resposta.compareTo("não") == 0) {
         
           respostaInvalida = false;
         } else {
           await voice.speek("Hummm não te escutei direito, repete de novo?");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
         }
     }
 
     await voice.speek("Para qual seção deseja ir agora?");
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
     respostaInvalida = true;
 
     while (respostaInvalida) {
@@ -75,24 +73,24 @@ class _UserScreen extends State<UserScreen> {
       resposta = resposta.toLowerCase().trim();
       
       if (resposta.compareTo("menu principal") == 0) {
-        irUIMenu(0);
+        _irUIMenu(0);
       } else if (resposta.compareTo("dispositivos") == 0) {
-        irUIMenu(1);
+        _irUIMenu(1);
         
       } else if (resposta.compareTo("informações") == 0) {
-        irUIMenu(2);
+        _irUIMenu(2);
         
       } else if (resposta.compareTo("perfil") == 0) {
         await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
       } else {
         await voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
       }
     }
   }
 
-  void irUIMenu (int index) {
+  void _irUIMenu(int index) {
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ControlScreen(index: index)
@@ -100,7 +98,7 @@ class _UserScreen extends State<UserScreen> {
     );
   }
 
-  void irUILogin() {
+  void _irUILogin() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -137,7 +135,7 @@ class _UserScreen extends State<UserScreen> {
                   children: [
                     //Campo de texto Nome usuario
                     Text(
-                      usuario.nome + ' ' + usuario.sobrenome,
+                      "${usuario.nome} ${usuario.sobrenome}",
                       style: styleBoxTitle(),
                     ),
                     const SizedBox(height: 30),

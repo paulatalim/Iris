@@ -1,58 +1,15 @@
-import 'dart:io' show Platform;
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:blur/blur.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
+import 'package:blur/blur.dart';
+import 'dart:io' show Platform;
+// import 'package:provider/provider.dart';
 
+import '../mqtt/state/MQTTAppState.dart';
+import '../mqtt/MQTTManager.dart';
+import '../storage/usuario.dart';
 import '../voices.dart';
 import '../control.dart';
-import '../mqtt/MQTTManager.dart';
-import '../mqtt/state/MQTTAppState.dart';
-import '../storage/usuario.dart';
-
-/// Classe com as propriedades dos dispositivos
-class DispositivosDisponivel {
-  String nome;
-  String imagePath;
-  String mensage;
-  String status;
-
-  DispositivosDisponivel({required this.nome, required this.imagePath, required this.mensage, required this.status});
-}
-
-// Lista dos dispositivos diponiveis
-List<DispositivosDisponivel> dispositivo = [
-  DispositivosDisponivel(
-      nome: "Selecione um\ndispositivo",
-      imagePath: 'assets/images/hardware.png',
-      mensage: '',
-      status: "Status"),
-
-  DispositivosDisponivel(
-      nome: "ESP 32", 
-      imagePath: 'assets/images/esp32.png', 
-      mensage: '',
-      status: "Status"),
-
-  DispositivosDisponivel(
-      nome: "Termômetro", 
-      imagePath: 'assets/images/termometro.png', 
-      mensage: 'T',
-      status: 'Processando ...'),
-
-  DispositivosDisponivel(
-      nome: "Sensor de Altura", 
-      imagePath: 'assets/images/sensor.png',
-      mensage: 'A',
-      status: 'Calibrando sensor...'),
-
-  DispositivosDisponivel(
-      nome: "Balança", 
-      imagePath: 'assets/images/balanca.png',
-      mensage: 'P',
-      status: 'Processando ...')
-];
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -62,15 +19,18 @@ class Devices extends StatefulWidget {
 }
 
 class _DevicesState extends State<Devices> {
+  DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
+
   late MQTTAppState currentAppState;
   late MQTTManager manager;
-
-  DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
+  
   final scrollControl = ScrollController();
+
   String resposta = "";
+  String mqttMensage = "";
   bool respostaInvalida = true;
   bool fazerNovaLeitura = false;
-  String mqttMensage = "";
+  bool dialogoNaoInicializado = true;
 
   @override
   void initState() {
@@ -221,8 +181,6 @@ class _DevicesState extends State<Devices> {
       )
     );
   }
-
-  bool dialogoNaoInicializado = true;
 
   @override
   Widget build(BuildContext context) {
@@ -465,7 +423,7 @@ class _DevicesState extends State<Devices> {
   }
 
   /// Verifica o status da coneccao do app com o broker e 
-  /// retorna uma string indicando o status
+  /// retorna uma [string] indicando o status
   String _prepareStateMessageFrom(MQTTAppConnectionState state) {
     switch (state) {
       case MQTTAppConnectionState.connected:
@@ -493,3 +451,46 @@ class _DevicesState extends State<Devices> {
     manager.connect();
   }
 }
+
+/// Classe com as propriedades dos dispositivos
+class DispositivosDisponivel {
+  String nome;
+  String imagePath;
+  String mensage;
+  String status;
+
+  DispositivosDisponivel({required this.nome, required this.imagePath, required this.mensage, required this.status});
+}
+
+/// Lista dos dispositivos diponiveis para conectar no hardware
+List<DispositivosDisponivel> dispositivo = [
+  DispositivosDisponivel(
+      nome: "Selecione um\ndispositivo",
+      imagePath: 'assets/images/hardware.png',
+      mensage: '',
+      status: "Status"),
+
+  DispositivosDisponivel(
+      nome: "ESP 32", 
+      imagePath: 'assets/images/esp32.png', 
+      mensage: '',
+      status: "Status"),
+
+  DispositivosDisponivel(
+      nome: "Termômetro", 
+      imagePath: 'assets/images/termometro.png', 
+      mensage: 'T',
+      status: 'Processando ...'),
+
+  DispositivosDisponivel(
+      nome: "Sensor de Altura", 
+      imagePath: 'assets/images/sensor.png',
+      mensage: 'A',
+      status: 'Calibrando sensor...'),
+
+  DispositivosDisponivel(
+      nome: "Balança", 
+      imagePath: 'assets/images/balanca.png',
+      mensage: 'P',
+      status: 'Processando ...')
+];

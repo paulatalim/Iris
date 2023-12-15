@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/material.dart';
 
 import 'devices.dart';
 import 'home.dart';
@@ -17,21 +17,21 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  String resposta = '';
   bool variavelNaoInicializada = true;
-
-  late int index;
+  String resposta = '';
+  
   late int currentIndex;
+  late int index;
   
   final Color _colorIconPressed = const Color(0xFFA000FF);
   final Color _colorIconNotPressed = const Color(0xFF6B86EB);
 
-  // Lista das paginas contidas no menu
+  /// Lista das paginas contidas no menu
   final List<Widget> screens = [
     const HomeScreen(),
     const Devices(),
     const Dados(),
-    const UserScreen(title: 'Nome Usuário'),
+    const UserScreen(),
   ];
 
   /// Lista de cores do icones do menu
@@ -52,7 +52,7 @@ class _MenuState extends State<Menu> {
     const Color(0XFFf1d9ff),
   ];
 
-  /// verifica o icone selecionado no menu e altera suas cores
+  /// Verifica o icone selecionado no menu e altera suas cores
   void _colorSelection(int index) {
     debugPrint(currentIndex.toString());
     for (int i = 0; i < _colorIcon.length; i++) {

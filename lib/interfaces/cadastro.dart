@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
-import 'login.dart';
-import 'menu.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
 import '../voices.dart';
+import 'login.dart';
+import 'menu.dart';
 import 'main.dart';
 
 class UserSingIn extends StatefulWidget {
@@ -27,7 +27,12 @@ class _UserSingIn extends State<UserSingIn> {
   TextEditingController userSurname = TextEditingController(); // sobremenome
 
   //Mensagem vazia para realizar alteração caso necessário
-  String erroCadastro = ''; 
+  String erroCadastro = '';
+
+  String resposta = "";
+  bool respostaInvalida = true;
+  bool infoErrada = true;
+  bool dialogoNaoInicializado = true;
 
   void _criarUser() async { //Criando usuario dentro do firebase ccom as informações providenciadas
     showDialog(
@@ -42,7 +47,7 @@ class _UserSingIn extends State<UserSingIn> {
         password: userPss1.text.trim(),
       );
     } on FirebaseAuthException catch (e){
-      print(e);
+      debugPrint(e.toString());
     }
     storage.salvarDados(userName.text.trim(), userSurname.text.trim(), userAcc.text.trim(), "");
     usuario.email = userAcc.text;
@@ -100,10 +105,6 @@ class _UserSingIn extends State<UserSingIn> {
     }
   }
 
-  String resposta = "";
-  bool respostaInvalida = true;
-  bool infoErrada = true;
-
   void questionarCampo(String campo) async {
     resposta = "";
     await voice.speek("Agora me fale seu $campo");
@@ -159,16 +160,14 @@ class _UserSingIn extends State<UserSingIn> {
     questionarCampo("email");
     questionarCampo("senha");
 
-    irUIMenu();
+    _irUIMenu();
   }
 
-  bool dialogoNaoInicializado = true;
-
-  void irUIMenu() {
+  void _irUIMenu() {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Menu(index: 0)),
+          builder: (context) => const Menu(index: 0)),
     );
   }
   

@@ -1,26 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/material.dart';
+
 import '../voices.dart';
+import '../control.dart';
+
 import 'configuracao.dart';
-import 'sobre.dart';
 import 'devices.dart';
+import 'sobre.dart';
 import 'dados.dart';
 import 'perfil.dart';
-import '../control.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
-final List<Widget> screens = [
-    const HomeScreen(),
-    const Devices(),
-    const Dados(),
-    const UserScreen(title: 'Nome Usuário'),
-  ];
-
 
 class _HomeScreenState extends State<HomeScreen> {
   bool dialogoNaoInicializado = true;
@@ -162,3 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+/// Lista das interfaces do menu
+final List<Widget> screens = [
+  const HomeScreen(),
+  const Devices(),
+  const Dados(),
+  const UserScreen(),
+];

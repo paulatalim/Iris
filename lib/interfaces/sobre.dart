@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../voices.dart';
+import 'package:flutter/material.dart';
 
+import '../voices.dart';
 import 'menu.dart';
 
 class Sobre extends StatefulWidget {
@@ -13,6 +13,7 @@ class Sobre extends StatefulWidget {
 }
 
 class _SobreState extends State<Sobre> {
+  bool dialogoNaoInicializado = true;
 
   /// Estiliza campo integrantes
   TextStyle integranteStyle() {
@@ -36,15 +37,7 @@ class _SobreState extends State<Sobre> {
     );
   }
 
-  void dialogo() async {
-    await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
-                "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
-                "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
-    await Future.delayed(const Duration(seconds: 20));
-    irUIMenu();
-  }
-
-  void irUIMenu() {
+  void _irUIMenu() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -52,7 +45,13 @@ class _SobreState extends State<Sobre> {
     );
   }
 
-  bool dialogoNaoInicializado = true;
+  void dialogo() async {
+    await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
+                "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
+                "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
+    await Future.delayed(const Duration(seconds: 20));
+    _irUIMenu();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +92,7 @@ class _SobreState extends State<Sobre> {
                         color: const Color(0xFF373B8A),
                         iconSize: 30,
                         onPressed: () {
-                          irUIMenu();
+                          _irUIMenu();
                         }),
                   ],
                 ),
@@ -253,6 +252,4 @@ class _SobreState extends State<Sobre> {
       ),
     );
   }
-
-  launchUrl(Uri parse) {}
 }

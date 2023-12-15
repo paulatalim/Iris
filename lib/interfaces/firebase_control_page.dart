@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'login.dart';
 import 'menu.dart';
 
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> {
           return const Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
         }
         if(snapshot.hasData){ //Verifica se usuario está logado
-          return Menu(index: 0);
+          return const Menu(index: 0);
         }
         else{
           return const UserLogin();

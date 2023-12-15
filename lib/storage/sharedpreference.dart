@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'usuario.dart';
+
 import 'armazenamento.dart';
+import 'usuario.dart';
 
 /// Altera ou cria um campo com o valor [value] no shared preference
 void setUserLoggedIn(String value) async {
