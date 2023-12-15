@@ -127,7 +127,7 @@ class _DevicesState extends State<Devices> {
           await voice.speek("Primeiro vou calibrar o sensor, não fique embaixo dele");
           await Future.delayed(Duration(seconds: 10));
           
-          await voice.speek("Sensor calibrado, agora fique debaixo do sensor");
+          await voice.speek("Sensor calibrando, agora fique debaixo do sensor");
           await Future.delayed(Duration(seconds: 5));
           manager.publish(dispositivo[2].mensage);
           
@@ -144,7 +144,7 @@ class _DevicesState extends State<Devices> {
           manager.publish(dispositivo[2].mensage);
           await Future.delayed(Duration(seconds: 5));
 
-          await voice.speek("Estou medindo sua tempearura");
+          await voice.speek("Estou medindo sua temperatura");
           await Future.delayed(Duration(seconds: 60));
           
 
@@ -155,7 +155,7 @@ class _DevicesState extends State<Devices> {
         } else {
           await voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
           await Future.delayed(Duration(seconds: 5));
-    
+          respostaInvalida = true;
         }
       }
       await voice.speek("Você deseja realizar uma nova leitura?");
@@ -226,52 +226,53 @@ class _DevicesState extends State<Devices> {
 
   @override
   Widget build(BuildContext context) {
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
     
-    final MQTTAppState appState = Provider.of<MQTTAppState>(context);
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
     
-    currentAppState = appState;
+    // final MQTTAppState appState = Provider.of<MQTTAppState>(context);
+    
+    // currentAppState = appState;
 
-    dispositivo[1].status = _prepareStateMessageFrom(currentAppState.getAppConnectionState);
+    // dispositivo[1].status = _prepareStateMessageFrom(currentAppState.getAppConnectionState);
 
-    if(currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected) {
-      _configureAndConnect();
-      dispositivo[1].status = "Conectado";
+    // if(currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected) {
+    //   _configureAndConnect();
+    //   dispositivo[1].status = "Conectado";
                 
-    } else {
-      // Captura da mensagem recebida pelo MQTT
-      mqttMensage = currentAppState.getReceivedText;
+    // } else {
+    //   // Captura da mensagem recebida pelo MQTT
+    //   mqttMensage = currentAppState.getReceivedText;
 
-      // Verifica se a mensagem eh vazia
-      if (mqttMensage.compareTo("") != 0) {
-        // Atribui o valor a variavel correta
-        switch (currentAppState.getReceivedText.trim()[0]) {
-          case 'T':
-            dispositivo[2].status = "Concluído";
-            usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
-            break;
-          case 'A':
-            dispositivo[3].status = "Concluído";
-            usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
-            usuario.calcular_imc();
-            break;
-          case 'P':
-            dispositivo[4].status = "Concluído";
-            usuario.peso = double.parse(currentAppState.getReceivedText.substring(1));
-            usuario.calcular_imc();
-            break;
-          case 'C':
-            //mensagem de orientacao
-            dispositivo[2].status = "Processando altura...";
-            break;
-        }
-      } else {
-        debugPrint("MQTT ERRO : mensagem captada vazia");
-      }
-    }
+    //   // Verifica se a mensagem eh vazia
+    //   if (mqttMensage.compareTo("") != 0) {
+    //     // Atribui o valor a variavel correta
+    //     switch (currentAppState.getReceivedText.trim()[0]) {
+    //       case 'T':
+    //         dispositivo[2].status = "Concluído";
+    //         usuario.temperatura = double.parse(currentAppState.getReceivedText.substring(1));
+    //         break;
+    //       case 'A':
+    //         dispositivo[3].status = "Concluído";
+    //         usuario.altura = double.parse(currentAppState.getReceivedText.substring(1));
+    //         usuario.calcular_imc();
+    //         break;
+    //       case 'P':
+    //         dispositivo[4].status = "Concluído";
+    //         usuario.peso = double.parse(currentAppState.getReceivedText.substring(1));
+    //         usuario.calcular_imc();
+    //         break;
+    //       case 'C':
+    //         //mensagem de orientacao
+    //         dispositivo[2].status = "Processando altura...";
+    //         break;
+    //     }
+    //   } else {
+    //     debugPrint("MQTT ERRO : mensagem captada vazia");
+    //   }
+    // }
 
     return Scaffold(
       backgroundColor: Colors.transparent,

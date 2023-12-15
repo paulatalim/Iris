@@ -35,10 +35,10 @@ class _HomeScreenState extends State<HomeScreen> {
     String resposta = "";
     bool respostaInvalida = true;
 
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
     await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 10));
     
     while (respostaInvalida) {
       print("1");
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
       } else {
         await voice.speek("Não te escutei direito, para qual seção deseja ir?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
         print("2");
       }
     }
@@ -104,10 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
     
     return Scaffold(
       backgroundColor: Colors.transparent,

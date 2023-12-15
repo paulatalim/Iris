@@ -107,7 +107,7 @@ class _UserSingIn extends State<UserSingIn> {
   void questionarCampo(String campo) async {
     resposta = "";
     await voice.speek("Agora me fale seu $campo");
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
     while (infoErrada) {
       await voice.hear();
@@ -123,14 +123,14 @@ class _UserSingIn extends State<UserSingIn> {
           break;
         }
         await voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
       }
     }
   }
 
   void dialogo() async {
     await voice.speek("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
     while (infoErrada) {
       resposta = "";
@@ -141,7 +141,7 @@ class _UserSingIn extends State<UserSingIn> {
 
       while (respostaInvalida) {
         await voice.speek("$resposta, esse é seu nome?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
 
         if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
           respostaInvalida = false;
@@ -151,7 +151,7 @@ class _UserSingIn extends State<UserSingIn> {
           break;
         }
         await voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
       }
     }
 
@@ -175,10 +175,10 @@ class _UserSingIn extends State<UserSingIn> {
   @override
   Widget build(BuildContext context) {
 
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
     
     return Scaffold(
       appBar: AppBar(

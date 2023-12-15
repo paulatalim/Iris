@@ -116,31 +116,31 @@ class _DadosState extends State<Dados> {
   void dialogo() async {
     if (usuario.temperatura > 0) {
       await voice.speek("A sua temperatura é de ${usuario.temperatura} graus Celsius");
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
     if (usuario.altura > 0) {
       await voice.speek("A sua altura é de ${usuario.altura} metros");
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
     if (usuario.peso > 0) {
       await voice.speek("A seu peso é de ${usuario.peso} quilos");
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
     if (usuario.imc > 0) {
       await voice.speek("A seu IMC é de ${usuario.imc}");
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       nenhumDadoColetado = false;
     }
     if (nenhumDadoColetado) {
       await voice.speek("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
-      await Future.delayed(Duration(seconds: 10));
+      await Future.delayed(const Duration(seconds: 10));
     }
 
     await voice.speek("Para qual seção deseja ir agora?");
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
     while (respostaInvalida) {
       // print(currentIndex);
@@ -158,10 +158,10 @@ class _DadosState extends State<Dados> {
         irUIMenu(3);
       } else if (resposta.compareTo("informações") == 0) {
         await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
-        await Future.delayed(Duration(seconds: 10));
+        await Future.delayed(const Duration(seconds: 10));
       } else {
         await voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
       }
     }
   }
@@ -176,10 +176,10 @@ class _DadosState extends State<Dados> {
 
   @override
   Widget build(BuildContext context) {
-    if(dialogoNaoInicializado) {
-      dialogoNaoInicializado = false;
-      dialogo();
-    }
+    // if(dialogoNaoInicializado) {
+    //   dialogoNaoInicializado = false;
+    //   dialogo();
+    // }
 
     return Scaffold(
       backgroundColor: Colors.transparent,
