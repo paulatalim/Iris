@@ -16,6 +16,8 @@ class User {
 
   User() {
     nome = '';
+    sobrenome = '';
+    email = '';
     _peso = 0;
     _altura = 0;
     _imc = 0;
