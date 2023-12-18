@@ -16,8 +16,8 @@
 #define BROKER_PORT 1883
 
 // Configuracao Wifi
-#define SSID     "PP_TALIM_2G_EXT" // nome da rede WI-FI que deseja se conectar
-#define PASSWORD "HOMETP20"  // Senha da rede WI-FI que deseja se conectar
+#define SSID     "AndroidAPT" // nome da rede WI-FI que deseja se conectar
+#define PASSWORD "nfwb6809"  // Senha da rede WI-FI que deseja se conectar
 
 /*** SENSORES E CONTROLES ***/
 #define PIN_SENSOR_TEMP 23 
@@ -198,7 +198,7 @@ void loop() {
   }
 
   //SENSOR ULTRASSONICO
-  if (medir_altura) {
+ 
     hcsr04();
     altura_calibracao = altura_medida;
     MQTT.publish(TOPICO_PUBLISH_SISTEMA, "C");
@@ -214,12 +214,13 @@ void loop() {
     Serial.print(altura); ////IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
     Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
     sprintf(altura_str, "A%d", altura);
+    if (medir_altura) {
     MQTT.publish(TOPICO_PUBLISH_SISTEMA, altura_str);
     medir_altura = false;
   }
   
   //BALANÇA
-  if (medir_peso) {
+  
     balanca.set_scale(calibration_factor);  // a balanca está em função do fator de calibração
     
     //verifica se o modulo esta pronto para realizar leituras
@@ -230,7 +231,11 @@ void loop() {
       Serial.print(balanca.get_units(), 1); //retorna a leitura da variavel balanca com a unidade quilogramas
       Serial.println(" kg");
       sprintf(peso_str, "P%f", peso);
+      
+if (medir_peso) {
       MQTT.publish(TOPICO_PUBLISH_SISTEMA, peso_str);
+      medir_peso = false;
+}
 
       //alteracao do fator de calibracao
       if (Serial.available()) {
@@ -259,8 +264,8 @@ void loop() {
     } else {
       Serial.println("HX-711 ocupado");
     }
-    medir_peso = false;
-  }
+    
+  
 
   MQTT.loop();
 }
