@@ -2,7 +2,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 // import 'package:provider/provider.dart';
 
 import '../mqtt/state/MQTTAppState.dart';
@@ -65,7 +65,7 @@ class _DevicesState extends State<Devices> {
   
   void dialogo() async {
     await voice.speek("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
-    await Future.delayed(Duration(seconds: 15));
+    await Future.delayed(const Duration(seconds: 15));
     
     do {
       while (respostaInvalida) {
@@ -74,52 +74,52 @@ class _DevicesState extends State<Devices> {
 
         if (resposta.compareTo("peso") == 0){
           await voice.speek("Suba na balança");
-          await Future.delayed(Duration(seconds: 10));
+          await Future.delayed(const Duration(seconds: 10));
           await voice.speek("Estou medindo seu peso");
           manager.publish(dispositivo[4].mensage);
 
           await voice.speek("Seu peso é de ${usuario.peso} quilos");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
 
           respostaInvalida = false;
         }
         else if (resposta.compareTo("altura") == 0) {
           await voice.speek("Primeiro vou calibrar o sensor, não fique embaixo dele");
-          await Future.delayed(Duration(seconds: 10));
+          await Future.delayed(const Duration(seconds: 10));
           
           await voice.speek("Sensor calibrando, agora fique debaixo do sensor");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           manager.publish(dispositivo[2].mensage);
           
           await voice.speek("Medindo sua altura");
-          await Future.delayed(Duration(seconds: 30));
+          await Future.delayed(const Duration(seconds: 30));
 
           await voice.speek("Sua altura é de ${usuario.altura} metros");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
 
           respostaInvalida= false;
         }
         else if (resposta.compareTo("temperatura") == 0) {
           await voice.speek("Coloque o sensor debaixo do seu braço");
           manager.publish(dispositivo[2].mensage);
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
 
           await voice.speek("Estou medindo sua temperatura");
-          await Future.delayed(Duration(seconds: 60));
+          await Future.delayed(const Duration(seconds: 60));
           
 
           await voice.speek("Sua temperatura é de ${usuario.temperatura} graus Celsius");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
 
           respostaInvalida= false;
         } else {
           await voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           respostaInvalida = true;
         }
       }
       await voice.speek("Você deseja realizar uma nova leitura?");
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
     
       respostaInvalida = true;
 
@@ -129,7 +129,7 @@ class _DevicesState extends State<Devices> {
 
         if (resposta.compareTo("sim") == 0) {
           await voice.speek("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
 
           respostaInvalida = false;
         } else if (resposta.compareTo("não") == 0) {
@@ -137,7 +137,7 @@ class _DevicesState extends State<Devices> {
           respostaInvalida = false;
         } else {
           await voice.speek("Hummm não te escutei direito, repete de novo?");
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
     
         }
         respostaInvalida = true;
@@ -145,7 +145,7 @@ class _DevicesState extends State<Devices> {
     } while (fazerNovaLeitura);
     
     await voice.speek("Para qual seção deseja ir agora?");
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
     
     respostaInvalida = true;
 
@@ -164,11 +164,11 @@ class _DevicesState extends State<Devices> {
         
       } else if (resposta.compareTo("informações") == 0) {
         await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-        await Future.delayed(Duration(seconds: 10));
+        await Future.delayed(const Duration(seconds: 10));
     
       } else {
         await voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 5));
     
       }
     }
@@ -249,6 +249,7 @@ class _DevicesState extends State<Devices> {
         ),
         child: Stack(
           alignment: Alignment.bottomCenter,
+          
           children: [
             Container(
               padding: const EdgeInsets.only(top: 60),
@@ -347,7 +348,7 @@ class _DevicesState extends State<Devices> {
                     .moveY(begin: -600, end: -15, duration: 1500.ms, curve: Curves.decelerate),
                 ],
               ),
-            )
+          ),
           ],
         ),
       ),
@@ -424,32 +425,32 @@ class _DevicesState extends State<Devices> {
 
   /// Verifica o status da coneccao do app com o broker e 
   /// retorna uma [string] indicando o status
-  String _prepareStateMessageFrom(MQTTAppConnectionState state) {
-    switch (state) {
-      case MQTTAppConnectionState.connected:
-        return 'Conectado';
-      case MQTTAppConnectionState.connecting:
-        return 'Conectando ...';
-      case MQTTAppConnectionState.disconnected:
-        return 'Desconectado';
-    }
-  }
+  // String _prepareStateMessageFrom(MQTTAppConnectionState state) {
+  //   switch (state) {
+  //     case MQTTAppConnectionState.connected:
+  //       return 'Conectado';
+  //     case MQTTAppConnectionState.connecting:
+  //       return 'Conectando ...';
+  //     case MQTTAppConnectionState.disconnected:
+  //       return 'Desconectado';
+  //   }
+  // }
 
-  /// Configura e conecta o App com o mqtt
-  void _configureAndConnect() {
-    String osPrefix = 'Flutter_iOS';
-    if (Platform.isAndroid) {
-      osPrefix = 'Flutter_Android';
-    }
-    manager = MQTTManager(
-        host: 'test.mosquitto.org',
-        topicPublish: 'iris/atuador',
-        topicSubscribe: 'iris/sensor',
-        identifier: osPrefix,
-        state: currentAppState);
-    manager.initializeMQTTClient();
-    manager.connect();
-  }
+  // /// Configura e conecta o App com o mqtt
+  // void _configureAndConnect() {
+  //   String osPrefix = 'Flutter_iOS';
+  //   if (Platform.isAndroid) {
+  //     osPrefix = 'Flutter_Android';
+  //   }
+  //   manager = MQTTManager(
+  //       host: 'test.mosquitto.org',
+  //       topicPublish: 'iris/atuador',
+  //       topicSubscribe: 'iris/sensor',
+  //       identifier: osPrefix,
+  //       state: currentAppState);
+  //   manager.initializeMQTTClient();
+  //   manager.connect();
+  // }
 }
 
 /// Classe com as propriedades dos dispositivos
