@@ -13,7 +13,7 @@ dependencies:
   google_fonts: ^6.1.0
   google_sign_in: ^6.1.6
   font_awesome_flutter: ^10.5.0
-  # cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.2
   shared_preferences: ^2.2.1
   blur: ^3.1.0
   sqflite: ^2.3.0
@@ -30,6 +30,7 @@ dependencies:
   firebase_core: ^2.24.0
   firebase_auth: ^4.15.0
   firebase_ui_auth: ^1.10.0
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +60,7 @@ flutter:
   assets:
     - assets/images/hardware.png
     - assets/images/logo.png
-    - assets/icon/logoIcone.png
+    - assets/icon/logo.png
     - assets/images/acc_finale.png
     - assets/images/balanca.png
     - assets/images/esp32.png
