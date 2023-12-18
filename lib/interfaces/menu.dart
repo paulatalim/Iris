@@ -70,6 +70,7 @@ class _MenuState extends State<Menu> {
     if (variavelNaoInicializada) {
       currentIndex = widget.index;
       index = widget.index;
+      _colorSelection(index);
       variavelNaoInicializada = false;
     } else {
       currentIndex = index;
@@ -124,7 +125,7 @@ class _MenuState extends State<Menu> {
                   onPressed: () {
                     setState(() {
                       index = 0;
-                      _colorSelection(currentIndex);
+                      _colorSelection(index);
                     });
                   },
                 ),
@@ -134,7 +135,7 @@ class _MenuState extends State<Menu> {
                   onPressed: () {
                     setState(() {
                       index = 1;
-                      _colorSelection(currentIndex);
+                      _colorSelection(index);
                     });
                   },
                 ),
@@ -150,7 +151,7 @@ class _MenuState extends State<Menu> {
                   onPressed: () {
                     setState(() {
                       index = 2;
-                      _colorSelection(currentIndex);
+                      _colorSelection(index);
                     });
                   },
                 ),
@@ -160,7 +161,7 @@ class _MenuState extends State<Menu> {
                   onPressed: () {
                     setState(() {
                       index = 3;
-                      _colorSelection(currentIndex);
+                      _colorSelection(index);
                     });
                   },
                 ),
