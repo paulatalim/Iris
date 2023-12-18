@@ -1,14 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:provider/provider.dart';
 
-// import 'login.dart';
-// import 'menu.dart';
-// import '../mqtt/state/MQTTAppState.dart';
-import '../firebase_options.dart';
-// import '../storage/usuario.dart';
-import 'firebase_control_page.dart';
+import '../firebase/firebase_control_page.dart';
+import '../firebase/firebase_options.dart';
+import 'menu.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -37,14 +33,9 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const MainPage(),
-    //  home: ChangeNotifierProvider<MQTTAppState>(
-    //       create: (_) => MQTTAppState(),
-    //       child: Menu(index: 0),
-        // )
-    // home: ChangeNotifierProvider<MQTTAppState>(
-    //       create: (_) => MQTTAppState(),
-    //       child: MainPage(),
-    //     )
+    home: const Menu(index: 0),
+
+    // Login desabilitado por estar com erro
+    //home: const MainPage();
   ));
 }
