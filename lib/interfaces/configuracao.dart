@@ -22,7 +22,7 @@ class _ConfiguracaoState extends State<Configuracao> {
 
   double valor = 100;
   Color boxColor = const Color(0xFFC7C9FF);
-  String speedOption = speeds.first;
+  String speedOption = speeds[1];
 
   /// Estiliza os cards das configuracoes
   BoxDecoration styleBox() {
