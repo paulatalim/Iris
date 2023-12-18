@@ -35,12 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
     await Future.delayed(const Duration(seconds: 10));
     
     while (respostaInvalida) {
-      print("1");
+      debugPrint("1");
       await voice.hear();
       
       resposta = voice.resposta;
-      print(resposta);
-      print(resposta.compareTo("sobre"));
+      debugPrint(resposta);
+      debugPrint(resposta.compareTo("sobre").toString());
 
       if (resposta.compareTo("configuração") == 0){
         irUIConfiguracao();
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         await voice.speek("Não te escutei direito, para qual seção deseja ir?");
         await Future.delayed(const Duration(seconds: 5));
-        print("2");
+        debugPrint("2");
       }
     }
     dialogoNaoInicializado = true;
@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Image.asset(
                   'assets/images/logo.png',
-                  width: 230,
+                  width: 300,
                 ),
                 const SizedBox(height: 20),
               ],
