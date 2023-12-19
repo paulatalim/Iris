@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../storage/usuario.dart' as MeuApp;
+import '../storage/usuario.dart' as meu_app;
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -27,10 +27,8 @@ Future<String> signInWithGoogle() async {
         assert(user.uid == currentUser.uid);
       }
 
-
-      MeuApp.usuario.nome = user.displayName!;
-      MeuApp.usuario.email = user.email!; //Carregando e-mail
-
+      meu_app.usuario.nome = user.displayName!;
+      meu_app.usuario.email = user.email!; //Carregando e-mail
 
       return 'signInWithGoogle succeeded: $user';
     }
