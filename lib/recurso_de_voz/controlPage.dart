@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../mqtt/state/MQTTAppState.dart';
 import '../interfaces/menu.dart';
 
 //ignore: must_be_immutable
@@ -24,11 +22,8 @@ class _ControlScreenState extends State<ControlScreen> {
     Navigator.push(
       context,
       MaterialPageRoute( 
-        builder: (context) => ChangeNotifierProvider<MQTTAppState>(
-            create: (_) => MQTTAppState(),
-            child: Menu(index: index),
-          )
-        )
+        builder: (context) => Menu(index: index),
+      )
     );
   }
 
