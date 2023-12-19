@@ -23,9 +23,6 @@ dependencies:
   speech_to_text: ^6.3.0
   permission_handler: ^11.1.0
   flutter_tts: ^3.8.3
-  mqtt_client: ^10.0.0
-  mqtt5_client: ^4.0.3
-  provider: ^6.1.1
   flutter_animate: ^4.2.0+1
   firebase_core: ^2.24.0
   firebase_auth: ^4.15.0

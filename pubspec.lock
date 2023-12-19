@@ -137,14 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.17"
-  event_bus:
-    dependency: transitive
-    description:
-      name: event_bus
-      sha256: "44baa799834f4c803921873e7446a2add0f3efa45e101a054b1f0ab9b95f8edc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -469,30 +461,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-  mqtt5_client:
-    dependency: "direct main"
-    description:
-      name: mqtt5_client
-      sha256: "50eab5dcc98129a5d19c32bdb009dbef6699a6ff8a43ae48e90afba547647faa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.3"
-  mqtt_client:
-    dependency: "direct main"
-    description:
-      name: mqtt_client
-      sha256: "41f29969d26d3e8336bdc3b0efcf85c1aaf7a5ac448cc13ff4d5a81819ce08ed"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.0.1"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   path:
     dependency: "direct main"
     description:
@@ -645,14 +613,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.3"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.1"
   shared_preferences:
     dependency: "direct main"
     description:
