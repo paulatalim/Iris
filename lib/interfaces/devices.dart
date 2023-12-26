@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
 
 import '../recurso_de_voz/voices.dart';
-import '../recurso_de_voz/controlPage.dart';
+import '../recurso_de_voz/loading.dart';
 import '../storage/usuario.dart';
 
 class Devices extends StatefulWidget {
