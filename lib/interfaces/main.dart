@@ -35,7 +35,8 @@ void main() async {
     debugShowCheckedModeBanner: false,
     home: const Menu(index: 0),
 
-    // Login desabilitado por estar com erro
-    //home: const MainPage();
+    // TODO(mafra): verificar erro de login
+    //Login desabilitado por estar com erro
+    // home: const MainPage(),
   ));
 }
