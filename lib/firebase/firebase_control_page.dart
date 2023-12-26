@@ -19,14 +19,14 @@ class _MainPageState extends State<MainPage> {
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator(),);
-        }
-        else if(snapshot.hasError){
+        } else if (snapshot.hasError){
           return const Center(child: Text('Algo deu errado! Tente novamente mais tarde.'),);
         }
-        if(snapshot.hasData){ //Verifica se usuario está logado
+
+        // Verifica se usuario está logado
+        if (snapshot.hasData) { 
           return const Menu(index: 0);
-        }
-        else{
+        } else {
           return const UserLogin();
         }
       },
