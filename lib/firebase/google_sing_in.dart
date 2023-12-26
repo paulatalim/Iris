@@ -4,6 +4,8 @@ import '../storage/usuario.dart' as meu_app;
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
+
+/// Realiza o login no app com o google
 Future<String> signInWithGoogle() async {
   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
   
@@ -37,6 +39,7 @@ Future<String> signInWithGoogle() async {
   return 'signInWithGoogle failed';
 }
 
+/// Realiza o logout da conta do google
 void signOutGoogle() async{
   await googleSignIn.signOut();
 
