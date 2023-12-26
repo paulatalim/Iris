@@ -91,22 +91,22 @@ class RecursoDeVoz {
   ///
   /// Retorna o texto em forma de uma [String]
   Future<String> hear() async {
-    print("Antesss uaaaaaaaaaa");
+    debugPrint("Antesss uaaaaaaaaaa");
 
     // Abre o microfone
     await initSpeech();
 
-    print("Antesss");
+    debugPrint("Antesss");
 
     // Escuta o usuario
     await _hear();
 
-    print("Depoissssss");
+    debugPrint("Depoissssss");
 
     // Delay de 5 segundos antes do retorno
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
-    print("5");
+    debugPrint("5");
 
     // Retorno da _resposta em String
     return Future.value(_resposta);
