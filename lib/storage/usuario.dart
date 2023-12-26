@@ -46,7 +46,8 @@ class User {
     }
   }
 
-  void calcular_imc() {
+  /// Calcula o imc do usuario
+  void calcularImc() {
     if (_peso != 0 && _altura !=0) {
       _imc = peso / pow(_altura,2);
     }
