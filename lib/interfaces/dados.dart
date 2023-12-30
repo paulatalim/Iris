@@ -5,6 +5,8 @@ import 'dart:core';
 import '../recurso_de_voz/loading.dart';
 import '../recurso_de_voz/voices.dart';
 import '../storage/usuario.dart';
+import '../bluetooth/bluetooth_manager.dart';
+import '../bluetooth/bluetooth.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -19,11 +21,9 @@ class _DadosState extends State<Dados> {
   bool nenhumDadoColetado = true;
   bool respostaInvalida = true;
   String resposta = "";
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  bool leitura = true;
+  BluetoothManager bluetooth = BluetoothManager();
+  Bluetooth blue = Bluetooth("Iris Hardware");
 
   /// Cria o card onde possui os dados do usuario
   Container _boxNumber(String texto, String numero, String unidade) {
@@ -174,8 +174,44 @@ class _DadosState extends State<Dados> {
     );
   }
 
+  void leituraBT() async {
+    late double test;
+    setState(() {
+      if (blue.msgBT.trim().compareTo('') != 0) {
+        print(blue.msgBT);
+        test = double.parse(blue.msgBT);
+      } else {
+        test = 0.0;
+      }
+      
+      // print("Leitura: ${double.parse(blue.msgBT).runtimeType}");
+      // usuario.temperatura = blue.msgBT.trim().compareTo('') != 0 ? double.parse(blue.msgBT) : 0.0;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+    leituraBT();
+  }
+
+  late double _temp;
+
+  void atualizarValores() async {
+    while (true) {
+      setState(() {
+        _temp = usuario.temperatura;
+      });
+      await Future.delayed(const Duration(seconds: 2));
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    
+    
+    bluetooth.atualizarDados();
+    atualizarValores();
+    
+
+    
+    // bluetooth.atualizarDados();
+    
     // if(dialogoNaoInicializado) {
     //   dialogoNaoInicializado = false;
     //   dialogo();
@@ -191,7 +227,7 @@ class _DadosState extends State<Dados> {
             _clickableBoxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
             _clickableBoxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
             _clickableBoxNumber(
-                'Temperatura', usuario.temperatura.toStringAsFixed(1), '°'),
+                'Temperatura', _temp.toStringAsFixed(1), '°'),
             _clickableBoxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
             
           ],
