@@ -12,7 +12,7 @@ class Bluetooth {
   BluetoothDevice? connectedDevice;
   bool connected = false;
   String? _status;
-  String? _msgBT;
+  String? _mensage;
 
   Bluetooth (String? nomeDispositivo) {
     // Inicializa o blutooth
@@ -21,13 +21,13 @@ class Bluetooth {
 
   Future<void> _initBluetooth(String? nomeDispositivo) async {
     // Tempo para esperar inicializacao
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 2));
 
     // Concessao de permissao para bluetooth
     await requestBluetoothPermissions();
 
     // Tempo para a concessao do bluetooth
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 7));
 
     // Informa quando a permissao ser condida
     print("[BLUETOOTH] Permissão Concedida");
@@ -123,10 +123,16 @@ class Bluetooth {
 
       if (msgBT.isNotEmpty) {
         try {
+          // Evita que mensagens vazias sejam salvas
+          if (msgBT.trim().isNotEmpty) {
+            _mensage = msgBT;
+          }
+
+          // Informa o valor recebido
           print('[BLUETOOTH] Mensagem recebida: $msgBT');
         } catch (e) {
           print("[BLUTOOTH] Erro ao receber mensagem");
-        } 
+        }
       }
     });
   }
@@ -175,6 +181,7 @@ class Bluetooth {
       salvarConeccao(device);
     } catch (error) {
       print('[BLUETOOTH] Erro de conexão: $error');
+      _connectToDevice(device);
     }
   }
 
@@ -213,6 +220,6 @@ class Bluetooth {
     }
   }
 
-  get msgBT => _msgBT ?? '';
+  get msgBT => _mensage ?? '';
   get status => _status ?? '';
 }
