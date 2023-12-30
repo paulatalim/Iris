@@ -174,23 +174,6 @@ class _DadosState extends State<Dados> {
     );
   }
 
-  void leituraBT() async {
-    late double test;
-    setState(() {
-      if (blue.msgBT.trim().compareTo('') != 0) {
-        print(blue.msgBT);
-        test = double.parse(blue.msgBT);
-      } else {
-        test = 0.0;
-      }
-      
-      // print("Leitura: ${double.parse(blue.msgBT).runtimeType}");
-      // usuario.temperatura = blue.msgBT.trim().compareTo('') != 0 ? double.parse(blue.msgBT) : 0.0;
-    });
-    await Future.delayed(const Duration(seconds: 1));
-    leituraBT();
-  }
-
   late double _temp;
 
   void atualizarValores() async {
@@ -203,14 +186,8 @@ class _DadosState extends State<Dados> {
   }
   @override
   Widget build(BuildContext context) {
-    
-    
     bluetooth.atualizarDados();
     atualizarValores();
-    
-
-    
-    // bluetooth.atualizarDados();
     
     // if(dialogoNaoInicializado) {
     //   dialogoNaoInicializado = false;
@@ -224,12 +201,10 @@ class _DadosState extends State<Dados> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            _clickableBoxNumber('Peso ', usuario.peso.toStringAsFixed(1), 'Kg'),
-            _clickableBoxNumber('Altura', usuario.altura.toStringAsFixed(2), 'm'),
-            _clickableBoxNumber(
-                'Temperatura', _temp.toStringAsFixed(1), '°'),
-            _clickableBoxNumber('IMC', usuario.imc.toStringAsFixed(1), ''),
-            
+            _clickableBoxNumber('Peso ', usuario.peso.toStringAsFixed(1).replaceAll(".", ","), 'Kg'),
+            _clickableBoxNumber('Altura', usuario.altura.toStringAsFixed(2).replaceAll(".", ","), 'm'),
+            _clickableBoxNumber('Temperatura', _temp.toStringAsFixed(1).replaceAll(".", ","), '°'),
+            _clickableBoxNumber('IMC', usuario.imc.toStringAsFixed(1).replaceAll(".", ","), ''),
           ],
         ),
       ),
