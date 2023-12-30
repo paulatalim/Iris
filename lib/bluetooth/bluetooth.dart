@@ -1,6 +1,7 @@
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:async';
 
@@ -21,26 +22,26 @@ class Bluetooth {
 
   Future<void> _initBluetooth(String? nomeDispositivo) async {
     // Tempo para esperar inicializacao
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Concessao de permissao para bluetooth
     await requestBluetoothPermissions();
 
     // Tempo para a concessao do bluetooth
-    await Future.delayed(Duration(seconds: 7));
+    await Future.delayed(const Duration(seconds: 7));
 
     // Informa quando a permissao ser condida
-    print("[BLUETOOTH] Permissão Concedida");
+    debugPrint("[BLUETOOTH] Permissão Concedida");
     _status = "Permissao";
-    print(_status);
+    debugPrint(_status);
 
     // Carrega os dispositivos disponiveis
     await _getBondedDevices();
     
     // Informa que os dispositivos foram carregados
-    print("[BLUETOOTH] Dispositivos Blutooth Carregados");
+    debugPrint("[BLUETOOTH] Dispositivos Blutooth Carregados");
     _status = 'Dispositivos Carregados';
-    print(_status);
+    debugPrint(_status);
 
     // Busca pelo harware para conectar com ele
     if (nomeDispositivo != null) {
@@ -57,13 +58,13 @@ class Bluetooth {
     ].request();
 
     if (state[Permission.bluetooth]!.isGranted) {
-      print('bluetooth permitido');
+      debugPrint('bluetooth permitido');
       if (state[Permission.bluetoothConnect]!.isGranted) {
-        print('bluetoothConnect permitido');
+        debugPrint('bluetoothConnect permitido');
         if (state[Permission.bluetoothScan]!.isGranted) {
-          print('bluetoothScan permitido');
+          debugPrint('bluetoothScan permitido');
           if (state[Permission.bluetoothAdvertise]!.isGranted) {
-            print('bluetoothAdvertise permitido');
+            debugPrint('bluetoothAdvertise permitido');
           }
         }
       }
@@ -91,9 +92,7 @@ class Bluetooth {
         await _connectToDevice(device);
 
         // Informa que o harware está conectado
-        print("[BLUETOOTH] Hardware Conectado");
-        _status = "Conectado";
-        print(_status);
+        debugPrint("[BLUETOOTH] Hardware Conectado");
 
         // Termina a busca pelo disposivo
         break;
@@ -103,10 +102,10 @@ class Bluetooth {
     // Caso não encontrar o hardware
     if(_status?.compareTo("Conectado") != 0) {
       // Informa que o dispositivo não foi encontrado
-      print("[BLUETOOTH] Hardware não encontrado");
+      debugPrint("[BLUETOOTH] Hardware não encontrado");
 
       // Tempo de 2 segundo para reiniciar o procedimento
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
 
       // Busca pelos dispositivos
       _getBondedDevices();
@@ -117,7 +116,7 @@ class Bluetooth {
     }
   }
 
-  Future<void> listenBluetooth() async {
+  Future<void> _listenBluetooth() async {
     connection?.input?.listen((Uint8List data) {
       final msgBT = String.fromCharCodes(data);
 
@@ -129,24 +128,21 @@ class Bluetooth {
           }
 
           // Informa o valor recebido
-          print('[BLUETOOTH] Mensagem recebida: $msgBT');
+          debugPrint('[BLUETOOTH] Mensagem recebida: $msgBT');
         } catch (e) {
-          print("[BLUTOOTH] Erro ao receber mensagem");
+          debugPrint("[BLUTOOTH] Erro ao receber mensagem");
         }
       }
     });
   }
 
   void publish(String mensage) async {
-    listenBluetooth();
-
-    String msgBT = mensage;
     try {
-      connection!.output.add(Uint8List.fromList(msgBT.codeUnits));
+      connection!.output.add(Uint8List.fromList(mensage.codeUnits));
       await connection!.output.allSent;
-      print('[BLUETOOTH] Mensagem enviada: $msgBT');
+      debugPrint('[BLUETOOTH] Mensagem enviada: $mensage');
     } catch (ex) {
-      print('[BLUETOOTH] Erro ao enviar mensagem: $ex');
+      debugPrint('[BLUETOOTH] Erro ao enviar mensagem: $ex');
       connected = false;
       reconectarDispositivo();
     }
@@ -170,17 +166,18 @@ class Bluetooth {
       // Conecta o dispositivo
       connection = await BluetoothConnection.toAddress(device.address);
       
-      // Atualizacao dos _status
+      // Atualizacao dos status
       connectedDevice = device;
       connected = true;
+      _status = "Conectado";
       
       // Inicia leitura
-      listenBluetooth();
+      _listenBluetooth();
 
       // Salva o dispositivo
       salvarConeccao(device);
     } catch (error) {
-      print('[BLUETOOTH] Erro de conexão: $error');
+      debugPrint('[BLUETOOTH] Erro de conexão: $error');
       _connectToDevice(device);
     }
   }
@@ -202,7 +199,7 @@ class Bluetooth {
     };
 
     // Informa o dispositivo resgatado
-    print('[BLUETOOTH] Conectado ao disposiivo: $device["name"] - $device["adress"]');
+    debugPrint('[BLUETOOTH] Conectado ao disposiivo: $device["name"] - $device["adress"]');
 
     if(device["name"] != null && device["adress"] != null && !connected){
       try{
@@ -210,10 +207,11 @@ class Bluetooth {
         connection = await BluetoothConnection.toAddress(device["adress"]);
         connectedDevice = BluetoothDevice(name: device["name"], address: device["adress"]);
         connected = true;
-        listenBluetooth();
+        _status = "Conectado";
+        _listenBluetooth();
 
       } catch (e) {
-        print('[BLUETOOTH] Erro ao reconectar dispositivo, aguarde 1 segundo');
+        debugPrint('[BLUETOOTH] Erro ao reconectar dispositivo, aguarde 1 segundo');
         await Future.delayed(const Duration(seconds: 1));
         reconectarDispositivo();
       }
