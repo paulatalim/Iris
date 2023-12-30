@@ -2,11 +2,6 @@ name: iris_app
 version: 1.0.0+1
 description: Iris, aplicativo mobile para ajudar deficientes visuais a controlar sua saúde.
 publish_to: 'pucminas.br.irisapp' 
-authors:
-  - Ana Beatriz<https://github.com/Ana-Bea-S>
-  - Mariana Aram <https://www.linkedin.com/in/mariana-aram-silva-a766b623b/>
-  - Paula Talim <https://www.linkedin.com/in/paulatalim/>
-  - Pedro Mafra <https://www.linkedin.com/in/pedro-mafra-vas/>
 homepage: https://github.com/paulatalim/Iris
 
 environment:
