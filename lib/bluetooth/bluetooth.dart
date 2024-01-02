@@ -6,50 +6,59 @@ import 'dart:typed_data';
 import 'dart:async';
 
 class Bluetooth {
-  List<BluetoothDiscoveryResult> discoveryResults = [];
-  bool isDiscovering = false;
-  BluetoothConnection? connection;
-  BluetoothConnection? activeConnections;
-  BluetoothDevice? connectedDevice;
-  bool connected = false;
-  String? _status;
+  List<BluetoothDiscoveryResult> _discoveryResults = [];
+  BluetoothConnection? _connection;
+  BluetoothDevice? _connectedDevice;
   String? _mensage;
+  bool _connected = false;
+  bool _isDiscovering = false;
+  bool _isGranted = false;
 
   Bluetooth (String? nomeDispositivo) {
-    // Inicializa o blutooth
+    // Inicializa o bluetooth
     _initBluetooth(nomeDispositivo);
   }
 
   Future<void> _initBluetooth(String? nomeDispositivo) async {
+    final prefs = await SharedPreferences.getInstance();
+    
     // Tempo para esperar inicializacao
     await Future.delayed(const Duration(seconds: 2));
 
     // Concessao de permissao para bluetooth
-    await requestBluetoothPermissions();
+    await _requestBluetoothPermissions();
 
     // Tempo para a concessao do bluetooth
     await Future.delayed(const Duration(seconds: 7));
 
     // Informa quando a permissao ser condida
     debugPrint("[BLUETOOTH] Permissão Concedida");
-    _status = "Permissao";
-    debugPrint(_status);
+    _isGranted = true;
 
-    // Carrega os dispositivos disponiveis
-    await _getBondedDevices();
-    
-    // Informa que os dispositivos foram carregados
-    debugPrint("[BLUETOOTH] Dispositivos Blutooth Carregados");
-    _status = 'Dispositivos Carregados';
-    debugPrint(_status);
+    String? name = prefs.getString('_connectedDeviceName');
 
-    // Busca pelo harware para conectar com ele
-    if (nomeDispositivo != null) {
-      buscarHardware(nomeDispositivo);
+    // Verifica se o dispositivo requerido é uma conecção antiga
+    if (name == null || name.compareTo(nomeDispositivo ?? '') != 0) {
+      // Carrega os dispositivos disponiveis
+      await _getBondedDevices();
+      
+      // Informa que os dispositivos foram carregados
+      debugPrint("[BLUETOOTH] Dispositivos Blutooth Carregados");
+      _isDiscovering = true;
+
+      // Busca pelo harware para conectar com ele
+      if (nomeDispositivo != null) {
+        _buscarHardware(nomeDispositivo);
+      }
+
+    } else {
+      _isDiscovering = true;
+      _reconectarDispositivo();
     }
   }
 
-  Future<void> requestBluetoothPermissions() async {
+  /// Requisita as permissoes do bluetooth
+  Future<void> _requestBluetoothPermissions() async {
     final Map<Permission, PermissionStatus> state = await [
       Permission.bluetooth,
       Permission.bluetoothScan,
@@ -74,7 +83,7 @@ class Bluetooth {
   Future<void> _getBondedDevices() async {
     List<BluetoothDevice> bondedDevices = await FlutterBluetoothSerial.instance.getBondedDevices();
 
-    discoveryResults = bondedDevices.map((device) {
+    _discoveryResults = bondedDevices.map((device) {
       return BluetoothDiscoveryResult(
         device: device,
         rssi: -55,
@@ -82,10 +91,11 @@ class Bluetooth {
     }).toList();
   }
 
-  void buscarHardware(String nomeDispositivo) async {
+  /// Busca por um hardware especifico atraves de seu nome [nomeDispositivo]
+  void _buscarHardware(String nomeDispositivo) async {
     // Busca pela lista de dispositivos encontrados
-    for (int i = 0; i < discoveryResults.length; i++) {
-      final device = discoveryResults[i].device;
+    for (int i = 0; i < _discoveryResults.length; i++) {
+      final device = _discoveryResults[i].device;
       // Comparacao entre o nome do dispositivo e o nome requirido
       if (device.name!.compareTo(nomeDispositivo) == 0) {
         // Conecta ao dispositivo
@@ -100,7 +110,7 @@ class Bluetooth {
     }
 
     // Caso não encontrar o hardware
-    if(_status?.compareTo("Conectado") != 0) {
+    if(!_connected) {
       // Informa que o dispositivo não foi encontrado
       debugPrint("[BLUETOOTH] Hardware não encontrado");
 
@@ -109,15 +119,100 @@ class Bluetooth {
 
       // Busca pelos dispositivos
       _getBondedDevices();
-      startDiscovery();
+      _startDiscovery();
 
       // Busca pelo hardware
-      buscarHardware(nomeDispositivo);
+      _buscarHardware(nomeDispositivo);
     }
   }
 
+  /// Busca por mais dispositivos
+  Future<void> _startDiscovery() async {
+    _isDiscovering = true;
+    _discoveryResults = [];
+    
+    FlutterBluetoothSerial.instance.startDiscovery().listen((result) {
+      _discoveryResults.add(result);
+    });
+
+    await Future.delayed(const Duration(seconds: 10));
+    FlutterBluetoothSerial.instance.cancelDiscovery();
+    _isDiscovering = false;
+  }
+
+  /// Salva a conecção no armazenamento local
+  void _salvarConeccao() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('_connectedDeviceName', _connectedDevice!.name ?? '');
+    prefs.setString('_connectedDeviceAddress', _connectedDevice!.address);
+  }
+
+  /// Reconecta um disposivo onde seus dados de conecção 
+  /// estão armazenados no armazenamento local
+  Future<void> _reconectarDispositivo() async {
+    // Cria instancia do armazenamento local
+    final prefs = await SharedPreferences.getInstance();
+    
+    // Busca de dispositivo no armazenamento local
+    Map<String, dynamic> device = {
+      "name" : prefs.getString('_connectedDeviceName'),
+      "adress" : prefs.getString('_connectedDeviceAddress')
+    };
+
+    // Informa o dispositivo resgatado
+    debugPrint('[BLUETOOTH] Reconectando ao disposiivo: $device["name"] - $device["adress"]');
+    _connectedDevice = BluetoothDevice(name: device["name"], address: device["adress"]);
+
+    if(device["name"] != null && device["adress"] != null && !_connected){
+      try{
+        // Conecta com o dispositivo encontrado
+        _connection = await BluetoothConnection.toAddress(device["adress"]);
+        _connected = true;
+        _listenBluetooth();
+
+      } catch (e) {
+        // Caso ocorrer um erro de coneccao
+        debugPrint('[BLUETOOTH] Erro ao reconectar dispositivo, aguarde 1 segundo');
+
+        // Reconecao com o dispositivo
+        _connectToDevice(null);
+      }
+    }
+  }
+
+  /// Conecta um dispositivo
+  /// Caso o Dispositivo [device], não ser informado
+  /// será realizado a tentativa de coneccao com o 
+  /// dispositivo salvo localmente
+  Future<void> _connectToDevice(BluetoothDevice? device) async {
+    try {
+      // Atribuicao de um dispositivo, caso não ser informado
+      _connectedDevice = device ?? _connectedDevice;
+
+      // Conecta o dispositivo
+      _connection = await BluetoothConnection.toAddress(_connectedDevice!.address);
+      
+      // Atualizacao dos status
+      _connected = true;
+      
+      // Inicia leitura
+      _listenBluetooth();
+
+      // Salva o dispositivo
+      _salvarConeccao();
+    } catch (error) {
+      // Informa erro de coneccao
+      debugPrint('[BLUETOOTH] Erro de conexão: $error');
+
+      // Tenta reconectar
+      _connectToDevice(device);
+    }
+  }
+
+  /// Recebe mensagem do bluetooth
+  /// Esse método ápos ser chamado continua em loop 
   Future<void> _listenBluetooth() async {
-    connection?.input?.listen((Uint8List data) {
+    _connection?.input?.listen((Uint8List data) {
       final msgBT = String.fromCharCodes(data);
 
       if (msgBT.isNotEmpty) {
@@ -131,93 +226,36 @@ class Bluetooth {
           debugPrint('[BLUETOOTH] Mensagem recebida: $msgBT');
         } catch (e) {
           debugPrint("[BLUTOOTH] Erro ao receber mensagem");
+          _connected = false;
+          _reconectarDispositivo();
         }
       }
     });
   }
 
+  /// Envia mensagem via bluetooth para o dispositivo conectado
+  /// A mensagem [mensage] é enviada
   void publish(String mensage) async {
     try {
-      connection!.output.add(Uint8List.fromList(mensage.codeUnits));
-      await connection!.output.allSent;
+      _connection!.output.add(Uint8List.fromList(mensage.codeUnits));
+      await _connection!.output.allSent;
       debugPrint('[BLUETOOTH] Mensagem enviada: $mensage');
     } catch (ex) {
       debugPrint('[BLUETOOTH] Erro ao enviar mensagem: $ex');
-      connected = false;
-      reconectarDispositivo();
+      _connected = false;
+      _reconectarDispositivo();
     }
   }
 
-  Future<void> startDiscovery() async {
-    isDiscovering = true;
-    discoveryResults = [];
-    
-    FlutterBluetoothSerial.instance.startDiscovery().listen((result) {
-      discoveryResults.add(result);
-    });
-
-    await Future.delayed(const Duration(seconds: 10));
-    FlutterBluetoothSerial.instance.cancelDiscovery();
-    isDiscovering = false;
-  }
-
-  Future<void> _connectToDevice(BluetoothDevice device) async {
-    try {
-      // Conecta o dispositivo
-      connection = await BluetoothConnection.toAddress(device.address);
-      
-      // Atualizacao dos status
-      connectedDevice = device;
-      connected = true;
-      _status = "Conectado";
-      
-      // Inicia leitura
-      _listenBluetooth();
-
-      // Salva o dispositivo
-      salvarConeccao(device);
-    } catch (error) {
-      debugPrint('[BLUETOOTH] Erro de conexão: $error');
-      _connectToDevice(device);
-    }
-  }
-
-  void salvarConeccao(BluetoothDevice device) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('connectedDeviceName', device.name ?? '');
-    prefs.setString('connectedDeviceAddress', device.address);
-  }
-
-  Future<void> reconectarDispositivo() async {
-    // Cria instancia do armazenamento local
-    final prefs = await SharedPreferences.getInstance();
-    
-    // Busca de dispositivo no armazenamento local
-    Map<String, dynamic> device = {
-      "name" : prefs.getString('connectedDeviceName'), 
-      "adress" : prefs.getString('connectedDeviceAddress')
-    };
-
-    // Informa o dispositivo resgatado
-    debugPrint('[BLUETOOTH] Conectado ao disposiivo: $device["name"] - $device["adress"]');
-
-    if(device["name"] != null && device["adress"] != null && !connected){
-      try{
-        // Conecta com o dispositivo encontrado
-        connection = await BluetoothConnection.toAddress(device["adress"]);
-        connectedDevice = BluetoothDevice(name: device["name"], address: device["adress"]);
-        connected = true;
-        _status = "Conectado";
-        _listenBluetooth();
-
-      } catch (e) {
-        debugPrint('[BLUETOOTH] Erro ao reconectar dispositivo, aguarde 1 segundo');
-        await Future.delayed(const Duration(seconds: 1));
-        reconectarDispositivo();
-      }
-    }
-  }
-
+  /// Mensagem enviada via bluetooth
   get msgBT => _mensage ?? '';
-  get status => _status ?? '';
+
+  /// Status da permissão do bluetooth no app
+  get isGranted => _isGranted;
+
+  /// Status da conecção
+  get connected => _connected;
+
+  /// Status busca de dispositivos
+  get isDiscovering => _isDiscovering;
 }
