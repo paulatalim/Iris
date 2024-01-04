@@ -5,56 +5,80 @@
 
 Ultrasonic ultrasonic(PIN_HCSR04_TRIG, PIN_HCSR04_ECHO);
 
-void setup_hcsr04() {
-  pinMode(PIN_HCSR04_ECHO, INPUT);  // DEFINE O PINO COMO ENTRADA (RECEBE)
-  pinMode(PIN_HCSR04_TRIG, OUTPUT); // DEFINE O PINO COMO SAIDA (ENVIA)
-}
+class Altura {
+private:
+  float altura_calibracao;
+  float altura_usuario;
+  bool isCalibrated;
 
-/**
- * @brief Calcula a distancia entre o sensor e o ponto mais proximo
- * 
- * @return inteiro: altura em centimetros 
- */
-int hcsr04() {
-  int altura_medida;
+  void setup_hcsr04() {
+    pinMode(PIN_HCSR04_ECHO, INPUT);  // DEFINE O PINO COMO ENTRADA (RECEBE)
+    pinMode(PIN_HCSR04_TRIG, OUTPUT); // DEFINE O PINO COMO SAIDA (ENVIA)
+  }
 
-  digitalWrite(PIN_HCSR04_TRIG, LOW);    // SETA O PINO 6 COM UM PULSO BAIXO "LOW"
-  delayMicroseconds(2);                  // INTERVALO DE 2 MICROSSEGUNDOS
-  digitalWrite(PIN_HCSR04_TRIG, HIGH);   // SETA O PINO 6 COM PULSO ALTO "HIGH"
-  delayMicroseconds(10);                 // INTERVALO DE 10 MICROSSEGUNDOS
-  digitalWrite(PIN_HCSR04_TRIG, LOW);    // SETA O PINO 6 COM PULSO BAIXO "LOW" NOVAMENTE
-  altura_medida = (ultrasonic.read(CM)); // VARIÁVEL GLOBAL RECEBE O VALOR DA DISTÂNCIA MEDIDA
-  delay(1000);
+  /**
+  * @brief Calcula a distancia entre o sensor e o ponto mais proximo
+  * 
+  * @return inteiro: altura em centimetros
+  */
+  int hcsr04() {
+    int distancia;
 
-  return altura_medida;
-}
+    digitalWrite(PIN_HCSR04_TRIG, LOW);
+    delayMicroseconds(2);
+    digitalWrite(PIN_HCSR04_TRIG, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(PIN_HCSR04_TRIG, LOW);
+    distancia = (ultrasonic.read(CM));
 
-int medir_altura() {
-  int distancia;
-  int altura_calibracao;
-  int altura;
+    return distancia;
+  }
 
-  // Mede a altura de calibracao
-  altura_calibracao = hcsr04();
-  Serial.print("Altura de calibração: ");
-  Serial.print(altura_calibracao);
-  
-  // Orientacao
-  Serial.print("Orientação: Fique de baixo do sensor");
-  delay(1000);
-  
-  // Mede a altura
-  distancia = hcsr04();
-  altura = altura_calibracao - distancia;
+public:
+  Altura () {
+    altura_calibracao = 0;
+    altura_usuario = 0;
+    isCalibrated = false;
 
-  // Imprime a altura medida
-  Serial.print("Sua altura é: ");
-  Serial.print(altura);
-  Serial.println("cm");
+    setup_hcsr04();
+  }
 
-  // if (medir_altura) {
-  //   MQTT.publish(TOPICO_PUBLISH_SISTEMA, altura_str);
-  //   medir_altura = false;
-  // }
-  return altura;
-}
+  void medir() {
+    float altura =  hcsr04() / 100;
+    
+    if(isCalibrated) {
+      // Calcula altura
+      altura_usuario = altura_calibracao - altura;
+    } else {
+      // Calibra o sensor
+      altura_calibracao = altura;
+    }
+  }
+
+  void imprimir() {
+    if (isCalibrated) {
+      // Imprimi altura do usuario
+      Serial.print("Altura: ");
+      Serial.print(altura_usuario);
+      Serial.println(" m");
+    } else {
+      // Imprime altura de calibracao
+      Serial.print("Altura de calibracao: ");
+      Serial.print(altura_calibracao);
+      Serial.println(" m");
+    }
+  }
+
+  float get_altura() {
+    return altura_usuario;
+  }
+
+  void set_isCalibrated(bool value) {
+    isCalibrated = value;
+
+    // Reinicia valores
+    if (!value) {
+      altura_usuario = 0;
+    }
+  }
+};

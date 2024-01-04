@@ -23,7 +23,9 @@ void loop() {
   Serial.println(numAleatorio);
 
   // Informa o peso no celular
-  SerialBT.println(numAleatorio);
+  char temperatura_str[10] = {0};
+  sprintf(temperatura_str, "A%d", numAleatorio);
+  SerialBT.println(temperatura_str);
 
   // Envia a mensagem
   if (Serial.available()) {

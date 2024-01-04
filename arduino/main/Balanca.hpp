@@ -6,8 +6,6 @@
 HX711 balanca;
 float calibration_factor;
 char comando;
-
-bool pesar;
 float peso;
 
 void setup_balanca() {
@@ -16,24 +14,14 @@ void setup_balanca() {
   balanca.tare();
 
   calibration_factor = -45000;
-  pesar = false;
 }
 
 float medir_peso () {
   balanca.set_scale(calibration_factor);  // a balanca está em função do fator de calibração
   
-  //verifica se o modulo esta pronto para realizar leituras
+  // Verifica se o modulo esta pronto para realizar leituras
   if (balanca.is_ready()) {
-    //mensagens de leitura no monitor serial
-    Serial.print("Leitura: ");
     peso = balanca.get_units();
-    Serial.print(balanca.get_units(), 1); //retorna a leitura da variavel balanca com a unidade quilogramas
-    Serial.println(" kg");
-      
-    // if (medir_peso) {
-    //   MQTT.publish(TOPICO_PUBLISH_SISTEMA, peso_str);
-    //   medir_peso = false;
-    // }
 
     //alteracao do fator de calibracao
     if (Serial.available()) {
