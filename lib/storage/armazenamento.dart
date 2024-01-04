@@ -3,7 +3,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart';
 import 'dart:convert';
-// import 'hardware.dart'; // Importa o arquivo mqtt.dart
 
 class Armazenamento {
   static Database? database;
@@ -14,7 +13,6 @@ class Armazenamento {
     if (database == null) {
       _initdatabase();
     }
-    // _initMqtt();
   }
 
   /// Inicializa o banco de dados, resgatando dados antigos caso existir
@@ -78,6 +76,8 @@ class Armazenamento {
       return -1;
     }
 
+    database = _recuperarBancoDados();
+
     // Criptografa as informacoes sensiveis
     var criptoEmail = _criptografar(email);
     var criptoSenha = _criptografar(senha);
@@ -111,7 +111,14 @@ class Armazenamento {
 
   /// Atualiza os dados do usuario
   dynamic atualizarUsuario(
-      int id, String nome, String sobrenome, String email, String senha) async {
+      int id, 
+      String nome, 
+      String sobrenome, 
+      String email, 
+      String senha) async {
+
+    database = _recuperarBancoDados();
+
     String emailCripto = _criptografar(email);
     String senhaCripto = _criptografar(senha);
 
@@ -130,6 +137,9 @@ class Armazenamento {
   /// Atualiza as informacoes adicionais do usuario do [id] no dados do usuario
   Future<void> atualizarInfoAdicional(int id, double peso, double temperatura,
       double altura, double imc) async {
+    
+    database = _recuperarBancoDados();
+
     Map<String, dynamic> dadosInfoAdicional = {
       "peso": peso,
       "temperatura": temperatura,
@@ -145,6 +155,7 @@ class Armazenamento {
 
   /// Pesquisa no banco de dados atraves do [id] as informacoes adicionais
   Future<List> buscarInfoAdicional(int id) async {
+    database = _recuperarBancoDados();
     List infoAdicional = await database!.query("informacoes_adicionais",
         columns: ["peso", "temperatura", "altura", "imc"],
         where: "usuario_id = ?",
