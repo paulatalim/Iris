@@ -1,6 +1,5 @@
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -82,13 +81,13 @@ class _UserLogin extends State<UserLogin> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
   }
 
-  void questionarCampo (String campo, String pronome) async {
+  void questionarCampo(String campo, String pronome) async {
     bool infoErrada = true;
     
     resposta = "";
@@ -185,7 +184,7 @@ class _UserLogin extends State<UserLogin> {
               children: [
                 const SizedBox(height: 85),
                 Image.asset(
-                  'assets/icon/logoIcone.png',
+                  'assets/icon/logo.png',
                   width: 150.0,
                 ),
                 const SizedBox(height: 50),
@@ -205,8 +204,6 @@ class _UserLogin extends State<UserLogin> {
                         ),
                         labelText: 'E-mail:',
                         hintText: 'nome@exemplo.com',
-                        // filled: true,
-                        // fillColor: const Color(0xfff2f2fb),
                       ),
                     ),
                     TextFormField(
@@ -220,8 +217,6 @@ class _UserLogin extends State<UserLogin> {
                         ),
                         labelText: 'Senha:',
                         hintText: 'Digite sua senha',
-                        // filled: true,
-                        // fillColor: const Color(0xfff2f2fb),
                       ),
                     ),
 
@@ -267,47 +262,7 @@ class _UserLogin extends State<UserLogin> {
                     ),
                   ),
                 ),
-                // const SizedBox(height: 20),
-                // Container(
-                //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                //   child: Row(
-                //     //Vertical
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     //Horizontal
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       TextButton(
-                //         onPressed: () {
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(
-                //                 builder: (context) => const UserSingIn()),
-                //           );
-                //         },
-                //         child: const Text(
-                //           //Botão para criar uma conta (ainda a ser feito)
-                //           'Criar uma conta',
-                //           style: TextStyle(
-                //               fontSize: 20,
-                //               color: Color.fromARGB(255, 56, 161, 214)),
-                //         ),
-                //       ),
-                //       TextButton(
-                //         onPressed: () {
-                //           login();
-                //         },
-                //         child: const Text(
-                //           //Botão para realizar login
-                //           'Entrar',
-                //           style: TextStyle(
-                //             fontSize: 25,
-                //             color: Color(0xFF373B8A),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+
                 const SizedBox(height: 20),
                 
                 // Botão para realizar login com google
@@ -350,22 +305,7 @@ class _UserLogin extends State<UserLogin> {
                     ]),
                   )
                 ),
-                  // ElevatedButton.icon(
-                  //   style: ElevatedButton.styleFrom(
-                  //       foregroundColor: const Color(0xFF202124), 
-                  //       backgroundColor: Colors.white,
-                  //       minimumSize: const Size(double.infinity, 45),
-                  //     ),
-                  //   onPressed: () {
-                  //     signInWithGoogle().then((result){
-                  //       if (result != null){
-                  //         navigatorKey.currentState!.popUntil((route) => route.isFirst);
-                  //       }
-                  //     });
-                  //   },   
-                  //   icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red,), 
-                  //   label: const Text('Entrar com o Google'),
-                  // )
+                
                 const SizedBox(height: 50,),
                 
                 // Botao para cadastrar
@@ -380,17 +320,11 @@ class _UserLogin extends State<UserLogin> {
                   child: Container(
                     width: 0.8 * MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(vertical: 9),
-                    
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(50.0),
                       border: Border.all(color: const Color(0xFF373B8A), ),
-                      // boxShadow: const [
-                      //   BoxShadow(
-                      //     color: Color.fromARGB(90, 0, 0, 0),
-                      //     blurRadius: 5,
-                      //     offset: Offset(0, 5))],
                     ),
                     child: const Text(
                       "Criar conta",
@@ -402,7 +336,6 @@ class _UserLogin extends State<UserLogin> {
                     ),
                   ),
                 )
-                
               ],
             )
           )
