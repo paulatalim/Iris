@@ -31,20 +31,12 @@ class Bluetooth {
     // Tempo para a concessao do bluetooth
     await Future.delayed(const Duration(seconds: 7));
 
-    // Informa quando a permissao ser condida
-    debugPrint("[BLUETOOTH] Permissão Concedida");
-    _isGranted = true;
-
     String? name = prefs.getString('_connectedDeviceName');
 
     // Verifica se o dispositivo requerido é uma conecção antiga
     if (name == null || name.compareTo(nomeDispositivo ?? '') != 0) {
       // Carrega os dispositivos disponiveis
       await _getBondedDevices();
-      
-      // Informa que os dispositivos foram carregados
-      debugPrint("[BLUETOOTH] Dispositivos Blutooth Carregados");
-      _isDiscovering = true;
 
       // Busca pelo harware para conectar com ele
       if (nomeDispositivo != null) {
@@ -74,6 +66,10 @@ class Bluetooth {
           debugPrint('bluetoothScan permitido');
           if (state[Permission.bluetoothAdvertise]!.isGranted) {
             debugPrint('bluetoothAdvertise permitido');
+
+            // Informa quando a permissao ser condida
+            debugPrint("[BLUETOOTH] Permissão Concedida");
+            _isGranted = true;
           }
         }
       }
@@ -82,6 +78,10 @@ class Bluetooth {
 
   Future<void> _getBondedDevices() async {
     List<BluetoothDevice> bondedDevices = await FlutterBluetoothSerial.instance.getBondedDevices();
+
+    // Informa que os dispositivos foram carregados
+    debugPrint("[BLUETOOTH] Dispositivos Blutooth Carregados");
+    _isDiscovering = true;
 
     _discoveryResults = bondedDevices.map((device) {
       return BluetoothDiscoveryResult(
@@ -235,7 +235,7 @@ class Bluetooth {
 
   /// Envia mensagem via bluetooth para o dispositivo conectado
   /// A mensagem [mensage] é enviada
-  void publish(String mensage) async {
+  Future<void> publish(String mensage) async {
     try {
       _connection!.output.add(Uint8List.fromList(mensage.codeUnits));
       await _connection!.output.allSent;
