@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
 
+import '../hardware/bluetooth/bluetooth_manager.dart';
+import '../hardware/available_devices.dart';
 import '../recurso_de_voz/voices.dart';
 import '../recurso_de_voz/loading.dart';
 import '../storage/usuario.dart';
@@ -16,11 +18,11 @@ class Devices extends StatefulWidget {
 
 class _DevicesState extends State<Devices> {
   DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
+  late BluetoothManager bluetooth;
   
   final scrollControl = ScrollController();
 
   String resposta = "";
-  String mqttMensage = "";
   bool respostaInvalida = true;
   bool fazerNovaLeitura = false;
   bool dialogoNaoInicializado = true;
@@ -28,6 +30,7 @@ class _DevicesState extends State<Devices> {
   @override
   void initState() {
     super.initState();
+    bluetooth = BluetoothManager();
   }
 
   /// Estiliza um texto
@@ -175,8 +178,21 @@ class _DevicesState extends State<Devices> {
     );
   }
 
+  void atualizarStatusSystem() async {
+    while(true) {
+      setState(() {
+        dispositivo[1].status = bluetooth.state;
+        dispositivo[2].status = bluetooth.stateTemperatura;
+        dispositivo[3].status = bluetooth.stateAltura;
+        dispositivo[4].status = bluetooth.statePeso;
+      });
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    atualizarStatusSystem();
     
     // if(dialogoNaoInicializado) {
     //   dialogoNaoInicializado = false;
@@ -232,7 +248,7 @@ class _DevicesState extends State<Devices> {
                       height: 200,
                     ),
                     Text(
-                      dispositivoSelecionado.status,
+                      dispositivoSelecionado.status!,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
@@ -242,6 +258,18 @@ class _DevicesState extends State<Devices> {
                         ),
                       ),
                     ),
+                    bluetooth.time != null 
+                      ? Text(
+                        bluetooth.time ?? "",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inclusiveSans(
+                          textStyle: const TextStyle(
+                            color: Color(0xFF373B8A),
+                            fontSize: 25,
+                            fontWeight: FontWeight.w800
+                          ),
+                        ),) 
+                      : const SizedBox(),
                   ],
                 ),
               ),
@@ -344,10 +372,25 @@ class _DevicesState extends State<Devices> {
         ),
         onPressed: () {
           setState(() {
-          dispositivoSelecionado = dispositivo[id];
-          scrollControl.animateTo(0,
-              duration: const Duration(seconds: 1), curve: Curves.ease);
-          });
+            dispositivoSelecionado = dispositivo[id];
+            scrollControl.animateTo(0,
+                duration: const Duration(seconds: 1), curve: Curves.ease);
+            });
+
+            switch(id) {
+              case 2:
+                // Mede a temperatura
+                bluetooth.medirTemperatura();
+                break;
+              case 3:
+                // Mede a altura
+                bluetooth.medirAltura();
+                break;
+              case 4:
+                // Mede o peso
+                bluetooth.medirPeso();
+                break;
+            }
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 0),
@@ -372,46 +415,3 @@ class _DevicesState extends State<Devices> {
     ));
   }
 }
-
-/// Classe com as propriedades dos dispositivos
-class DispositivosDisponivel {
-  String nome;
-  String imagePath;
-  String mensage;
-  String status;
-
-  DispositivosDisponivel({required this.nome, required this.imagePath, required this.mensage, required this.status});
-}
-
-/// Lista dos dispositivos diponiveis para conectar no hardware
-List<DispositivosDisponivel> dispositivo = [
-  DispositivosDisponivel(
-      nome: "Selecione um\ndispositivo",
-      imagePath: 'assets/images/hardware.png',
-      mensage: '',
-      status: "Status"),
-
-  DispositivosDisponivel(
-      nome: "ESP 32", 
-      imagePath: 'assets/images/esp32.png', 
-      mensage: '',
-      status: "Status"),
-
-  DispositivosDisponivel(
-      nome: "Termômetro", 
-      imagePath: 'assets/images/termometro.png', 
-      mensage: 'T',
-      status: 'Processando ...'),
-
-  DispositivosDisponivel(
-      nome: "Sensor de Altura", 
-      imagePath: 'assets/images/sensor.png',
-      mensage: 'A',
-      status: 'Calibrando sensor...'),
-
-  DispositivosDisponivel(
-      nome: "Balança", 
-      imagePath: 'assets/images/balanca.png',
-      mensage: 'P',
-      status: 'Processando ...')
-];
