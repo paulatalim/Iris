@@ -2,11 +2,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import '../hardware/bluetooth/bluetooth_manager.dart';
 import '../recurso_de_voz/loading.dart';
 import '../recurso_de_voz/voices.dart';
 import '../storage/usuario.dart';
-import '../bluetooth/bluetooth_manager.dart';
-import '../bluetooth/bluetooth.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -21,9 +20,7 @@ class _DadosState extends State<Dados> {
   bool nenhumDadoColetado = true;
   bool respostaInvalida = true;
   String resposta = "";
-  bool leitura = true;
   BluetoothManager bluetooth = BluetoothManager();
-  Bluetooth blue = Bluetooth("Iris Hardware");
 
   /// Cria o card onde possui os dados do usuario
   Container _boxNumber(String texto, String numero, String unidade) {
@@ -184,6 +181,7 @@ class _DadosState extends State<Dados> {
       await Future.delayed(const Duration(seconds: 2));
     }
   }
+  
   @override
   Widget build(BuildContext context) {
     bluetooth.atualizarDados();
