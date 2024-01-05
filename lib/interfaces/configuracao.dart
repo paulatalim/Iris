@@ -13,21 +13,18 @@ class Configuracao extends StatefulWidget {
 }
 
 class _ConfiguracaoState extends State<Configuracao> {
-  String resposta = "";
-  bool respostaInvalida = true;
-  bool configurarVelocidade = false;
-  bool configurarVolume = false;
-  bool novaConfiguracao = false;
-  bool dialogoNaoInicializado = true;
+  List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
 
-  double valor = 100;
-  Color boxColor = const Color(0xFFC7C9FF);
-  String speedOption = speeds[1];
+  final Color _boxColor = const Color(0xFFC7C9FF);
+
+  double _valorVolume = voice.volume * 100;
+
+  late String _speedOption;
 
   /// Estiliza os cards das configuracoes
-  BoxDecoration styleBox() {
+  BoxDecoration _styleBox() {
     return BoxDecoration(
-      color: boxColor,
+      color: _boxColor,
       borderRadius: BorderRadius.circular(20),
       boxShadow: const [
         BoxShadow(
@@ -43,7 +40,7 @@ class _ConfiguracaoState extends State<Configuracao> {
   }
 
   /// Estiliza o texto do item das configuracoes
-  TextStyle styleBoxTitle() {
+  TextStyle _styleBoxTitle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
         fontSize: 20,
@@ -55,6 +52,12 @@ class _ConfiguracaoState extends State<Configuracao> {
   }
 
   void dialogo() async {
+    String resposta = "";
+    bool respostaInvalida = true;
+    bool configurarVelocidade = false;
+    bool configurarVolume = false;
+    bool novaConfiguracao = false;
+
     await voice.speek("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
     await Future.delayed(const Duration(seconds: 10));
 
@@ -116,7 +119,7 @@ class _ConfiguracaoState extends State<Configuracao> {
           resposta = voice.resposta;
 
           if (resposta.compareTo("alto") == 0) {
-            voice.volume =   1.0;
+            voice.volume = 1.0;
             respostaInvalida = false;
           } else if (resposta.compareTo("médio") == 0 || resposta.compareTo("medio") == 0) {
             voice.volume = 0.5;
@@ -162,18 +165,19 @@ class _ConfiguracaoState extends State<Configuracao> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menu(index: 0)),
+          builder: (context) => const Menu()),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    _speedOption= speeds[1];
+    // dialogo();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -233,23 +237,24 @@ class _ConfiguracaoState extends State<Configuracao> {
                 // height: 0.2 * MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.only(
                     left: 30, top: 20, right: 30, bottom: 20),
-                decoration: styleBox(),
+                decoration: _styleBox(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Volume', style: styleBoxTitle()),
+                    Text('Volume', style: _styleBoxTitle()),
                     Slider(
-                        value: valor, //definir o valor inicial
+                        value: _valorVolume, //definir o _valorVolume inicial
                         min: 0,
                         max: 100,
                         divisions:
                             100, //define as divisoes entre o minimo e o maximo
                         activeColor: const Color(0xFF5100FF),
                         inactiveColor: Colors.black12,
-                        onChanged: (double novoValor) {
+                        onChanged: (double novoValorVolume) {
                           setState(() {
-                            valor = novoValor;
+                            _valorVolume = novoValorVolume;
+                            voice.volume = novoValorVolume / 100;
                           });
                         }),
                   ],
@@ -266,13 +271,13 @@ class _ConfiguracaoState extends State<Configuracao> {
                 width: 0.8 * MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.only(
                     left: 30, top: 20, right: 30, bottom: 20),
-                decoration: styleBox(),
+                decoration: _styleBox(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Velocidade',
-                      style: styleBoxTitle(),
+                      style: _styleBoxTitle(),
                     ),
                     SizedBox(
                       width: 70,
@@ -280,7 +285,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                         dropdownColor: const Color(0xFFb2b4ff),
                         // dropdownColor: Color.fromARGB(255, 221, 163, 255),
                         isExpanded: true,
-                        value: speedOption,
+                        value: _speedOption,
                         icon: const Icon(FontAwesomeIcons.chevronDown),
                         iconSize: 15,
                         iconEnabledColor: const Color(0xFF373B8A),
@@ -297,7 +302,8 @@ class _ConfiguracaoState extends State<Configuracao> {
                         onChanged: (String? value) {
                           // This is called when the user selects an item.
                           setState(() {
-                            speedOption = value!;
+                            _speedOption = value!;
+                            
                           });
                         },
                         items: speeds
@@ -319,6 +325,3 @@ class _ConfiguracaoState extends State<Configuracao> {
     );
   }
 }
-
-/// Lista das velocidades de voz disponiveis
-List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
