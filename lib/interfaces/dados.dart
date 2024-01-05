@@ -170,12 +170,13 @@ class _DadosState extends State<Dados> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
+  void initState() {
+    super.initState();
+    // dialogo();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
