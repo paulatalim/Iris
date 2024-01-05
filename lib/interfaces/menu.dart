@@ -6,11 +6,10 @@ import 'home.dart';
 import 'dados.dart';
 import 'perfil.dart';
 
-@immutable
 class Menu extends StatefulWidget {
-  const Menu({super.key, required this.index});
+  const Menu({super.key, this.index});
 
-  final int index;
+  final int? index;
 
   @override
   State<Menu> createState() => _MenuState();
@@ -21,7 +20,6 @@ class _MenuState extends State<Menu> {
   String resposta = '';
   
   late int currentIndex;
-  late int index;
   
   final Color _colorIconPressed = const Color(0xFFA000FF);
   final Color _colorIconNotPressed = const Color(0xFF6B86EB);
@@ -65,17 +63,14 @@ class _MenuState extends State<Menu> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    
-    if (variavelNaoInicializada) {
-      currentIndex = widget.index;
-      index = widget.index;
-      _colorSelection(index);
-      variavelNaoInicializada = false;
-    } else {
-      currentIndex = index;
-    }
+  void initState() {
+    super.initState();
+    currentIndex = widget.index ?? 0;
+    _colorSelection(currentIndex);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -85,7 +80,7 @@ class _MenuState extends State<Menu> {
 
           // Seciona a cor de fundo de acordo com as telas
           colors: [
-            currentIndex == 0 || currentIndex == 1
+            currentIndex < 2
                 ? _colorScreen[0]
                 : currentIndex == 1
                     ? _colorScreen[4]
@@ -111,63 +106,41 @@ class _MenuState extends State<Menu> {
           child: const Icon(FontAwesomeIcons.microphone),
         ),
         bottomNavigationBar: BottomAppBar(
-            color: const Color(0xFFE6E6E6),
-            height: 0.08 * MediaQuery.of(context).size.height,
-            notchMargin: 6.0,
-            padding: const EdgeInsets.all(0),
-            shape: const CircularNotchedRectangle(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  color: _colorIcon[0],
-                  icon: const Icon(FontAwesomeIcons.house),
-                  onPressed: () {
-                    setState(() {
-                      index = 0;
-                      _colorSelection(index);
-                    });
-                  },
-                ),
-                IconButton(
-                  color: _colorIcon[1],
-                  icon: const Icon(FontAwesomeIcons.computer),
-                  onPressed: () {
-                    setState(() {
-                      index = 1;
-                      _colorSelection(index);
-                    });
-                  },
-                ),
+          color: const Color(0xFFE6E6E6),
+          height: 0.08 * MediaQuery.of(context).size.height,
+          notchMargin: 6.0,
+          padding: const EdgeInsets.all(0),
+          shape: const CircularNotchedRectangle(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buttonNavigationBar(0, FontAwesomeIcons.house),
+              buttonNavigationBar(1, FontAwesomeIcons.computer),
 
-                //Espacamento entre icone e button action bar
-                const SizedBox(
-                  width: 30,
-                ),
+              //Espacamento entre icone e button action bar
+              const SizedBox(
+                width: 30,
+              ),
 
-                IconButton(
-                  color: _colorIcon[2],
-                  icon: const Icon(FontAwesomeIcons.heartPulse),
-                  onPressed: () {
-                    setState(() {
-                      index = 2;
-                      _colorSelection(index);
-                    });
-                  },
-                ),
-                IconButton(
-                  color: _colorIcon[3],
-                  icon: const Icon(FontAwesomeIcons.lock),
-                  onPressed: () {
-                    setState(() {
-                      index = 3;
-                      _colorSelection(index);
-                    });
-                  },
-                ),
-              ],
-            )),
+              buttonNavigationBar(2, FontAwesomeIcons.heartPulse),
+              buttonNavigationBar(3, FontAwesomeIcons.lock)
+            ],
+          )
+        ),
       ),
+    );
+  }
+
+  Widget buttonNavigationBar(int index, IconData icon) {
+    return IconButton(
+      color: _colorIcon[index],
+      icon: Icon(icon),
+      onPressed: () {
+        setState(() {
+          currentIndex = index;
+          _colorSelection(currentIndex);
+        });
+      },
     );
   }
 }
