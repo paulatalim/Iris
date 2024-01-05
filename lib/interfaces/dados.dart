@@ -101,7 +101,7 @@ class _DadosState extends State<Dados> {
         }
 
         if(texto== "Temperatura"){
-          voice.speek("temperatura : $usuario.temperatura graus.");
+          voice.speek("temperatura : ${usuario.temperatura} graus.");
         }
 
         if(texto== "IMC"){
@@ -184,8 +184,8 @@ class _DadosState extends State<Dados> {
   
   @override
   Widget build(BuildContext context) {
-    bluetooth.atualizarDados();
-    atualizarValores();
+    // bluetooth.atualizarDados();
+    // atualizarValores();
     
     // if(dialogoNaoInicializado) {
     //   dialogoNaoInicializado = false;
@@ -201,7 +201,7 @@ class _DadosState extends State<Dados> {
           children: <Widget>[
             _clickableBoxNumber('Peso ', usuario.peso.toStringAsFixed(1).replaceAll(".", ","), 'Kg'),
             _clickableBoxNumber('Altura', usuario.altura.toStringAsFixed(2).replaceAll(".", ","), 'm'),
-            _clickableBoxNumber('Temperatura', _temp.toStringAsFixed(1).replaceAll(".", ","), '°'),
+            _clickableBoxNumber('Temperatura', usuario.temperatura.toStringAsFixed(1).replaceAll(".", ","), '°'),
             _clickableBoxNumber('IMC', usuario.imc.toStringAsFixed(1).replaceAll(".", ","), ''),
           ],
         ),

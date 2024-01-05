@@ -26,11 +26,19 @@ class _DevicesState extends State<Devices> {
   bool respostaInvalida = true;
   bool fazerNovaLeitura = false;
   bool dialogoNaoInicializado = true;
+  late bool isRunning;
 
   @override
   void initState() {
     super.initState();
     bluetooth = BluetoothManager();
+    isRunning = true;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    isRunning = false;
   }
 
   /// Estiliza um texto
@@ -179,7 +187,7 @@ class _DevicesState extends State<Devices> {
   }
 
   void atualizarStatusSystem() async {
-    while(true) {
+    while(isRunning) {
       setState(() {
         dispositivo[1].status = bluetooth.state;
         dispositivo[2].status = bluetooth.stateTemperatura;
@@ -189,6 +197,8 @@ class _DevicesState extends State<Devices> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
