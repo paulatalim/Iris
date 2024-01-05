@@ -17,29 +17,14 @@ class Devices extends StatefulWidget {
 }
 
 class _DevicesState extends State<Devices> {
-  DispositivosDisponivel dispositivoSelecionado = dispositivo[0];
-  late BluetoothManager bluetooth;
+  DispositivosDisponivel _dispositivoSelecionado = dispositivo[0];
   
-  final scrollControl = ScrollController();
+  late BluetoothManager _bluetooth;
+  late bool _isRunning;
+  
+  final _scrollControl = ScrollController();
 
-  String resposta = "";
-  bool respostaInvalida = true;
-  bool fazerNovaLeitura = false;
-  bool dialogoNaoInicializado = true;
-  late bool isRunning;
-
-  @override
-  void initState() {
-    super.initState();
-    bluetooth = BluetoothManager();
-    isRunning = true;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    isRunning = false;
-  }
+  
 
   /// Estiliza um texto
   TextStyle styletext() {
@@ -67,7 +52,11 @@ class _DevicesState extends State<Devices> {
     );
   }
   
-  void dialogo() async {
+  void _dialogo() async {
+    String resposta = "";
+    bool respostaInvalida = true;
+    bool fazerNovaLeitura = false;
+
     await voice.speek("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
     await Future.delayed(const Duration(seconds: 15));
     
@@ -158,13 +147,13 @@ class _DevicesState extends State<Devices> {
       resposta = voice.resposta;
       
       if (resposta.compareTo("menu principal") == 0) {
-        irUIMenu(0);
+        _irUIMenu(0);
         
       } else if (resposta.compareTo("informações") == 0) {
-        irUIMenu(2);
+        _irUIMenu(2);
         
       } else if (resposta.compareTo("perfil") == 0) {
-        irUIMenu(3);
+        _irUIMenu(3);
         
       } else if (resposta.compareTo("informações") == 0) {
         await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
@@ -178,7 +167,7 @@ class _DevicesState extends State<Devices> {
     }
   }
 
-  void irUIMenu(int index) {
+  void _irUIMenu(int index) {
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ControlScreen(index: index)
@@ -186,29 +175,38 @@ class _DevicesState extends State<Devices> {
     );
   }
 
-  void atualizarStatusSystem() async {
-    while(isRunning) {
+  void _atualizarStatusDevices() async {
+    while(_isRunning) {
       setState(() {
-        dispositivo[1].status = bluetooth.state;
-        dispositivo[2].status = bluetooth.stateTemperatura;
-        dispositivo[3].status = bluetooth.stateAltura;
-        dispositivo[4].status = bluetooth.statePeso;
+        dispositivo[1].status = _bluetooth.state;
+        dispositivo[2].status = _bluetooth.stateTemperatura;
+        dispositivo[3].status = _bluetooth.stateAltura;
+        dispositivo[4].status = _bluetooth.statePeso;
       });
       await Future.delayed(const Duration(milliseconds: 500));
     }
   }
 
-  
+  @override
+  void initState() {
+    super.initState();
+    // Inicializa variaveis
+    _bluetooth = BluetoothManager();
+    _isRunning = true;
+
+    // Inicializa recursos
+    _atualizarStatusDevices();
+    // _dialogo();
+  }
 
   @override
-  Widget build(BuildContext context) {
-    atualizarStatusSystem();
-    
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-    
+  void dispose() {
+    super.dispose();
+    _isRunning = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -242,7 +240,7 @@ class _DevicesState extends State<Devices> {
                       CrossAxisAlignment.center, // Centralize horizontalmente
                   children: [
                     Text(
-                      dispositivoSelecionado.nome,
+                      _dispositivoSelecionado.nome,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
@@ -254,11 +252,11 @@ class _DevicesState extends State<Devices> {
                       ),
                     ),
                     Image.asset(
-                      dispositivoSelecionado.imagePath,
+                      _dispositivoSelecionado.imagePath,
                       height: 200,
                     ),
                     Text(
-                      dispositivoSelecionado.status!,
+                      _dispositivoSelecionado.status!,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
@@ -268,9 +266,9 @@ class _DevicesState extends State<Devices> {
                         ),
                       ),
                     ),
-                    bluetooth.time != null 
+                    _bluetooth.time != null 
                       ? Text(
-                        bluetooth.time ?? "",
+                        _bluetooth.time ?? "",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inclusiveSans(
                           textStyle: const TextStyle(
@@ -285,7 +283,7 @@ class _DevicesState extends State<Devices> {
               ),
             ),
             SingleChildScrollView(
-              controller: scrollControl,
+              controller: _scrollControl,
               child: Column(
                 children: [
                   SizedBox(
@@ -382,23 +380,23 @@ class _DevicesState extends State<Devices> {
         ),
         onPressed: () {
           setState(() {
-            dispositivoSelecionado = dispositivo[id];
-            scrollControl.animateTo(0,
+            _dispositivoSelecionado = dispositivo[id];
+            _scrollControl.animateTo(0,
                 duration: const Duration(seconds: 1), curve: Curves.ease);
             });
 
             switch(id) {
               case 2:
                 // Mede a temperatura
-                bluetooth.medirTemperatura();
+                _bluetooth.medirTemperatura();
                 break;
               case 3:
                 // Mede a altura
-                bluetooth.medirAltura();
+                _bluetooth.medirAltura();
                 break;
               case 4:
                 // Mede o peso
-                bluetooth.medirPeso();
+                _bluetooth.medirPeso();
                 break;
             }
         },
