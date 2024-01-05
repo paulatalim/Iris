@@ -24,31 +24,11 @@ class _DevicesState extends State<Devices> {
   
   final _scrollControl = ScrollController();
 
-  
-
   /// Estiliza um texto
-  TextStyle styletext() {
+  TextStyle _styletext() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
           color: Color(0xFF373B8A), fontSize: 20, fontWeight: FontWeight.w600),
-    );
-  }
-
-  /// Estiliza os cards dos dispositivos
-  BoxDecoration styleBox() {
-    return BoxDecoration(
-      color: const Color(0xFFdadcff),
-      borderRadius: BorderRadius.circular(20.0),
-      boxShadow: const [
-        BoxShadow(
-            color: Color.fromARGB(90, 0, 0, 0),
-            blurRadius: 10,
-            offset: Offset(5, 5)),
-        BoxShadow(
-            color: Color.fromARGB(174, 255, 255, 255),
-            blurRadius: 20,
-            offset: Offset(-5, -5)),
-      ],
     );
   }
   
@@ -414,7 +394,7 @@ class _DevicesState extends State<Devices> {
               Text(
                 dispositivo[id].nome,
                 textAlign: TextAlign.center,
-                style: styletext(),
+                style: _styletext(),
               ),
             ],
           ),
