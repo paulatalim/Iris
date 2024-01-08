@@ -25,7 +25,7 @@ class _MainPageState extends State<MainPage> {
 
         // Verifica se usuario está logado
         if (snapshot.hasData) { 
-          return const Menu(index: 0);
+          return const Menu();
         } else {
           return const UserLogin();
         }
