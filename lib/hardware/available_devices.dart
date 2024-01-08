@@ -1,15 +1,16 @@
 /// Classe com as propriedades dos dispositivos
 class DispositivosDisponivel {
   String nome;
-  String imagePath;
+  late String imagePath;
   String? status;
 
   DispositivosDisponivel({
       required this.nome, 
-      required this.imagePath, 
+      required imageName, 
       this.status}) 
   {
     status = status ?? '';
+    imagePath = 'assets/images/$imageName.png';
   }
 }
 
@@ -17,27 +18,27 @@ class DispositivosDisponivel {
 List<DispositivosDisponivel> dispositivo = [
   DispositivosDisponivel(
       nome: "Selecione um\ndispositivo",
-      imagePath: 'assets/images/hardware.png',
+      imageName: 'hardware',
       status: "Status"
   ),
 
   DispositivosDisponivel(
       nome: "ESP 32", 
-      imagePath: 'assets/images/esp32.png', 
+      imageName: 'esp32', 
   ),
 
   DispositivosDisponivel(
       nome: "Termômetro", 
-      imagePath: 'assets/images/termometro.png', 
+      imageName: 'termometro', 
   ),
 
   DispositivosDisponivel(
       nome: "Sensor de Altura", 
-      imagePath: 'assets/images/sensor.png',
+      imageName: 'sensor',
   ),
 
   DispositivosDisponivel(
       nome: "Balança", 
-      imagePath: 'assets/images/balanca.png',
+      imageName: 'balanca',
   )
 ];
