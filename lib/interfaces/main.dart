@@ -33,7 +33,7 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const Menu(index: 0),
+    home: const Menu(),
 
     // TODO(mafra): verificar erro de login
     //Login desabilitado por estar com erro

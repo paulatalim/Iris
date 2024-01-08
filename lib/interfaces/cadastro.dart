@@ -32,7 +32,6 @@ class _UserSingIn extends State<UserSingIn> {
   String resposta = "";
   bool respostaInvalida = true;
   bool infoErrada = true;
-  bool dialogoNaoInicializado = true;
 
   void _criarUser() async { //Criando usuario dentro do firebase ccom as informações providenciadas
     showDialog(
@@ -167,18 +166,18 @@ class _UserSingIn extends State<UserSingIn> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menu(index: 0)),
+          builder: (context) => const Menu()),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // dialogo();
   }
   
   @override
   Widget build(BuildContext context) {
-
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

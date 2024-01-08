@@ -13,8 +13,6 @@ class Sobre extends StatefulWidget {
 }
 
 class _SobreState extends State<Sobre> {
-  bool dialogoNaoInicializado = true;
-
   /// Estiliza campo integrantes
   TextStyle integranteStyle() {
     return GoogleFonts.inclusiveSans(
@@ -41,7 +39,7 @@ class _SobreState extends State<Sobre> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menu(index: 0,)),
+          builder: (context) => const Menu()),
     );
   }
 
@@ -54,13 +52,13 @@ class _SobreState extends State<Sobre> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // dialogo();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

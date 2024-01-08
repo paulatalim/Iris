@@ -1,5 +1,3 @@
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +26,6 @@ class _UserLogin extends State<UserLogin> {
   final passwordController = TextEditingController();
   String erroEmail = '';
   String erroSenha = '';
-
-  String resposta = "";
-  bool respostaInvalida = true;
-  bool dialogoNaoInicializado = true;
 
   // Mensagem vazia para realizar alteração caso necessário
   String mensagemErro = ''; 
@@ -80,17 +74,11 @@ class _UserLogin extends State<UserLogin> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  }
-
   void questionarCampo(String campo, String pronome) async {
     bool infoErrada = true;
+    bool respostaInvalida = true;
     
-    resposta = "";
+    String resposta = "";
     voice.speek("Qual a $pronome $campo?");
 
     while (infoErrada) {
@@ -112,17 +100,20 @@ class _UserLogin extends State<UserLogin> {
   }
 
   void dialogo() async {
+    String resposta = "";
+    bool respostaInvalida = true;
+
     voice.speek("Entre com a sua conta ou crie uma nova conta! Voce já possui uma conta aqui?");
     await Future.delayed(const Duration(seconds: 5));
     await voice.hear();
-      resposta = voice.resposta;
+    resposta = voice.resposta;
 
     while(respostaInvalida) {
       if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
         respostaInvalida = false;
         //Ir menu
       } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-        irUICadastro();
+        _irUICadastro();
         respostaInvalida = false;
       }
 
@@ -133,10 +124,10 @@ class _UserLogin extends State<UserLogin> {
     questionarCampo("email", "seu");
     questionarCampo("senha", "sua");
 
-    irUIMenu();
+    _irUIMenu();
   }
 
-  void irUICadastro() {
+  void _irUICadastro() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -144,22 +135,29 @@ class _UserLogin extends State<UserLogin> {
     );
   }
 
-  void irUIMenu() {
+  void _irUIMenu() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const Menu(index: 0),
+        builder: (context) => const Menu(),
       ));
   }
 
   @override
+  void initState() {
+    super.initState();
+    // dialogo();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-
     return Scaffold(
       body: Container(
         height: double.infinity,
