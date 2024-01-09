@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iris_app/recurso_de_voz/controlPage.dart';
 
-import '../firebase/firebase_control_page.dart';
-import '../firebase/firebase_options.dart';
-import 'menu.dart';
+import 'firebase/firebase_control_page.dart';
+import 'firebase/firebase_options.dart';
+import 'interfaces/menu.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -33,7 +34,7 @@ void main() async {
           seedColor: const Color(0xFFdba0ff),
         )),
     debugShowCheckedModeBanner: false,
-    home: const Menu(index: 0),
+    home: ControlScreen(index: 0),
 
     // Login desabilitado por estar com erro
     //home: const MainPage();
