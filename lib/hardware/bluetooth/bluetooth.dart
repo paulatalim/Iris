@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
+import 'dart:convert';
 import 'dart:async';
 
 class Bluetooth {
@@ -237,7 +238,7 @@ class Bluetooth {
   /// A mensagem [mensage] é enviada
   Future<void> publish(String mensage) async {
     try {
-      _connection!.output.add(Uint8List.fromList(mensage.codeUnits));
+      _connection!.output.add(utf8.encode(mensage));
       await _connection!.output.allSent;
       debugPrint('[BLUETOOTH] Mensagem enviada: $mensage');
     } catch (ex) {
