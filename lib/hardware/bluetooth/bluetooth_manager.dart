@@ -97,21 +97,26 @@ class BluetoothManager {
   }
 
   void medirPeso() async {
-    if(_statePeso != null) {
-      while(_cronometroPeso != 0) {
-        _statePeso = "Suba na balança";
-
-        _timePeso = _cronometroPeso;
-        _cronometroPeso --;
-        await Future.delayed(const Duration(seconds: 1));
-      }
-
-      _timePeso = null;
-      _cronometroPeso = 30;
-      _statePeso = "Processando ...";
-
-      _salvarPeso = true;
+    // Aguarda a conexao do sistema
+    while(!_sistemaConectado) {
+      await Future.delayed(Duration(seconds: 2));
     }
+
+    // Atualiza status
+    _statePeso = "Suba na balança";
+
+    // Atualiza o conometro
+    while(_cronometroPeso != 0) {
+      _timePeso = _cronometroPeso;
+      _cronometroPeso --;
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    // Atuaiza as variaveis
+    _timePeso = null;
+    _cronometroPeso = 30;
+    _statePeso = "Processando ...";
+    _salvarPeso = true;
   }
 
   void medirTemperatura() async {
