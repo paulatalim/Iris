@@ -34,36 +34,50 @@ class User {
       id = dados[0]["id"]; //Carregando o ID
       nome = dados[0]["nome"]; //Carregando nome
       sobrenome = dados[0]["sobrenome"];
-      email = email;
+      this.email = email;
     }
 
     List infoAdicionais = await storage.buscarInfoAdicional(id);
     if (infoAdicionais.isNotEmpty) {
-      peso = infoAdicionais[0]["peso"];
-      altura = infoAdicionais[0]["altura"];
-      temperatura = infoAdicionais[0]["temperatura"];
-      imc = infoAdicionais[0]["imc"];
+      _peso = infoAdicionais[0]["peso"];
+      _altura = infoAdicionais[0]["altura"];
+      _temperatura = infoAdicionais[0]["temperatura"];
+      _imc = infoAdicionais[0]["imc"];
     }
   }
 
   /// Calcula o imc do usuario
-  void calcularImc() {
+  void _calcularImc() {
     if (_peso != 0 && _altura !=0) {
       _imc = peso / pow(_altura,2);
+      // TODO atualizar IMC no banco de dados
     }
   }
 
   get peso => _peso;
-  set peso(value) => _peso = value;
+  set peso(value) {
+    _peso = value;
+    _calcularImc();
+
+    // TODO atualizar peso no banco de dados
+  }
 
   get altura => _altura;
-  set altura(value) => _altura = value;
+  set altura(value) {
+    _altura = value;
+    _calcularImc();
+
+    // TODO atualizar altura no banco de dados
+  }
 
   get imc => _imc;
-  set imc(value) => _imc = value;
 
   get temperatura => _temperatura;
-  set temperatura(value) => _temperatura = value;
+  set temperatura(value)  {
+    _temperatura = value;
+
+    // TODO atualizar temperatura no banco de dados
+  }
 }
 
 User usuario = User();
