@@ -33,7 +33,8 @@ class _UserSingIn extends State<UserSingIn> {
   bool respostaInvalida = true;
   bool infoErrada = true;
 
-  void _criarUser() async { //Criando usuario dentro do firebase ccom as informações providenciadas
+  /// Criando usuario dentro do firebase ccom as informações providenciadas
+  void _criarUser() async {
     showDialog(
       context: context,
       barrierDismissible: false, 
