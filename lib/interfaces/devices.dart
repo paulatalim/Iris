@@ -167,6 +167,17 @@ class _DevicesState extends State<Devices> {
     }
   }
 
+  void _atualizarCronometroDevices() async {
+    while(_isRunning) {
+      setState(() {
+        dispositivo[2].time = _bluetooth.timeTemperatura;
+        dispositivo[3].time = _bluetooth.timeAltura;
+        dispositivo[4].time = _bluetooth.timePeso;
+      });
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +187,7 @@ class _DevicesState extends State<Devices> {
 
     // Inicializa recursos
     _atualizarStatusDevices();
+    _atualizarCronometroDevices();
     // _dialogo();
   }
 
@@ -206,7 +218,7 @@ class _DevicesState extends State<Devices> {
           alignment: Alignment.bottomCenter,
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 60),
+              padding: const EdgeInsets.only(top: 60, left: 20, right: 20),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               alignment: Alignment.topCenter,
@@ -246,9 +258,9 @@ class _DevicesState extends State<Devices> {
                         ),
                       ),
                     ),
-                    _bluetooth.time != null 
+                    _dispositivoSelecionado.time != null 
                       ? Text(
-                        _bluetooth.time ?? "",
+                        "Tempo: ${_dispositivoSelecionado.time} s",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inclusiveSans(
                           textStyle: const TextStyle(
