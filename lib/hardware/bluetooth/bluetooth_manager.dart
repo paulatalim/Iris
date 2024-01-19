@@ -64,36 +64,27 @@ class BluetoothManager {
   }
 
   void medirAltura() async{
-    if(_stateAltura != null) {
-
-      // Aguarda a calibracao do sensor
-      while(!_isCalibrated) {
-        await Future.delayed(const Duration(seconds: 2));
-      }
-
-      _stateAltura = "Fique debaixo do sensor";
-
-      // Esperar um tempo
-      while(_cronometroAltura != 0) {
-        _timeAltura = _cronometroAltura;
-        _cronometroAltura --;
-        await Future.delayed(const Duration(seconds: 1));
-      }
-
-      _timeAltura = null;
-      _cronometroAltura = 30;
-
-      _stateAltura = "Processando ...";
-
-      _salvarAltura = true;
-
-      // while (!_alturaRecebida){
-      //   await bluetooth.publish("a");
-      //   await Future.delayed(const Duration(seconds: 1));
-      // }
-
-      // _alturaRecebida = false;
+    // Aguarda a calibracao do sensor
+    while(!_isCalibrated) {
+      await Future.delayed(const Duration(seconds: 2));
     }
+
+    // Atualiza status
+    _stateAltura = "Fique debaixo do sensor";
+
+    // Inicializa o cronometro
+    _timeAltura = 30;
+
+    // Esperar um tempo
+    while(_timeAltura != 0) {
+      _timeAltura = _timeAltura! - 1;
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    // Atualiza variaveis
+    _timeAltura = null;
+    _stateAltura = "Processando ...";
+    _salvarAltura = true;
   }
 
   void medirPeso() async {
@@ -105,37 +96,43 @@ class BluetoothManager {
     // Atualiza status
     _statePeso = "Suba na balança";
 
+    // Inicializa o cronometro
+    _timePeso = 30;
+
     // Atualiza o conometro
-    while(_cronometroPeso != 0) {
-      _timePeso = _cronometroPeso;
-      _cronometroPeso --;
+    while(_timePeso != 0) {
+      _timePeso = _timePeso! - 1;
       await Future.delayed(const Duration(seconds: 1));
     }
 
     // Atuaiza as variaveis
     _timePeso = null;
-    _cronometroPeso = 30;
     _statePeso = "Processando ...";
     _salvarPeso = true;
   }
 
   void medirTemperatura() async {
-    // Verifica se o sistema está conectado
-    if(_stateTemperatura != null) {
-      while(_cronometroTemp != 0) {
-        _stateTemperatura = "Coloque o sensor debaixo do braço";
-
-        _timeTemp = _cronometroPeso;
-        _cronometroTemp --;
-        await Future.delayed(const Duration(seconds: 1));
-      }
-
-      _timePeso = null;
-      _cronometroTemp = 30;
-      _stateTemperatura = "Processando ...";
-
-      _salvarTemperatura = true;
+    // Aguarda o sistema conectar
+    while(!_sistemaConectado) {
+      await Future.delayed(Duration(seconds: 2));
     }
+    
+    // Atualiza status do sensor
+    _stateTemperatura = "Coloque o sensor debaixo do braço";
+
+    // Inicializa o cronometro
+    _timeTemp = 30;
+    
+    // Controla o conometro
+    while(_timeTemp != 0) {
+      _timeTemp = _timeTemp! - 1;
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    // Atualiza variaveis
+    _timePeso = null;
+    _stateTemperatura = "Processando ...";
+    _salvarTemperatura = true;
   }
 
   void atualizarDados() async {
