@@ -10,14 +10,23 @@ class BluetoothManager {
   String? _stateAltura;
   String? _statePeso;
   String? _stateTemperatura;
-  String? _time;
 
-  int cronometroAltura = 30;
-  int cronometroPeso = 30;
-  int cronometroTemp = 30;
+  int _cronometroAltura = 30;
+  int _cronometroPeso = 30;
+  int _cronometroTemp = 30;
+  // int _cronometroCalibracao = 30;
 
-  bool salvarPeso = false;
-  bool salvarTemperatura = false;
+  int? _timeAltura;
+  int? _timePeso;
+  int? _timeTemp;
+
+  bool _salvarPeso = false;
+  bool _salvarTemperatura = false;
+  bool _salvarAltura = false;
+  bool _isCalibrated = false;
+  bool _sistemaConectado = false;
+  // bool _alturaRecebida = false;
+  // bool _enviarMsg = false;
 
   BluetoothManager() {
     nomeDispositivo = "Iris Hardware";
@@ -25,62 +34,102 @@ class BluetoothManager {
     atualizarStatus();
   }
 
+  void calibrarSensor() async{
+    late String msg;
+
+    _timeAltura = 30;
+
+    while(!_isCalibrated) {
+      msg = bluetooth.msgBT;
+      if(msg.trim().isNotEmpty) {
+        if(msg.trim()[0] == 'C') {
+          _stateAltura = "Calibrando sensor...";
+          double time = double.parse(msg.substring(1));
+          time /= 1000;
+          _timeAltura = time.toInt();
+        } else {
+          _timeAltura = _timeAltura! - 1;
+        }
+      }
+
+      if(_timeAltura! <= 0) {
+        _timeAltura = 0;
+      }
+      
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    _timeAltura = null;
+    _stateAltura = "Sensor calibrado";
+  }
+
   void medirAltura() async{
     if(_stateAltura != null) {
-      await bluetooth.publish("c");
+
+      // Aguarda a calibracao do sensor
+      while(!_isCalibrated) {
+        await Future.delayed(const Duration(seconds: 2));
+      }
+
+      _stateAltura = "Fique debaixo do sensor";
 
       // Esperar um tempo
-      while(cronometroAltura != 0) {
-        _stateAltura = "Fique debaixo do sensor";
-        _time = "Tempo para medir: $cronometroAltura s";
-
-        cronometroAltura --;
+      while(_cronometroAltura != 0) {
+        _timeAltura = _cronometroAltura;
+        _cronometroAltura --;
         await Future.delayed(const Duration(seconds: 1));
       }
 
-      _time = null;
-      cronometroAltura = 30;
+      _timeAltura = null;
+      _cronometroAltura = 30;
 
       _stateAltura = "Processando ...";
 
-      await bluetooth.publish("a");
+      _salvarAltura = true;
+
+      // while (!_alturaRecebida){
+      //   await bluetooth.publish("a");
+      //   await Future.delayed(const Duration(seconds: 1));
+      // }
+
+      // _alturaRecebida = false;
     }
   }
 
   void medirPeso() async {
     if(_statePeso != null) {
-      while(cronometroPeso != 0) {
-        _statePeso = "Suba na balança\nTempo para medir: $cronometroPeso s";
-        _time = "Tempo para medir: $cronometroPeso s";
+      while(_cronometroPeso != 0) {
+        _statePeso = "Suba na balança";
 
-        cronometroPeso --;
+        _timePeso = _cronometroPeso;
+        _cronometroPeso --;
         await Future.delayed(const Duration(seconds: 1));
       }
 
-      _time = null;
-      cronometroPeso = 30;
+      _timePeso = null;
+      _cronometroPeso = 30;
       _statePeso = "Processando ...";
 
-      salvarPeso = true;
+      _salvarPeso = true;
     }
   }
 
   void medirTemperatura() async {
     // Verifica se o sistema está conectado
     if(_stateTemperatura != null) {
-      while(cronometroTemp != 0) {
+      while(_cronometroTemp != 0) {
         _stateTemperatura = "Coloque o sensor debaixo do braço";
-        _time = "Tempo para medir: $cronometroTemp s";
 
-        cronometroTemp --;
+        _timeTemp = _cronometroPeso;
+        _cronometroTemp --;
         await Future.delayed(const Duration(seconds: 1));
       }
 
-      _time = null;
-      cronometroTemp = 30;
+      _timePeso = null;
+      _cronometroTemp = 30;
       _stateTemperatura = "Processando ...";
 
-      salvarTemperatura = true;
+      _salvarTemperatura = true;
     }
   }
 
@@ -88,24 +137,30 @@ class BluetoothManager {
     while (true) {
       String msg = bluetooth.msgBT;
 
-      if (msg.trim().isNotEmpty) {        
+      if (msg.trim().isNotEmpty) {
         switch (msg[0]) {
           case 'T':
-            if(salvarTemperatura) {
+            if(_salvarTemperatura) {
               usuario.temperatura = double.parse(msg.substring(1));
               _stateTemperatura = 'Concluído';
-              salvarTemperatura = false;
+              _salvarTemperatura = false;
             }
             break;
           case 'A':
-            usuario.altura = double.parse(msg.substring(1));
-            _stateAltura = "Concluído";
+            _isCalibrated = true;
+
+            if(_salvarAltura) {
+              usuario.altura = double.parse(msg.substring(1));
+              _stateAltura = "Concluído";
+              _salvarAltura = false;
+            }
+            
             break;
           case 'P':
-            if (salvarPeso) {
+            if (_salvarPeso) {
               usuario.peso = double.parse(msg.substring(1));
               _statePeso = "Concluído";
-              salvarPeso = false;
+              _salvarPeso = false;
             }
             break;
         }
@@ -140,16 +195,29 @@ class BluetoothManager {
       await Future.delayed(const Duration(milliseconds: 1000));
     }
 
+    _state = "Verificando conexão";
+    while (!_sistemaConectado){
+      if(bluetooth.msgBT.trim().isNotEmpty) {
+        if(bluetooth.msgBT.trim()[0] == 'S') {
+          _sistemaConectado = true;
+        }
+      }
+      await bluetooth.publish("S");
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
     _state = "Conectado";
     _stateTemperatura = 'Processando ...';
-    _stateAltura = 'Calibrando sensor...';
     _statePeso = 'Processando ...';
     atualizarDados();
+    calibrarSensor();
   }
 
   get state => _state ?? "Bluetooth não inicializado";
   get statePeso => _statePeso ?? "Conectando ...";
   get stateAltura => _stateAltura ?? "Conectando ...";
   get stateTemperatura => _stateTemperatura ?? "Conectando ...";
-  get time => _time;
+  get timeTemperatura => _timeTemp;
+  get timeAltura => _timeAltura;
+  get timePeso => _timePeso;
 }
