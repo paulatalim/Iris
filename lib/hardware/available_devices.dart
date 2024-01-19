@@ -3,11 +3,13 @@ class DispositivosDisponivel {
   String nome;
   late String imagePath;
   String? status;
+  int? time;
 
   DispositivosDisponivel({
       required this.nome, 
       required imageName, 
-      this.status}) 
+      this.status,
+      this.time}) 
   {
     status = status ?? '';
     imagePath = 'assets/images/$imageName.png';
