@@ -10,9 +10,13 @@ private:
   float altura_calibracao;
   float altura_usuario;
   bool isCalibrated;
+  bool calibrate;
   long envioAnterior;
   long time;
 
+  /**
+   * @brief Set the up hcsr04 object
+   */
   void setup_hcsr04() {
     pinMode(PIN_HCSR04_ECHO, INPUT);  // DEFINE O PINO COMO ENTRADA (RECEBE)
     pinMode(PIN_HCSR04_TRIG, OUTPUT); // DEFINE O PINO COMO SAIDA (ENVIA)
@@ -37,22 +41,31 @@ private:
     return distancia;
   }
 
+  /**
+   * @brief Controla o tempo em millisengundos para a calibracao do sensor
+   * 
+   * @param reiniciar_contagem
+   */
   void atualizar_tempo_calibracao(bool reiniciar_contagem) {
     if(reiniciar_contagem) {
       this->envioAnterior = millis();
-      this->time = 10000;
+      this->time = 30000;
     } else {
       this->time -= long(millis()) - this->envioAnterior;
     }
   }
 
 public:
+  /**
+   * @brief Construct a new Altura object
+   */
   Altura () {
     this->altura_calibracao = 0;
     this->altura_usuario = 0;
     this->isCalibrated = false;
     this->envioAnterior = 0;
-    this->time = 10000;
+    this->time = 30000;
+    this->calibrate = false;
 
     setup_hcsr04();
   }
@@ -76,8 +89,6 @@ public:
 
   void medir() {
     float altura =  hcsr04();
-    Serial.println(altura);
-    Serial.println(this->altura_calibracao);
     this->altura_usuario = this->altura_calibracao - altura;
   }
 
@@ -103,16 +114,24 @@ public:
     return this->altura_usuario;
   }
 
-  void set_isCalibrated(bool value) {
-    isCalibrated = value;
+  // void set_isCalibrated(bool value) {
+  //   isCalibrated = value;
 
-    // Reinicia valores
-    if (!value) {
-      altura_usuario = 0;
-    }
-  }
+  //   // Reinicia valores
+  //   if (!value) {
+  //     altura_usuario = 0;
+  //   }
+  // }
 
   bool get_isCalibrated() {
     return this->isCalibrated;
+  }
+
+  bool get_calibrate() {
+    return this->calibrate;
+  }
+
+  void set_calibrate(bool calibrate) {
+    this->calibrate = calibrate;
   }
 };
