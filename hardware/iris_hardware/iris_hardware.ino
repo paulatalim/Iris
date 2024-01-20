@@ -10,6 +10,7 @@ BluetoothSerial SerialBT;
 Altura altura;
 
 unsigned long envioAnterior;
+bool sistema_conectado;
 int enviar_msg;
 int state;
 
@@ -30,6 +31,7 @@ void setup() {
   state = 1;
   envioAnterior = 0;
   enviar_msg = -1;
+  sistema_conectado = false;
 }
 
 void loop() {
@@ -65,31 +67,45 @@ void loop() {
     Serial.print(peso);
     Serial.println(" kg");
 
-    char mensage[10] = {0};
+    char mensage[30] = {0};
 
-    // Verifica a mensagem a ser enviada
-    switch(enviar_msg) {
-      case -1:
-        if(altura.get_isCalibrated()) {
-          // Prepara a mensagem para enviar a altura
-          sprintf(mensage, "A%.03f", altura.get_altura());
-        } else {
-          sprintf(mensage, "C%d", altura.get_timeCalibracao());
-        }
-        break;
-      case 0:
-        // Prepara a mensagem para enviar a temperatura
-        sprintf(mensage, "T%.02f", temp);
-        break;
-      case 1:
-        // Prepara a mensagem para enviar o peso
-        sprintf(mensage, "P%.02f", peso);
-        break;
-      case 2:
-        // Prepara a mensagem para enviar a verificacao que o sistema esta conectado
-        sprintf(mensage, "S");
-        break;
+    sprintf(mensage, "T%.02f", temp);
+    sprintf(mensage, "%s,P%.02f", mensage, peso);
+
+    if(altura.get_isCalibrated()) {
+      // Prepara a mensagem para enviar a altura
+      sprintf(mensage, "%s,A%.03f", mensage, altura.get_altura());
+    } else {
+      sprintf(mensage, "%s,C%d", mensage, altura.get_timeCalibracao());
     }
+
+    if (sistema_conectado) {
+      sprintf(mensage, "%s,S", mensage);
+    }
+    
+    // Verifica a mensagem a ser enviada
+    // switch(enviar_msg) {
+    //   case -1:
+    //     if(altura.get_isCalibrated()) {
+    //       // Prepara a mensagem para enviar a altura
+    //       sprintf(mensage, "A%.03f", altura.get_altura());
+    //     } else {
+    //       sprintf(mensage, "C%d", altura.get_timeCalibracao());
+    //     }
+    //     break;
+    //   case 0:
+    //     // Prepara a mensagem para enviar a temperatura
+    //     sprintf(mensage, "T%.02f", temp);
+    //     break;
+    //   case 1:
+    //     // Prepara a mensagem para enviar o peso
+    //     sprintf(mensage, "P%.02f", peso);
+    //     break;
+    //   case 2:
+    //     // Prepara a mensagem para enviar a verificacao que o sistema esta conectado
+    //     sprintf(mensage, "S");
+    //     break;
+    // }
 
     SerialBT.println(mensage);
 
@@ -117,6 +133,7 @@ void loop() {
     Serial.println(caracterRecebido);
 
     enviar_msg = 2;
+    sistema_conectado = true;
 
     digitalWrite(LED, HIGH);
     altura.set_calibrate(true);
