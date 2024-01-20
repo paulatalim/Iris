@@ -106,31 +106,49 @@ public:
     }
   }
 
+  /**
+   * @brief Get the timeCalibracao object
+   * 
+   * @return long 
+   */
   long get_timeCalibracao(){
     return this->time;
   }
 
+  /**
+   * @brief Get the altura object
+   * 
+   * @return float 
+   */
   float get_altura() {
     return this->altura_usuario;
   }
 
-  // void set_isCalibrated(bool value) {
-  //   isCalibrated = value;
-
-  //   // Reinicia valores
-  //   if (!value) {
-  //     altura_usuario = 0;
-  //   }
-  // }
-
+  /**
+   * @brief Get the isCalibrated object
+   * 
+   * @return true se o sensor estiver calibrado
+   * @return false  se o sensor nao estiver calibrado
+   */
   bool get_isCalibrated() {
     return this->isCalibrated;
   }
 
+  /**
+   * @brief Get the calibrate object
+   * 
+   * @return true 
+   * @return false 
+   */
   bool get_calibrate() {
     return this->calibrate;
   }
 
+  /**
+   * @brief Set the calibrate object
+   * 
+   * @param calibrate true para iniciar a calibracao, false para nao calibrar
+   */
   void set_calibrate(bool calibrate) {
     this->calibrate = calibrate;
   }
