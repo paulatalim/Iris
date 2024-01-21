@@ -70,6 +70,10 @@ public:
     setup_hcsr04();
   }
 
+  /**
+   * @brief Calibra o sensor HC-SR04
+   * 
+   */
   void calibrar_sensor() {
     float altura_anterior;
 
@@ -87,13 +91,21 @@ public:
     }
   }
 
+  /**
+   * @brief Mede e calcula a altura do usuario
+   * 
+   */
   void medir() {
-    float altura =  hcsr04();
+    float altura = hcsr04();
     this->altura_usuario = this->altura_calibracao - altura;
   }
 
+  /**
+   * @brief Informa no monitor serial os valores obtidos
+   * 
+   */
   void imprimir() {
-    if (isCalibrated) {
+    if (this->isCalibrated) {
       // Imprimi altura do usuario
       Serial.print("Altura: ");
       Serial.print(this->altura_usuario);
@@ -109,7 +121,7 @@ public:
   /**
    * @brief Get the timeCalibracao object
    * 
-   * @return long 
+   * @return long - tempo restante para calibracao
    */
   long get_timeCalibracao(){
     return this->time;
@@ -118,7 +130,7 @@ public:
   /**
    * @brief Get the altura object
    * 
-   * @return float 
+   * @return float - altura do usuario em metros
    */
   float get_altura() {
     return this->altura_usuario;
@@ -127,8 +139,8 @@ public:
   /**
    * @brief Get the isCalibrated object
    * 
-   * @return true se o sensor estiver calibrado
-   * @return false  se o sensor nao estiver calibrado
+   * @return true - se o sensor estiver calibrado
+   * @return false - se o sensor nao estiver calibrado
    */
   bool get_isCalibrated() {
     return this->isCalibrated;

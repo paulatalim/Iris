@@ -8,6 +8,10 @@ float calibration_factor;
 char comando;
 float peso;
 
+/**
+ * @brief Set the up balanca object
+ * 
+ */
 void setup_balanca() {
   balanca.begin(PIN_HX711_DT, PIN_HX711_SCK);
   balanca.read_average(); 
@@ -16,6 +20,11 @@ void setup_balanca() {
   calibration_factor = -45000;
 }
 
+/**
+ * @brief Medicao do peso do usuario
+ * 
+ * @return float peso do usuario em kg
+ */
 float medir_peso () {
   balanca.set_scale(calibration_factor);  // a balanca está em função do fator de calibração
   
