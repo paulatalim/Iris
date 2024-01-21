@@ -24,8 +24,17 @@ class User {
     _temperatura = 0;
   }
 
+  /// Calcula o imc do usuario
+  void _calcularImc() {
+    if (_peso != 0 && _altura !=0) {
+      _imc = peso / pow(_altura,2);
+      
+      // TODO atualizar IMC no banco de dados
+    }
+  }
+
   /// Busca os dados no banco de dados atraves do [email] e os salva na memoria principal
-  void importarDados (String email) async {
+  void importarDados(String email) async {
     Armazenamento storage = Armazenamento();
 
     // Recupera os dados do usuario
@@ -46,14 +55,7 @@ class User {
     }
   }
 
-  /// Calcula o imc do usuario
-  void _calcularImc() {
-    if (_peso != 0 && _altura !=0) {
-      _imc = peso / pow(_altura,2);
-      // TODO atualizar IMC no banco de dados
-    }
-  }
-
+  /// Peso em kg do usuario
   get peso => _peso;
   set peso(value) {
     _peso = value;
@@ -62,6 +64,7 @@ class User {
     // TODO atualizar peso no banco de dados
   }
 
+  /// Altura em metros do usuario
   get altura => _altura;
   set altura(value) {
     _altura = value;
@@ -70,8 +73,10 @@ class User {
     // TODO atualizar altura no banco de dados
   }
 
+  /// IMC do usuario
   get imc => _imc;
 
+  /// Temperatura em graus Celsius do usuario
   get temperatura => _temperatura;
   set temperatura(value)  {
     _temperatura = value;
