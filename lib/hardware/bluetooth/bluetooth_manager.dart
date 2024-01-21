@@ -43,7 +43,7 @@ class BluetoothManager {
         }
       } else {
         // Enquanto não estiver permitido o bluetooth
-        _state = "Inicializando _bluetooth";
+        _state = "Inicializando bluetooth";
       }
       
       // Atualiza status do sistema
@@ -55,9 +55,16 @@ class BluetoothManager {
 
     _state = "Verificando conexão";
     while (!_sistemaConectado){
-      if(_bluetooth.msgBT.trim().isNotEmpty) {
-        if(_bluetooth.msgBT.trim()[0] == 'S') {
-          _sistemaConectado = true;
+      String msg = _bluetooth.msgBT;
+
+      if(msg.trim().isNotEmpty) {
+        final dados = msg.split(",");
+
+        for (int i = 0; i < dados.length; i++) {
+          if(dados[i].trim()[0] == 'S') {
+            _sistemaConectado = true;
+            break;
+          }
         }
       }
       await _bluetooth.publish("S");
@@ -76,33 +83,40 @@ class BluetoothManager {
       String msg = _bluetooth.msgBT;
 
       if (msg.trim().isNotEmpty) {
-        switch (msg[0]) {
-          case 'T':
-            if(_salvarTemperatura) {
-              usuario.temperatura = double.parse(msg.substring(1));
-              _stateTemperatura = 'Concluído';
-              _salvarTemperatura = false;
-            }
-            break;
-          case 'A':
-            _isCalibrated = true;
 
-            if(_salvarAltura) {
-              usuario.altura = double.parse(msg.substring(1));
-              _stateAltura = "Concluído";
-              _salvarAltura = false;
-            }
-            
-            break;
-          case 'P':
-            if (_salvarPeso) {
-              usuario.peso = double.parse(msg.substring(1));
-              _statePeso = "Concluído";
-              _salvarPeso = false;
-            }
-            break;
+        final dados = msg.split(",");
+
+        for (int i = 0; i < dados.length; i++) {
+
+          switch (dados[i][0]) {
+            case 'T':
+              if(_salvarTemperatura) {
+                usuario.temperatura = double.parse(dados[i].substring(1));
+                _stateTemperatura = 'Concluído';
+                _salvarTemperatura = false;
+                
+              }
+              break;
+            case 'A':
+              _isCalibrated = true;
+
+              if(_salvarAltura) {
+                usuario.altura = double.parse(dados[i].substring(1));
+                _stateAltura = "Concluído";
+                _salvarAltura = false;
+                
+              }
+              break;
+            case 'P':
+              if (_salvarPeso) {
+                usuario.peso = double.parse(dados[i].substring(1));
+                _statePeso = "Concluído";
+                _salvarPeso = false;
+              }
+              break;
+          }
         }
-      } 
+      }
       await Future.delayed(const Duration(milliseconds: 1000));
     }
   }
@@ -114,14 +128,20 @@ class BluetoothManager {
 
     while(!_isCalibrated) {
       msg = _bluetooth.msgBT;
+
       if(msg.trim().isNotEmpty) {
-        if(msg.trim()[0] == 'C') {
-          _stateAltura = "Calibrando sensor...";
-          double time = double.parse(msg.substring(1));
-          time /= 1000;
-          _timeAltura = time.toInt();
-        } else {
-          _timeAltura = _timeAltura! - 1;
+
+        final dados = msg.split(",");
+
+        for(int i = 0; i < dados.length; i++) {
+          if(dados[i].trim()[0] == 'C') {
+            _stateAltura = "Calibrando sensor...";
+            double time = double.parse(dados[i].substring(1));
+            time /= 1000;
+            _timeAltura = time.toInt();
+          } else {
+            _timeAltura = _timeAltura! - 1;
+          }
         }
       }
 
