@@ -8,7 +8,7 @@ import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
 import '../firebase/google_sing_in.dart';
 import 'cadastro.dart';
-import 'main.dart';
+import '../main.dart';
 import 'menu.dart';
 
 class UserLogin extends StatefulWidget {
