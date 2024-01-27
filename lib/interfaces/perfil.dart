@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-import '../recurso_de_voz/loading.dart';
 import '../recurso_de_voz/voices.dart';
 import '../storage/usuario.dart';
+import 'loading.dart';
 import 'login.dart';
 
 class UserScreen extends StatefulWidget {
@@ -93,7 +93,7 @@ class _UserScreen extends State<UserScreen> {
   void _irUIMenu(int index) {
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+        MaterialPageRoute(builder: (context) => LoadScreen(index: index)
       )
     );
   }

@@ -6,7 +6,7 @@ import 'package:blur/blur.dart';
 import '../hardware/bluetooth/bluetooth_manager.dart';
 import '../hardware/available_devices.dart';
 import '../recurso_de_voz/voices.dart';
-import '../recurso_de_voz/loading.dart';
+import 'loading.dart';
 import '../storage/usuario.dart';
 
 class Devices extends StatefulWidget {
@@ -150,7 +150,7 @@ class _DevicesState extends State<Devices> {
   void _irUIMenu(int index) {
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+        MaterialPageRoute(builder: (context) => LoadScreen(index: index)
       )
     );
   }

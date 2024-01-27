@@ -2,9 +2,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import '../recurso_de_voz/loading.dart';
 import '../recurso_de_voz/voices.dart';
 import '../storage/usuario.dart';
+import 'loading.dart';
 
 class Dados extends StatefulWidget {
   const Dados({super.key});
@@ -164,7 +164,7 @@ class _DadosState extends State<Dados> {
   void irUIMenu(int index) {
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+        MaterialPageRoute(builder: (context) => LoadScreen(index: index)
       )
     );
   }

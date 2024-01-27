@@ -2,9 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
 import '../recurso_de_voz/voices.dart';
-import '../recurso_de_voz/loading.dart';
-
 import 'configuracao.dart';
+import 'loading.dart';
 import 'devices.dart';
 import 'sobre.dart';
 import 'dados.dart';
@@ -77,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void irUIMenu (int index) {
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ControlScreen(index: index)
+        MaterialPageRoute(builder: (context) => LoadScreen(index: index)
       )
     );
   }
