@@ -31,10 +31,8 @@ class _ControlScreenState extends State<ControlScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Container(
-        // color: Colors.purple,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            // Where the linear gradient begins and ends
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
 
@@ -51,18 +49,18 @@ class _ControlScreenState extends State<ControlScreen> {
             Text(
               'Carregando...',
               style: GoogleFonts.inclusiveSans(
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold,
-              ),
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             // Espaço entre o texto e o indicador de carregamento
-            SizedBox(height: 50.0), 
-            CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          ),
+            const SizedBox(height: 50.0), 
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
           ],
         ),
       ),
