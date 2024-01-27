@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../interfaces/menu.dart';
 
@@ -30,20 +31,35 @@ class _ControlScreenState extends State<ControlScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Container(
-        color: Colors.purple, // Cor lilás
-        child: const Center(
+        // color: Colors.purple,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            // Where the linear gradient begins and ends
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+
+            colors: [
+              Color.fromARGB(255, 129, 135, 248),
+              Color.fromARGB(255, 189, 94, 248),
+            ],
+          ),
+        ),
+        child: Center(
           child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Carregando...',
-              style: TextStyle(
+              style: GoogleFonts.inclusiveSans(
+              textStyle: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 25.0,
                 fontWeight: FontWeight.bold,
               ),
+              ),
             ),
-            SizedBox(height: 16.0), // Espaço entre o texto e o indicador de carregamento
+            // Espaço entre o texto e o indicador de carregamento
+            SizedBox(height: 50.0), 
             CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           ),
