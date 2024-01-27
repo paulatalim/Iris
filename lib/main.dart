@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// import './recurso_de_voz/loading.dart';
+
 import 'firebase/firebase_control_page.dart';
 import 'firebase/firebase_options.dart';
 import 'interfaces/menu.dart';
@@ -34,6 +36,7 @@ void main() async {
         )),
     debugShowCheckedModeBanner: false,
     home: const Menu(),
+    // home: ControlScreen(index: 0),
 
     // TODO(mafra): verificar erro de login
     //Login desabilitado por estar com erro
