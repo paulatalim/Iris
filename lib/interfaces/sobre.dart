@@ -17,7 +17,7 @@ class _SobreState extends State<Sobre> {
   TextStyle integranteStyle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
-        color: Color(0xFF373B8A),
+        color: Color.fromARGB(255, 30, 32, 75),
         fontSize: 20,
       ),
     );
@@ -27,7 +27,7 @@ class _SobreState extends State<Sobre> {
   TextStyle subtitle() {
     return GoogleFonts.inclusiveSans(
       textStyle: const TextStyle(
-        color: Color(0xFF373B8A),
+        color: Color.fromARGB(255, 30, 32, 75),
         fontSize: 22,
         fontWeight: FontWeight.bold,
         letterSpacing: 2,
@@ -114,7 +114,7 @@ class _SobreState extends State<Sobre> {
                     ),
                     const SizedBox(height: 15),
                     Image.asset(
-                      'assets/icon/logoIcone.png',
+                      'assets/icon/logo.png',
                       width: 130,
                       // height: 100,
                     ),
@@ -126,7 +126,7 @@ class _SobreState extends State<Sobre> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          color: Color(0xFF373B8A),
+                          color: Color.fromARGB(255, 30, 32, 75),
                           fontSize: 21,
                         ),
                       ),
@@ -220,13 +220,13 @@ class _SobreState extends State<Sobre> {
                       ListTile(
                         leading: const Icon(
                           Icons.location_on,
-                          color: Color(0xFF373B8A),
+                          color: Color.fromARGB(255, 30, 32, 75),
                         ),
                         title: Text(
                           'PUC Minas',
                           style: GoogleFonts.inclusiveSans(
                             textStyle: const TextStyle(
-                              color: Color(0xFF373B8A),
+                              color: Color.fromARGB(255, 30, 32, 75),
                               fontSize: 18,
                             ),
                           ),
@@ -235,7 +235,7 @@ class _SobreState extends State<Sobre> {
                           'Coração Eucarístico',
                           style: GoogleFonts.inclusiveSans(
                             textStyle: const TextStyle(
-                              color: Color(0xFF373B8A),
+                              color: Color.fromARGB(255, 30, 32, 75),
                               fontSize: 15,
                             ),
                           ),
