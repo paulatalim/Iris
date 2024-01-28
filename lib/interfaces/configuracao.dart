@@ -200,183 +200,250 @@ class _ConfiguracaoState extends State<Configuracao> {
             ],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(top: 45, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        icon: const Icon(FontAwesomeIcons.xmark),
-                        color: const Color(0xFF373B8A),
-                        iconSize: 30,
-                        onPressed: () => _irUIMenu()
-                    ),
-                  ],
-                ),
-              ),
-
-              const Padding(padding: EdgeInsets.only(top: 50)),
-              // Informa o titulo da pagina
-              Text(
-                AppLocalizations.of(context)!.settings,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.dosis(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 3,
-                      fontSize: 40,
-                      color: Color(0xFF5100FF)),
-                ),
-              ),
-
-              // Gap entre elementos
-              const SizedBox(
-                height: 80,
-              ),
-
-              // Campo do volume
-              Container(
-                width: 0.8 * MediaQuery.of(context).size.width,
-                // height: 0.2 * MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.only(
-                    left: 30, top: 20, right: 30, bottom: 20),
-                decoration: _styleBox(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Volume', style: _styleBoxTitle()),
-                    Slider(
-                        value: _valorVolume, //definir o _valorVolume inicial
-                        min: 0,
-                        max: 100,
-                        divisions:
-                            100, //define as divisoes entre o minimo e o maximo
-                        activeColor: const Color(0xFF5100FF),
-                        inactiveColor: Colors.black12,
-                        onChanged: (double novoValorVolume) {
-                          setState(() {
-                            _valorVolume = novoValorVolume;
-                            voice.volume = novoValorVolume / 100;
-                          });
-                        }),
-                  ],
-                ),
-              ),
-
-              // Gap entre elementos
-              const SizedBox(
-                height: 30,
-              ),
-
-              // Compo da velocidade
-              Container(
-                width: 0.8 * MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(
-                    left: 30, top: 20, right: 30, bottom: 20),
-                decoration: _styleBox(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Velocidade',
-                      style: _styleBoxTitle(),
-                    ),
-                    SizedBox(
-                      width: 70,
-                      child: DropdownButton<String>(
-                        dropdownColor: const Color(0xFFb2b4ff),
-                        // dropdownColor: Color.fromARGB(255, 221, 163, 255),
-                        isExpanded: true,
-                        value: _speedOption,
-                        icon: const Icon(FontAwesomeIcons.chevronDown),
-                        iconSize: 15,
-                        iconEnabledColor: const Color(0xFF373B8A),
-                        iconDisabledColor: const Color(0xFFFAFAFA),
-                        underline: Container(
-                          color: const Color(0x00000000),
-                        ),
-                        elevation: 15,
-                        borderRadius: BorderRadius.circular(10),
-                        style: const TextStyle(
-                            color: Color(0xFF373B8A),
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
-                        onChanged: (String? value) {
-                          // This is called when the user selects an item.
-                          setState(() {
-                            _speedOption = value!;
-                            
-                          });
-                        },
-                        items: speeds
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(top: 45, right: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          icon: const Icon(FontAwesomeIcons.xmark),
+                          color: const Color(0xFF373B8A),
+                          iconSize: 30,
+                          onPressed: () => _irUIMenu()
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-
-              ),
+          
+                const Padding(padding: EdgeInsets.only(top: 50)),
+                // Informa o titulo da pagina
+                Text(
+                  AppLocalizations.of(context)!.settings,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.dosis(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 3,
+                        fontSize: 40,
+                        color: Color(0xFF5100FF)),
+                  ),
+                ),
+          
+                // Gap entre elementos
+                const SizedBox(
+                  height: 80,
+                ),
+          
+                Container(
+                  width: 0.7 * MediaQuery.of(context).size.width,
+                  child: Text(
+                    "Voz",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.inclusiveSans(
+                      textStyle: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2,
+                        color: Color(0xFF373B8A),
+                      ),
+                    )
+                  ),
+                ),
+          
+                // Gap entre elementos
+                const SizedBox(
+                  height: 30,
+                ),
+          
+                // Campo do volume
+                Container(
+                  width: 0.8 * MediaQuery.of(context).size.width,
+                  // height: 0.2 * MediaQuery.of(context).size.height,
+                  padding: const EdgeInsets.only(
+                      left: 30, top: 20, right: 30, bottom: 20),
+                  decoration: _styleBox(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Volume', style: _styleBoxTitle()),
+                      Slider(
+                          value: _valorVolume, //definir o _valorVolume inicial
+                          min: 0,
+                          max: 100,
+                          divisions:
+                              100, //define as divisoes entre o minimo e o maximo
+                          activeColor: const Color(0xFF5100FF),
+                          inactiveColor: Colors.black12,
+                          onChanged: (double novoValorVolume) {
+                            setState(() {
+                              _valorVolume = novoValorVolume;
+                              voice.volume = novoValorVolume / 100;
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+          
+                // Gap entre elementos
+                const SizedBox(
+                  height: 30,
+                ),
+          
                 // Compo da velocidade
-              Container(
-                width: 0.8 * MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(
-                    left: 30, top: 20, right: 30, bottom: 20),
-                decoration: _styleBox(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Idioma',
-                      style: _styleBoxTitle(),
-                    ),
-                    SizedBox(
-                      width: 120,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          value: locale,
-                          icon: Container(width: 12),
-                          items: L10n.all.map(
-                            (locale) {
-                              final language = L10n.getLanguage(locale.languageCode);
-
-                              return DropdownMenuItem(
-                                child: Center(
-                                  child: Text(
-                                    language,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                value: locale,
-                                onTap: () {
-                                  final provider = Provider.of<LocaleProvider>(context, listen: false);
-
-                                  provider.setLocale(locale);
-                                },
-                              );
-                            }
-                          
-                           
-                          ).toList(),
-                          onChanged: (_) {},
-                          
-                          )
-                      )
-                    ),
-                  ],
+                Container(
+                  width: 0.8 * MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(
+                      left: 30, top: 20, right: 30, bottom: 20),
+                  decoration: _styleBox(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Velocidade',
+                        style: _styleBoxTitle(),
+                      ),
+                      SizedBox(
+                        width: 70,
+                        child: DropdownButton<String>(
+                          dropdownColor: Color.fromARGB(255, 255, 255, 255),
+                          // dropdownColor: Color.fromARGB(255, 221, 163, 255),
+                          isExpanded: true,
+                          value: _speedOption,
+                          icon: const Icon(FontAwesomeIcons.chevronDown),
+                          iconSize: 15,
+                          iconEnabledColor: const Color(0xFF373B8A),
+                          iconDisabledColor: const Color(0xFFFAFAFA),
+                          underline: Container(
+                            color: const Color(0x00000000),
+                          ),
+                          elevation: 15,
+                          borderRadius: BorderRadius.circular(10),
+                          style: const TextStyle(
+                              color: Color(0xFF373B8A),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              _speedOption = value!;
+                              
+                            });
+                          },
+                          items: speeds
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+          
                 ),
-              ),
-            ],
+                
+                // Gap entre elementos
+                const SizedBox(
+                  height: 30,
+                ),
+          
+                Container(
+                  width: 0.7 * MediaQuery.of(context).size.width,
+                  child: Text(
+                    "Geral",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.inclusiveSans(
+                      textStyle: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2,
+                        color: Color(0xFF373B8A),
+                      ),
+                    )
+                  ),
+                ),
+          
+                // Gap entre elementos
+                const SizedBox(
+                  height: 30,
+                ),
+          
+                // Compo do idioma
+                Container(
+                  width: 0.8 * MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(
+                      left: 30, top: 20, right: 30, bottom: 20),
+                  decoration: _styleBox(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Idioma',
+                        style: _styleBoxTitle(),
+                      ),
+                      SizedBox(
+                        width: 110,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            value: locale,
+                            icon: const Icon(FontAwesomeIcons.chevronDown),
+                            iconSize: 15,
+                            iconEnabledColor: const Color(0xFF373B8A),
+                            iconDisabledColor: const Color(0xFFFAFAFA),
+                            underline: Container(
+                            color: const Color(0x00000000),
+                          ),
+                          elevation: 15,
+                          borderRadius: BorderRadius.circular(10),
+                          style: const TextStyle(
+                              color: Color(0xFF373B8A),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                            items: L10n.all.map(
+                              (locale) {
+                                final language = L10n.getLanguage(locale.languageCode);
+          
+                                return DropdownMenuItem(
+                                  child: Center(
+                                    child: Text(
+                                      language,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                  value: locale,
+                                  onTap: () {
+                                    final provider = Provider.of<LocaleProvider>(context, listen: false);
+          
+                                    provider.setLocale(locale);
+                                  },
+                                );
+                              }
+                            ).toList(),
+                            onChanged: (_) {},
+                            
+                            )
+                        )
+                      ),
+
+                      // Gap entre elementos
+                
+                    ],
+                  ),
+                ),
+              
+                const SizedBox(
+                  height: 80,
+                ),
+              ],
+            ),
           ),
         ),
       ),
