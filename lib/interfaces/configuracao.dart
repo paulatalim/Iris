@@ -1,6 +1,11 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import '../l10n/l10n.dart';
+import '../provider/locale-provider.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../recurso_de_voz/voices.dart';
 import 'menu.dart';
@@ -178,6 +183,9 @@ class _ConfiguracaoState extends State<Configuracao> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<LocaleProvider>(context);
+    final locale = provider.locale;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -215,7 +223,7 @@ class _ConfiguracaoState extends State<Configuracao> {
               const Padding(padding: EdgeInsets.only(top: 50)),
               // Informa o titulo da pagina
               Text(
-                "Configuração",
+                AppLocalizations.of(context)!.settings,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.dosis(
                   textStyle: const TextStyle(
@@ -314,6 +322,56 @@ class _ConfiguracaoState extends State<Configuracao> {
                           );
                         }).toList(),
                       ),
+                    ),
+                  ],
+                ),
+
+              ),
+                // Compo da velocidade
+              Container(
+                width: 0.8 * MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.only(
+                    left: 30, top: 20, right: 30, bottom: 20),
+                decoration: _styleBox(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Idioma',
+                      style: _styleBoxTitle(),
+                    ),
+                    SizedBox(
+                      width: 120,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: locale,
+                          icon: Container(width: 12),
+                          items: L10n.all.map(
+                            (locale) {
+                              final language = L10n.getLanguage(locale.languageCode);
+
+                              return DropdownMenuItem(
+                                child: Center(
+                                  child: Text(
+                                    language,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                value: locale,
+                                onTap: () {
+                                  final provider = Provider.of<LocaleProvider>(context, listen: false);
+
+                                  provider.setLocale(locale);
+                                },
+                              );
+                            }
+                          
+                           
+                          ).toList(),
+                          onChanged: (_) {},
+                          
+                          )
+                      )
                     ),
                   ],
                 ),

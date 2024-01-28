@@ -1,0 +1,8 @@
+{
+    "language": "English",
+    "@language":{
+        "description": "The current Language"
+    },
+
+    "settings": "Settings"
+}
