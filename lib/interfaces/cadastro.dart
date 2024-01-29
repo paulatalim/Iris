@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import '../recurso_de_voz/voices.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
+import '../main.dart';
 import 'login.dart';
 import 'menu.dart';
-import '../main.dart';
 
-class UserSingIn extends StatefulWidget {
-  const UserSingIn({super.key});
+class SingUp extends StatefulWidget {
+  const SingUp({super.key});
   
   @override
-  State<UserSingIn> createState() => _UserSingIn();
+  State<SingUp> createState() => _SingUp();
 }
 
-class _UserSingIn extends State<UserSingIn> {
+class _SingUp extends State<SingUp> {
   Armazenamento storage = Armazenamento();
 
   // Armazena os dados do usuarios
