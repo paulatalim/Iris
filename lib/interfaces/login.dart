@@ -132,7 +132,7 @@ class _UserLogin extends State<UserLogin> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const UserSingIn()),
+          builder: (context) => const SingUp()),
     );
   }
 
@@ -201,7 +201,7 @@ class _UserLogin extends State<UserLogin> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        labelText: 'E-mail:',
+                        labelText: 'E-mail',
                         hintText: AppLocalizations.of(context)!.emailExample,
                       ),
                     ),
@@ -313,7 +313,7 @@ class _UserLogin extends State<UserLogin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const UserSingIn()),
+                            builder: (context) => const SingUp()),
                       );
                   },
                   child: Container(

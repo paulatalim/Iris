@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../provider/locale-provider.dart';
-import '../l10n/l10n.dart';
 import '../recurso_de_voz/voices.dart';
+import '../l10n/l10n.dart';
 import 'menu.dart';
 
 class Configuracao extends StatefulWidget {
@@ -314,8 +314,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                       SizedBox(
                         width: 70,
                         child: DropdownButton<String>(
-                          dropdownColor: Color.fromARGB(255, 255, 255, 255),
-                          // dropdownColor: Color.fromARGB(255, 221, 163, 255),
+                          dropdownColor: const Color.fromARGB(255, 255, 255, 255),
                           isExpanded: true,
                           value: _speedOption,
                           icon: const Icon(FontAwesomeIcons.chevronDown),
@@ -419,6 +418,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                                     final provider = Provider.of<LocaleProvider>(context, listen: false);
           
                                     provider.setLocale(locale);
+                                    provider.saveLocale(locale);
                                   },
                                   child: Center(
                                     child: Text(

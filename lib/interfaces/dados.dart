@@ -93,18 +93,18 @@ class _DadosState extends State<Dados> {
     return GestureDetector(
       onTap: () {
         if (texto== AppLocalizations.of(context)!.peso) {
-          voice.speek("peso : ${usuario.peso} ${AppLocalizations.of(context)!.kg}");
+          voice.speek("${AppLocalizations.of(context)!.peso} : ${usuario.peso} ${AppLocalizations.of(context)!.kg}");
         }
         if(texto==  AppLocalizations.of(context)!.altura){
-          voice.speek("altura : ${usuario.altura} ${AppLocalizations.of(context)!.m}.");
+          voice.speek("${AppLocalizations.of(context)!.altura} : ${usuario.altura} ${AppLocalizations.of(context)!.m}.");
         }
 
         if(texto==  AppLocalizations.of(context)!.temperatura){
-          voice.speek("temperatura : ${usuario.temperatura} ${AppLocalizations.of(context)!.graus}.");
+          voice.speek("${AppLocalizations.of(context)!.temperatura} : ${usuario.temperatura} ${AppLocalizations.of(context)!.graus}.");
         }
 
-        if(texto== "IMC"){
-          voice.speek("IMC : ${usuario.imc}");
+        if(texto== AppLocalizations.of(context)!.imc){
+          voice.speek("${AppLocalizations.of(context)!.imc} : ${usuario.imc}");
         }
       },
 
