@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -198,7 +199,30 @@ class _DevicesState extends State<Devices> {
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
+    dispositivo[0].nome = AppLocalizations.of(context)!.selectDevice;
+    dispositivo[1].nome = AppLocalizations.of(context)!.system;
+    dispositivo[2].nome = AppLocalizations.of(context)!.thermometer;
+    dispositivo[3].nome = AppLocalizations.of(context)!.hcsr04;
+    dispositivo[4].nome = AppLocalizations.of(context)!.balance;
+    
+    _bluetooth.atualizarIdioma(
+      AppLocalizations.of(context)!.connecting,
+      AppLocalizations.of(context)!.connected,
+      AppLocalizations.of(context)!.checkingConnection,
+      AppLocalizations.of(context)!.processing,
+      AppLocalizations.of(context)!.bluetoothNotInitializing,
+      AppLocalizations.of(context)!.initializingBluetooth,
+      AppLocalizations.of(context)!.searchingDevice,
+      AppLocalizations.of(context)!.permission,
+      AppLocalizations.of(context)!.concluded,
+      AppLocalizations.of(context)!.calibratingSensor,
+      AppLocalizations.of(context)!.calibratedSensor,
+      AppLocalizations.of(context)!.guiHscr04,
+      AppLocalizations.of(context)!.guiBalance,
+      AppLocalizations.of(context)!.guiThermometer
+    );
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -260,7 +284,7 @@ class _DevicesState extends State<Devices> {
                     ),
                     _dispositivoSelecionado.time != null 
                       ? Text(
-                        "Tempo: ${_dispositivoSelecionado.time} s",
+                        "${AppLocalizations.of(context)!.time}: ${_dispositivoSelecionado.time} s",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inclusiveSans(
                           textStyle: const TextStyle(

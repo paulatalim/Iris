@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -60,11 +61,11 @@ class _UserLogin extends State<UserLogin> {
       
       if(e.code == 'invalid-email' || e.code == 'user-not-found'){
         setState(() {
-          erroEmail = 'E-mail inválido';
+          erroEmail = AppLocalizations.of(context)!.errorLoginEmail;
         });
       } else if(e.code == 'invalid-credential'){
         setState(() {
-          erroSenha = 'Senha inválida';
+          erroSenha = AppLocalizations.of(context)!.errorLoginPassword;
         });
       } else {
         debugPrint(e.code);
@@ -201,7 +202,7 @@ class _UserLogin extends State<UserLogin> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         labelText: 'E-mail:',
-                        hintText: 'nome@exemplo.com',
+                        hintText: AppLocalizations.of(context)!.emailExample,
                       ),
                     ),
                     TextFormField(
@@ -213,8 +214,8 @@ class _UserLogin extends State<UserLogin> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        labelText: 'Senha:',
-                        hintText: 'Digite sua senha',
+                        labelText: AppLocalizations.of(context)!.password,
+                        hintText: AppLocalizations.of(context)!.passwordHint,
                       ),
                     ),
 
@@ -250,9 +251,9 @@ class _UserLogin extends State<UserLogin> {
                       ),
                     ),
                     child: 
-                      const Text(
-                        'Login',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.singIn,
+                        style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 255, 255, 255),
@@ -293,9 +294,9 @@ class _UserLogin extends State<UserLogin> {
                           height: 25,
                         ),
                         const SizedBox(width: 20,),
-                        const Text(
-                          'Entrar com o Google', 
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.singInGoogle, 
+                          style: const TextStyle(
                             fontSize: 22,
                             color: Color(0xFF202124),
                           ),
@@ -324,9 +325,9 @@ class _UserLogin extends State<UserLogin> {
                       borderRadius: BorderRadius.circular(50.0),
                       border: Border.all(color: const Color(0xFF373B8A), ),
                     ),
-                    child: const Text(
-                      "Criar conta",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.createAccount,
+                      style: const TextStyle(
                         color: Color(0xFF373B8A),
                         fontWeight: FontWeight.w500,
                         fontSize: 22,

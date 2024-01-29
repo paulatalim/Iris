@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -182,9 +183,9 @@ class _UserScreen extends State<UserScreen> {
                       //Cor de fundo customizada
                       backgroundColor: MaterialStateColor.resolveWith(
                           (context) => const Color(0xFFA000FF))),
-                  child: const Text(
-                    'Editar Perfil',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  child: Text(
+                    AppLocalizations.of(context)!.editarPerfil,
+                    style: const TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
 
@@ -197,9 +198,9 @@ class _UserScreen extends State<UserScreen> {
                   onPressed: (){
                     _signOut();
                   },
-                  child: const Text(
-                    'Sair',
-                    style: TextStyle(fontSize: 20, color: Colors.red),
+                  child: Text(
+                    AppLocalizations.of(context)!.sair,
+                    style: const TextStyle(fontSize: 20, color: Colors.red),
                   ),
                 ),
               ],

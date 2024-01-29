@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class _UserSingIn extends State<UserSingIn> {
       checarSenha();
     } else {
       setState(() {
-        erroCadastro = 'Verifique se o e-mail está correto.';
+        erroCadastro = AppLocalizations.of(context)!.errorRegisterEmail;
       });
     }
   }
@@ -88,8 +89,7 @@ class _UserSingIn extends State<UserSingIn> {
       _criarUser();
     } else {
       setState(() {
-        erroCadastro =
-            'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.';
+        erroCadastro = AppLocalizations.of(context)!.errorRegisterPassword1;
       });
     }
   }
@@ -100,7 +100,7 @@ class _UserSingIn extends State<UserSingIn> {
       checarSenha();
     } else {
       setState(() {
-        erroCadastro = 'As senhas devem ser iguais.';
+        erroCadastro = AppLocalizations.of(context)!.errorRegisterPassword2;
       });
     }
   }
@@ -208,7 +208,7 @@ class _UserSingIn extends State<UserSingIn> {
                   SizedBox(
                       height: 70,
                       child: Text(
-                        'Criar um usuário',
+                        AppLocalizations.of(context)!.register,
                         style: GoogleFonts.dosis(fontSize: 30),
                       )),
 
@@ -237,11 +237,11 @@ class _UserSingIn extends State<UserSingIn> {
                             controller: userName,
                             keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              labelText: 'Nome:',
+                              labelText: "${AppLocalizations.of(context)!.name}:",
                             ),
                           ),
                         ),
@@ -257,11 +257,11 @@ class _UserSingIn extends State<UserSingIn> {
                             controller: userSurname,
                             keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              labelText: 'Sobrenome:',
+                              labelText: "${AppLocalizations.of(context)!.surname}:",
                             ),
                           ),
                         ),
@@ -297,11 +297,11 @@ class _UserSingIn extends State<UserSingIn> {
                         child: TextFormField(
                           controller: userPss1,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            labelText: 'Senha:',
+                            labelText: "${AppLocalizations.of(context)!.password}:",
                           ),
                         ),
                       ),
@@ -312,11 +312,11 @@ class _UserSingIn extends State<UserSingIn> {
                         child: TextFormField(
                           controller: userPss2,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            labelText: 'Confirme a senha:',
+                            labelText: '${AppLocalizations.of(context)!.confirmPassword}:',
                           ),
                         ),
                       ),
@@ -341,19 +341,19 @@ class _UserSingIn extends State<UserSingIn> {
                                 fixedSize:
                                     MaterialStateProperty.resolveWith((states) {
                                   if (states.contains(MaterialState.disabled)) {
-                                    return const Size(100, 50);
+                                    return const Size(250, 50);
                                   }
-                                  return const Size(120, 50);
+                                  return const Size(300, 50);
                                 }),
                                 //Cor de fundo customizada
                                 backgroundColor: MaterialStateColor.resolveWith(
                                     (context) => const Color.fromARGB(
                                         0XFF, 0x93, 0x7C, 0xEE))),
-                            child: const Text(
+                            child: Text(
                               //Botão para finalizar a criação da conta
-                              'Criar',
+                              AppLocalizations.of(context)!.createAccount,
                               style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
+                                  const TextStyle(fontSize: 25, color: Colors.white),
                             ),
                           ),
                         ],

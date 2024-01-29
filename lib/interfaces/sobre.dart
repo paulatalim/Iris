@@ -122,9 +122,7 @@ class _SobreState extends State<Sobre> {
                     ),
                     const SizedBox(height: 45),
                     Text(
-                      'Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes visuais, '
-                      'fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o '
-                      'acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.',
+                      AppLocalizations.of(context)!.infoApp,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
@@ -140,7 +138,7 @@ class _SobreState extends State<Sobre> {
                         children: [
                           const SizedBox(height: 6.0),
                           Text(
-                            'Integrantes',
+                            AppLocalizations.of(context)!.members,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inclusiveSans(
                                 textStyle: subtitle()),
@@ -190,7 +188,7 @@ class _SobreState extends State<Sobre> {
                               height: 20.0), // Espaço entre os textos
 
                           Text(
-                            'Orientador',
+                            AppLocalizations.of(context)!.advisor,
                             textAlign: TextAlign.center,
                             style: subtitle(),
                           ),
@@ -214,7 +212,7 @@ class _SobreState extends State<Sobre> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Fale Conosco:',
+                        AppLocalizations.of(context)!.contact,
                         textAlign: TextAlign.center,
                         style: subtitle(),
                       ),

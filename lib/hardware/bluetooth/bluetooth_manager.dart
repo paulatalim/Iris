@@ -21,6 +21,21 @@ class BluetoothManager {
   bool _isCalibrated = false;
   bool _sistemaConectado = false;
 
+  String connecting = '';
+  String connected = '';
+  String checkingConnection = '';
+  String processing = '';
+  String bluetoothNotInitializing = '';
+  String initializingBluetooth = '';
+  String searchingDevice = '';
+  String permission = '';
+  String concluded = '';
+  String calibratingSensor = '';
+  String calibratedSensor = '';
+  String guiHscr04 = '';
+  String guiBalance = '';
+  String guiThermometer = '';
+
   BluetoothManager() {
     _nomeDispositivo = "Iris Hardware";
     _bluetooth = Bluetooth(_nomeDispositivo);
@@ -35,15 +50,15 @@ class BluetoothManager {
         // Verifica se está encontrando o dispositivo
         if (!_bluetooth.isDiscovering) {
           // Atualiza os status para permissao concedida
-          _state = "Permissão concedida";
+          _state = permission;
 
         } else {
           // Atualiza os status para encontrando um dispositivo
-          _state = "Procurando Dispositivo";
+          _state = searchingDevice;
         }
       } else {
         // Enquanto não estiver permitido o bluetooth
-        _state = "Inicializando bluetooth";
+        _state = initializingBluetooth;
       }
       
       // Atualiza status do sistema
@@ -53,7 +68,7 @@ class BluetoothManager {
       await Future.delayed(const Duration(milliseconds: 1000));
     }
 
-    _state = "Verificando conexão";
+    _state = checkingConnection;
     while (!_sistemaConectado){
       String msg = _bluetooth.msgBT;
 
@@ -71,9 +86,9 @@ class BluetoothManager {
       await Future.delayed(const Duration(seconds: 1));
     }
 
-    _state = "Conectado";
-    _stateTemperatura = 'Processando ...';
-    _statePeso = 'Processando ...';
+    _state = connected;
+    _stateTemperatura = '$processing ...';
+    _statePeso = '$processing ...';
     _atualizarDados();
     _calibrarSensor();
   }
@@ -92,7 +107,7 @@ class BluetoothManager {
             case 'T':
               if(_salvarTemperatura) {
                 usuario.temperatura = double.parse(dados[i].substring(1));
-                _stateTemperatura = 'Concluído';
+                _stateTemperatura = concluded;
                 _salvarTemperatura = false;
                 
               }
@@ -102,7 +117,7 @@ class BluetoothManager {
 
               if(_salvarAltura) {
                 usuario.altura = double.parse(dados[i].substring(1));
-                _stateAltura = "Concluído";
+                _stateAltura = concluded;
                 _salvarAltura = false;
                 
               }
@@ -110,7 +125,7 @@ class BluetoothManager {
             case 'P':
               if (_salvarPeso) {
                 usuario.peso = double.parse(dados[i].substring(1));
-                _statePeso = "Concluído";
+                _statePeso = concluded;
                 _salvarPeso = false;
               }
               break;
@@ -135,7 +150,7 @@ class BluetoothManager {
 
         for(int i = 0; i < dados.length; i++) {
           if(dados[i].trim()[0] == 'C') {
-            _stateAltura = "Calibrando sensor...";
+            _stateAltura = "$calibratingSensor...";
             double time = double.parse(dados[i].substring(1));
             time /= 1000;
             _timeAltura = time.toInt();
@@ -153,7 +168,7 @@ class BluetoothManager {
     }
 
     _timeAltura = null;
-    _stateAltura = "Sensor calibrado";
+    _stateAltura = calibratedSensor;
   }
 
   void medirAltura() async{
@@ -163,20 +178,20 @@ class BluetoothManager {
     }
 
     // Atualiza status
-    _stateAltura = "Fique debaixo do sensor";
+    _stateAltura = guiHscr04;
 
     // Inicializa o cronometro
     _timeAltura = 30;
 
     // Esperar um tempo
-    while(_timeAltura != 0) {
+    while(_timeAltura! >= 0) {
       _timeAltura = _timeAltura! - 1;
       await Future.delayed(const Duration(seconds: 1));
     }
 
     // Atualiza variaveis
     _timeAltura = null;
-    _stateAltura = "Processando ...";
+    _stateAltura = "$processing ...";
     _salvarAltura = true;
   }
 
@@ -187,7 +202,7 @@ class BluetoothManager {
     }
 
     // Atualiza status
-    _statePeso = "Suba na balança";
+    _statePeso = guiBalance;
 
     // Inicializa o cronometro
     _timePeso = 30;
@@ -200,7 +215,7 @@ class BluetoothManager {
 
     // Atuaiza as variaveis
     _timePeso = null;
-    _statePeso = "Processando ...";
+    _statePeso = "$processing ...";
     _salvarPeso = true;
   }
 
@@ -211,27 +226,59 @@ class BluetoothManager {
     }
     
     // Atualiza status do sensor
-    _stateTemperatura = "Coloque o sensor debaixo do braço";
+    _stateTemperatura = guiThermometer;
 
     // Inicializa o cronometro
     _timeTemp = 30;
     
     // Controla o conometro
-    while(_timeTemp != 0) {
+    while(_timeTemp! >= 0) {
       _timeTemp = _timeTemp! - 1;
       await Future.delayed(const Duration(seconds: 1));
     }
 
     // Atualiza variaveis
-    _timePeso = null;
-    _stateTemperatura = "Processando ...";
+    _timeTemp = null;
+    _stateTemperatura = "$processing ...";
     _salvarTemperatura = true;
   }
 
-  get state => _state ?? "_Bluetooth não inicializado";
-  get statePeso => _statePeso ?? "Conectando ...";
-  get stateAltura => _stateAltura ?? "Conectando ...";
-  get stateTemperatura => _stateTemperatura ?? "Conectando ...";
+  void atualizarIdioma(
+      String connecting,
+      String connected,
+      String checkingConnection,
+      String processing,
+      String bluetoothNotInitializing,
+      String initializingBluetooth,
+      String searchingDevice,
+      String permission,
+      String concluded,
+      String calibratingSensor,
+      String calibratedSensor,
+      String guiHscr04,
+      String guiBalance,
+      String guiThermometer,
+    ) {
+    this.connecting = connecting;
+    this.connected = connected;
+    this.checkingConnection = checkingConnection;
+    this.processing = processing;
+    this.bluetoothNotInitializing = bluetoothNotInitializing;
+    this.initializingBluetooth = initializingBluetooth;
+    this.searchingDevice = searchingDevice;
+    this.permission = permission;
+    this.concluded = concluded;
+    this.calibratingSensor = calibratingSensor;
+    this.calibratedSensor = calibratedSensor;
+    this.guiHscr04 = guiHscr04;
+    this.guiBalance = guiBalance;
+    this.guiThermometer = guiThermometer;
+  }
+
+  get state => _state ?? bluetoothNotInitializing;
+  get statePeso => _statePeso ?? "$connecting ...";
+  get stateAltura => _stateAltura ?? "$connecting ...";
+  get stateTemperatura => _stateTemperatura ?? "$connecting ...";
   get timeTemperatura => _timeTemp;
   get timeAltura => _timeAltura;
   get timePeso => _timePeso;

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
@@ -58,7 +59,7 @@ class _DadosState extends State<Dados> {
           Row(
             children: [
               Text(
-                numero, // Exemplo de formatação com 2 casas decimais
+                numero.replaceAll(".", AppLocalizations.of(context)!.dot), // Exemplo de formatação com 2 casas decimais
                 style: GoogleFonts.inclusiveSans(
                   textStyle: const TextStyle(
                     fontSize: 25.0,
@@ -91,15 +92,15 @@ class _DadosState extends State<Dados> {
   GestureDetector _clickableBoxNumber(String texto, String numero, String unidade) {
     return GestureDetector(
       onTap: () {
-        if (texto== "Peso ") {
-          voice.speek("peso : ${usuario.peso} quilos");
+        if (texto== AppLocalizations.of(context)!.peso) {
+          voice.speek("peso : ${usuario.peso} ${AppLocalizations.of(context)!.kg}");
         }
-        if(texto== "Altura"){
-          voice.speek("altura : ${usuario.altura} metros.");
+        if(texto==  AppLocalizations.of(context)!.altura){
+          voice.speek("altura : ${usuario.altura} ${AppLocalizations.of(context)!.m}.");
         }
 
-        if(texto== "Temperatura"){
-          voice.speek("temperatura : ${usuario.temperatura} graus.");
+        if(texto==  AppLocalizations.of(context)!.temperatura){
+          voice.speek("temperatura : ${usuario.temperatura} ${AppLocalizations.of(context)!.graus}.");
         }
 
         if(texto== "IMC"){
@@ -184,10 +185,10 @@ class _DadosState extends State<Dados> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            _clickableBoxNumber('Peso ', usuario.peso.toStringAsFixed(1).replaceAll(".", ","), 'Kg'),
-            _clickableBoxNumber('Altura', usuario.altura.toStringAsFixed(2).replaceAll(".", ","), 'm'),
-            _clickableBoxNumber('Temperatura', usuario.temperatura.toStringAsFixed(1).replaceAll(".", ","), '°'),
-            _clickableBoxNumber('IMC', usuario.imc.toStringAsFixed(1).replaceAll(".", ","), ''),
+            _clickableBoxNumber(AppLocalizations.of(context)!.peso, usuario.peso.toStringAsFixed(1), 'Kg'),
+            _clickableBoxNumber(AppLocalizations.of(context)!.altura, usuario.altura.toStringAsFixed(2), 'm'),
+            _clickableBoxNumber(AppLocalizations.of(context)!.temperatura, usuario.temperatura.toStringAsFixed(1), '°'),
+            _clickableBoxNumber(AppLocalizations.of(context)!.imc, usuario.imc.toStringAsFixed(1), ''),
           ],
         ),
       ),

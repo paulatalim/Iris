@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iris_app/interfaces/cadastro.dart';
 import 'package:iris_app/l10n/l10n.dart';
 import 'package:iris_app/provider/locale-provider.dart';
 
@@ -13,6 +14,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import './interfaces/loading.dart';
+import './interfaces/configuracao.dart';
+import './interfaces/configuracao.dart';
+import './interfaces/login.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -32,7 +37,7 @@ void main() async {
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
 
-  runApp( ChangeNotifierProvider(
+  runApp(ChangeNotifierProvider(
       create: (context) => LocaleProvider(),
       builder: (context, child) {
         final provider = Provider.of<LocaleProvider>(context);
@@ -49,15 +54,14 @@ void main() async {
           
           locale: provider.locale,
           supportedLocales: L10n.all,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          
 
-
+          // home: UserLogin(),
           home: const Menu(),
 
           // TODO(mafra): verificar erro de login

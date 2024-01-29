@@ -4,5 +4,75 @@
         "description": "The current Language"
     },
 
-    "settings": "Settings"
+    "settings": "Settings",
+    "voice": "Voice",
+    "volume": "Volume",
+    "speed": "Speed",
+    "general": "General",
+    "idioma": "Language",
+
+    "selectDevice": "Select a device",
+    "system": "Systema",
+    "thermometer": "Thermometer",
+    "hcsr04": "Height Sensor",
+    "balance": "Balance",
+
+    "peso": "Weight",
+    "altura": "Height",
+    "temperatura": "Temperature",
+    "imc": "BMI",
+
+    "kg": "kilos",
+    "m": "meters",
+    "@m":{
+        "description": "Unit of measurement meters"
+    },
+    "graus": "degrees",
+    "dot": ".",
+    "@dot":{
+        "description": "Symbol that separates the decimal places of a number"
+    },
+
+    "connecting": "Connecting",
+    "connected": "Connected",
+    "checkingConnection": "Checking connection",
+    "processing": "Processing",
+    "bluetoothNotInitializing": "Bluetooth not initialized",
+    "initializingBluetooth": "Initializing bluetooth",
+    "searchingDevice": "Searching for device",
+    "permission": "Permission granted",
+    "concluded": "Concluded",
+    "calibratingSensor": "Calibrating sensor",
+    "calibratedSensor": "Calibrated sensor",
+    "time": "Time",
+    "guiHscr04": "Stand under the sensor",
+    "guiBalance": "Suba na balança",
+    "guiThermometer": "Coloque o sensor debaixo do braço",
+
+    "editarPerfil": "Edit Profile",
+    "sair": "Sing out",
+
+    "infoApp": "Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes visuais, fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.",
+    "members": "Members",
+    "advisor": "Advisor",
+    "contact": "Contact Us",
+
+    "load": "Loading",
+
+    "register": "Register",
+    "name": "Name",
+    "surname": "Surname",
+    "password": "Password",
+    "confirmPassword": "Confirm the Password",
+    "errorRegisterEmail": "Verifique se o e-mail está correto.",
+    "errorRegisterPassword1": "'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.",
+    "errorRegisterPassword2": "As senhas devem ser iguais.",
+    "createAccount": "Create Account",
+
+    "emailExample": "name@example.com",
+    "passwordHint": "Digite sua senha",
+    "singIn": "Sing in",
+    "singInGoogle": "Sing in with Google",
+    "errorLoginEmail": "Invalid e-mail",
+    "errorLoginPassword": "Invalid password"
 }

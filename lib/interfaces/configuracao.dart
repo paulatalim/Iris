@@ -1,12 +1,11 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/material.dart';
-import '../l10n/l10n.dart';
-import '../provider/locale-provider.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
+import '../provider/locale-provider.dart';
+import '../l10n/l10n.dart';
 import '../recurso_de_voz/voices.dart';
 import 'menu.dart';
 
@@ -240,10 +239,10 @@ class _ConfiguracaoState extends State<Configuracao> {
                   height: 80,
                 ),
           
-                Container(
+                SizedBox(
                   width: 0.7 * MediaQuery.of(context).size.width,
                   child: Text(
-                    "Voz",
+                    AppLocalizations.of(context)!.voice,
                     textAlign: TextAlign.start,
                     style: GoogleFonts.inclusiveSans(
                       textStyle: const TextStyle(
@@ -272,7 +271,10 @@ class _ConfiguracaoState extends State<Configuracao> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Volume', style: _styleBoxTitle()),
+                      Text(
+                        AppLocalizations.of(context)!.volume, 
+                        style: _styleBoxTitle()
+                      ),
                       Slider(
                           value: _valorVolume, //definir o _valorVolume inicial
                           min: 0,
@@ -306,7 +308,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Velocidade',
+                        AppLocalizations.of(context)!.speed,
                         style: _styleBoxTitle(),
                       ),
                       SizedBox(
@@ -355,10 +357,10 @@ class _ConfiguracaoState extends State<Configuracao> {
                   height: 30,
                 ),
           
-                Container(
+                SizedBox(
                   width: 0.7 * MediaQuery.of(context).size.width,
                   child: Text(
-                    "Geral",
+                    AppLocalizations.of(context)!.general,
                     textAlign: TextAlign.start,
                     style: GoogleFonts.inclusiveSans(
                       textStyle: const TextStyle(
@@ -386,7 +388,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Idioma',
+                        AppLocalizations.of(context)!.idioma,
                         style: _styleBoxTitle(),
                       ),
                       SizedBox(
@@ -412,29 +414,25 @@ class _ConfiguracaoState extends State<Configuracao> {
                                 final language = L10n.getLanguage(locale.languageCode);
           
                                 return DropdownMenuItem(
-                                  child: Center(
-                                    child: Text(
-                                      language,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ),
                                   value: locale,
                                   onTap: () {
                                     final provider = Provider.of<LocaleProvider>(context, listen: false);
           
                                     provider.setLocale(locale);
                                   },
+                                  child: Center(
+                                    child: Text(
+                                      language,
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                  ),
                                 );
                               }
                             ).toList(),
                             onChanged: (_) {},
-                            
                             )
                         )
                       ),
-
-                      // Gap entre elementos
-                
                     ],
                   ),
                 ),
