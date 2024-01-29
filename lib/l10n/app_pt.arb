@@ -56,9 +56,9 @@
     "password": "Senha",
     "confirmPassword": "Confirme a senha",
     "errorRegisterEmail": "Verifique se o e-mail está correto.",
-    "errorRegisterPassword": "'A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.",
+    "errorRegisterPassword": "A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.",
     "errorRegisterPassword2": "As senhas devem ser iguais.",
-    "createAccount": "Criar conta",
+    "createAccount": "Cadastrar-se",
 
     "emailExample": "nome@exemplo.com",
     "passwordHint": "Digite sua senha",
