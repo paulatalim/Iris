@@ -33,6 +33,9 @@ dependencies:
 
   google_sign_in: ^6.1.6
   google_fonts: ^6.1.0
+
+  flutter_localizations:
+    sdk: flutter
   intl: ^0.18.1
   provider: ^6.1.1
   
