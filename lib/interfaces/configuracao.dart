@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../provider/locale-provider.dart';
+import '../provider/locale_provider.dart';
 import '../recurso_de_voz/voices.dart';
 import '../l10n/l10n.dart';
 import 'menu.dart';

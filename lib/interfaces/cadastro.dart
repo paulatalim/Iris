@@ -238,7 +238,7 @@ class _SingUp extends State<SingUp> {
                             keyboardType: TextInputType.name,
                             style: GoogleFonts.dosis(),
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(
+                              border: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
                               labelText: "${AppLocalizations.of(context)!.name}:",
