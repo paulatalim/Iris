@@ -43,52 +43,52 @@ class _UserScreen extends State<UserScreen> {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
   }
 
-  void dialogo() async {
-    await voice.speek("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
-    await Future.delayed(const Duration(seconds: 10));
+  // void dialogo() async {
+  //   await voice.speek("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
+  //   await Future.delayed(const Duration(seconds: 10));
 
-    while (respostaInvalida) {
-        await voice.hear();
-        resposta = voice.resposta;
-        resposta = resposta.toLowerCase().trim();
+  //   while (respostaInvalida) {
+  //       await voice.hear();
+  //       resposta = voice.resposta;
+  //       resposta = resposta.toLowerCase().trim();
 
-        if (resposta.compareTo("sim") == 0) {
-          _irUILogin();
-        } else if (resposta.compareTo("não") == 0) {
+  //       if (resposta.compareTo("sim") == 0) {
+  //         _irUILogin();
+  //       } else if (resposta.compareTo("não") == 0) {
         
-          respostaInvalida = false;
-        } else {
-          await voice.speek("Hummm não te escutei direito, repete de novo?");
-          await Future.delayed(const Duration(seconds: 5));
-        }
-    }
+  //         respostaInvalida = false;
+  //       } else {
+  //         await voice.speek("Hummm não te escutei direito, repete de novo?");
+  //         await Future.delayed(const Duration(seconds: 5));
+  //       }
+  //   }
 
-    await voice.speek("Para qual seção deseja ir agora?");
-    await Future.delayed(const Duration(seconds: 5));
-    respostaInvalida = true;
+  //   await voice.speek("Para qual seção deseja ir agora?");
+  //   await Future.delayed(const Duration(seconds: 5));
+  //   respostaInvalida = true;
 
-    while (respostaInvalida) {
-      await voice.hear();
-      resposta = voice.resposta;
-      resposta = resposta.toLowerCase().trim();
+  //   while (respostaInvalida) {
+  //     await voice.hear();
+  //     resposta = voice.resposta;
+  //     resposta = resposta.toLowerCase().trim();
       
-      if (resposta.compareTo("menu principal") == 0) {
-        _irUIMenu(0);
-      } else if (resposta.compareTo("dispositivos") == 0) {
-        _irUIMenu(1);
+  //     if (resposta.compareTo("menu principal") == 0) {
+  //       _irUIMenu(0);
+  //     } else if (resposta.compareTo("dispositivos") == 0) {
+  //       _irUIMenu(1);
         
-      } else if (resposta.compareTo("informações") == 0) {
-        _irUIMenu(2);
+  //     } else if (resposta.compareTo("informações") == 0) {
+  //       _irUIMenu(2);
         
-      } else if (resposta.compareTo("perfil") == 0) {
-        await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-        await Future.delayed(const Duration(seconds: 5));
-      } else {
-        await voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(const Duration(seconds: 5));
-      }
-    }
-  }
+  //     } else if (resposta.compareTo("perfil") == 0) {
+  //       await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+  //       await Future.delayed(const Duration(seconds: 5));
+  //     } else {
+  //       await voice.speek("Hummm não te escutei direito, repete de novo?");
+  //       await Future.delayed(const Duration(seconds: 5));
+  //     }
+  //   }
+  // }
 
   void _irUIMenu(int index) {
     Navigator.push(

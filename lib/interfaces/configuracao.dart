@@ -17,7 +17,7 @@ class _ConfiguracaoState extends State<Configuracao> {
 
   final Color _boxColor = const Color(0xFFC7C9FF);
 
-  double _valorVolume = voice.volume * 100;
+  double _valorVolume = 100;
 
   late String _speedOption;
 
@@ -51,115 +51,115 @@ class _ConfiguracaoState extends State<Configuracao> {
     );
   }
 
-  void dialogo() async {
-    String resposta = "";
-    bool respostaInvalida = true;
-    bool configurarVelocidade = false;
-    bool configurarVolume = false;
-    bool novaConfiguracao = false;
+  // void dialogo() async {
+  //   String resposta = "";
+  //   bool respostaInvalida = true;
+  //   bool configurarVelocidade = false;
+  //   bool configurarVolume = false;
+  //   bool novaConfiguracao = false;
 
-    await voice.speek("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
-    await Future.delayed(const Duration(seconds: 10));
+  //   await voice.speek("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
+  //   await Future.delayed(const Duration(seconds: 10));
 
-    do {
-      respostaInvalida = true;
+  //   do {
+  //     respostaInvalida = true;
 
-      while (respostaInvalida) {
-        await voice.hear();
-        resposta = voice.resposta;
+  //     while (respostaInvalida) {
+  //       await voice.hear();
+  //       resposta = voice.resposta;
 
-        if (resposta.compareTo("velocidade") == 0){
-          configurarVelocidade = true;
-          respostaInvalida = false;
-        } else if (resposta.compareTo("volume") == 0) {
-          configurarVolume = true;
-          respostaInvalida= false;
-        } else {
-          await voice.speek("Hummm não te escutei direito, o que você quer configurar?");
-          await Future.delayed(const Duration(seconds: 5));
-        }
-      }
+  //       if (resposta.compareTo("velocidade") == 0){
+  //         configurarVelocidade = true;
+  //         respostaInvalida = false;
+  //       } else if (resposta.compareTo("volume") == 0) {
+  //         configurarVolume = true;
+  //         respostaInvalida= false;
+  //       } else {
+  //         await voice.speek("Hummm não te escutei direito, o que você quer configurar?");
+  //         await Future.delayed(const Duration(seconds: 5));
+  //       }
+  //     }
 
-      respostaInvalida = true;
+  //     respostaInvalida = true;
 
-      if (configurarVelocidade) {
-        await voice.speek("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
-        await Future.delayed(const Duration(seconds: 10));
+  //     if (configurarVelocidade) {
+  //       await voice.speek("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
+  //       await Future.delayed(const Duration(seconds: 10));
 
-        while (respostaInvalida) {
-          await voice.hear();
-          resposta = voice.resposta;
+  //       while (respostaInvalida) {
+  //         await voice.hear();
+  //         resposta = voice.resposta;
 
-          if (resposta.compareTo("0,5x") == 0||
-            resposta.compareTo("0.5x") == 0||
-            resposta.compareTo("zero , cincox") == 0) {
+  //         if (resposta.compareTo("0,5x") == 0||
+  //           resposta.compareTo("0.5x") == 0||
+  //           resposta.compareTo("zero , cincox") == 0) {
 
-              voice.speed = 0.2;  
-              respostaInvalida = false;
-          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("um x") == 0) {
-            voice.speed = 0.5;
-            respostaInvalida= false;
-          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("dois x") == 0) {
-            voice.speed = 1.0;
-            respostaInvalida= false;
-          } else {
-            await voice.speek("Hummm não te escutei direito, pode repetir de novo?");
-            await Future.delayed(const Duration(seconds: 5));
-          }
-        }
-        configurarVelocidade = false;
-      }
+  //             voice.speed = 0.2;  
+  //             respostaInvalida = false;
+  //         } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("um x") == 0) {
+  //           voice.speed = 0.5;
+  //           respostaInvalida= false;
+  //         } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("dois x") == 0) {
+  //           voice.speed = 1.0;
+  //           respostaInvalida= false;
+  //         } else {
+  //           await voice.speek("Hummm não te escutei direito, pode repetir de novo?");
+  //           await Future.delayed(const Duration(seconds: 5));
+  //         }
+  //       }
+  //       configurarVelocidade = false;
+  //     }
 
-      if (configurarVolume) {
-        await voice.speek("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
-        await Future.delayed(const Duration(seconds: 10));
+  //     if (configurarVolume) {
+  //       await voice.speek("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
+  //       await Future.delayed(const Duration(seconds: 10));
 
-        while (respostaInvalida) {
-          await voice.hear();
-          resposta = voice.resposta;
+  //       while (respostaInvalida) {
+  //         await voice.hear();
+  //         resposta = voice.resposta;
 
-          if (resposta.compareTo("alto") == 0) {
-            voice.volume = 1.0;
-            respostaInvalida = false;
-          } else if (resposta.compareTo("médio") == 0 || resposta.compareTo("medio") == 0) {
-            voice.volume = 0.5;
-            respostaInvalida= false;
-          } else if (resposta.compareTo("baixo") == 0) {
-            voice.volume = 0.2;
-            respostaInvalida= false;
-          } else {
-            voice.speek("Hummm não te escutei direito, repete de novo?");
-            await Future.delayed(const Duration(seconds: 5));
-          }
-        }
-        configurarVolume = false;
-      }
+  //         if (resposta.compareTo("alto") == 0) {
+  //           voice.volume = 1.0;
+  //           respostaInvalida = false;
+  //         } else if (resposta.compareTo("médio") == 0 || resposta.compareTo("medio") == 0) {
+  //           voice.volume = 0.5;
+  //           respostaInvalida= false;
+  //         } else if (resposta.compareTo("baixo") == 0) {
+  //           voice.volume = 0.2;
+  //           respostaInvalida= false;
+  //         } else {
+  //           voice.speek("Hummm não te escutei direito, repete de novo?");
+  //           await Future.delayed(const Duration(seconds: 5));
+  //         }
+  //       }
+  //       configurarVolume = false;
+  //     }
 
-      await voice.speek("Você deseja realizar mais alguma configuração?");
-      await Future.delayed(const Duration(seconds: 5));
-      respostaInvalida = true;
+  //     await voice.speek("Você deseja realizar mais alguma configuração?");
+  //     await Future.delayed(const Duration(seconds: 5));
+  //     respostaInvalida = true;
 
-      while (respostaInvalida) {
-        await voice.hear();
-        resposta = voice.resposta;
+  //     while (respostaInvalida) {
+  //       await voice.hear();
+  //       resposta = voice.resposta;
 
-        if (resposta.compareTo("sim") == 0) {
-          await voice.speek("E o que deseja configurar? A velocidade ou volume da minha voz?");
-          await Future.delayed(const Duration(seconds: 5));
-          novaConfiguracao = true;
-          respostaInvalida = false;
-        } else if (resposta.compareTo("não") == 0) {
-          respostaInvalida = false;
-          novaConfiguracao = false;
-        } else {
-          await voice.speek("Hummm não te escutei direito, repete de novo?");
-          await Future.delayed(const Duration(seconds: 5));
-        }
-      }
-    } while (novaConfiguracao);
+  //       if (resposta.compareTo("sim") == 0) {
+  //         await voice.speek("E o que deseja configurar? A velocidade ou volume da minha voz?");
+  //         await Future.delayed(const Duration(seconds: 5));
+  //         novaConfiguracao = true;
+  //         respostaInvalida = false;
+  //       } else if (resposta.compareTo("não") == 0) {
+  //         respostaInvalida = false;
+  //         novaConfiguracao = false;
+  //       } else {
+  //         await voice.speek("Hummm não te escutei direito, repete de novo?");
+  //         await Future.delayed(const Duration(seconds: 5));
+  //       }
+  //     }
+  //   } while (novaConfiguracao);
 
-    _irUIMenu();
-  }
+  //   _irUIMenu();
+  // }
 
   void _irUIMenu() {
     Navigator.push(
@@ -254,7 +254,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                         onChanged: (double novoValorVolume) {
                           setState(() {
                             _valorVolume = novoValorVolume;
-                            voice.volume = novoValorVolume / 100;
+                            // voice.volume = novoValorVolume / 100;
                           });
                         }),
                   ],

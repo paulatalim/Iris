@@ -43,13 +43,13 @@ class _SobreState extends State<Sobre> {
     );
   }
 
-  void dialogo() async {
-    await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
-                "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
-                "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
-    await Future.delayed(const Duration(seconds: 20));
-    _irUIMenu();
-  }
+  // void dialogo() async {
+  //   await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
+  //               "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
+  //               "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
+  //   await Future.delayed(const Duration(seconds: 20));
+  //   _irUIMenu();
+  // }
 
   @override
   void initState() {

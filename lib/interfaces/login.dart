@@ -74,58 +74,58 @@ class _UserLogin extends State<UserLogin> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  void questionarCampo(String campo, String pronome) async {
-    bool infoErrada = true;
-    bool respostaInvalida = true;
+  // void questionarCampo(String campo, String pronome) async {
+  //   bool infoErrada = true;
+  //   bool respostaInvalida = true;
     
-    String resposta = "";
-    voice.speek("Qual a $pronome $campo?");
+  //   String resposta = "";
+  //   voice.speek("Qual a $pronome $campo?");
 
-    while (infoErrada) {
-      await voice.hear();
-      resposta = voice.resposta;
-      while (respostaInvalida) {
-        voice.speek("$resposta, esse é $pronome $campo?");
-        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-          respostaInvalida = false;
-          infoErrada = false;
+  //   while (infoErrada) {
+  //     await voice.hear();
+  //     resposta = voice.resposta;
+  //     while (respostaInvalida) {
+  //       voice.speek("$resposta, esse é $pronome $campo?");
+  //       if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+  //         respostaInvalida = false;
+  //         infoErrada = false;
           
-        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-          break;
-        }
-        voice.speek("Hummm não te escutei direito, repete de novo?");
-        await Future.delayed(const Duration(seconds: 5));
-      }
-    }
-  }
+  //       } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+  //         break;
+  //       }
+  //       voice.speek("Hummm não te escutei direito, repete de novo?");
+  //       await Future.delayed(const Duration(seconds: 5));
+  //     }
+  //   }
+  // }
 
-  void dialogo() async {
-    String resposta = "";
-    bool respostaInvalida = true;
+  // void dialogo() async {
+  //   String resposta = "";
+  //   bool respostaInvalida = true;
 
-    voice.speek("Entre com a sua conta ou crie uma nova conta! Voce já possui uma conta aqui?");
-    await Future.delayed(const Duration(seconds: 5));
-    await voice.hear();
-    resposta = voice.resposta;
+  //   voice.speek("Entre com a sua conta ou crie uma nova conta! Voce já possui uma conta aqui?");
+  //   await Future.delayed(const Duration(seconds: 5));
+  //   await voice.hear();
+  //   resposta = voice.resposta;
 
-    while(respostaInvalida) {
-      if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-        respostaInvalida = false;
-        //Ir menu
-      } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-        _irUICadastro();
-        respostaInvalida = false;
-      }
+  //   while(respostaInvalida) {
+  //     if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+  //       respostaInvalida = false;
+  //       //Ir menu
+  //     } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+  //       _irUICadastro();
+  //       respostaInvalida = false;
+  //     }
 
-      voice.speek("Hummm não te escutei direito, repete de novo?");
-      await Future.delayed(const Duration(seconds: 5));
-    }
+  //     voice.speek("Hummm não te escutei direito, repete de novo?");
+  //     await Future.delayed(const Duration(seconds: 5));
+  //   }
 
-    questionarCampo("email", "seu");
-    questionarCampo("senha", "sua");
+  //   questionarCampo("email", "seu");
+  //   questionarCampo("senha", "sua");
 
-    _irUIMenu();
-  }
+  //   _irUIMenu();
+  // }
 
   void _irUICadastro() {
     Navigator.push(
