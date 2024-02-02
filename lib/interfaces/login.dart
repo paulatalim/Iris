@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import '../recurso_de_voz/voices.dart';
+// import '../recurso_de_voz/voices.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
 import '../firebase/google_sing_in.dart';

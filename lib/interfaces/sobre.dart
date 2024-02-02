@@ -2,7 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-import '../recurso_de_voz/voices.dart';
+// import '../recurso_de_voz/voices.dart';
 import 'menu.dart';
 
 class Sobre extends StatefulWidget {

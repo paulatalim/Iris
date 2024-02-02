@@ -5,9 +5,9 @@ import 'package:blur/blur.dart';
 
 import '../hardware/bluetooth/bluetooth_manager.dart';
 import '../hardware/available_devices.dart';
-import '../recurso_de_voz/voices.dart';
+// import '../recurso_de_voz/voices.dart';
 import 'loading.dart';
-import '../storage/usuario.dart';
+// import '../storage/usuario.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
