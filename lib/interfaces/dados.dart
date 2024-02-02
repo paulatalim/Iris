@@ -91,20 +91,20 @@ class _DadosState extends State<Dados> {
   GestureDetector _clickableBoxNumber(String texto, String numero, String unidade) {
     return GestureDetector(
       onTap: () {
-        // if (texto== "Peso ") {
-        //   voice.speek("peso : ${usuario.peso} quilos");
-        // }
-        // if(texto== "Altura"){
-        //   voice.speek("altura : ${usuario.altura} metros.");
-        // }
+         if (texto== "Peso ") {
+           voice.speek("peso : ${usuario.peso} quilos");
+         }
+         if(texto== "Altura"){
+           voice.speek("altura : ${usuario.altura} metros.");
+         }
 
-        // if(texto== "Temperatura"){
-        //   voice.speek("temperatura : ${usuario.temperatura} graus.");
-        // }
+         if(texto== "Temperatura"){
+           voice.speek("temperatura : ${usuario.temperatura} graus.");
+         }
 
-        // if(texto== "IMC"){
-        //   voice.speek("IMC : ${usuario.imc}");
-        // }
+         if(texto== "IMC"){
+           voice.speek("IMC : ${usuario.imc}");
+         }
       },
 
       child: _boxNumber(texto, numero, unidade),

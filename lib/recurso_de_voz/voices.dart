@@ -128,4 +128,4 @@ class RecursoDeVoz {
   String get resposta => _resposta.toLowerCase().trim();
 }
 
-// RecursoDeVoz voice = RecursoDeVoz();
+ RecursoDeVoz voice = RecursoDeVoz();

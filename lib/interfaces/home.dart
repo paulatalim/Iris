@@ -21,10 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
   bool estado_mic = false;
 
- // void listen() async{
-   // await voice.hear();
- // }
-/*
+//void teste() {
+  //voice.speek("Teste 1 2 3 testando");  
+//}
+
+//
    void listening() async {
     await voice.hear();
    }
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
      }
      dialogoNaoInicializado = true;
    }
-   */
+   //
 
   void irUIMenu (int index) {
     Navigator.push(
