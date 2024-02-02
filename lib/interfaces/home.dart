@@ -19,59 +19,65 @@ class _HomeScreenState extends State<HomeScreen> {
   bool dialogoNaoInicializado = true;
   bool trocarUI = false;
   int index = 0;
+  bool estado_mic = false;
 
-  // void listening() async {
-  //   await voice.hear();
-  // }
+ // void listen() async{
+   // await voice.hear();
+ // }
+/*
+   void listening() async {
+    await voice.hear();
+   }
 
-  // void dialogo() async {
-  //   String resposta = "";
-  //   bool respostaInvalida = true;
+   void dialogo() async {
+     String resposta = "";
+     bool respostaInvalida = true;
 
-  //   await Future.delayed(const Duration(seconds: 5));
+     await Future.delayed(const Duration(seconds: 5));
 
-  //   await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
-  //   await Future.delayed(const Duration(seconds: 10));
+     await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
+     await Future.delayed(const Duration(seconds: 10));
     
-  //   while (respostaInvalida) {
-  //     debugPrint("1");
-  //     await voice.hear();
+     while (respostaInvalida) {
+       debugPrint("1");
+       await voice.hear();
       
-  //     resposta = voice.resposta;
-  //     debugPrint(resposta);
-  //     debugPrint(resposta.compareTo("sobre").toString());
+       resposta = voice.resposta;
+       debugPrint(resposta);
+       debugPrint(resposta.compareTo("sobre").toString());
 
-  //     if (resposta.compareTo("configuração") == 0){
-  //       irUIConfiguracao();
-  //       respostaInvalida = false;
-  //     }
-  //     else if (resposta.compareTo("sobre") == 0) {
-  //       irUISobre();
-  //       respostaInvalida= false;
-  //     }
-  //     else if (resposta.compareTo("dispositivos") == 0) {
+       if (resposta.compareTo("configuração") == 0){
+         irUIConfiguracao();
+         respostaInvalida = false;
+       }
+       else if (resposta.compareTo("sobre") == 0) {
+         irUISobre();
+         respostaInvalida= false;
+       }
+       else if (resposta.compareTo("dispositivos") == 0) {
         
-  //       irUIMenu(1);
-  //       respostaInvalida= false;
+         irUIMenu(1);
+         respostaInvalida= false;
       
-  //     } else if (resposta.compareTo("informações") == 0) {
+       } else if (resposta.compareTo("informações") == 0) {
         
-  //       irUIMenu(2);
-  //       respostaInvalida= false;
+         irUIMenu(2);
+         respostaInvalida= false;
       
-  //     } else if (resposta.compareTo("perfil") == 0) {
-  //       //index = 3;
-  //       irUIMenu(3);
-  //       respostaInvalida= false;
+       } else if (resposta.compareTo("perfil") == 0) {
+         //index = 3;
+         irUIMenu(3);
+         respostaInvalida= false;
       
-  //     } else {
-  //       await voice.speek("Não te escutei direito, para qual seção deseja ir?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //       debugPrint("2");
-  //     }
-  //   }
-  //   dialogoNaoInicializado = true;
-  // }
+       } else {
+         await voice.speek("Não te escutei direito, para qual seção deseja ir?");
+         await Future.delayed(const Duration(seconds: 5));
+         debugPrint("2");
+       }
+     }
+     dialogoNaoInicializado = true;
+   }
+   */
 
   void irUIMenu (int index) {
     Navigator.push(
