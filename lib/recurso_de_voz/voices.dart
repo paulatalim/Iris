@@ -4,6 +4,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'som_mic.dart';
+
 
 class RecursoDeVoz {
   late FlutterTts _textToSpeech;
@@ -12,6 +15,7 @@ class RecursoDeVoz {
   late double _speed; //pitch
   late double _tom; // rate
   late String _resposta;
+  late bool estado_mic = false;
 
   /// Construtor
   RecursoDeVoz() {
@@ -32,7 +36,7 @@ class RecursoDeVoz {
   /// Inicializa o microfone
   Future<void> initSpeech() async {
     await _speechToText.initialize();
-    debugPrint("microfone inicializado");
+    
   }
 
   /// Requisição da permissao para habilitacao do microfone
@@ -74,11 +78,12 @@ class RecursoDeVoz {
 
   /// Habilita o microfone e captura a voz
   Future<void> _hear() async {
+    estado_mic = true;
     _resposta = '';
     
     await _speechToText.listen(
       onResult: _onSpeechResult,
-      listenFor: const Duration(seconds: 5),
+      listenFor: const Duration(seconds: 6),
       localeId: "pt-br",
       cancelOnError: false,
       partialResults: false,
@@ -91,25 +96,24 @@ class RecursoDeVoz {
   ///
   /// Retorna o texto em forma de uma [String]
   Future<String> hear() async {
-    debugPrint("Antesss uaaaaaaaaaa");
+
 
     // Abre o microfone
-    await initSpeech();
-
-    debugPrint("Antesss");
+     await initSpeech();
 
     // Escuta o usuario
-    await _hear();
+     await _hear();
+     debugPrint("MICROFONE LIGADO");
 
-    debugPrint("Depoissssss");
 
     // Delay de 5 segundos antes do retorno
-    await Future.delayed(const Duration(seconds: 5));
-
-    debugPrint("5");
+     await Future.delayed(const Duration(seconds: 10));
+     debugPrint("10 segundos passaram ");
 
     // Retorno da _resposta em String
+     debugPrint(_resposta);
     return Future.value(_resposta);
+   
   }
 
   /// Velocidade da voz do audio

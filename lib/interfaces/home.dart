@@ -1,7 +1,9 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/som_mic.dart';
 import 'configuracao.dart';
 import 'loading.dart';
 import 'devices.dart';
@@ -21,13 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
   bool estado_mic = false;
 
-//void teste() {
-  //voice.speek("Teste 1 2 3 testando");  
-//}
 
-//
    void listening() async {
     await voice.hear();
+    estado_mic = true; 
    }
 
    void dialogo() async {
@@ -36,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
      await Future.delayed(const Duration(seconds: 5));
 
-     await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
-     await Future.delayed(const Duration(seconds: 10));
+     //await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
+     await Future.delayed(const Duration(seconds: 5));
     
      while (respostaInvalida) {
        debugPrint("1");
@@ -71,14 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
          respostaInvalida= false;
       
        } else {
-         await voice.speek("Não te escutei direito, para qual seção deseja ir?");
+         //await voice.speek("Não te escutei direito, para qual seção deseja ir?");
          await Future.delayed(const Duration(seconds: 5));
          debugPrint("2");
        }
      }
      dialogoNaoInicializado = true;
    }
-   //
+   
 
   void irUIMenu (int index) {
     Navigator.push(
@@ -104,10 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
+     if(dialogoNaoInicializado) {
+       dialogoNaoInicializado = false;
+       dialogo();
+     }
     
     return Scaffold(
       backgroundColor: Colors.transparent,

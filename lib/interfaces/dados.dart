@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'dart:core';
 
 import '../recurso_de_voz/voices.dart';
@@ -92,7 +93,9 @@ class _DadosState extends State<Dados> {
     return GestureDetector(
       onTap: () {
          if (texto== "Peso ") {
-           voice.speek("peso : ${usuario.peso} quilos");
+          final player = AudioPlayer();
+          player.play(AssetSource('som_ligado.mp3'));
+           //voice.speek("peso : ${usuario.peso} quilos");
          }
          if(texto== "Altura"){
            voice.speek("altura : ${usuario.altura} metros.");
