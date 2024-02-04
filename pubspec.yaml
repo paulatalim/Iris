@@ -33,6 +33,10 @@ dependencies:
 
   google_sign_in: ^6.1.6
   google_fonts: ^6.1.0
+  audioplayers: ^5.2.1
+  path_provider: ^2.1.2
+  http: ^1.2.0
+  azure_speech_recognition_null_safety: ^0.9.4
   
 dev_dependencies:
   flutter_test:
