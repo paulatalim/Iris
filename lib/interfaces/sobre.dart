@@ -2,7 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-// import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/speech_manager.dart';
 import 'menu.dart';
 
 class Sobre extends StatefulWidget {
@@ -43,18 +43,24 @@ class _SobreState extends State<Sobre> {
     );
   }
 
-  // void dialogo() async {
-  //   await voice.speek("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
-  //               "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
-  //               "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
-  //   await Future.delayed(const Duration(seconds: 20));
-  //   _irUIMenu();
-  // }
+  void _dialogo() async {
+    speech.speak("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
+                "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
+                "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
+    
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
+    
+    
+    _irUIMenu();
+  }
 
   @override
   void initState() {
     super.initState();
-    // dialogo();
+    _dialogo();
   }
 
   @override

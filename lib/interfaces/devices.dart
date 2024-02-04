@@ -3,11 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
 
+import '../recurso_de_voz/speech_manager.dart';
 import '../hardware/bluetooth/bluetooth_manager.dart';
 import '../hardware/available_devices.dart';
-// import '../recurso_de_voz/voices.dart';
 import 'loading.dart';
-// import '../storage/usuario.dart';
+import '../storage/usuario.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -32,120 +32,178 @@ class _DevicesState extends State<Devices> {
     );
   }
   
-  // void _dialogo() async {
-  //   String resposta = "";
-  //   bool respostaInvalida = true;
-  //   bool fazerNovaLeitura = false;
+  void _dialogo() async {
+    String resposta = "";
+    bool respostaInvalida = true;
+    bool fazerNovaLeitura = false;
 
-  //   await voice.speek("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
-  //   await Future.delayed(const Duration(seconds: 15));
+    speech.speak("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
     
-  //   do {
-  //     while (respostaInvalida) {
-  //       await voice.hear();
-  //       resposta = voice.resposta;
+    do {
+      while (respostaInvalida) {
+        resposta = await speech.listen();
 
-  //       if (resposta.compareTo("peso") == 0){
-  //         await voice.speek("Suba na balança");
-  //         await Future.delayed(const Duration(seconds: 10));
-  //         await voice.speek("Estou medindo seu peso");
-  //         // manager.publish(dispositivo[4].mensage);
+        if (resposta.compareTo("peso") == 0){
+          speech.speak("Suba na balança");
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+    
+          speech.speak("Estou medindo seu peso");
+          // manager.publish(dispositivo[4].mensage);
 
-  //         await voice.speek("Seu peso é de ${usuario.peso} quilos");
-  //         await Future.delayed(const Duration(seconds: 5));
+          speech.speak("Seu peso é de ${usuario.peso} quilos");
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
 
-  //         respostaInvalida = false;
-  //       }
-  //       else if (resposta.compareTo("altura") == 0) {
-  //         await voice.speek("Primeiro vou calibrar o sensor, não fique embaixo dele");
-  //         await Future.delayed(const Duration(seconds: 10));
+          respostaInvalida = false;
+        }
+        else if (resposta.compareTo("altura") == 0) {
+          speech.speak("Primeiro vou calibrar o sensor, não fique embaixo dele");
+
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+    
+          speech.speak("Sensor calibrando, agora fique debaixo do sensor");
+
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+
+          speech.speak("Medindo sua altura");
+
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+
+          speech.speak("Sua altura é de ${usuario.altura} metros");
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+
+          respostaInvalida= false;
+        }
+        else if (resposta.compareTo("temperatura") == 0) {
+          speech.speak("Coloque o sensor debaixo do seu braço");
           
-  //         await voice.speek("Sensor calibrando, agora fique debaixo do sensor");
-  //         await Future.delayed(const Duration(seconds: 5));
-  //         // manager.publish(dispositivo[2].mensage);
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+
+          speech.speak("Estou medindo sua temperatura");
+
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+    
+          speech.speak("Sua temperatura é de ${usuario.temperatura} graus Celsius");
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+
+          respostaInvalida= false;
+        } else {
+          speech.speak("Hummm não te escutei direito, o que você quer que eu meça?");
+
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+
+          respostaInvalida = true;
+        }
+      }
+      speech.speak("Você deseja realizar uma nova leitura?");
+
+      // Espera a fala terminar
+      do {
+        await Future.delayed(Duration(seconds: 1));
+      } while(speech.isTalking);
+    
+      respostaInvalida = true;
+
+      while (respostaInvalida) {
+        resposta = await speech.listen();
+
+        if (resposta.compareTo("sim") == 0) {
+          speech.speak("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
           
-  //         await voice.speek("Medindo sua altura");
-  //         await Future.delayed(const Duration(seconds: 30));
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
 
-  //         await voice.speek("Sua altura é de ${usuario.altura} metros");
-  //         await Future.delayed(const Duration(seconds: 5));
+          respostaInvalida = false;
+        } else if (resposta.compareTo("não") == 0) {
+          fazerNovaLeitura = false;
+          respostaInvalida = false;
+        } else {
+          speech.speak("Hummm não te escutei direito, repete de novo?");
+          // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
 
-  //         respostaInvalida= false;
-  //       }
-  //       else if (resposta.compareTo("temperatura") == 0) {
-  //         await voice.speek("Coloque o sensor debaixo do seu braço");
-  //         // manager.publish(dispositivo[2].mensage);
-  //         await Future.delayed(const Duration(seconds: 5));
-
-  //         await voice.speek("Estou medindo sua temperatura");
-  //         await Future.delayed(const Duration(seconds: 60));
-          
-
-  //         await voice.speek("Sua temperatura é de ${usuario.temperatura} graus Celsius");
-  //         await Future.delayed(const Duration(seconds: 5));
-
-  //         respostaInvalida= false;
-  //       } else {
-  //         await voice.speek("Hummm não te escutei direito, o que você quer que eu meça?");
-  //         await Future.delayed(const Duration(seconds: 5));
-  //         respostaInvalida = true;
-  //       }
-  //     }
-  //     await voice.speek("Você deseja realizar uma nova leitura?");
-  //     await Future.delayed(const Duration(seconds: 5));
     
-  //     respostaInvalida = true;
-
-  //     while (respostaInvalida) {
-  //       await voice.hear();
-  //       resposta = voice.resposta;
-
-  //       if (resposta.compareTo("sim") == 0) {
-  //         await voice.speek("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
-  //         await Future.delayed(const Duration(seconds: 5));
-
-  //         respostaInvalida = false;
-  //       } else if (resposta.compareTo("não") == 0) {
-  //         fazerNovaLeitura = false;
-  //         respostaInvalida = false;
-  //       } else {
-  //         await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //         await Future.delayed(const Duration(seconds: 5));
+        }
+        respostaInvalida = true;
+      }
+    } while (fazerNovaLeitura);
     
-  //       }
-  //       respostaInvalida = true;
-  //     }
-  //   } while (fazerNovaLeitura);
+    speech.speak("Para qual seção deseja ir agora?");
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
     
-  //   await voice.speek("Para qual seção deseja ir agora?");
-  //   await Future.delayed(const Duration(seconds: 5));
-    
-  //   respostaInvalida = true;
+    respostaInvalida = true;
 
-  //   while (respostaInvalida) {
-  //     await voice.hear();
-  //     resposta = voice.resposta;
+    while (respostaInvalida) {
+      resposta = await speech.listen();
       
-  //     if (resposta.compareTo("menu principal") == 0) {
-  //       _irUIMenu(0);
+      if (resposta.compareTo("menu principal") == 0) {
+        _irUIMenu(0);
         
-  //     } else if (resposta.compareTo("informações") == 0) {
-  //       _irUIMenu(2);
+      } else if (resposta.compareTo("informações") == 0) {
+        _irUIMenu(2);
         
-  //     } else if (resposta.compareTo("perfil") == 0) {
-  //       _irUIMenu(3);
+      } else if (resposta.compareTo("perfil") == 0) {
+        _irUIMenu(3);
         
-  //     } else if (resposta.compareTo("informações") == 0) {
-  //       await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-  //       await Future.delayed(const Duration(seconds: 10));
-    
-  //     } else {
-  //       await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //       await Future.delayed(const Duration(seconds: 5));
-    
-  //     }
-  //   }
-  // }
+      } else if (resposta.compareTo("informações") == 0) {
+        speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+        
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+
+      } else {
+        speech.speak("Hummm não te escutei direito, repete de novo?");
+        
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+        
+      }
+    }
+  }
 
   void _irUIMenu(int index) {
     Navigator.push(

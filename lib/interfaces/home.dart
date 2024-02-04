@@ -1,7 +1,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/speech_manager.dart';
 import 'configuracao.dart';
 import 'loading.dart';
 import 'devices.dart';
@@ -20,60 +20,59 @@ class _HomeScreenState extends State<HomeScreen> {
   bool trocarUI = false;
   int index = 0;
 
-  // void listening() async {
-  //   await voice.hear();
-  // }
+  void dialogo() async {
+    String resposta = "";
+    bool respostaInvalida = true;
 
-  // void dialogo() async {
-  //   String resposta = "";
-  //   bool respostaInvalida = true;
+    await Future.delayed(const Duration(seconds: 5));
 
-  //   await Future.delayed(const Duration(seconds: 5));
-
-  //   await voice.speek("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
-  //   await Future.delayed(const Duration(seconds: 10));
+    speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
+  
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
     
-  //   while (respostaInvalida) {
-  //     debugPrint("1");
-  //     await voice.hear();
+    while (respostaInvalida) {
+      resposta = await speech.listen();
       
-  //     resposta = voice.resposta;
-  //     debugPrint(resposta);
-  //     debugPrint(resposta.compareTo("sobre").toString());
-
-  //     if (resposta.compareTo("configuração") == 0){
-  //       irUIConfiguracao();
-  //       respostaInvalida = false;
-  //     }
-  //     else if (resposta.compareTo("sobre") == 0) {
-  //       irUISobre();
-  //       respostaInvalida= false;
-  //     }
-  //     else if (resposta.compareTo("dispositivos") == 0) {
+      switch (resposta) {
+        case "configuração": 
+          _irUIConfiguracao();
+          respostaInvalida = false;
+          break;
+      
+        case "sobre": 
+          _irUISobre();
+          respostaInvalida = false;
+          break;
         
-  //       irUIMenu(1);
-  //       respostaInvalida= false;
-      
-  //     } else if (resposta.compareTo("informações") == 0) {
+        case "dispositivos": 
+          _irUIMenu(1);
+          respostaInvalida = false;
+          break;
         
-  //       irUIMenu(2);
-  //       respostaInvalida= false;
+        case "informações": 
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
+        
+        case "perfil":
+          _irUIMenu(3);
+          respostaInvalida = false;
+          break;
       
-  //     } else if (resposta.compareTo("perfil") == 0) {
-  //       //index = 3;
-  //       irUIMenu(3);
-  //       respostaInvalida= false;
-      
-  //     } else {
-  //       await voice.speek("Não te escutei direito, para qual seção deseja ir?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //       debugPrint("2");
-  //     }
-  //   }
-  //   dialogoNaoInicializado = true;
-  // }
+        default:
+          speech.speak("Não te escutei direito, para qual seção deseja ir?");
+          
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+      }
+    }
+  }
 
-  void irUIMenu (int index) {
+  void _irUIMenu(int index) {
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoadScreen(index: index)
@@ -81,18 +80,24 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void irUIConfiguracao () {
+  void _irUIConfiguracao() {
     Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const Configuracao()),
         );
   }
 
-  void irUISobre () {
+  void _irUISobre() {
     Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const Sobre())
         );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dialogo();
   }
 
   @override

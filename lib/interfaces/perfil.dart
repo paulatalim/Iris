@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-// import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/speech_manager.dart';
 import '../storage/usuario.dart';
 import 'loading.dart';
 import 'login.dart';
@@ -43,52 +43,67 @@ class _UserScreen extends State<UserScreen> {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const UserLogin()));
   }
 
-  // void dialogo() async {
-  //   await voice.speek("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
-  //   await Future.delayed(const Duration(seconds: 10));
+  void _dialogo() async {
+    speech.speak("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
 
-  //   while (respostaInvalida) {
-  //       await voice.hear();
-  //       resposta = voice.resposta;
-  //       resposta = resposta.toLowerCase().trim();
+    while (respostaInvalida) {
+        resposta = await speech.listen();
 
-  //       if (resposta.compareTo("sim") == 0) {
-  //         _irUILogin();
-  //       } else if (resposta.compareTo("não") == 0) {
+        if (resposta.compareTo("sim") == 0) {
+          _irUILogin();
+        } else if (resposta.compareTo("não") == 0) {
         
-  //         respostaInvalida = false;
-  //       } else {
-  //         await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //         await Future.delayed(const Duration(seconds: 5));
-  //       }
-  //   }
+          respostaInvalida = false;
+        } else {
+          speech.speak("Hummm não te escutei direito, repete de novo?");
+          // Espera a fala terminar
+          do {
+            await Future.delayed(Duration(seconds: 1));
+          } while(speech.isTalking);
+        }
+    }
 
-  //   await voice.speek("Para qual seção deseja ir agora?");
-  //   await Future.delayed(const Duration(seconds: 5));
-  //   respostaInvalida = true;
+    speech.speak("Para qual seção deseja ir agora?");
+    
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
 
-  //   while (respostaInvalida) {
-  //     await voice.hear();
-  //     resposta = voice.resposta;
-  //     resposta = resposta.toLowerCase().trim();
+    respostaInvalida = true;
+
+    while (respostaInvalida) {
+      resposta = await speech.listen();
       
-  //     if (resposta.compareTo("menu principal") == 0) {
-  //       _irUIMenu(0);
-  //     } else if (resposta.compareTo("dispositivos") == 0) {
-  //       _irUIMenu(1);
+      if (resposta.compareTo("menu principal") == 0) {
+        _irUIMenu(0);
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        _irUIMenu(1);
         
-  //     } else if (resposta.compareTo("informações") == 0) {
-  //       _irUIMenu(2);
+      } else if (resposta.compareTo("informações") == 0) {
+        _irUIMenu(2);
         
-  //     } else if (resposta.compareTo("perfil") == 0) {
-  //       await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //     } else {
-  //       await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //     }
-  //   }
-  // }
+      } else if (resposta.compareTo("perfil") == 0) {
+        speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+        
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+
+      } else {
+        speech.speak("Hummm não te escutei direito, repete de novo?");
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+      }
+    }
+  }
 
   void _irUIMenu(int index) {
     Navigator.push(
@@ -105,14 +120,15 @@ class _UserScreen extends State<UserScreen> {
           builder: (context) => const UserLogin()),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _dialogo();
+  }
  
   @override
   Widget build(BuildContext context) {
-    
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
 
     return Scaffold(
       backgroundColor: Colors.transparent,

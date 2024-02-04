@@ -2,7 +2,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-// import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/speech_manager.dart';
 import '../storage/usuario.dart';
 import 'loading.dart';
 
@@ -91,77 +91,107 @@ class _DadosState extends State<Dados> {
   GestureDetector _clickableBoxNumber(String texto, String numero, String unidade) {
     return GestureDetector(
       onTap: () {
-        // if (texto== "Peso ") {
-        //   voice.speek("peso : ${usuario.peso} quilos");
-        // }
-        // if(texto== "Altura"){
-        //   voice.speek("altura : ${usuario.altura} metros.");
-        // }
+        if (texto == "Peso ") {
+          speech.speak("peso : ${usuario.peso} quilos");
+        } 
 
-        // if(texto== "Temperatura"){
-        //   voice.speek("temperatura : ${usuario.temperatura} graus.");
-        // }
+        else if (texto == "Altura"){
+          speech.speak("altura : ${usuario.altura} metros.");
+        }
 
-        // if(texto== "IMC"){
-        //   voice.speek("IMC : ${usuario.imc}");
-        // }
+        else if (texto == "Temperatura"){
+          speech.speak("temperatura : ${usuario.temperatura} graus.");
+        }
+
+        else if (texto == "IMC"){
+          speech.speak("IMC : ${usuario.imc}");
+        }
       },
 
       child: _boxNumber(texto, numero, unidade),
     );
   }
 
-  // void dialogo() async {
-  //   if (usuario.temperatura > 0) {
-  //     await voice.speek("A sua temperatura é de ${usuario.temperatura} graus Celsius");
-  //     await Future.delayed(const Duration(seconds: 5));
-  //     nenhumDadoColetado = false;
-  //   }
-  //   if (usuario.altura > 0) {
-  //     await voice.speek("A sua altura é de ${usuario.altura} metros");
-  //     await Future.delayed(const Duration(seconds: 5));
-  //     nenhumDadoColetado = false;
-  //   }
-  //   if (usuario.peso > 0) {
-  //     await voice.speek("A seu peso é de ${usuario.peso} quilos");
-  //     await Future.delayed(const Duration(seconds: 5));
-  //     nenhumDadoColetado = false;
-  //   }
-  //   if (usuario.imc > 0) {
-  //     await voice.speek("A seu IMC é de ${usuario.imc}");
-  //     await Future.delayed(const Duration(seconds: 5));
-  //     nenhumDadoColetado = false;
-  //   }
-  //   if (nenhumDadoColetado) {
-  //     await voice.speek("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
-  //     await Future.delayed(const Duration(seconds: 10));
-  //   }
+  void _dialogo() async {
+    if (usuario.temperatura > 0) {
+      speech.speak("A sua temperatura é de ${usuario.temperatura} graus Celsius");
+      // Espera a fala terminar
+      do {
+        await Future.delayed(Duration(seconds: 1));
+      } while(speech.isTalking);
+    
+      nenhumDadoColetado = false;
+    }
+    if (usuario.altura > 0) {
+      speech.speak("A sua altura é de ${usuario.altura} metros");
+      // Espera a fala terminar
+      do {
+        await Future.delayed(Duration(seconds: 1));
+      } while(speech.isTalking);
+    
+      nenhumDadoColetado = false;
+    }
+    if (usuario.peso > 0) {
+      speech.speak("A seu peso é de ${usuario.peso} quilos");
+      // Espera a fala terminar
+      do {
+        await Future.delayed(Duration(seconds: 1));
+      } while(speech.isTalking);
+    
+      nenhumDadoColetado = false;
+    }
+    if (usuario.imc > 0) {
+      speech.speak("A seu IMC é de ${usuario.imc}");
+      // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
 
-  //   await voice.speek("Para qual seção deseja ir agora?");
-  //   await Future.delayed(const Duration(seconds: 5));
+      nenhumDadoColetado = false;
+    }
+    if (nenhumDadoColetado) {
+      speech.speak("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
+      // Espera a fala terminar
+      do {
+        await Future.delayed(Duration(seconds: 1));
+      } while(speech.isTalking);
+    }
 
-  //   while (respostaInvalida) {
-  //     // print(currentIndex);
-  //     await voice.hear();
-  //     resposta = voice.resposta;
+    speech.speak("Para qual seção deseja ir agora?");
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
+
+
+
+    while (respostaInvalida) {
+      resposta = await speech.listen();
       
-  //     if (resposta.compareTo("menu principal") == 0) {
-  //       irUIMenu(0);
-  //     } else if (resposta.compareTo("dispositivos") == 0) {
-  //       irUIMenu(1);
-  //     } else if (resposta.compareTo("perfil") == 0) {
-  //       irUIMenu(3);
-  //     } else if (resposta.compareTo("informações") == 0) {
-  //       await voice.speek("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
-  //       await Future.delayed(const Duration(seconds: 10));
-  //     } else {
-  //       await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //     }
-  //   }
-  // }
+      if (resposta.compareTo("menu principal") == 0) {
+        _irUIMenu(0);
+      } else if (resposta.compareTo("dispositivos") == 0) {
+        _irUIMenu(1);
+      } else if (resposta.compareTo("perfil") == 0) {
+        _irUIMenu(3);
+      } else if (resposta.compareTo("informações") == 0) {
+        speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+    
+      } else {
+        speech.speak("Hummm não te escutei direito, repete de novo?");
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+      }
+    }
+  }
 
-  void irUIMenu(int index) {
+  void _irUIMenu(int index) {
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoadScreen(index: index)
@@ -172,7 +202,7 @@ class _DadosState extends State<Dados> {
   @override
   void initState() {
     super.initState();
-    // dialogo();
+    _dialogo();
   }
 
   @override

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-// import '../recurso_de_voz/voices.dart';
+import '../recurso_de_voz/speech_manager.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
 import 'login.dart';
@@ -105,63 +105,78 @@ class _UserSingIn extends State<UserSingIn> {
     }
   }
 
-  // void questionarCampo(String campo) async {
-  //   resposta = "";
-  //   await voice.speek("Agora me fale seu $campo");
-  //   await Future.delayed(const Duration(seconds: 5));
+  void _questionarCampo(String campo) async {
+    resposta = "";
+    speech.speak("Agora me fale seu $campo");
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
 
-  //   while (infoErrada) {
-  //     await voice.hear();
-  //     resposta = voice.resposta;
+    while (infoErrada) {
+      resposta = await speech.listen();
 
-  //     while (respostaInvalida) {
-  //       await voice.speek("$resposta, esse é seu $campo?");
-  //       if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-  //         respostaInvalida = false;
-  //         infoErrada = false;
+      while (respostaInvalida) {
+        speech.speak("$resposta, esse é seu $campo?");
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
           
-  //       } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-  //         break;
-  //       }
-  //       await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //     }
-  //   }
-  // }
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        speech.speak("Hummm não te escutei direito, repete de novo?");
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+      }
+    }
+  }
 
-  // void dialogo() async {
-  //   await voice.speek("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
-  //   await Future.delayed(const Duration(seconds: 5));
+  void _dialogo() async {
+    speech.speak("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
+    // Espera a fala terminar
+    do {
+      await Future.delayed(Duration(seconds: 1));
+    } while(speech.isTalking);
 
-  //   while (infoErrada) {
-  //     resposta = "";
-  //     respostaInvalida = true;
-  //     infoErrada = true;
+    while (infoErrada) {
+      resposta = "";
+      respostaInvalida = true;
+      infoErrada = true;
 
-  //     resposta = voice.resposta;
+      resposta = await speech.listen();
 
-  //     while (respostaInvalida) {
-  //       await voice.speek("$resposta, esse é seu nome?");
-  //       await Future.delayed(const Duration(seconds: 5));
+      while (respostaInvalida) {
+        speech.speak("$resposta, esse é seu nome?");
 
-  //       if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-  //         respostaInvalida = false;
-  //         infoErrada = false;
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+
+        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
+          respostaInvalida = false;
+          infoErrada = false;
           
-  //       } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-  //         break;
-  //       }
-  //       await voice.speek("Hummm não te escutei direito, repete de novo?");
-  //       await Future.delayed(const Duration(seconds: 5));
-  //     }
-  //   }
+        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
+          break;
+        }
+        speech.speak("Hummm não te escutei direito, repete de novo?");
+        // Espera a fala terminar
+        do {
+          await Future.delayed(Duration(seconds: 1));
+        } while(speech.isTalking);
+      }
+    }
 
-  //   questionarCampo("sobrenome");
-  //   questionarCampo("email");
-  //   questionarCampo("senha");
+    _questionarCampo("sobrenome");
+    _questionarCampo("email");
+    _questionarCampo("senha");
 
-  //   _irUIMenu();
-  // }
+    _irUIMenu();
+  }
 
   void _irUIMenu() {
     Navigator.push(
@@ -174,7 +189,7 @@ class _UserSingIn extends State<UserSingIn> {
   @override
   void initState() {
     super.initState();
-    // dialogo();
+    _dialogo();
   }
   
   @override
