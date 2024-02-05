@@ -4,11 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
 
-import '../recurso_de_voz/speech_manager.dart';
 import '../hardware/bluetooth/bluetooth_manager.dart';
+import '../recurso_de_voz/speech_manager.dart';
 import '../hardware/available_devices.dart';
 import 'loading.dart';
-// import '../storage/usuario.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -38,85 +37,127 @@ class _DevicesState extends State<Devices> {
     bool respostaInvalida = true;
     bool fazerNovaLeitura = false;
 
-    await speech.speak("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
+    await Future.delayed(Duration(seconds: 2));
+    await speech.speak("Please wait a moment. I am connecting to the system");
+
+    while(_bluetooth.state != "Connected") {
+      
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    await speech.speak("So far, I can read temperature, height, and measure weight. What do you want me to measure?");
     
     do {
+      respostaInvalida = true;
       while (respostaInvalida) {
         resposta = await speech.listen();
 
         switch (resposta) {
-          case "peso":
-            // await speech.speak("Suba na balança");
-            // await speech.speak("Estou medindo seu peso");
-            // manager.publish(dispositivo[4].mensage);
-            // await speech.speak("Seu peso é de ${usuario.peso} quilos");
+          case "weight":
+            _dispositivoSelecionado = dispositivo[4];
+            _bluetooth.medirPeso();
+
+            do {
+              await Future.delayed(const Duration(seconds: 1));
+            } while(_bluetooth.isMeasuring);
+            
             respostaInvalida = false;
             break;
-          
-          case "altura":
-            // await speech.speak("Primeiro vou calibrar o sensor, não fique embaixo dele");
-            // await speech.speak("Sensor calibrando, agora fique debaixo do sensor");
-            // await speech.speak("Medindo sua altura");
-            //await speech.speak("Sua altura é de ${usuario.altura} metros");
+
+          case "wait":
+            _dispositivoSelecionado = dispositivo[4];
+             _bluetooth.medirPeso();
+
+            do {
+              await Future.delayed(const Duration(seconds: 1));
+            } while(_bluetooth.isMeasuring);
+            
+            respostaInvalida = false;
+            break;
+
+          case "height":
+            _dispositivoSelecionado = dispositivo[3];
+            _bluetooth.medirAltura();
+
+            do {
+              await Future.delayed(const Duration(seconds: 1));
+            } while(_bluetooth.isMeasuring);
+            
             respostaInvalida= false;
             break;
           
-          case "temperatura":
-            // await speech.speak("Coloque o sensor debaixo do seu braço");
-            // await speech.speak("Estou medindo sua temperatura");
-            // await speech.speak("Sua temperatura é de ${usuario.temperatura} graus Celsius");
+          case "temperature":
+            _dispositivoSelecionado = dispositivo[2];
+            _bluetooth.medirTemperatura();
+
+            do {
+              await Future.delayed(const Duration(seconds: 1));
+            } while(_bluetooth.isMeasuring);
+            
             respostaInvalida= false;
             break;
 
           default:
-            await speech.speak("Hummm não te escutei direito, o que você quer que eu meça?");
-          
+            await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
             respostaInvalida = true; 
         }
       }
-      await speech.speak("Você deseja realizar uma nova leitura?");
+
+      _dispositivoSelecionado = dispositivo[0];
+      await speech.speak("Do you want to perform a new reading?");
 
       respostaInvalida = true;
 
       while (respostaInvalida) {
         resposta = await speech.listen();
 
-        if (resposta.compareTo("sim") == 0) {
-          await speech.speak("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
+        switch(resposta) {
+          case "yes":
+            await speech.speak("And what do you want me to measure now? Your weight? Your Height? Or your temperature?");
+            respostaInvalida = false;
           
-          respostaInvalida = false;
-        } else if (resposta.compareTo("não") == 0) {
-          fazerNovaLeitura = false;
-          respostaInvalida = false;
-        } else {
-          await speech.speak("Hummm não te escutei direito, repete de novo?");
+          case "no":
+            fazerNovaLeitura = false;
+            respostaInvalida = false;
+          
+          default:
+            await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
+
         }
-        respostaInvalida = true;
       }
     } while (fazerNovaLeitura);
     
-    await speech.speak("Para qual seção deseja ir agora?");
+    await speech.speak("Which section do you want to go to now?");
     
     respostaInvalida = true;
 
-    while (respostaInvalida) {
+    do {
       resposta = await speech.listen();
-      
-      if (resposta.compareTo("menu principal") == 0) {
-        _irUIMenu(0);
-        
-      } else if (resposta.compareTo("informações") == 0) {
-        _irUIMenu(2);
-        
-      } else if (resposta.compareTo("perfil") == 0) {
-        _irUIMenu(3);
-        
-      } else if (resposta.compareTo("informações") == 0) {
-        await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-      } else {
-        await speech.speak("Hummm não te escutei direito, repete de novo?");
+
+      switch (resposta) {
+        case "menu":
+          _irUIMenu(0);
+          respostaInvalida = false;
+          break;
+
+        case "information":
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
+
+        case "profile":
+          _irUIMenu(3);
+          respostaInvalida = false;
+          break;
+
+        case "devices":
+          await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
+          break;
+
+        default:
+          await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
       }
-    }
+    } while (respostaInvalida);
   }
 
   void _irUIMenu(int index) {
