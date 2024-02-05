@@ -1,5 +1,6 @@
 import 'bluetooth.dart';
 
+import '../../recurso_de_voz/speech_manager.dart';
 import '../../storage/usuario.dart';
 import '../available_devices.dart';
 
@@ -20,6 +21,7 @@ class BluetoothManager {
   bool _salvarAltura = false;
   bool _isCalibrated = false;
   bool _sistemaConectado = false;
+  bool _isMeasuring = false;
 
   String connecting = '';
   String connected = '';
@@ -107,6 +109,10 @@ class BluetoothManager {
             case 'T':
               if(_salvarTemperatura) {
                 usuario.temperatura = double.parse(dados[i].substring(1));
+
+                await speech.speak("Your temperature is ${usuario.temperatura} degrees Celsius");
+                _isMeasuring = false;
+
                 _stateTemperatura = concluded;
                 _salvarTemperatura = false;
                 
@@ -117,6 +123,10 @@ class BluetoothManager {
 
               if(_salvarAltura) {
                 usuario.altura = double.parse(dados[i].substring(1));
+
+                await speech.speak("Your height is ${usuario.altura} meters");
+                _isMeasuring = false;
+
                 _stateAltura = concluded;
                 _salvarAltura = false;
                 
@@ -125,6 +135,8 @@ class BluetoothManager {
             case 'P':
               if (_salvarPeso) {
                 usuario.peso = double.parse(dados[i].substring(1));
+                await speech.speak("Your weight is ${usuario.peso} kilograms");
+                _isMeasuring = false;
                 _statePeso = concluded;
                 _salvarPeso = false;
               }
@@ -143,6 +155,8 @@ class BluetoothManager {
 
     while(!_isCalibrated) {
       msg = _bluetooth.msgBT;
+
+      await speech.speak("I'm calibrating the sensor. Wait a minute");
 
       if(msg.trim().isNotEmpty) {
 
@@ -177,21 +191,32 @@ class BluetoothManager {
       await Future.delayed(const Duration(seconds: 2));
     }
 
+    _isMeasuring = true;
+
     // Atualiza status
     _stateAltura = guiHscr04;
 
     // Inicializa o cronometro
     _timeAltura = 30;
 
+    await speech.speak("Stand under the sensor. You have 30 seconds for this");
+
     // Esperar um tempo
     while(_timeAltura! >= 0) {
       _timeAltura = _timeAltura! - 1;
+
+      if (_timeAltura == 15) {
+        await speech.speak("15 seconds left for measurement");
+      }
+
       await Future.delayed(const Duration(seconds: 1));
     }
 
+    _stateAltura = "$processing ...";
+    await speech.speak("Processing your height");
+
     // Atualiza variaveis
     _timeAltura = null;
-    _stateAltura = "$processing ...";
     _salvarAltura = true;
   }
 
@@ -201,21 +226,32 @@ class BluetoothManager {
       await Future.delayed(const Duration(seconds: 2));
     }
 
+    _isMeasuring = true;
+
     // Atualiza status
     _statePeso = guiBalance;
 
     // Inicializa o cronometro
     _timePeso = 30;
 
+    await speech.speak("Step on the weight scale. You have 30 seconds for this");
+
     // Atualiza o conometro
-    while(_timePeso != 0) {
+    while(_timePeso! > 0) {
       _timePeso = _timePeso! - 1;
+
+      if (_timePeso == 15) {
+        await speech.speak("15 seconds left for measurement");
+      }
+
       await Future.delayed(const Duration(seconds: 1));
     }
 
+    _statePeso = "$processing ...";
+    await speech.speak("Processing your weight...");
+
     // Atuaiza as variaveis
     _timePeso = null;
-    _statePeso = "$processing ...";
     _salvarPeso = true;
   }
 
@@ -224,22 +260,32 @@ class BluetoothManager {
     while(!_sistemaConectado) {
       await Future.delayed(const Duration(seconds: 2));
     }
-    
+
+    _isMeasuring = true;
+
     // Atualiza status do sensor
     _stateTemperatura = guiThermometer;
-
+    await speech.speak("Put the sensor in your armpit. You have 30 seconds for this");
+    
     // Inicializa o cronometro
     _timeTemp = 30;
     
     // Controla o conometro
-    while(_timeTemp! >= 0) {
+    while(_timeTemp! > 0) {
       _timeTemp = _timeTemp! - 1;
+
+      if (_timeTemp == 15) {
+        await speech.speak("15 seconds left for measurement");
+      }
+
       await Future.delayed(const Duration(seconds: 1));
     }
 
+    _stateTemperatura = "$processing ...";
+    await speech.speak("Processing your temperature...");
+
     // Atualiza variaveis
     _timeTemp = null;
-    _stateTemperatura = "$processing ...";
     _salvarTemperatura = true;
   }
 
@@ -282,4 +328,5 @@ class BluetoothManager {
   get timeTemperatura => _timeTemp;
   get timeAltura => _timeAltura;
   get timePeso => _timePeso;
+  get isMeasuring => _isMeasuring;
 }
