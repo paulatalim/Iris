@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool trocarUI = false;
   int index = 0;
 
-  void dialogo() async {
+  void _dialogo() async {
     String resposta = "";
     bool respostaInvalida = true;
 
@@ -87,16 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    dialogo();
+    _dialogo();
   }
 
   @override
   Widget build(BuildContext context) {
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
