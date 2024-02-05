@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'stt.dart';
 import 'tts.dart';
@@ -35,6 +36,20 @@ class Speech {
     _textToSpeech.language = _language;
   }
 
+  Future<void> _songMicrophne() async {
+    final AudioPlayer audioPlayer = AudioPlayer();
+
+    final player = AudioCache(prefix: 'assets/audio/');
+    final url = await player.load(_microphoneOn! ? 'som_ligado.mp3' : 'som_desligado.mp3');
+
+    await audioPlayer.play(UrlSource(url.path));
+
+    // Espera o sudio termina
+    while (audioPlayer.state.toString().compareTo("PlayerState.completed") != 0) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+  }
+
   Future<void> speak(String text) async {
     _isTalking = true;
     _textToSpeech.speak(text);
@@ -57,15 +72,16 @@ class Speech {
       await Future.delayed(const Duration(seconds: 1));
     }
 
-    // TODO ativar o microfone
-    
+    _microphoneOn = true;
+    await _songMicrophne();
+
     // Espera o microfone ser desativado
     do {
       await Future.delayed(const Duration(seconds: 2));
-      _microphoneOn = true;
     } while (_speechToText.isRecording);
 
-    // TODO desativar microfone
+    _microphoneOn = false;
+    await _songMicrophne();
 
     // Informa a resposta recebida
     debugPrint("[MICROFONE] Resposta: ${_speechToText.resposta}");
