@@ -1,6 +1,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
+import '../recurso_de_voz/speech_manager.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
@@ -17,6 +18,8 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   bool variavelNaoInicializada = true;
+  late bool _isRunning;
+  bool _microphneActive = false;
   String resposta = '';
   
   late int currentIndex;
@@ -62,11 +65,28 @@ class _MenuState extends State<Menu> {
     }
   }
 
+  void _updateColorMicrophone() async {
+    while(_isRunning) {
+      setState(() {
+        _microphneActive = speech.microphoneOn;
+      });
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     currentIndex = widget.index ?? 0;
+    _isRunning = true;
     _colorSelection(currentIndex);
+    _updateColorMicrophone();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _isRunning = false;
   }
 
   @override
@@ -99,7 +119,7 @@ class _MenuState extends State<Menu> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          backgroundColor: Colors.green,
+          backgroundColor:  _microphneActive ? Colors.green : Colors.red,
           foregroundColor: Colors.white,
           elevation: 0,
           shape: const CircleBorder(),
