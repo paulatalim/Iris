@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'stt.dart';
 import 'tts.dart';
 
@@ -39,7 +41,7 @@ class Speech {
 
     // Espera terminar a fala
     do {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
     } while(_textToSpeech.isTalking);
 
     _isTalking = false;
@@ -52,21 +54,21 @@ class Speech {
 
     // Caso o microfone nao esteja ativado
     while (!_speechToText.isRecording) {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
     }
 
     // TODO ativar o microfone
     
     // Espera o microfone ser desativado
     do {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       _microphoneOn = true;
     } while (_speechToText.isRecording);
 
     // TODO desativar microfone
 
     // Informa a resposta recebida
-    print("[MICROFONE] Resposta: ${_speechToText.resposta}");
+    debugPrint("[MICROFONE] Resposta: ${_speechToText.resposta}");
 
     // Formaa a resposta recebida e a retorna
     return Future.value(_speechToText.resposta.toLowerCase().replaceAll(".", '').trim());

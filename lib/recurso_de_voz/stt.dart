@@ -1,7 +1,7 @@
-import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter/material.dart';
 import 'package:azure_speech_recognition_null_safety/azure_speech_recognition_null_safety.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
 class Stt {
   late AzureSpeechRecognition _speechAzure;

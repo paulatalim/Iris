@@ -76,7 +76,7 @@ class Tts {
 
     // Espera o audio terminar
     while (player.state.toString().compareTo("PlayerState.completed") != 0) {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
     }
 
     // Atualizacao de variavel

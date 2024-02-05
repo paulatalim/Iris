@@ -159,7 +159,7 @@ class _DevicesState extends State<Devices> {
     // Inicializa recursos
     _atualizarStatusDevices();
     _atualizarCronometroDevices();
-    // _dialogo();
+    _dialogo();
   }
 
   @override
