@@ -33,11 +33,9 @@ class Speech {
     _textToSpeech.language = _language;
   }
 
-  void speak(String text) async {
+  Future<void> speak(String text) async {
     _isTalking = true;
     _textToSpeech.speak(text);
-
-    // TODO desativar microfone
 
     // Espera terminar a fala
     do {
@@ -47,27 +45,30 @@ class Speech {
     _isTalking = false;
   }
 
+  /// Ativa o microfone e transforma em texto o som falaso pelo usuario
   Future<String> listen() async {
+    // Chamada da API para a traducao de fala em texto
     _speechToText.speech();
 
-    print('oiiiii');
-
-    // bool microfoneAtivado = false;
-
+    // Caso o microfone nao esteja ativado
     while (!_speechToText.isRecording) {
       await Future.delayed(Duration(seconds: 1));
     }
+
+    // TODO ativar o microfone
     
+    // Espera o microfone ser desativado
     do {
       await Future.delayed(Duration(seconds: 2));
       _microphoneOn = true;
     } while (_speechToText.isRecording);
 
-    _microphoneOn = false;
+    // TODO desativar microfone
 
-    print("ahhhhhhhhhhhhhhhhhh");
-    print(_speechToText.resposta);
+    // Informa a resposta recebida
+    print("[MICROFONE] Resposta: ${_speechToText.resposta}");
 
+    // Formaa a resposta recebida e a retorna
     return Future.value(_speechToText.resposta.toLowerCase().replaceAll(".", '').trim());
   }
 

@@ -42,7 +42,7 @@ class Stt {
       isRecording = false;
     });
 
-    print("[MICROFONE] Resposta: $resposta");
+    debugPrint("[MICROFONE] Resposta: $resposta");
 
     _speechAzure.setRecognitionStartedHandler(() {
       // called at the start of recognition (it could also not be used)
@@ -58,7 +58,7 @@ class Stt {
     try {
       AzureSpeechRecognition.simpleVoiceRecognition();
     } on PlatformException catch (e) {
-      print("[MICROFONE] Failed to get text '${e.message}'.");
+      debugPrint("[MICROFONE] Failed to get text '${e.message}'.");
     }
   }
 
