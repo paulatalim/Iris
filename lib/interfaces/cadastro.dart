@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../recurso_de_voz/speech_manager.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
+import '../main.dart';
 import 'login.dart';
 import 'menu.dart';
-import '../main.dart';
 
 class UserSingIn extends StatefulWidget {
   const UserSingIn({super.key});
@@ -107,39 +107,33 @@ class _UserSingIn extends State<UserSingIn> {
 
   void _questionarCampo(String campo) async {
     resposta = "";
-    speech.speak("Agora me fale seu $campo");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Agora me fale seu $campo");
 
     while (infoErrada) {
       resposta = await speech.listen();
 
       while (respostaInvalida) {
-        speech.speak("$resposta, esse é seu $campo?");
-        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-          respostaInvalida = false;
-          infoErrada = false;
+        await speech.speak("$resposta, esse é seu $campo?");
+
+        switch (resposta) {
+          case "sim":
+            respostaInvalida = false;
+            infoErrada = false;
+            break;
           
-        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-          break;
+          case "não":
+            respostaInvalida = false;
+            break;
+          
+          default:
+            await speech.speak("Hummm não te escutei direito, repete de novo?");
         }
-        speech.speak("Hummm não te escutei direito, repete de novo?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
       }
     }
   }
 
   void _dialogo() async {
-    speech.speak("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Tudo bem, vamos fazer uma conta para você. Primeiro eu preciso que me fale seu primeiro nome");
 
     while (infoErrada) {
       resposta = "";
@@ -149,25 +143,21 @@ class _UserSingIn extends State<UserSingIn> {
       resposta = await speech.listen();
 
       while (respostaInvalida) {
-        speech.speak("$resposta, esse é seu nome?");
+        await speech.speak("$resposta, esse é seu nome?");
 
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
+        switch (resposta) {
+          case "sim":
+            respostaInvalida = false;
+            infoErrada = false;
+            break;
 
-        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-          respostaInvalida = false;
-          infoErrada = false;
-          
-        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-          break;
+          case "não":
+            respostaInvalida = false;
+            break;
+
+          default:
+            await speech.speak("Hummm não te escutei direito, repete de novo?");
         }
-        speech.speak("Hummm não te escutei direito, repete de novo?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
       }
     }
 

@@ -25,13 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     bool respostaInvalida = true;
 
     await Future.delayed(const Duration(seconds: 5));
-
-    speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
-  
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
     
     while (respostaInvalida) {
       resposta = await speech.listen();
@@ -63,11 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
       
         default:
-          speech.speak("Não te escutei direito, para qual seção deseja ir?");
-          
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
+          await speech.speak("Não te escutei direito, para qual seção deseja ir?");
       }
     }
   }

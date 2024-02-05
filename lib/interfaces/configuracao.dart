@@ -58,12 +58,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     bool configurarVolume = false;
     bool novaConfiguracao = false;
 
-    speech.speak("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
-    
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
     
     do {
       respostaInvalida = true;
@@ -71,30 +66,26 @@ class _ConfiguracaoState extends State<Configuracao> {
       while (respostaInvalida) {
         resposta = await speech.listen();
 
-        if (resposta.compareTo("velocidade") == 0){
-          configurarVelocidade = true;
-          respostaInvalida = false;
-        } else if (resposta.compareTo("volume") == 0) {
-          configurarVolume = true;
-          respostaInvalida= false;
-        } else {
-          speech.speak("Hummm não te escutei direito, o que você quer configurar?");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-    
+        switch (resposta) {
+          case "velocidade":
+            configurarVelocidade = true;
+            respostaInvalida = false;
+            break;
+
+          case "volume":
+            configurarVolume = true;
+            respostaInvalida= false;
+            break;
+
+          default:
+            await speech.speak("Hummm não te escutei direito, o que você quer configurar?");
         }
       }
 
       respostaInvalida = true;
 
       if (configurarVelocidade) {
-        speech.speak("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
+        await speech.speak("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
@@ -112,75 +103,60 @@ class _ConfiguracaoState extends State<Configuracao> {
             // voice.speed = 1.0;
             respostaInvalida= false;
           } else {
-            speech.speak("Hummm não te escutei direito, pode repetir de novo?");
-            // Espera a fala terminar
-            do {
-              await Future.delayed(Duration(seconds: 1));
-            } while(speech.isTalking);
+            await speech.speak("Hummm não te escutei direito, pode repetir de novo?");
           }
         }
         configurarVelocidade = false;
       }
 
       if (configurarVolume) {
-        speech.speak("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
+        await speech.speak("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
 
-          if (resposta.compareTo("alto") == 0) {
-            // voice.volume = 1.0;
-            respostaInvalida = false;
-          } else if (resposta.compareTo("médio") == 0 || resposta.compareTo("medio") == 0) {
-            // voice.volume = 0.5;
-            respostaInvalida= false;
-          } else if (resposta.compareTo("baixo") == 0) {
-            // voice.volume = 0.2;
-            respostaInvalida= false;
-          } else {
-            speech.speak("Hummm não te escutei direito, repete de novo?");
-            // Espera a fala terminar
-            do {
-              await Future.delayed(Duration(seconds: 1));
-            } while(speech.isTalking);
+          switch (resposta) {
+            case "alto":
+              // voice.volume = 1.0;
+              respostaInvalida = false;
+              break;
+
+            case "médio":
+              // voice.volume = 0.5;
+              respostaInvalida= false;
+              break;
+
+            case "baixo":
+              // voice.volume = 0.2;
+              respostaInvalida= false;
+              break;
+
+            default:
+              await speech.speak("Hummm não te escutei direito, repete de novo?");
           }
         }
         configurarVolume = false;
       }
 
-      speech.speak("Você deseja realizar mais alguma configuração?");
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
-    
+      await speech.speak("Você deseja realizar mais alguma configuração?");
       respostaInvalida = true;
 
       while (respostaInvalida) {
         resposta = await speech.listen();
+        switch(resposta) {
+          case "sim":
+            await speech.speak("E o que deseja configurar? A velocidade ou volume da minha voz?");
+            novaConfiguracao = true;
+            respostaInvalida = false;
+            break;
 
-        if (resposta.compareTo("sim") == 0) {
-          speech.speak("E o que deseja configurar? A velocidade ou volume da minha voz?");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-    
-          novaConfiguracao = true;
-          respostaInvalida = false;
-        } else if (resposta.compareTo("não") == 0) {
-          respostaInvalida = false;
-          novaConfiguracao = false;
-        } else {
-          speech.speak("Hummm não te escutei direito, repete de novo?");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
+          case "não":
+            respostaInvalida = false;
+            novaConfiguracao = false;
+            break;
+            
+          default:
+            await speech.speak("Hummm não te escutei direito, repete de novo?");
         }
       }
     } while (novaConfiguracao);

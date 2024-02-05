@@ -114,79 +114,54 @@ class _DadosState extends State<Dados> {
 
   void _dialogo() async {
     if (usuario.temperatura > 0) {
-      speech.speak("A sua temperatura é de ${usuario.temperatura} graus Celsius");
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
-    
+      await speech.speak("A sua temperatura é de ${usuario.temperatura} graus Celsius");
+      
       nenhumDadoColetado = false;
     }
     if (usuario.altura > 0) {
-      speech.speak("A sua altura é de ${usuario.altura} metros");
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
-    
+      await speech.speak("A sua altura é de ${usuario.altura} metros");
+      
       nenhumDadoColetado = false;
     }
     if (usuario.peso > 0) {
-      speech.speak("A seu peso é de ${usuario.peso} quilos");
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
-    
+      await speech.speak("A seu peso é de ${usuario.peso} quilos");
+      
       nenhumDadoColetado = false;
     }
     if (usuario.imc > 0) {
-      speech.speak("A seu IMC é de ${usuario.imc}");
-      // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
-
+      await speech.speak("A seu IMC é de ${usuario.imc}");
+      
       nenhumDadoColetado = false;
     }
     if (nenhumDadoColetado) {
-      speech.speak("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
+      await speech.speak("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
     }
 
-    speech.speak("Para qual seção deseja ir agora?");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
-
-
-
+    await speech.speak("Para qual seção deseja ir agora?");
+    
     while (respostaInvalida) {
       resposta = await speech.listen();
+
+      switch (resposta) {
+        case "menu principal":
+          _irUIMenu(0);
+          break;
+
+        case "dispositivos":
+          _irUIMenu(1);
+          break;
+
+        case "perfil":
+          _irUIMenu(3);
+          break;
+
+        case "informações":
+          await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
+          break;
+
+        default:
+          await speech.speak("Hummm não te escutei direito, repete de novo?");
       
-      if (resposta.compareTo("menu principal") == 0) {
-        _irUIMenu(0);
-      } else if (resposta.compareTo("dispositivos") == 0) {
-        _irUIMenu(1);
-      } else if (resposta.compareTo("perfil") == 0) {
-        _irUIMenu(3);
-      } else if (resposta.compareTo("informações") == 0) {
-        speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
-    
-      } else {
-        speech.speak("Hummm não te escutei direito, repete de novo?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
       }
     }
   }

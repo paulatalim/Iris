@@ -79,67 +79,53 @@ class _UserLogin extends State<UserLogin> {
     bool respostaInvalida = true;
     
     String resposta = "";
-    speech.speak("Qual a $pronome $campo?");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Qual a $pronome $campo?");
 
     while (infoErrada) {
+      respostaInvalida = true;
       resposta = await speech.listen();
       
       while (respostaInvalida) {
-        speech.speak("$resposta, esse é $pronome $campo?");
+        await speech.speak("$resposta, esse é $pronome $campo?");
 
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
-
-        if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-          respostaInvalida = false;
-          infoErrada = false;
+        switch (resposta) {
+          case "sim":
+            respostaInvalida = false;
+            infoErrada = false;
+            break;
           
-        } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-          break;
+          case "não":
+            respostaInvalida = false;
+            break;
+          default:
+            await speech.speak("Hummm não te escutei direito, repete de novo?");
         }
-
-        speech.speak("Hummm não te escutei direito, repete de novo?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
       }
     }
   }
 
-  void dialogo() async {
+  void _dialogo() async {
     String resposta = "";
     bool respostaInvalida = true;
 
-    speech.speak("Entre com a sua conta ou crie uma nova conta! Voce já possui uma conta aqui?");
-    
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
-
+    await speech.speak("Entre com a sua conta ou crie uma nova conta! Voce já possui uma conta aqui?");
     resposta = await speech.listen();
 
     while(respostaInvalida) {
-      if (resposta.toLowerCase().trim().compareTo("sim") == 0) {
-        respostaInvalida = false;
-        _irUIMenu();
-      } else if (resposta.toLowerCase().trim().compareTo("não") == 0) {
-        _irUICadastro();
-        respostaInvalida = false;
-      }
-
-      speech.speak("Hummm não te escutei direito, repete de novo?");
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
+      switch (resposta) {
+          case "sim":
+            // Fazer login
+            // _irUIMenu();
+            respostaInvalida = false;
+            break;
+          
+          case "não":
+            _irUICadastro();
+            break;
+          
+          default:
+            await speech.speak("Hummm não te escutei direito, repete de novo?");
+        }
     }
 
     questionarCampo("email", "seu");
@@ -167,7 +153,7 @@ class _UserLogin extends State<UserLogin> {
   @override
   void initState() {
     super.initState();
-    // dialogo();
+    _dialogo();
   }
 
   @override

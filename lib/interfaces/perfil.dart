@@ -44,63 +44,49 @@ class _UserScreen extends State<UserScreen> {
   }
 
   void _dialogo() async {
-    speech.speak("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Sobre o seu perfil. Você se chama NOME e seu email é EMAIL. Você deseja sair da sua conta?");
 
     while (respostaInvalida) {
         resposta = await speech.listen();
 
-        if (resposta.compareTo("sim") == 0) {
-          _irUILogin();
-        } else if (resposta.compareTo("não") == 0) {
-        
-          respostaInvalida = false;
-        } else {
-          speech.speak("Hummm não te escutei direito, repete de novo?");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
+        switch (resposta) {
+          case "sim":
+            _irUILogin();
+            break;
+          
+          case "não":
+            respostaInvalida = false;
+            break;
+          
+          default:
+            await speech.speak("Hummm não te escutei direito, repete de novo?");
         }
     }
 
-    speech.speak("Para qual seção deseja ir agora?");
-    
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
-
+    await speech.speak("Para qual seção deseja ir agora?");
     respostaInvalida = true;
 
     while (respostaInvalida) {
       resposta = await speech.listen();
-      
-      if (resposta.compareTo("menu principal") == 0) {
-        _irUIMenu(0);
-      } else if (resposta.compareTo("dispositivos") == 0) {
-        _irUIMenu(1);
-        
-      } else if (resposta.compareTo("informações") == 0) {
-        _irUIMenu(2);
-        
-      } else if (resposta.compareTo("perfil") == 0) {
-        speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-        
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
+      switch(resposta) {
+        case "menu principal":
+          _irUIMenu(0);
+          break;
 
-      } else {
-        speech.speak("Hummm não te escutei direito, repete de novo?");
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
+        case "dispositivos":
+          _irUIMenu(1);
+          break;
+
+        case "informações":
+          _irUIMenu(2);
+          break;
+
+        case "perfil":
+          await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+          break;
+          
+        default:
+          await speech.speak("Hummm não te escutei direito, repete de novo?");
       }
     }
   }

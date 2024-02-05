@@ -7,7 +7,7 @@ import '../recurso_de_voz/speech_manager.dart';
 import '../hardware/bluetooth/bluetooth_manager.dart';
 import '../hardware/available_devices.dart';
 import 'loading.dart';
-import '../storage/usuario.dart';
+// import '../storage/usuario.dart';
 
 class Devices extends StatefulWidget {
   const Devices({super.key});
@@ -37,139 +37,64 @@ class _DevicesState extends State<Devices> {
     bool respostaInvalida = true;
     bool fazerNovaLeitura = false;
 
-    speech.speak("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
     
     do {
       while (respostaInvalida) {
         resposta = await speech.listen();
 
-        if (resposta.compareTo("peso") == 0){
-          speech.speak("Suba na balança");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-    
-          speech.speak("Estou medindo seu peso");
-          // manager.publish(dispositivo[4].mensage);
-
-          speech.speak("Seu peso é de ${usuario.peso} quilos");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
-          respostaInvalida = false;
-        }
-        else if (resposta.compareTo("altura") == 0) {
-          speech.speak("Primeiro vou calibrar o sensor, não fique embaixo dele");
-
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-    
-          speech.speak("Sensor calibrando, agora fique debaixo do sensor");
-
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
-          speech.speak("Medindo sua altura");
-
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
-          speech.speak("Sua altura é de ${usuario.altura} metros");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
-          respostaInvalida= false;
-        }
-        else if (resposta.compareTo("temperatura") == 0) {
-          speech.speak("Coloque o sensor debaixo do seu braço");
+        switch (resposta) {
+          case "peso":
+            // await speech.speak("Suba na balança");
+            // await speech.speak("Estou medindo seu peso");
+            // manager.publish(dispositivo[4].mensage);
+            // await speech.speak("Seu peso é de ${usuario.peso} quilos");
+            respostaInvalida = false;
+            break;
           
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
+          case "altura":
+            // await speech.speak("Primeiro vou calibrar o sensor, não fique embaixo dele");
+            // await speech.speak("Sensor calibrando, agora fique debaixo do sensor");
+            // await speech.speak("Medindo sua altura");
+            //await speech.speak("Sua altura é de ${usuario.altura} metros");
+            respostaInvalida= false;
+            break;
+          
+          case "temperatura":
+            // await speech.speak("Coloque o sensor debaixo do seu braço");
+            // await speech.speak("Estou medindo sua temperatura");
+            // await speech.speak("Sua temperatura é de ${usuario.temperatura} graus Celsius");
+            respostaInvalida= false;
+            break;
 
-          speech.speak("Estou medindo sua temperatura");
-
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-    
-          speech.speak("Sua temperatura é de ${usuario.temperatura} graus Celsius");
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
-          respostaInvalida= false;
-        } else {
-          speech.speak("Hummm não te escutei direito, o que você quer que eu meça?");
-
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
-          respostaInvalida = true;
+          default:
+            await speech.speak("Hummm não te escutei direito, o que você quer que eu meça?");
+          
+            respostaInvalida = true; 
         }
       }
-      speech.speak("Você deseja realizar uma nova leitura?");
+      await speech.speak("Você deseja realizar uma nova leitura?");
 
-      // Espera a fala terminar
-      do {
-        await Future.delayed(Duration(seconds: 1));
-      } while(speech.isTalking);
-    
       respostaInvalida = true;
 
       while (respostaInvalida) {
         resposta = await speech.listen();
 
         if (resposta.compareTo("sim") == 0) {
-          speech.speak("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
+          await speech.speak("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
           
-          // Espera a fala terminar
-          do {
-            await Future.delayed(Duration(seconds: 1));
-          } while(speech.isTalking);
-
           respostaInvalida = false;
         } else if (resposta.compareTo("não") == 0) {
           fazerNovaLeitura = false;
           respostaInvalida = false;
         } else {
-          speech.speak("Hummm não te escutei direito, repete de novo?");
-          // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
-
-    
+          await speech.speak("Hummm não te escutei direito, repete de novo?");
         }
         respostaInvalida = true;
       }
     } while (fazerNovaLeitura);
     
-    speech.speak("Para qual seção deseja ir agora?");
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
+    await speech.speak("Para qual seção deseja ir agora?");
     
     respostaInvalida = true;
 
@@ -186,21 +111,9 @@ class _DevicesState extends State<Devices> {
         _irUIMenu(3);
         
       } else if (resposta.compareTo("informações") == 0) {
-        speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
-        
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
-
+        await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
       } else {
-        speech.speak("Hummm não te escutei direito, repete de novo?");
-        
-        // Espera a fala terminar
-        do {
-          await Future.delayed(Duration(seconds: 1));
-        } while(speech.isTalking);
-        
+        await speech.speak("Hummm não te escutei direito, repete de novo?");
       }
     }
   }

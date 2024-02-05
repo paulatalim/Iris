@@ -44,16 +44,9 @@ class _SobreState extends State<Sobre> {
   }
 
   void _dialogo() async {
-    speech.speak("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
+    await speech.speak("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
                 "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
                 "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
-    
-    // Espera a fala terminar
-    do {
-      await Future.delayed(Duration(seconds: 1));
-    } while(speech.isTalking);
-    
-    
     _irUIMenu();
   }
 
