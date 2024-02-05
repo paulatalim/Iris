@@ -1,0 +1,78 @@
+{
+    "language": "English",
+    "@language":{
+        "description": "The current Language"
+    },
+
+    "settings": "Settings",
+    "voice": "Voice",
+    "volume": "Volume",
+    "speed": "Speed",
+    "general": "General",
+    "idioma": "Language",
+
+    "selectDevice": "Select a device",
+    "system": "System",
+    "thermometer": "Thermometer",
+    "hcsr04": "Height Sensor",
+    "balance": "Scale",
+
+    "peso": "Weight",
+    "altura": "Height",
+    "temperatura": "Temperature",
+    "imc": "BMI",
+
+    "kg": "kilos",
+    "m": "meters",
+    "@m":{
+        "description": "Unit of measurement meters"
+    },
+    "graus": "degrees",
+    "dot": ".",
+    "@dot":{
+        "description": "Symbol that separates the decimal places of a number"
+    },
+
+    "connecting": "Connecting",
+    "connected": "Connected",
+    "checkingConnection": "Checking connection",
+    "processing": "Processing",
+    "bluetoothNotInitializing": "Bluetooth not initialized",
+    "initializingBluetooth": "Initializing bluetooth",
+    "searchingDevice": "Searching for device",
+    "permission": "Permission granted",
+    "concluded": "Concluded",
+    "calibratingSensor": "Calibrating sensor",
+    "calibratedSensor": "Calibrated sensor",
+    "time": "Time",
+    "guiHscr04": "Stand under the sensor",
+    "guiBalance": "Step on the weight scale",
+    "guiThermometer": "Put the sensor in your armpit",
+
+    "editarPerfil": "Edit Profile",
+    "sair": "Sing out",
+
+    "infoApp": "This app was developed with the goal of improving the life of the visually impaired person, giving a variety of services related to health such as BMI and other essentials things for your daily life.",
+    "members": "Members",
+    "advisor": "Advisor",
+    "contact": "Contact Us",
+
+    "load": "Loading",
+
+    "register": "Register",
+    "name": "Name",
+    "surname": "Surname",
+    "password": "Password",
+    "confirmPassword": "Confirm the Password",
+    "errorRegisterEmail": "Check if the e-mail is correct.",
+    "errorRegisterPassword1": "The password must contain at least 8 characters with an uppercase, a lowercase, and a number.",
+    "errorRegisterPassword2": "The password must match.",
+    "createAccount": "Sing up",
+
+    "emailExample": "name@example.com",
+    "passwordHint": "Type your password",
+    "singIn": "Sing in",
+    "singInGoogle": "Sing in with Google",
+    "errorLoginEmail": "Invalid e-mail",
+    "errorLoginPassword": "Invalid password"
+}

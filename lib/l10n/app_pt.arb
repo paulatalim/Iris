@@ -1,0 +1,69 @@
+{
+    "language": "Português",
+
+    "settings": "Configuração",
+    "voice": "Voz",
+    "volume": "Volume",
+    "speed": "Velocidade",
+    "general": "Geral",
+    "idioma": "Idioma",
+
+    "selectDevice": "Selecione um dispositivo",
+    "system": "Sistema",
+    "thermometer": "Termômetro",
+    "hcsr04": "Sensor de Altura",
+    "balance": "Balança",
+
+    "peso": "Peso",
+    "altura": "Altura",
+    "temperatura": "Temperatura",
+    "imc": "IMC",
+
+    "kg": "quilos",
+    "m": "metros",
+    "graus": "graus",
+    "dot": ",",
+
+    "connecting": "Conectando",
+    "connected": "Conectado",
+    "checkingConnection": "Verificando conexão",
+    "processing": "Processando",
+    "bluetoothNotInitializing": "Bluetooth não inicializado",
+    "initializingBluetooth": "Inicializando bluetooth",
+    "searchingDevice": "Procurando Dispositivo",
+    "permission": "Permissão concedida",
+    "concluded": "Concluído",
+    "calibratingSensor": "Calibrando sensor",
+    "calibratedSensor": "Sensor calibrado",
+    "time": "Tempo",
+    "guiHscr04": "Fique debaixo do sensor",
+    "guiBalance": "Suba na balança",
+    "guiThermometer": "Coloque o sensor debaixo do braço",
+
+    "editarPerfil": "Editar Perfil",
+    "sair": "Sair",
+
+    "infoApp": "Este aplicativo foi desenvolvido com o objetivo de melhorar a qualidade de vida dos deficientes visuais, fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.",
+    "members": "Integrantes",
+    "advisor": "Orientador",
+    "contact": "Fale Conosco",
+
+    "load": "Carregando",
+
+    "register": "Cadastro",
+    "name": "Nome",
+    "surname": "Sobrenome",
+    "password": "Senha",
+    "confirmPassword": "Confirme a senha",
+    "errorRegisterEmail": "Verifique se o e-mail está correto.",
+    "errorRegisterPassword": "A senha deve conter pelo menos 8 digitos, possuindo uma letra maiúscula, uma letra minúscula e um número.",
+    "errorRegisterPassword2": "As senhas devem ser iguais.",
+    "createAccount": "Cadastrar-se",
+
+    "emailExample": "nome@exemplo.com",
+    "passwordHint": "Digite sua senha",
+    "singIn": "Entrar",
+    "singInGoogle": "Entrar com Google",
+    "errorLoginEmail": "E-mail inválido",
+    "errorLoginPassword": "Senha inválida"
+}

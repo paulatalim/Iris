@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +48,7 @@ class _LoadScreenState extends State<LoadScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Carregando...',
+              "${AppLocalizations.of(context)!.load} ...",
               style: GoogleFonts.inclusiveSans(
                 textStyle: const TextStyle(
                   color: Colors.white,

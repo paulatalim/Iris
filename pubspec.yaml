@@ -37,6 +37,11 @@ dependencies:
   path_provider: ^2.1.2
   http: ^1.2.0
   azure_speech_recognition_null_safety: ^0.9.4
+
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.18.1
+  provider: ^6.1.1
   
 dev_dependencies:
   flutter_test:
@@ -68,6 +73,7 @@ flutter_launcher_icons:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - assets/images/hardware.png
     - assets/images/logo.png
