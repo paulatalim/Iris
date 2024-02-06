@@ -166,14 +166,44 @@ class _ConfiguracaoState extends State<Configuracao> {
       }
     } while (novaConfiguracao);
 
-    _irUIMenu();
+    await speech.speak("Which section do you want to go to now?");
+    
+    do {
+      resposta = await speech.listen();
+
+      switch (resposta) {
+        case "menu":
+          _irUIMenu(0);
+          respostaInvalida = false;
+          break;
+
+        case "devices":
+          _irUIMenu(1);
+          respostaInvalida = false;
+          break;
+
+        case "settings":
+          await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
+          respostaInvalida = false;
+          break;
+
+        case "information":
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
+
+        default:
+          await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
+      }
+      
+    } while (respostaInvalida);
   }
 
-  void _irUIMenu() {
+  void _irUIMenu(int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menu()),
+          builder: (context) => Menu(index: index,)),
     );
   }
 
