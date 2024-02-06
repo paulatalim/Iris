@@ -54,7 +54,10 @@ class _SobreState extends State<Sobre> {
   @override
   void initState() {
     super.initState();
-    _dialogo();
+    
+    if(speech.controlarPorVoz) {
+      _dialogo();
+    }
   }
 
   @override

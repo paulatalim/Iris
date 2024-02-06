@@ -20,6 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   bool trocarUI = false;
   int index = 0;
 
+  void _apresentacao() async {
+    // await speech.speak("Hi, I am Iris")
+  }
+
   void _dialogo() async {
     String resposta = "";
     bool respostaInvalida = true;
@@ -87,7 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _dialogo();
+
+    if(speech.controlarPorVoz == null) {
+      _apresentacao();
+    } else if (speech.controlarPorVoz!) {
+      _dialogo();
+    }
+
+    // await Future.delayed(Duration(seconds: 1));
+    // if(speech.controlarPorVoz) {
+      
+    // }
   }
 
   @override
@@ -113,19 +127,19 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 16,
             child: Column(
               children: [
-                IconButton(
-                  icon: const Icon(FontAwesomeIcons.gear),
-                  color: Colors.white,
-                  iconSize: 30,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Configuracao()),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
+                // IconButton(
+                //   icon: const Icon(FontAwesomeIcons.gear),
+                //   color: Colors.white,
+                //   iconSize: 30,
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => const Configuracao()),
+                //     );
+                //   },
+                // ),
+                // const SizedBox(height: 20),
                 IconButton(
                   icon: const Icon(FontAwesomeIcons.circleInfo),
                   color: Colors.white,

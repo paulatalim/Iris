@@ -182,7 +182,9 @@ class _DadosState extends State<Dados> {
   @override
   void initState() {
     super.initState();
-    _dialogo();
+    if(speech.controlarPorVoz) {
+      _dialogo();
+    }
   }
 
   @override

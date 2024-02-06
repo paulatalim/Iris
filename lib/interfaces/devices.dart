@@ -201,7 +201,10 @@ class _DevicesState extends State<Devices> {
     // Inicializa recursos
     _atualizarStatusDevices();
     _atualizarCronometroDevices();
-    _dialogo();
+    
+    if(speech.controlarPorVoz) {
+      _dialogo();
+    }
   }
 
   @override
