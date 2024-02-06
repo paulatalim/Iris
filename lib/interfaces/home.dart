@@ -21,14 +21,21 @@ class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
 
   void _apresentacao() async {
-    // await speech.speak("Hi, I am Iris")
+    await Future.delayed(const Duration(seconds: 1));
+    await speech.speak("Hi, I'm Iris, your virtual healthcare assistant");
+
+    // Espera o recurso de voz ser inicializado
+    while(speech.controlarPorVoz == null) {
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+
   }
 
   void _dialogo() async {
     String resposta = "";
     bool respostaInvalida = true;
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
     await speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
     
     while (respostaInvalida) {

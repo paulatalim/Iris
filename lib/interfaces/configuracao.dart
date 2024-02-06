@@ -1,12 +1,12 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../recurso_de_voz/speech_manager.dart';
-import '../provider/locale_provider.dart';
-import '../l10n/l10n.dart';
+// import '../provider/locale_provider.dart';
+// import '../l10n/l10n.dart';
 import 'menu.dart';
 
 class Configuracao extends StatefulWidget {
@@ -359,7 +359,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                 //   ),
                 // ),
 
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
           
                 SizedBox(
                   width: 0.7 * MediaQuery.of(context).size.width,

@@ -37,7 +37,6 @@ class _DevicesState extends State<Devices> {
     bool respostaInvalida = true;
     bool fazerNovaLeitura = false;
 
-    await Future.delayed(Duration(seconds: 2));
     await speech.speak("Please wait a moment. I am connecting to the system");
 
     while(_bluetooth.state != "Connected") {
@@ -201,7 +200,7 @@ class _DevicesState extends State<Devices> {
     // Inicializa recursos
     _atualizarStatusDevices();
     _atualizarCronometroDevices();
-    
+
     if(speech.controlarPorVoz) {
       _dialogo();
     }
