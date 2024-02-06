@@ -25,13 +25,21 @@ class _HomeScreenState extends State<HomeScreen> {
     bool respostaInvalida = true;
 
     await Future.delayed(const Duration(seconds: 5));
-    await speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
+    await speech.speak("Which section of the app would you like to go to? Settings? About us? Devices? Informations? Or Profile?");
     
     while (respostaInvalida) {
       resposta = await speech.listen();
       
       switch (resposta) {
-        case "configuração": 
+        case "i want to go to settings": 
+          _irUIConfiguracao();
+          respostaInvalida = false;
+          break;
+        case "i wanna go to settings": 
+          _irUIConfiguracao();
+          respostaInvalida = false;
+          break;
+        case "go to settings": 
           _irUIConfiguracao();
           respostaInvalida = false;
           break;
@@ -41,7 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
 
       
-        case "sobre": 
+        case "i want to go to about us": 
+          _irUISobre();
+          respostaInvalida = false;
+          break;
+        case "i wanna go to about us": 
+          _irUISobre();
+          respostaInvalida = false;
+          break;
+        case "go to about us": 
           _irUISobre();
           respostaInvalida = false;
           break;
@@ -50,7 +66,15 @@ class _HomeScreenState extends State<HomeScreen> {
           respostaInvalida = false;
           break;
         
-        case "dispositivos": 
+        case "i want to go to devices ": 
+          _irUIMenu(1);
+          respostaInvalida = false;
+          break;
+        case "i wanna go to devices": 
+          _irUIMenu(1);
+          respostaInvalida = false;
+          break;
+        case "go to devices": 
           _irUIMenu(1);
           respostaInvalida = false;
           break;
@@ -59,16 +83,32 @@ class _HomeScreenState extends State<HomeScreen> {
           respostaInvalida = false;
           break;
         
-        case "informações": 
+        case "i wanna go to informations": 
           _irUIMenu(2);
           respostaInvalida = false;
           break;
-        case "information": 
+        case "i want to go to informations": 
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
+        case "go to informations": 
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
+        case "informations": 
           _irUIMenu(2);
           respostaInvalida = false;
           break;
         
-        case "perfil":
+        case "i want to go to profile ":
+          _irUIMenu(3);
+          respostaInvalida = false;
+          break;
+        case "i wanna go to profile":
+          _irUIMenu(3);
+          respostaInvalida = false;
+          break;
+        case "go to profile ":
           _irUIMenu(3);
           respostaInvalida = false;
           break;
@@ -78,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
       
         default:
-          await speech.speak("Não te escutei direito, para qual seção deseja ir?");
+          await speech.speak("I didn't hear you properly, which section do you want to go to?");
       }
     }
   }
