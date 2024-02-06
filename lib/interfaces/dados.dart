@@ -115,56 +115,60 @@ class _DadosState extends State<Dados> {
 
   void _dialogo() async {
     if (usuario.temperatura > 0) {
-      await speech.speak("A sua temperatura é de ${usuario.temperatura} graus Celsius");
+      await speech.speak("Your temperature is ${usuario.temperatura} degrees Celsius");
       
       nenhumDadoColetado = false;
     }
     if (usuario.altura > 0) {
-      await speech.speak("A sua altura é de ${usuario.altura} metros");
+      await speech.speak("Your height is ${usuario.altura} meters");
       
       nenhumDadoColetado = false;
     }
     if (usuario.peso > 0) {
-      await speech.speak("A seu peso é de ${usuario.peso} quilos");
+      await speech.speak("Your weight is ${usuario.peso} kilograms");
       
       nenhumDadoColetado = false;
     }
     if (usuario.imc > 0) {
-      await speech.speak("A seu IMC é de ${usuario.imc}");
+      await speech.speak("Your BMI is ${usuario.imc}");
       
       nenhumDadoColetado = false;
     }
     if (nenhumDadoColetado) {
-      await speech.speak("Ainda não há nenhuma informação coletada aqui, vá para a seção de dispositivos para começar.");
+      await speech.speak("There is no information collected here yet, go to the devices section to get started.");
     }
 
-    await speech.speak("Para qual seção deseja ir agora?");
+    await speech.speak("Which section do you want to go to now?");
     
-    while (respostaInvalida) {
+    do {
       resposta = await speech.listen();
 
       switch (resposta) {
-        case "menu principal":
+        case "menu":
           _irUIMenu(0);
+          respostaInvalida = false;
           break;
 
-        case "dispositivos":
+        case "devices":
           _irUIMenu(1);
+          respostaInvalida = false;
           break;
 
-        case "perfil":
+        case "profile":
           _irUIMenu(3);
+          respostaInvalida = false;
           break;
 
-        case "informações":
-          await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
+        case "information":
+          await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
+          respostaInvalida = false;
           break;
 
         default:
-          await speech.speak("Hummm não te escutei direito, repete de novo?");
-      
+          await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
       }
-    }
+      
+    } while (respostaInvalida);
   }
 
   void _irUIMenu(int index) {
@@ -178,7 +182,9 @@ class _DadosState extends State<Dados> {
   @override
   void initState() {
     super.initState();
-    _dialogo();
+    if(speech.controlarPorVoz) {
+      _dialogo();
+    }
   }
 
   @override

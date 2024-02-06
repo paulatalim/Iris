@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../recurso_de_voz/speech_manager.dart';
 import '../storage/armazenamento.dart';
 import '../storage/usuario.dart';
-import '../main.dart';
+// import '../main.dart';
 import 'login.dart';
 import 'menu.dart';
 
@@ -54,7 +54,7 @@ class _SingUp extends State<SingUp> {
     usuario.email = userAcc.text;
     usuario.sobrenome = userSurname.text;
     usuario.nome = userName.text;
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    // navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   /// Valida o email

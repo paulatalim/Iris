@@ -20,11 +20,22 @@ class _HomeScreenState extends State<HomeScreen> {
   bool trocarUI = false;
   int index = 0;
 
-  void dialogo() async {
+  void _apresentacao() async {
+    await Future.delayed(const Duration(seconds: 1));
+    await speech.speak("Hi, I'm Iris, your virtual healthcare assistant");
+
+    // Espera o recurso de voz ser inicializado
+    while(speech.controlarPorVoz == null) {
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+
+  }
+
+  void _dialogo() async {
     String resposta = "";
     bool respostaInvalida = true;
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
     await speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Informações? Ou perfil?");
     
     while (respostaInvalida) {
@@ -108,16 +119,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    dialogo();
+
+    if(speech.controlarPorVoz == null) {
+      _apresentacao();
+    } else if (speech.controlarPorVoz!) {
+      _dialogo();
+    }
+
+    // await Future.delayed(Duration(seconds: 1));
+    // if(speech.controlarPorVoz) {
+      
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    // if(dialogoNaoInicializado) {
-    //   dialogoNaoInicializado = false;
-    //   dialogo();
-    // }
-    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -139,19 +155,19 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 16,
             child: Column(
               children: [
-                IconButton(
-                  icon: const Icon(FontAwesomeIcons.gear),
-                  color: Colors.white,
-                  iconSize: 30,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Configuracao()),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
+                // IconButton(
+                //   icon: const Icon(FontAwesomeIcons.gear),
+                //   color: Colors.white,
+                //   iconSize: 30,
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => const Configuracao()),
+                //     );
+                //   },
+                // ),
+                // const SizedBox(height: 20),
                 IconButton(
                   icon: const Icon(FontAwesomeIcons.circleInfo),
                   color: Colors.white,

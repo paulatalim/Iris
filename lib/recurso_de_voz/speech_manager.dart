@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'stt.dart';
 import 'tts.dart';
@@ -12,6 +15,7 @@ class Speech {
   late Stt _speechToText;
 
   bool? _microphoneOn;
+  bool? _controleVozAtivado;
   bool _isTalking = false;
   
   Speech() {
@@ -19,6 +23,18 @@ class Speech {
     _speechToText = Stt(_key, _region, _language);
 
     _microphoneOn = _speechToText.isRecording;
+
+    recuperarConfig();
+  }
+
+  void salvarConfig() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("controleVoz", _controleVozAtivado ?? true);
+  }
+
+  void recuperarConfig() async {
+    final prefs = await SharedPreferences.getInstance();
+    _controleVozAtivado = prefs.getBool("controleVoz") ?? true;
   }
 
   void setLanguage(String languageCode) {
@@ -33,6 +49,20 @@ class Speech {
     // Atualiza idioma
     _speechToText.language = _language;
     _textToSpeech.language = _language;
+  }
+
+  Future<void> _songMicrophne() async {
+    final AudioPlayer audioPlayer = AudioPlayer();
+
+    final player = AudioCache(prefix: 'assets/audio/');
+    final url = await player.load(_microphoneOn! ? 'som_ligado.mp3' : 'som_desligado.mp3');
+
+    await audioPlayer.play(UrlSource(url.path));
+
+    // Espera o sudio termina
+    while (audioPlayer.state.toString().compareTo("PlayerState.completed") != 0) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
   }
 
   Future<void> speak(String text) async {
@@ -57,15 +87,16 @@ class Speech {
       await Future.delayed(const Duration(seconds: 1));
     }
 
-    // TODO ativar o microfone
-    
+    _microphoneOn = true;
+    await _songMicrophne();
+
     // Espera o microfone ser desativado
     do {
       await Future.delayed(const Duration(seconds: 2));
-      _microphoneOn = true;
     } while (_speechToText.isRecording);
 
-    // TODO desativar microfone
+    _microphoneOn = false;
+    await _songMicrophne();
 
     // Informa a resposta recebida
     debugPrint("[MICROFONE] Resposta: ${_speechToText.resposta}");
@@ -78,6 +109,15 @@ class Speech {
   get microphoneOn => _microphoneOn ?? false;
 
   get isTalking => _isTalking;
+
+  get controlarPorVoz => _controleVozAtivado;
+  set controlarPorVoz (value) {
+    _controleVozAtivado = value;
+    if(!value) {
+      _textToSpeech.stopPlayer();
+    }
+    salvarConfig();
+  }
 }
 
 Speech speech = Speech();

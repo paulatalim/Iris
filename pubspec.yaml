@@ -83,3 +83,4 @@ flutter:
     - assets/images/esp32.png
     - assets/images/sensor.png
     - assets/images/termometro.png
+    - assets/audio/

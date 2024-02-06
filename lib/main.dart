@@ -5,13 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'firebase/firebase_control_page.dart';
 import 'provider/locale_provider.dart';
 import 'firebase/firebase_options.dart';
 import 'interfaces/menu.dart';
 import './l10n/l10n.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
+// final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +35,7 @@ void main() async {
         provider.getLocale();
         
         return MaterialApp(
-          navigatorKey: navigatorKey,
+          // navigatorKey: navigatorKey,
           title: 'Iris',
           theme: ThemeData(
               useMaterial3: true,
@@ -55,10 +54,6 @@ void main() async {
           ],
 
           home: const Menu(),
-
-          // TODO(mafra): verificar erro de login
-          //Login desabilitado por estar com erro
-          // home: const MainPage(),
         );
       }
     )
