@@ -5,7 +5,8 @@ import '../recurso_de_voz/speech_manager.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
-import 'perfil.dart';
+import 'configuracao.dart';
+// import 'perfil.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key, this.index});
@@ -32,7 +33,7 @@ class _MenuState extends State<Menu> {
     const HomeScreen(),
     const Devices(),
     const Dados(),
-    const UserScreen(),
+    const Configuracao(),
   ];
 
   /// Lista de cores do icones do menu
@@ -143,7 +144,7 @@ class _MenuState extends State<Menu> {
               ),
 
               buttonNavigationBar(2, FontAwesomeIcons.heartPulse),
-              buttonNavigationBar(3, FontAwesomeIcons.lock)
+              buttonNavigationBar(3, FontAwesomeIcons.gear)
             ],
           )
         ),
