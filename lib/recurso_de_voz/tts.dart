@@ -7,6 +7,7 @@ class Tts {
   late String _key;
   String _language = "en-US";
   bool isTalking = false;
+  final player = AudioPlayer();
 
   Tts(String key, String language) {
     _key = key;
@@ -71,7 +72,6 @@ class Tts {
     file.writeAsBytesSync(bytes);
     
     // Toca o arquivo mp3
-    final player = AudioPlayer();
     await player.play(UrlSource(file.path));
 
     // Espera o audio terminar
@@ -81,6 +81,10 @@ class Tts {
 
     // Atualizacao de variavel
     isTalking = false;
+  }
+
+  void stopPlayer () {
+    player.stop();
   }
 
   set language(String language) => _language = language;

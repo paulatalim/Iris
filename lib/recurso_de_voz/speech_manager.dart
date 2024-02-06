@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'stt.dart';
 import 'tts.dart';
@@ -13,6 +15,7 @@ class Speech {
   late Stt _speechToText;
 
   bool? _microphoneOn;
+  bool? _controleVozAtivado;
   bool _isTalking = false;
   
   Speech() {
@@ -20,6 +23,21 @@ class Speech {
     _speechToText = Stt(_key, _region, _language);
 
     _microphoneOn = _speechToText.isRecording;
+
+    recuperarConfig();
+  }
+
+  void salvarConfig() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("controleVoz", _controleVozAtivado ?? true);
+    print("sallllvooooo $_controleVozAtivado");
+  }
+
+  void recuperarConfig() async {
+    final prefs = await SharedPreferences.getInstance();
+    _controleVozAtivado = prefs.getBool("controleVoz") ?? true;
+
+    print("recupearodooo $_controleVozAtivado");
   }
 
   void setLanguage(String languageCode) {
@@ -94,6 +112,15 @@ class Speech {
   get microphoneOn => _microphoneOn ?? false;
 
   get isTalking => _isTalking;
+
+  get controlarPorVoz => _controleVozAtivado;
+  set controlarPorVoz (value) {
+    _controleVozAtivado = value;
+    if(!value) {
+      _textToSpeech.stopPlayer();
+    }
+    salvarConfig();
+  }
 }
 
 Speech speech = Speech();
