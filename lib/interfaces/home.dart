@@ -25,6 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
+    if (speech.controlarPorVoz) {
+      _dialogo();
+    }
   }
 
   void _dialogo() async {
