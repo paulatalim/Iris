@@ -125,11 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (speech.controlarPorVoz!) {
       _dialogo();
     }
-
-    // await Future.delayed(Duration(seconds: 1));
-    // if(speech.controlarPorVoz) {
-      
-    // }
   }
 
   @override
