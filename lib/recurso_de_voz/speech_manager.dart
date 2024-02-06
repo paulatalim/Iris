@@ -17,11 +17,11 @@ class Speech {
   bool? _microphoneOn;
   bool? _controleVozAtivado;
   bool _isTalking = false;
+  double _volume = 1;
   
   Speech() {
     _textToSpeech = Tts(_key, _language);
     _speechToText = Stt(_key, _region, _language);
-
     _microphoneOn = _speechToText.isRecording;
 
     recuperarConfig();
@@ -30,11 +30,14 @@ class Speech {
   void salvarConfig() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("controleVoz", _controleVozAtivado ?? true);
+    prefs.setDouble("volume", _volume);
   }
 
   void recuperarConfig() async {
     final prefs = await SharedPreferences.getInstance();
     _controleVozAtivado = prefs.getBool("controleVoz") ?? true;
+    _volume = prefs.getDouble("volume") ?? 1;
+    _textToSpeech.volume = _volume;
   }
 
   void setLanguage(String languageCode) {
@@ -116,6 +119,13 @@ class Speech {
     if(!value) {
       _textToSpeech.stopPlayer();
     }
+    salvarConfig();
+  }
+
+  get volume => _volume;
+  set volume(value) {
+    _volume = value;
+    _textToSpeech.volume = _volume;
     salvarConfig();
   }
 }

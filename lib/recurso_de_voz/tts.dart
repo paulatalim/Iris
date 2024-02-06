@@ -7,6 +7,7 @@ class Tts {
   late String _key;
   String _language = "en-US";
   bool isTalking = false;
+  double _volume = 1;
   final player = AudioPlayer();
 
   Tts(String key, String language) {
@@ -88,4 +89,8 @@ class Tts {
   }
 
   set language(String language) => _language = language;
+  set volume(double value) {
+    _volume = value;
+    player.setVolume(_volume);
+  }
 }
