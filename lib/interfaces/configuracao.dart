@@ -24,6 +24,7 @@ class _ConfiguracaoState extends State<Configuracao> {
   double _valorVolume = 100;
 
   late String _speedOption;
+  late bool _ativarVoz;
 
   /// Estiliza os cards das configuracoes
   BoxDecoration _styleBox() {
@@ -180,13 +181,17 @@ class _ConfiguracaoState extends State<Configuracao> {
   void initState() {
     super.initState();
     _speedOption= speeds[1];
-    _dialogo();
+    _ativarVoz = speech.controlarPorVoz;
+    
+    if(speech.controlarPorVoz) {
+      _dialogo();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context);
-    final locale = provider.locale;
+    // final provider = Provider.of<LocaleProvider>(context);
+    // final locale = provider.locale;
 
     return Scaffold(
       body: Container(
@@ -207,21 +212,21 @@ class _ConfiguracaoState extends State<Configuracao> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.only(top: 45, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      IconButton(
-                          icon: const Icon(FontAwesomeIcons.xmark),
-                          color: const Color(0xFF373B8A),
-                          iconSize: 30,
-                          onPressed: () => _irUIMenu()
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   padding: const EdgeInsets.only(top: 45, right: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     crossAxisAlignment: CrossAxisAlignment.end,
+                //     children: [
+                //       IconButton(
+                //           icon: const Icon(FontAwesomeIcons.xmark),
+                //           color: const Color(0xFF373B8A),
+                //           iconSize: 30,
+                //           onPressed: () => _irUIMenu()
+                //       ),
+                //     ],
+                //   ),
+                // ),
           
                 const Padding(padding: EdgeInsets.only(top: 50)),
                 // Informa o titulo da pagina
@@ -241,6 +246,120 @@ class _ConfiguracaoState extends State<Configuracao> {
                 const SizedBox(
                   height: 80,
                 ),
+
+                SizedBox(
+                  width: 0.7 * MediaQuery.of(context).size.width,
+                  child: Text(
+                    AppLocalizations.of(context)!.general,
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.inclusiveSans(
+                      textStyle: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2,
+                        color: Color(0xFF373B8A),
+                      ),
+                    )
+                  ),
+                ),
+          
+                // Gap entre elementos
+                const SizedBox(
+                  height: 30,
+                ),
+
+                // Campo de ativação de voz
+                Container(
+                  width: 0.8 * MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(
+                      left: 30, top: 20, right: 30, bottom: 20),
+                  decoration: _styleBox(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Voice control",
+                        style: _styleBoxTitle(),
+                      ),
+                      Switch(
+                        value: _ativarVoz,
+                        onChanged: (bool valor){
+                          setState(() {
+                            _ativarVoz = valor;
+                            speech.controlarPorVoz = _ativarVoz;
+                          });
+                        }
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Gap entre elementos
+                // const SizedBox(
+                //   height: 30,
+                // ),
+          
+                // // Compo do idioma
+                // Container(
+                //   width: 0.8 * MediaQuery.of(context).size.width,
+                //   padding: const EdgeInsets.only(
+                //       left: 30, top: 20, right: 30, bottom: 20),
+                //   decoration: _styleBox(),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //         AppLocalizations.of(context)!.idioma,
+                //         style: _styleBoxTitle(),
+                //       ),
+                //       SizedBox(
+                //         width: 110,
+                //         child: DropdownButtonHideUnderline(
+                //           child: DropdownButton(
+                //             value: locale,
+                //             icon: const Icon(FontAwesomeIcons.chevronDown),
+                //             iconSize: 15,
+                //             iconEnabledColor: const Color(0xFF373B8A),
+                //             iconDisabledColor: const Color(0xFFFAFAFA),
+                //             underline: Container(
+                //             color: const Color(0x00000000),
+                //           ),
+                //           elevation: 15,
+                //           borderRadius: BorderRadius.circular(10),
+                //           style: const TextStyle(
+                //               color: Color(0xFF373B8A),
+                //               fontSize: 20,
+                //               fontWeight: FontWeight.w500),
+                //             items: L10n.all.map(
+                //               (locale) {
+                //                 final language = L10n.getLanguage(locale.languageCode);
+          
+                //                 return DropdownMenuItem(
+                //                   value: locale,
+                //                   onTap: () {
+                //                     final provider = Provider.of<LocaleProvider>(context, listen: false);
+          
+                //                     provider.setLocale(locale);
+                //                     provider.saveLocale(locale);
+                //                   },
+                //                   child: Center(
+                //                     child: Text(
+                //                       language,
+                //                       style: const TextStyle(fontSize: 20),
+                //                     ),
+                //                   ),
+                //                 );
+                //               }
+                //             ).toList(),
+                //             onChanged: (_) {},
+                //             )
+                //         )
+                //       ),
+                //     ],
+                //   ),
+                // ),
+
+                SizedBox(height: 30),
           
                 SizedBox(
                   width: 0.7 * MediaQuery.of(context).size.width,
@@ -353,93 +472,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                   ),
           
                 ),
-                
-                // Gap entre elementos
-                const SizedBox(
-                  height: 30,
-                ),
-          
-                SizedBox(
-                  width: 0.7 * MediaQuery.of(context).size.width,
-                  child: Text(
-                    AppLocalizations.of(context)!.general,
-                    textAlign: TextAlign.start,
-                    style: GoogleFonts.inclusiveSans(
-                      textStyle: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 2,
-                        color: Color(0xFF373B8A),
-                      ),
-                    )
-                  ),
-                ),
-          
-                // Gap entre elementos
-                const SizedBox(
-                  height: 30,
-                ),
-          
-                // Compo do idioma
-                Container(
-                  width: 0.8 * MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.only(
-                      left: 30, top: 20, right: 30, bottom: 20),
-                  decoration: _styleBox(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.idioma,
-                        style: _styleBoxTitle(),
-                      ),
-                      SizedBox(
-                        width: 110,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            value: locale,
-                            icon: const Icon(FontAwesomeIcons.chevronDown),
-                            iconSize: 15,
-                            iconEnabledColor: const Color(0xFF373B8A),
-                            iconDisabledColor: const Color(0xFFFAFAFA),
-                            underline: Container(
-                            color: const Color(0x00000000),
-                          ),
-                          elevation: 15,
-                          borderRadius: BorderRadius.circular(10),
-                          style: const TextStyle(
-                              color: Color(0xFF373B8A),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                            items: L10n.all.map(
-                              (locale) {
-                                final language = L10n.getLanguage(locale.languageCode);
-          
-                                return DropdownMenuItem(
-                                  value: locale,
-                                  onTap: () {
-                                    final provider = Provider.of<LocaleProvider>(context, listen: false);
-          
-                                    provider.setLocale(locale);
-                                    provider.saveLocale(locale);
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      language,
-                                      style: const TextStyle(fontSize: 20),
-                                    ),
-                                  ),
-                                );
-                              }
-                            ).toList(),
-                            onChanged: (_) {},
-                            )
-                        )
-                      ),
-                    ],
-                  ),
-                ),
-              
+
                 const SizedBox(
                   height: 80,
                 ),
