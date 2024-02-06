@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       resposta = await speech.listen();
       
       switch (resposta) {
-        case "i want to go to settings": 
+        case "i want to go to settings":
           _irUIConfiguracao();
           respostaInvalida = false;
           break;
