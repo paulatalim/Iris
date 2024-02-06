@@ -35,8 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
           _irUIConfiguracao();
           respostaInvalida = false;
           break;
+        case "settings": 
+          _irUIConfiguracao();
+          respostaInvalida = false;
+          break;
+
       
         case "sobre": 
+          _irUISobre();
+          respostaInvalida = false;
+          break;
+        case "about us": 
           _irUISobre();
           respostaInvalida = false;
           break;
@@ -45,13 +54,25 @@ class _HomeScreenState extends State<HomeScreen> {
           _irUIMenu(1);
           respostaInvalida = false;
           break;
+        case "devices": 
+          _irUIMenu(1);
+          respostaInvalida = false;
+          break;
         
         case "informações": 
           _irUIMenu(2);
           respostaInvalida = false;
           break;
+        case "information": 
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
         
         case "perfil":
+          _irUIMenu(3);
+          respostaInvalida = false;
+          break;
+        case "profile":
           _irUIMenu(3);
           respostaInvalida = false;
           break;
