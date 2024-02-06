@@ -30,14 +30,11 @@ class Speech {
   void salvarConfig() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("controleVoz", _controleVozAtivado ?? true);
-    print("sallllvooooo $_controleVozAtivado");
   }
 
   void recuperarConfig() async {
     final prefs = await SharedPreferences.getInstance();
     _controleVozAtivado = prefs.getBool("controleVoz") ?? true;
-
-    print("recupearodooo $_controleVozAtivado");
   }
 
   void setLanguage(String languageCode) {
