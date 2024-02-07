@@ -62,7 +62,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     bool configurarVolume = false;
     bool novaConfiguracao = false;
 
-    await speech.speak("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
+    await speech.speak("Let's set up my voice. What would you like to adjust? The speed or the volume of my voice?");
     
     do {
       respostaInvalida = true;
@@ -71,25 +71,33 @@ class _ConfiguracaoState extends State<Configuracao> {
         resposta = await speech.listen();
 
         switch (resposta) {
-          case "velocidade":
+          case "speed":
+            configurarVelocidade = true;
+            respostaInvalida = false;
+            break;
+          case "the speed":
             configurarVelocidade = true;
             respostaInvalida = false;
             break;
 
-          case "volume":
+          case "the volume":
+            configurarVolume = true;
+            respostaInvalida= false;
+            break;
+           case "volume":
             configurarVolume = true;
             respostaInvalida= false;
             break;
 
           default:
-            await speech.speak("Hummm não te escutei direito, o que você quer configurar?");
+            await speech.speak("Hmm, I didn't hear you properly, what do you want to configure?");
         }
       }
 
       respostaInvalida = true;
 
       if (configurarVelocidade) {
-        await speech.speak("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
+        await speech.speak("Let's adjust the speed. Do you prefer me to speak at 0.5X, 1X, or 2X speed?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
@@ -100,67 +108,67 @@ class _ConfiguracaoState extends State<Configuracao> {
 
             // voice.speed = 0.2;  
             respostaInvalida = false;
-          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("um x") == 0) {
+          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("one x") == 0) {
             // voice.speed = 0.5;
             respostaInvalida= false;
-          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("dois x") == 0) {
+          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("two x") == 0) {
             // voice.speed = 1.0;
             respostaInvalida= false;
           } else {
-            await speech.speak("Hummm não te escutei direito, pode repetir de novo?");
+            await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
           }
         }
         configurarVelocidade = false;
       }
 
       if (configurarVolume) {
-        await speech.speak("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
+        await speech.speak("Let's adjust the volume. Do you prefer me to speak in a high, medium, or low volume?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
 
           switch (resposta) {
-            case "alto":
+            case "high":
               // voice.volume = 1.0;
               respostaInvalida = false;
               break;
 
-            case "médio":
+            case "medium":
               // voice.volume = 0.5;
               respostaInvalida= false;
               break;
 
-            case "baixo":
+            case "low":
               // voice.volume = 0.2;
               respostaInvalida= false;
               break;
 
             default:
-              await speech.speak("Hummm não te escutei direito, repete de novo?");
+              await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
           }
         }
         configurarVolume = false;
       }
 
-      await speech.speak("Você deseja realizar mais alguma configuração?");
+      await speech.speak("Do you want to change any other settings?");
       respostaInvalida = true;
 
       while (respostaInvalida) {
         resposta = await speech.listen();
         switch(resposta) {
-          case "sim":
-            await speech.speak("E o que deseja configurar? A velocidade ou volume da minha voz?");
+          case "yes":
+            await speech.speak("And what would you like to change? The speed or volume of my voice?");
             novaConfiguracao = true;
             respostaInvalida = false;
             break;
 
-          case "não":
+          case "no":
             respostaInvalida = false;
             novaConfiguracao = false;
             break;
             
           default:
-            await speech.speak("Hummm não te escutei direito, repete de novo?");
+            await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
         }
       }
     } while (novaConfiguracao);

@@ -38,14 +38,14 @@ class _DevicesState extends State<Devices> {
     bool respostaInvalida = true;
     bool fazerNovaLeitura = false;
 
-    await speech.speak("Até agora eu sei ler temperatura, altura e medir peso, o que você deseja que eu meça?");
+    await speech.speak("Up to now, I can read temperature, height, and measure weight. What would you like me to measure?");
     
     do {
       while (respostaInvalida) {
         resposta = await speech.listen();
 
         switch (resposta) {
-          case "peso":
+          case "weight":
             // await speech.speak("Suba na balança");
             // await speech.speak("Estou medindo seu peso");
             // manager.publish(dispositivo[4].mensage);
@@ -69,52 +69,52 @@ class _DevicesState extends State<Devices> {
             break;
 
           default:
-            await speech.speak("Hummm não te escutei direito, o que você quer que eu meça?");
+            await speech.speak("Hmm, I didn't hear you properly. What do you want me to measure?");
           
             respostaInvalida = true; 
         }
       }
-      await speech.speak("Você deseja realizar uma nova leitura?");
+      await speech.speak("Do you want to perform a new reading?");
 
       respostaInvalida = true;
 
       while (respostaInvalida) {
         resposta = await speech.listen();
 
-        if (resposta.compareTo("sim") == 0) {
-          await speech.speak("E o que deseja que eu meça agora? Seu peso? Sua altura? Ou sua temperatura?");
+        if (resposta.compareTo("yes") == 0) {
+          await speech.speak("What would you like me to measure now? Your weight? Your height? Or your temperature?");
           
           respostaInvalida = false;
-        } else if (resposta.compareTo("não") == 0) {
+        } else if (resposta.compareTo("no") == 0) {
           fazerNovaLeitura = false;
           respostaInvalida = false;
         } else {
-          await speech.speak("Hummm não te escutei direito, repete de novo?");
+          await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
         }
         respostaInvalida = true;
       }
     } while (fazerNovaLeitura);
     
-    await speech.speak("Para qual seção deseja ir agora?");
+    await speech.speak("Which section would you like to go to now");
     
     respostaInvalida = true;
 
     while (respostaInvalida) {
       resposta = await speech.listen();
       
-      if (resposta.compareTo("menu principal") == 0) {
+      if (resposta.compareTo("menu") == 0) {
         _irUIMenu(0);
         
-      } else if (resposta.compareTo("informações") == 0) {
+      } else if (resposta.compareTo("informations") == 0) {
         _irUIMenu(2);
         
-      } else if (resposta.compareTo("perfil") == 0) {
+      } else if (resposta.compareTo("profile") == 0) {
         _irUIMenu(3);
         
-      } else if (resposta.compareTo("informações") == 0) {
-        await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então para qual seção deseja ir agora?");
+      } else if (resposta.compareTo("informations") == 0) {
+        await speech.speak("You're already in this section, tell me another section. If you're unsure which option you want, choose the main menu section. So, which section would you like to go to now?");
       } else {
-        await speech.speak("Hummm não te escutei direito, repete de novo?");
+        await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
       }
     }
   }

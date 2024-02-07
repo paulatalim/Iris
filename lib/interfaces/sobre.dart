@@ -45,9 +45,8 @@ class _SobreState extends State<Sobre> {
   }
 
   void _dialogo() async {
-    await speech.speak("Então deixa eu me apresentar. Eu sou a Iris e fui desenvolvida com o objetivo de melhorar a qualidade de vida dos deficientes visuais, "
-                "fornecendo uma variedade de serviços relacionados à saúde e medidas corporais, incluindo o "
-                "acompanhamento da massa corporal, entre outros recursos essenciais para o seu dia a dia.");
+    await speech.speak("Let me introduce myself, I'm Iris, and I was developed with the aim of improving the quality of life for the visually impaired"
+    "providing a range of health-related services and body measurements, including body mass monitoring, among other essential resources for your daily life.");
     _irUIMenu();
   }
 
