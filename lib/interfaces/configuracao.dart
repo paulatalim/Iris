@@ -19,7 +19,7 @@ class Configuracao extends StatefulWidget {
 }
 
 class _ConfiguracaoState extends State<Configuracao> {
-  List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
+  List<String> speeds = <String>['0.5x', '1.0x', '1.5x', '2.0x', '3.0x'];
 
   final Color _boxColor = const Color(0xFFC7C9FF);
 
@@ -66,7 +66,14 @@ class _ConfiguracaoState extends State<Configuracao> {
     while(_isRunning) {
       setState(() {
         _ativarVoz = speech.controlarPorVoz ?? true;
-        _valorVolume = speech.volume * 100;
+        _valorVolume = speech.volume;
+
+        for (int i = 0; i < speeds.length; i++) {
+          if (speeds[i] == "${speech.speed.toString()}x") {
+            _speedOption = speeds[i];
+            break;
+          }
+        }
       });
 
       if(!_ativarVoz) {
@@ -143,7 +150,7 @@ class _ConfiguracaoState extends State<Configuracao> {
       }
       
       if (configurarVelocidade) {
-        await speech.speak("Let's configure the speed I say. Would you prefer me to speak at 0.5X speed, 1X or 2X?");
+        await speech.speak("Let's configure the speed I say. Would you prefer me to speak at 0.5X speed, 1X, 2X or 3x?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
@@ -152,14 +159,21 @@ class _ConfiguracaoState extends State<Configuracao> {
             resposta.compareTo("0.5x") == 0||
             resposta.compareTo("zero . fivex") == 0) {
 
-            // voice.speed = 0.2;  
+            speech.speed = 0.5;
             respostaInvalida = false;
-          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("one x") == 0) {
-            // voice.speed = 0.5;
+          
+          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("one x") == 0 || resposta == '1' || resposta == "one") {
+            speech.speed = 1.0;
             respostaInvalida= false;
-          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("two x") == 0) {
-            // voice.speed = 1.0;
+          
+          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("two x") == 0 || resposta == "2" || resposta == "two") {
+            speech.speed = 2.0;
             respostaInvalida= false;
+          
+          } else if (resposta == "3" || resposta == "three"|| resposta == "3x" || resposta == "three x") {
+            speech.speed = 3.0;
+            respostaInvalida= false;
+          
           } else {
             await speech.speak("Hmmm I didn't hear you right, can you repeat that again?");
           }
@@ -176,19 +190,19 @@ class _ConfiguracaoState extends State<Configuracao> {
 
           switch (resposta) {
             case "high":
-              speech.volume = 1.0;
+              speech.volume = 100;
               _valorVolume = 100;
               respostaInvalida = false;
               break;
 
             case "medium":
-              speech.volume = 0.5;
+              speech.volume = 50;
               _valorVolume = 50;
               respostaInvalida= false;
               break;
 
             case "low":
-              speech.volume = 0.2;
+              speech.volume = 20;
               _valorVolume = 20;
               respostaInvalida= false;
               break;
@@ -396,71 +410,6 @@ class _ConfiguracaoState extends State<Configuracao> {
                   ),
                 ),
 
-                // Gap entre elementos
-                // const SizedBox(
-                //   height: 30,
-                // ),
-          
-                // // Compo do idioma
-                // Container(
-                //   width: 0.8 * MediaQuery.of(context).size.width,
-                //   padding: const EdgeInsets.only(
-                //       left: 30, top: 20, right: 30, bottom: 20),
-                //   decoration: _styleBox(),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(
-                //         AppLocalizations.of(context)!.idioma,
-                //         style: _styleBoxTitle(),
-                //       ),
-                //       SizedBox(
-                //         width: 110,
-                //         child: DropdownButtonHideUnderline(
-                //           child: DropdownButton(
-                //             value: locale,
-                //             icon: const Icon(FontAwesomeIcons.chevronDown),
-                //             iconSize: 15,
-                //             iconEnabledColor: const Color(0xFF373B8A),
-                //             iconDisabledColor: const Color(0xFFFAFAFA),
-                //             underline: Container(
-                //             color: const Color(0x00000000),
-                //           ),
-                //           elevation: 15,
-                //           borderRadius: BorderRadius.circular(10),
-                //           style: const TextStyle(
-                //               color: Color(0xFF373B8A),
-                //               fontSize: 20,
-                //               fontWeight: FontWeight.w500),
-                //             items: L10n.all.map(
-                //               (locale) {
-                //                 final language = L10n.getLanguage(locale.languageCode);
-          
-                //                 return DropdownMenuItem(
-                //                   value: locale,
-                //                   onTap: () {
-                //                     final provider = Provider.of<LocaleProvider>(context, listen: false);
-          
-                //                     provider.setLocale(locale);
-                //                     provider.saveLocale(locale);
-                //                   },
-                //                   child: Center(
-                //                     child: Text(
-                //                       language,
-                //                       style: const TextStyle(fontSize: 20),
-                //                     ),
-                //                   ),
-                //                 );
-                //               }
-                //             ).toList(),
-                //             onChanged: (_) {},
-                //             )
-                //         )
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
                 const SizedBox(height: 30),
           
                 SizedBox(
@@ -510,7 +459,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                           onChanged: (double novoValorVolume) {
                             setState(() {
                               _valorVolume = novoValorVolume;
-                              speech.volume = novoValorVolume / 100;
+                              speech.volume = novoValorVolume;
                             });
                           }),
                     ],
@@ -558,7 +507,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                             // This is called when the user selects an item.
                             setState(() {
                               _speedOption = value!;
-                              
+                              speech.speed = double.parse(_speedOption.replaceAll("x", ""));
                             });
                           },
                           items: speeds

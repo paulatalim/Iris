@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     String resposta = "";
     bool respostaInvalida = true;
 
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     await speech.speak("Para qual seção do aplicativo deseja ir? Configuração? Sobre? Dispositivos? Ou informações?");
     
     while (respostaInvalida) {

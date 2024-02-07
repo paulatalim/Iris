@@ -7,7 +7,8 @@ class Tts {
   late String _key;
   String _language = "en-US";
   bool isTalking = false;
-  double _volume = 1;
+  double _volume = 0;
+  int _speed = 0;
   final player = AudioPlayer();
 
   Tts(String key, String language) {
@@ -41,7 +42,9 @@ class Tts {
     var xmlData = '''
       <speak version='1.0' xml:lang='$_language'>
         <voice xml:lang='$_language' xml:gender='Female' name='${_getNameLanguage()}'>
-          $text
+          <prosody rate="+$_speed%" volume="-$_volume%">
+            $text
+          </prosody>
         </voice>
       </speak>
     ''';
@@ -61,7 +64,7 @@ class Tts {
     // Mensagem recebida da API
     var bytes = responseAudio.bodyBytes;
 
-    var tempDir;
+    dynamic tempDir;
     
     // Cria um diretorio temporario
     do {
@@ -89,8 +92,6 @@ class Tts {
   }
 
   set language(String language) => _language = language;
-  set volume(double value) {
-    _volume = value;
-    player.setVolume(_volume);
-  }
+  set volume(double value) => _volume = value;
+  set speed(int value) => _speed = value;
 }

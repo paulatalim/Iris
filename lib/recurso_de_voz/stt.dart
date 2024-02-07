@@ -8,7 +8,7 @@ class Stt {
   late String _subKey;
   late String _region;
   late String _lang;
-  final _timeout = "5000";
+  final _timeout = "3000";
   bool isRecording = false;
   String resposta = '';
 
