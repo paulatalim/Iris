@@ -154,7 +154,7 @@ class _DadosState extends State<Dados> {
           respostaInvalida = false;
           break;
 
-        case "profile":
+        case "settings":
           _irUIMenu(3);
           respostaInvalida = false;
           break;

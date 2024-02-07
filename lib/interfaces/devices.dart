@@ -144,7 +144,7 @@ class _DevicesState extends State<Devices> {
           respostaInvalida = false;
           break;
 
-        case "profile":
+        case "settings":
           _irUIMenu(3);
           respostaInvalida = false;
           break;

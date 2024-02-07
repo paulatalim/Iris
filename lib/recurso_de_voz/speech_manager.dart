@@ -17,24 +17,46 @@ class Speech {
   bool? _microphoneOn;
   bool? _controleVozAtivado;
   bool _isTalking = false;
+  double _volume = 100;
+  double _speed = 1;
   
   Speech() {
     _textToSpeech = Tts(_key, _language);
     _speechToText = Stt(_key, _region, _language);
-
     _microphoneOn = _speechToText.isRecording;
 
-    recuperarConfig();
+    _recuperarConfig();
   }
 
-  void salvarConfig() async {
+  void _salvarConfig() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("controleVoz", _controleVozAtivado ?? true);
+    prefs.setDouble("volume", _volume);
+    prefs.setDouble("speed", _speed);
   }
 
-  void recuperarConfig() async {
+  void _recuperarConfig() async {
     final prefs = await SharedPreferences.getInstance();
     _controleVozAtivado = prefs.getBool("controleVoz") ?? true;
+    _volume = prefs.getDouble("volume") ?? 100;
+    _speed = prefs.getDouble("speed") ?? 1;
+
+    _textToSpeech.volume = 100 - _volume;
+    _setSpeed();
+  }
+
+  void _setSpeed() {
+    double aux1 = _speed * 100;
+    int aux2 = aux1.toInt();
+    int aux3;
+
+    if (aux2 - 100 < 0) {
+      aux3 = aux2;
+    } else {
+      aux3 = aux2 - 100;
+    }
+
+    _textToSpeech.speed = aux3;
   }
 
   void setLanguage(String languageCode) {
@@ -116,7 +138,21 @@ class Speech {
     if(!value) {
       _textToSpeech.stopPlayer();
     }
-    salvarConfig();
+    _salvarConfig();
+  }
+
+  get volume => _volume;
+  set volume(value) {
+    _volume = value;
+    _textToSpeech.volume = 100 - _volume;
+    _salvarConfig();
+  }
+
+  get speed => _speed;
+  set speed(value) {
+    _speed = value;
+    _setSpeed();
+    _salvarConfig();
   }
 }
 

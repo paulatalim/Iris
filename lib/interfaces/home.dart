@@ -2,11 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
 import '../recurso_de_voz/speech_manager.dart';
-import 'configuracao.dart';
 import 'loading.dart';
-import 'devices.dart';
 import 'sobre.dart';
-import 'dados.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
-    if(speech.controlarPorVoz) {
+    if (speech.controlarPorVoz) {
       _dialogo();
     }
   }
@@ -44,23 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
       
       switch (resposta) {
         case "i want to go to settings":
-          _irUIConfiguracao();
+          _irUIMenu(3);
           respostaInvalida = false;
           break;
         case "i wanna go to settings": 
-          _irUIConfiguracao();
+          _irUIMenu(3);
           respostaInvalida = false;
           break;
         case "go to settings": 
-          _irUIConfiguracao();
+          _irUIMenu(3);
           respostaInvalida = false;
           break;
         case "settings": 
-          _irUIConfiguracao();
+          _irUIMenu(3);
           respostaInvalida = false;
           break;
 
-      
         case "i want to go to about us": 
           _irUISobre();
           respostaInvalida = false;
@@ -111,6 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
           _irUIMenu(2);
           respostaInvalida = false;
           break;
+        case "information": 
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
       
         default:
           await speech.speak("I didn't hear you properly, which section do you want to go to?");
@@ -124,13 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(builder: (context) => LoadScreen(index: index)
       )
     );
-  }
-
-  void _irUIConfiguracao() {
-    Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Configuracao()),
-        );
   }
 
   void _irUISobre() {
@@ -206,10 +199,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-/// Lista das interfaces do menu
-final List<Widget> screens = [
-  const HomeScreen(),
-  const Devices(),
-  const Dados(),
-];

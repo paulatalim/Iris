@@ -3,11 +3,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:iris_app/interfaces/loading.dart';
 
 import '../recurso_de_voz/speech_manager.dart';
 // import '../provider/locale_provider.dart';
 // import '../l10n/l10n.dart';
-import 'menu.dart';
+// import 'menu.dart';
+// import 'loading.dart';
 
 class Configuracao extends StatefulWidget {
   const Configuracao({super.key});
@@ -17,7 +19,7 @@ class Configuracao extends StatefulWidget {
 }
 
 class _ConfiguracaoState extends State<Configuracao> {
-  List<String> speeds = <String>['0.5x', '1.0x', '1.5x'];
+  List<String> speeds = <String>['0.5x', '1.0x', '1.5x', '2.0x', '3.0x'];
 
   final Color _boxColor = const Color(0xFFC7C9FF);
 
@@ -25,6 +27,10 @@ class _ConfiguracaoState extends State<Configuracao> {
 
   late String _speedOption;
   late bool _ativarVoz;
+
+  bool _isRunning = true;
+  late bool configVoz;
+  late int configVolume;
 
   /// Estiliza os cards das configuracoes
   BoxDecoration _styleBox() {
@@ -56,14 +62,37 @@ class _ConfiguracaoState extends State<Configuracao> {
     );
   }
 
+  void _atualizarConfiguracoes() async {
+    while(_isRunning) {
+      setState(() {
+        _ativarVoz = speech.controlarPorVoz ?? true;
+        _valorVolume = speech.volume;
+
+        for (int i = 0; i < speeds.length; i++) {
+          if (speeds[i] == "${speech.speed.toString()}x") {
+            _speedOption = speeds[i];
+            break;
+          }
+        }
+      });
+
+      if(!_ativarVoz) {
+        break;
+      }
+
+      await Future.delayed(const Duration(seconds: 1));
+    }
+  }
+
   void _dialogo() async {
     String resposta = "";
     bool respostaInvalida = true;
     bool configurarVelocidade = false;
     bool configurarVolume = false;
+    bool controleVoz = false;
     bool novaConfiguracao = false;
 
-    await speech.speak("Vamos configurar minha voz. O que deseja configurar? A velocidade com que eu falo ou o volume da minha voz?");
+    await speech.speak("What do you want to configure? The speed at which I speak or the volume of my voice? Or disable voice control?");
     
     do {
       respostaInvalida = true;
@@ -72,7 +101,12 @@ class _ConfiguracaoState extends State<Configuracao> {
         resposta = await speech.listen();
 
         switch (resposta) {
-          case "velocidade":
+          case "voice control":
+            respostaInvalida = false;
+            controleVoz = true;
+            break;
+
+          case "speed":
             configurarVelocidade = true;
             respostaInvalida = false;
             break;
@@ -83,97 +117,170 @@ class _ConfiguracaoState extends State<Configuracao> {
             break;
 
           default:
-            await speech.speak("Hummm não te escutei direito, o que você quer configurar?");
+            await speech.speak("Hmmm I didn't hear you right, what do you want to configure?");
         }
       }
 
       respostaInvalida = true;
 
+      if (controleVoz) {
+        await speech.speak("Do you want to disable voice control?");
+
+        do {
+          resposta = await speech.listen();
+
+          switch (resposta) {
+            case "yes":
+              speech.controlarPorVoz = false;
+              _ativarVoz = false;
+              controleVoz = false;
+              respostaInvalida = false;
+              break;
+
+            case "no":
+              respostaInvalida = false;
+              break;
+
+            default:
+              await speech.speak("Hmmm I didn't hear you right, can you repeat that again?");
+          }
+        } while (respostaInvalida);
+
+        controleVoz = false;
+      }
+      
       if (configurarVelocidade) {
-        await speech.speak("Vamos configurar a velocidade que eu falo. Você prefere que eu fale na velocidade 0,5X 1X ou 2X?");
+        await speech.speak("Let's configure the speed I say. Would you prefer me to speak at 0.5X speed, 1X, 2X or 3x?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
 
           if (resposta.compareTo("0,5x") == 0||
             resposta.compareTo("0.5x") == 0||
-            resposta.compareTo("zero , cincox") == 0) {
+            resposta.compareTo("zero . fivex") == 0) {
 
-            // voice.speed = 0.2;  
+            speech.speed = 0.5;
             respostaInvalida = false;
-          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("um x") == 0) {
-            // voice.speed = 0.5;
+          
+          } else if (resposta.compareTo("1x") == 0 || resposta.compareTo("one x") == 0 || resposta == '1' || resposta == "one") {
+            speech.speed = 1.0;
             respostaInvalida= false;
-          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("dois x") == 0) {
-            // voice.speed = 1.0;
+          
+          } else if (resposta.compareTo("2x") == 0 || resposta.compareTo("two x") == 0 || resposta == "2" || resposta == "two") {
+            speech.speed = 2.0;
             respostaInvalida= false;
+          
+          } else if (resposta == "3" || resposta == "three"|| resposta == "3x" || resposta == "three x") {
+            speech.speed = 3.0;
+            respostaInvalida= false;
+          
           } else {
-            await speech.speak("Hummm não te escutei direito, pode repetir de novo?");
+            await speech.speak("Hmmm I didn't hear you right, can you repeat that again?");
           }
         }
         configurarVelocidade = false;
       }
 
+
       if (configurarVolume) {
-        await speech.speak("Vamos configurar a altura da minha voz. Você prefere que eu fale alto médio ou baixo?");
+        await speech.speak("Let's set the height of my voice. Would you prefer me to speak high, medium or low?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
 
           switch (resposta) {
-            case "alto":
-              // voice.volume = 1.0;
+            case "high":
+              speech.volume = 100;
+              _valorVolume = 100;
               respostaInvalida = false;
               break;
 
-            case "médio":
-              // voice.volume = 0.5;
+            case "medium":
+              speech.volume = 50;
+              _valorVolume = 50;
               respostaInvalida= false;
               break;
 
-            case "baixo":
-              // voice.volume = 0.2;
+            case "low":
+              speech.volume = 20;
+              _valorVolume = 20;
               respostaInvalida= false;
               break;
 
             default:
-              await speech.speak("Hummm não te escutei direito, repete de novo?");
+              await speech.speak("Hmmm I didn't hear you right, repeat that again?");
           }
         }
         configurarVolume = false;
       }
 
-      await speech.speak("Você deseja realizar mais alguma configuração?");
-      respostaInvalida = true;
+      if (speech.controlarPorVoz) {
 
-      while (respostaInvalida) {
-        resposta = await speech.listen();
-        switch(resposta) {
-          case "sim":
-            await speech.speak("E o que deseja configurar? A velocidade ou volume da minha voz?");
-            novaConfiguracao = true;
-            respostaInvalida = false;
-            break;
+        await speech.speak("Do you want to perform any further configuration?");
+        respostaInvalida = true;
 
-          case "não":
-            respostaInvalida = false;
-            novaConfiguracao = false;
-            break;
-            
-          default:
-            await speech.speak("Hummm não te escutei direito, repete de novo?");
+        while (respostaInvalida) {
+          resposta = await speech.listen();
+          switch(resposta) {
+            case "yes":
+              await speech.speak("And what do you want to configure? Voice control? The speed or volume of my voice?");
+              novaConfiguracao = true;
+              respostaInvalida = false;
+              break;
+
+            case "no":
+              respostaInvalida = false;
+              novaConfiguracao = false;
+              break;
+              
+            default:
+              await speech.speak("Hmmm I didn't hear you right, repeat that again?");
+          }
         }
       }
     } while (novaConfiguracao);
 
-    _irUIMenu();
+    if (speech.controlarPorVoz) {
+      await speech.speak("Which section do you want to go to now?");
+      respostaInvalida = true;
+      
+      do {
+        resposta = await speech.listen();
+
+        switch (resposta) {
+          case "menu":
+            _irUIMenu(0);
+            respostaInvalida = false;
+            break;
+
+          case "devices":
+            _irUIMenu(1);
+            respostaInvalida = false;
+            break;
+
+          case "settings":
+            await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
+            respostaInvalida = false;
+            break;
+
+          case "information":
+            _irUIMenu(2);
+            respostaInvalida = false;
+            break;
+
+          default:
+            await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
+        }
+        
+      } while (respostaInvalida);
+    }
   }
 
-  void _irUIMenu() {
+  void _irUIMenu(int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const Menu()),
+          builder: (context) => LoadScreen(index: index))
     );
   }
 
@@ -181,11 +288,20 @@ class _ConfiguracaoState extends State<Configuracao> {
   void initState() {
     super.initState();
     _speedOption= speeds[1];
-    _ativarVoz = speech.controlarPorVoz;
+    _valorVolume = 100;
+    _isRunning = true;
     
-    if(speech.controlarPorVoz) {
+    if(speech.controlarPorVoz ?? true) {
       _dialogo();
     }
+
+    _atualizarConfiguracoes();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _isRunning = false;
   }
 
   @override
@@ -294,71 +410,6 @@ class _ConfiguracaoState extends State<Configuracao> {
                   ),
                 ),
 
-                // Gap entre elementos
-                // const SizedBox(
-                //   height: 30,
-                // ),
-          
-                // // Compo do idioma
-                // Container(
-                //   width: 0.8 * MediaQuery.of(context).size.width,
-                //   padding: const EdgeInsets.only(
-                //       left: 30, top: 20, right: 30, bottom: 20),
-                //   decoration: _styleBox(),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(
-                //         AppLocalizations.of(context)!.idioma,
-                //         style: _styleBoxTitle(),
-                //       ),
-                //       SizedBox(
-                //         width: 110,
-                //         child: DropdownButtonHideUnderline(
-                //           child: DropdownButton(
-                //             value: locale,
-                //             icon: const Icon(FontAwesomeIcons.chevronDown),
-                //             iconSize: 15,
-                //             iconEnabledColor: const Color(0xFF373B8A),
-                //             iconDisabledColor: const Color(0xFFFAFAFA),
-                //             underline: Container(
-                //             color: const Color(0x00000000),
-                //           ),
-                //           elevation: 15,
-                //           borderRadius: BorderRadius.circular(10),
-                //           style: const TextStyle(
-                //               color: Color(0xFF373B8A),
-                //               fontSize: 20,
-                //               fontWeight: FontWeight.w500),
-                //             items: L10n.all.map(
-                //               (locale) {
-                //                 final language = L10n.getLanguage(locale.languageCode);
-          
-                //                 return DropdownMenuItem(
-                //                   value: locale,
-                //                   onTap: () {
-                //                     final provider = Provider.of<LocaleProvider>(context, listen: false);
-          
-                //                     provider.setLocale(locale);
-                //                     provider.saveLocale(locale);
-                //                   },
-                //                   child: Center(
-                //                     child: Text(
-                //                       language,
-                //                       style: const TextStyle(fontSize: 20),
-                //                     ),
-                //                   ),
-                //                 );
-                //               }
-                //             ).toList(),
-                //             onChanged: (_) {},
-                //             )
-                //         )
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
                 const SizedBox(height: 30),
           
                 SizedBox(
@@ -408,7 +459,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                           onChanged: (double novoValorVolume) {
                             setState(() {
                               _valorVolume = novoValorVolume;
-                              // voice.volume = novoValorVolume / 100;
+                              speech.volume = novoValorVolume;
                             });
                           }),
                     ],
@@ -456,7 +507,7 @@ class _ConfiguracaoState extends State<Configuracao> {
                             // This is called when the user selects an item.
                             setState(() {
                               _speedOption = value!;
-                              
+                              speech.speed = double.parse(_speedOption.replaceAll("x", ""));
                             });
                           },
                           items: speeds
