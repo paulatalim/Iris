@@ -6,7 +6,6 @@ import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
 import 'configuracao.dart';
-// import 'perfil.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key, this.index});

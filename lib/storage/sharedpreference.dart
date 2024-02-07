@@ -33,3 +33,45 @@ Future<bool> isUserLoggedIn() async {
 
   return Future.value(false);
 }
+
+//Função para salvar temperatura no SharedPreference
+void saveTemp(double temperatura) async {
+  SharedPreferences tempStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  tempStorage.setDouble('temperatura', temperatura); //Salvando o valor da temperatura na chave 'temperatura'
+}
+
+//Função para salvar altura no SharedPreference
+void saveAltura(double altura) async {
+  SharedPreferences altStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  altStorage.setDouble('altura', altura); //Salvando o valor da temperatura na chave 'temperatura'
+}
+
+//Função para salvar peso no SharedPreference
+void savePeso(double peso) async {
+  SharedPreferences pesoStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  pesoStorage.setDouble('peso', peso); //Salvando o valor da temperatura na chave 'temperatura'
+}
+
+//Função para resgatar temperatura do SharedPreference
+Future<double?> getTemp() async {
+  SharedPreferences tempStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  double? tempArmazenada = tempStorage.getDouble('temperatura'); //Localizando a chave e resgatando valor
+
+  return tempArmazenada;
+}
+
+//Função para resgatar altura do SharedPreference
+Future<double?> getAltura() async {
+  SharedPreferences altStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  double? altArmazenada = altStorage.getDouble('altura'); //Localizando a chave e resgatando valor
+
+  return altArmazenada;
+}
+
+//Função para resgatar peso do SharedPreference
+Future<double?> getPeso() async {
+  SharedPreferences pesoStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  double? pesoArmazenada = pesoStorage.getDouble('peso'); //Localizando a chave e resgatando valor
+
+  return pesoArmazenada;
+}
