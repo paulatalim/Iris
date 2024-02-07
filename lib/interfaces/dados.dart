@@ -152,10 +152,6 @@ class _DadosState extends State<Dados> {
           _irUIMenu(1);
           break;
 
-        case "perfil":
-          _irUIMenu(3);
-          break;
-
         case "informações":
           await speech.speak("Você já está nessa seção, me diga outra seção. Caso estiver com dúvida de qual opção deseja, escolha a seção do menu principal. Então, para qual seção deseja ir agora?");
           break;
