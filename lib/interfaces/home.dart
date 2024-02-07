@@ -7,7 +7,6 @@ import 'loading.dart';
 import 'devices.dart';
 import 'sobre.dart';
 import 'dados.dart';
-import 'perfil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     bool respostaInvalida = true;
 
     await Future.delayed(const Duration(seconds: 5));
-    await speech.speak("Which section of the app would you like to go to? Settings? About us? Devices? Informations? Or Profile?");
+    await speech.speak("Which section of the app would you like to go to? Settings? About us? Devices? Or informations?");
     
     while (respostaInvalida) {
       resposta = await speech.listen();
@@ -97,23 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case "informations": 
           _irUIMenu(2);
-          respostaInvalida = false;
-          break;
-        
-        case "i want to go to profile ":
-          _irUIMenu(3);
-          respostaInvalida = false;
-          break;
-        case "i wanna go to profile":
-          _irUIMenu(3);
-          respostaInvalida = false;
-          break;
-        case "go to profile ":
-          _irUIMenu(3);
-          respostaInvalida = false;
-          break;
-        case "profile":
-          _irUIMenu(3);
           respostaInvalida = false;
           break;
       
@@ -217,5 +199,4 @@ final List<Widget> screens = [
   const HomeScreen(),
   const Devices(),
   const Dados(),
-  const UserScreen(),
 ];

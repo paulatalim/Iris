@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'devices.dart';
 import 'home.dart';
 import 'dados.dart';
-import 'perfil.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key, this.index});
@@ -29,7 +28,6 @@ class _MenuState extends State<Menu> {
     const HomeScreen(),
     const Devices(),
     const Dados(),
-    const UserScreen(),
   ];
 
   /// Lista de cores do icones do menu
