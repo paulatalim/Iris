@@ -52,26 +52,41 @@ void savePeso(double peso) async {
   pesoStorage.setDouble('peso', peso); //Salvando o valor da temperatura na chave 'temperatura'
 }
 
-//Função para resgatar temperatura do SharedPreference
-Future<double?> getTemp() async {
-  SharedPreferences tempStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
-  double? tempArmazenada = tempStorage.getDouble('temperatura'); //Localizando a chave e resgatando valor
+//Função para salvar imc no SharedPreference
+void saveIMC(double imc) async {
+  SharedPreferences imcStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  imcStorage.setDouble('imc', imc); //Salvando o valor da temperatura na chave 'temperatura'
+}
 
-  return tempArmazenada;
+
+//Função para resgatar temperatura do SharedPreference
+Future<double> getTemp() async {
+  SharedPreferences tempStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  double tempArmazenada = tempStorage.getDouble('temperatura') ?? 0; //Localizando a chave e resgatando valor
+
+  return Future.value(tempArmazenada);
 }
 
 //Função para resgatar altura do SharedPreference
-Future<double?> getAltura() async {
+Future<double> getAltura() async {
   SharedPreferences altStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
-  double? altArmazenada = altStorage.getDouble('altura'); //Localizando a chave e resgatando valor
+  double altArmazenada = altStorage.getDouble('altura') ?? 0; //Localizando a chave e resgatando valor
 
-  return altArmazenada;
+  return Future.value(altArmazenada);
 }
 
 //Função para resgatar peso do SharedPreference
-Future<double?> getPeso() async {
+Future<double> getPeso() async {
   SharedPreferences pesoStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
-  double? pesoArmazenada = pesoStorage.getDouble('peso'); //Localizando a chave e resgatando valor
+  double pesoArmazenada = pesoStorage.getDouble('peso') ?? 0; //Localizando a chave e resgatando valor
 
-  return pesoArmazenada;
+  return Future.value(pesoArmazenada);
+}
+
+//Função para resgatar imc do SharedPreference
+Future<double> getImc() async {
+  SharedPreferences imcStorage = await SharedPreferences.getInstance(); //Criando a instancia do SharedPreference
+  double imcArmazenada = imcStorage.getDouble('imc') ?? 0; //Localizando a chave e resgatando valor
+
+  return Future.value(imcArmazenada);
 }

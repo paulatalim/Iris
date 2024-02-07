@@ -17,26 +17,20 @@ class User {
   late double _temperatura;
 
   User() {
-    nome = '';
-    sobrenome = '';
-    email = '';
     id = 1;
     _peso = 0;
     _altura = 0;
     _imc = 0;
     _temperatura = 0;
 
-    if(getAltura() != null){
-      _altura = getAltura() as double;
-    }
+    _restaurarValores();
+  }
 
-    if(getPeso() != null){
-      _peso = getPeso() as double;
-    }
-
-    if(getTemp() != null){
-      _temperatura = getTemp() as double;
-    }
+  void _restaurarValores() async {
+    _altura = await getAltura();
+    _peso = await getPeso();
+    _temperatura = await getTemp();
+    _imc = await getImc();
   }
 
   /// Calcula o imc do usuario
@@ -44,7 +38,7 @@ class User {
     if (_peso != 0 && _altura !=0) {
       _imc = peso / pow(_altura,2);
       
-      // TODO atualizar IMC no banco de dados
+      saveIMC(imc);
     }
   }
 
