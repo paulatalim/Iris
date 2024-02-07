@@ -1,6 +1,8 @@
 import 'dart:core';
 import 'dart:math';
 
+import 'package:iris_app/storage/sharedpreference.dart';
+
 import 'armazenamento.dart';
 
 /// Classe usuario contendo variáveis básicas para o utilização no app
@@ -18,10 +20,23 @@ class User {
     nome = '';
     sobrenome = '';
     email = '';
+    id = 1;
     _peso = 0;
     _altura = 0;
     _imc = 0;
     _temperatura = 0;
+
+    if(getAltura() != null){
+      _altura = getAltura() as double;
+    }
+
+    if(getPeso() != null){
+      _peso = getPeso() as double;
+    }
+
+    if(getTemp() != null){
+      _temperatura = getTemp() as double;
+    }
   }
 
   /// Calcula o imc do usuario
@@ -61,7 +76,7 @@ class User {
     _peso = value;
     _calcularImc();
 
-    // TODO atualizar peso no banco de dados
+    savePeso(_peso);
   }
 
   /// Altura em metros do usuario
@@ -70,7 +85,7 @@ class User {
     _altura = value;
     _calcularImc();
 
-    // TODO atualizar altura no banco de dados
+    saveAltura(_altura);
   }
 
   /// IMC do usuario
@@ -81,7 +96,7 @@ class User {
   set temperatura(value)  {
     _temperatura = value;
 
-    // TODO atualizar temperatura no banco de dados
+    saveTemp(_temperatura);
   }
 }
 
