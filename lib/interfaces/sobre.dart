@@ -92,7 +92,10 @@ class _SobreState extends State<Sobre> {
                         color: const Color(0xFF373B8A),
                         iconSize: 30,
                         onPressed: () {
-                          _irUIMenu();
+                          if(!speech.controlarPorVoz) {
+                            _irUIMenu();
+                          }
+                          
                         }),
                   ],
                 ),

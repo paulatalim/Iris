@@ -7,7 +7,7 @@ import 'stt.dart';
 import 'tts.dart';
 
 class Speech {
-  final _key = "53cada5a127d4d3c88f518d736af77f2";
+  final _key = "9fc21039a0a7405e80773bb128376504";
   String _language = "en-US";
   final _region = "brazilsouth";
 
@@ -17,6 +17,7 @@ class Speech {
   bool? _microphoneOn;
   bool? _controleVozAtivado;
   bool _isTalking = false;
+  bool infosRecuperadas = false;
   double _volume = 100;
   double _speed = 1;
   
@@ -24,7 +25,7 @@ class Speech {
     _textToSpeech = Tts(_key, _language);
     _speechToText = Stt(_key, _region, _language);
     _microphoneOn = _speechToText.isRecording;
-
+    infosRecuperadas = false;
     _recuperarConfig();
   }
 
@@ -43,6 +44,11 @@ class Speech {
 
     _textToSpeech.volume = 100 - _volume;
     _setSpeed();
+    infosRecuperadas = true;
+  }
+
+  void stopSpeech() {
+    _textToSpeech.stopPlayer();
   }
 
   void _setSpeed() {
@@ -88,43 +94,48 @@ class Speech {
   }
 
   Future<void> speak(String text) async {
-    _isTalking = true;
-    _textToSpeech.speak(text);
+    if(controlarPorVoz) {
+      _isTalking = true;
+      _textToSpeech.speak(text);
 
-    // Espera terminar a fala
-    do {
-      await Future.delayed(const Duration(seconds: 1));
-    } while(_textToSpeech.isTalking);
+      // Espera terminar a fala
+      do {
+        await Future.delayed(const Duration(seconds: 1));
+      } while(_textToSpeech.isTalking);
 
-    _isTalking = false;
+      _isTalking = false;
+    }
   }
 
   /// Ativa o microfone e transforma em texto o som falaso pelo usuario
   Future<String> listen() async {
-    // Chamada da API para a traducao de fala em texto
-    _speechToText.speech();
+    if(controlarPorVoz) {
+      // Chamada da API para a traducao de fala em texto
+      _speechToText.speech();
 
-    // Caso o microfone nao esteja ativado
-    while (!_speechToText.isRecording) {
-      await Future.delayed(const Duration(seconds: 1));
+      // Caso o microfone nao esteja ativado
+      while (!_speechToText.isRecording) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      _microphoneOn = true;
+      await _songMicrophne();
+
+      // Espera o microfone ser desativado
+      do {
+        await Future.delayed(const Duration(seconds: 2));
+      } while (_speechToText.isRecording);
+
+      _microphoneOn = false;
+      await _songMicrophne();
+
+      // Informa a resposta recebida
+      debugPrint("[MICROFONE] Resposta: ${_speechToText.resposta}");
+
+      // Formaa a resposta recebida e a retorna
+      return Future.value(_speechToText.resposta.toLowerCase().replaceAll(".", '').trim());
     }
-
-    _microphoneOn = true;
-    await _songMicrophne();
-
-    // Espera o microfone ser desativado
-    do {
-      await Future.delayed(const Duration(seconds: 2));
-    } while (_speechToText.isRecording);
-
-    _microphoneOn = false;
-    await _songMicrophne();
-
-    // Informa a resposta recebida
-    debugPrint("[MICROFONE] Resposta: ${_speechToText.resposta}");
-
-    // Formaa a resposta recebida e a retorna
-    return Future.value(_speechToText.resposta.toLowerCase().replaceAll(".", '').trim());
+    return '';
   }
 
   /// Verifica se o microfone stá ligado ou nao
@@ -132,7 +143,7 @@ class Speech {
 
   get isTalking => _isTalking;
 
-  get controlarPorVoz => _controleVozAtivado;
+  get controlarPorVoz => _controleVozAtivado ?? true;
   set controlarPorVoz (value) {
     _controleVozAtivado = value;
     if(!value) {
@@ -143,7 +154,7 @@ class Speech {
 
   get volume => _volume;
   set volume(value) {
-    _volume = value;
+    _volume = value.toDouble();
     _textToSpeech.volume = 100 - _volume;
     _salvarConfig();
   }

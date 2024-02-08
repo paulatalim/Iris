@@ -113,6 +113,7 @@ class _DevicesState extends State<Devices> {
         switch(resposta) {
           case "yes":
             await speech.speak("What would you like me to measure now? Your weight? Your height? Or your temperature?");
+            fazerNovaLeitura = true;
             respostaInvalida = false;
           
           case "no":
@@ -187,6 +188,20 @@ class _DevicesState extends State<Devices> {
       });
       await Future.delayed(const Duration(milliseconds: 500));
     }
+  }
+
+  String _calcularTempo(int seconds) {
+    if (seconds < 60) {
+      return '$seconds s';
+    } else if(seconds < 120 && seconds - 60 == 0) {
+      return "1 min";
+    } else if (seconds < 120) {
+      return '1 min ${seconds - 60}';
+    } else if (seconds - 120 == 0) {
+      return '2 min';
+    }
+
+    return '2 min ${seconds - 120}';
   }
 
   @override
@@ -273,7 +288,6 @@ class _DevicesState extends State<Devices> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          // color: Color(0xFF373B8A), // Cor do texto
                           color: Colors.white,
                           fontSize: 40,
                           fontWeight: FontWeight.w600, // Tamanho do texto
@@ -289,7 +303,6 @@ class _DevicesState extends State<Devices> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inclusiveSans(
                         textStyle: const TextStyle(
-                          // color: Color(0xFF373B8A), // Cor do texto
                           color: Colors.white,
                           fontSize: 35, // Tamanho do texto
                         ),
@@ -297,7 +310,7 @@ class _DevicesState extends State<Devices> {
                     ),
                     _dispositivoSelecionado.time != null 
                       ? Text(
-                        "${AppLocalizations.of(context)!.time}: ${_dispositivoSelecionado.time} s",
+                        "${AppLocalizations.of(context)!.time}: ${_calcularTempo(_dispositivoSelecionado.time!)}",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inclusiveSans(
                           textStyle: const TextStyle(
@@ -409,11 +422,14 @@ class _DevicesState extends State<Devices> {
         ),
         onPressed: () {
           setState(() {
-            _dispositivoSelecionado = dispositivo[id];
+            if (!_bluetooth.isMeasuring && (_bluetooth.state == AppLocalizations.of(context)!.connected || id == 1)) {
+              _dispositivoSelecionado = dispositivo[id];
+            }
             _scrollControl.animateTo(0,
                 duration: const Duration(seconds: 1), curve: Curves.ease);
-            });
+          });
 
+          if (!_bluetooth.isMeasuring && (_bluetooth.state == AppLocalizations.of(context)!.connected || id == 1)) {
             switch(id) {
               case 2:
                 // Mede a temperatura
@@ -428,6 +444,7 @@ class _DevicesState extends State<Devices> {
                 _bluetooth.medirPeso();
                 break;
             }
+          }
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 0),

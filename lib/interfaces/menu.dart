@@ -37,10 +37,11 @@ class _MenuState extends State<Menu> {
 
   /// Lista de cores do icones do menu
   final List<Color> _colorIcon = [
-    const Color(0xFFA000FF),
-    const Color(0xFF6B86EB),
-    const Color(0xFF6B86EB),
-    const Color(0xFF6B86EB)
+    speech.controlarPorVoz ? const Color.fromARGB(255, 170, 99, 210) :const Color(0xFFA000FF),
+    speech.controlarPorVoz ? const Color.fromARGB(255, 145, 160, 213) : const Color(0xFF6B86EB),
+    speech.controlarPorVoz ? const Color.fromARGB(255, 145, 160, 213) : const Color(0xFF6B86EB),
+    speech.controlarPorVoz ? const Color.fromARGB(255, 145, 160, 213) : const Color(0xFF6B86EB),
+    speech.controlarPorVoz ? const Color.fromARGB(255, 145, 160, 213) : const Color(0xFF6B86EB),
   ];
 
   // Lista das cares de fundo das paginas
@@ -117,14 +118,17 @@ class _MenuState extends State<Menu> {
         backgroundColor: Colors.transparent,
         body: screens[currentIndex],
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor:  _microphneActive ? Colors.green : Colors.red,
-          foregroundColor: Colors.white,
-          elevation: 0,
-          shape: const CircleBorder(),
-          child: const Icon(FontAwesomeIcons.microphone),
-        ),
+        floatingActionButton: 
+          speech.controlarPorVoz 
+            ? FloatingActionButton(
+                onPressed: () {},
+                backgroundColor:  _microphneActive ? Colors.green : Colors.red,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: const CircleBorder(),
+                child: const Icon(FontAwesomeIcons.microphone),
+              )
+            : null,
         bottomNavigationBar: BottomAppBar(
           color: const Color(0xFFE6E6E6),
           height: 0.08 * MediaQuery.of(context).size.height,
@@ -138,9 +142,11 @@ class _MenuState extends State<Menu> {
               buttonNavigationBar(1, FontAwesomeIcons.computer),
 
               //Espacamento entre icone e button action bar
-              const SizedBox(
-                width: 30,
-              ),
+              speech.controlarPorVoz 
+                ? const SizedBox(
+                    width: 30,
+                  )
+                : const SizedBox(width: 0,),
 
               buttonNavigationBar(2, FontAwesomeIcons.heartPulse),
               buttonNavigationBar(3, FontAwesomeIcons.gear)
@@ -156,10 +162,12 @@ class _MenuState extends State<Menu> {
       color: _colorIcon[index],
       icon: Icon(icon),
       onPressed: () {
-        setState(() {
-          currentIndex = index;
-          _colorSelection(currentIndex);
-        });
+        if(!speech.controlarPorVoz) {
+          setState(() {
+            currentIndex = index;
+            _colorSelection(currentIndex);
+          });
+        }
       },
     );
   }

@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await speech.speak("Hi, I'm Iris, your virtual healthcare assistant");
 
     // Espera o recurso de voz ser inicializado
-    while(speech.controlarPorVoz == null) {
+    while(!speech.infosRecuperadas) {
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _irUISobre();
           respostaInvalida = false;
           break;
+        case "about":
         case "about us": 
           _irUISobre();
           respostaInvalida = false;
@@ -137,9 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    if(speech.controlarPorVoz == null) {
+    if(!speech.infosRecuperadas) {
       _apresentacao();
-    } else if (speech.controlarPorVoz!) {
+    } else if (speech.controlarPorVoz) {
       _dialogo();
     }
   }
@@ -185,10 +186,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   iconSize: 30,
                   onPressed: () {
-                    (Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Sobre()),
-                    ));
+                    if(speech.controlarPorVoz) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Sobre()),
+                      );
+                    }
                   },
                 ),
               ],

@@ -156,8 +156,6 @@ class BluetoothManager {
     while(!_isCalibrated) {
       msg = _bluetooth.msgBT;
 
-      await speech.speak("I'm calibrating the sensor. Wait a minute");
-
       if(msg.trim().isNotEmpty) {
 
         final dados = msg.split(",");
@@ -186,6 +184,10 @@ class BluetoothManager {
   }
 
   void medirAltura() async{
+    if(!_isCalibrated) {
+      await speech.speak("I'm calibrating the sensor. Wait a minute");
+    }
+
     // Aguarda a calibracao do sensor
     while(!_isCalibrated) {
       await Future.delayed(const Duration(seconds: 2));
@@ -202,7 +204,7 @@ class BluetoothManager {
     await speech.speak("Stand under the sensor. You have 30 seconds for this");
 
     // Esperar um tempo
-    while(_timeAltura! >= 0) {
+    while(_timeAltura! > 0) {
       _timeAltura = _timeAltura! - 1;
 
       if (_timeAltura == 15) {
@@ -265,17 +267,23 @@ class BluetoothManager {
 
     // Atualiza status do sensor
     _stateTemperatura = guiThermometer;
-    await speech.speak("Put the sensor in your armpit. You have 30 seconds for this");
+    await speech.speak("Hold the thermometer under the arm and wait for 3 minutes.");
     
     // Inicializa o cronometro
-    _timeTemp = 30;
+    _timeTemp = 180;
     
     // Controla o conometro
     while(_timeTemp! > 0) {
       _timeTemp = _timeTemp! - 1;
 
-      if (_timeTemp == 15) {
-        await speech.speak("15 seconds left for measurement");
+      if(_timeTemp == 120) {
+        await speech.speak("2 minutes left");
+      
+      } else if (_timeTemp == 60) {
+        await speech.speak("1 minute left");
+      
+      } else if (_timeTemp == 15) {
+        await speech.speak("15 seconds left");
       }
 
       await Future.delayed(const Duration(seconds: 1));

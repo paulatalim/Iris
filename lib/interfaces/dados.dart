@@ -114,23 +114,27 @@ class _DadosState extends State<Dados> {
   }
 
   void _dialogo() async {
-    if (usuario.temperatura > 0) {
-      await speech.speak("Your temperature is ${usuario.temperatura} degrees Celsius");
-      
-      nenhumDadoColetado = false;
-    }
-    if (usuario.altura > 0) {
-      await speech.speak("Your high is ${usuario.altura} meters");
-      
-      nenhumDadoColetado = false;
-    }
     if (usuario.peso > 0) {
-      await speech.speak("Your weight is ${usuario.peso} kilos");
+      await speech.speak("Your weight is ${usuario.peso.toStringAsFixed(1)} kilos");
       
       nenhumDadoColetado = false;
     }
+
+    if (usuario.altura > 0) {
+      await speech.speak("Your height is ${usuario.altura.toStringAsFixed(2)} meters");
+      
+      nenhumDadoColetado = false;
+    }
+
+    if (usuario.temperatura > 0) {
+      await speech.speak("Your temperature is ${usuario.temperatura.toStringAsFixed(1)} degrees Celsius");
+      
+      nenhumDadoColetado = false;
+    }
+    
+    
     if (usuario.imc > 0) {
-      await speech.speak("Your BMI is ${usuario.imc}");
+      await speech.speak("Your BMI is ${usuario.imc.toStringAsFixed(1)}");
       
       nenhumDadoColetado = false;
     }

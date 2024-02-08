@@ -97,7 +97,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     do {
       respostaInvalida = true;
 
-      while (respostaInvalida) {
+      while (respostaInvalida && speech.controlarPorVoz) {
         resposta = await speech.listen();
 
         switch (resposta) {
@@ -132,10 +132,10 @@ class _ConfiguracaoState extends State<Configuracao> {
 
       respostaInvalida = true;
 
-      if (controleVoz) {
+      if (controleVoz && speech.controlarPorVoz) {
         await speech.speak("Do you want to disable voice control?");
 
-        do {
+        while (respostaInvalida && speech.controlarPorVoz) {
           resposta = await speech.listen();
 
           switch (resposta) {
@@ -153,15 +153,15 @@ class _ConfiguracaoState extends State<Configuracao> {
             default:
               await speech.speak("Hmmm I didn't hear you right, can you repeat that again?");
           }
-        } while (respostaInvalida);
+        }
 
         controleVoz = false;
       }
       
-      if (configurarVelocidade) {
+      if (configurarVelocidade && speech.controlarPorVoz) {
         await speech.speak("Let's adjust the speed. Do you prefer me to speak at 0.5X, 1X, 2X, 3X speed?");
 
-        while (respostaInvalida) {
+        while (respostaInvalida && speech.controlarPorVoz) {
           resposta = await speech.listen();
 
           if (resposta.compareTo("0,5x") == 0||
@@ -190,11 +190,10 @@ class _ConfiguracaoState extends State<Configuracao> {
         configurarVelocidade = false;
       }
 
-
-      if (configurarVolume) {
+      if (configurarVolume && speech.controlarPorVoz) {
         await speech.speak("Let's adjust the volume. Do you prefer me to speak in a high, medium, or low volume?");
 
-        while (respostaInvalida) {
+        while (respostaInvalida && speech.controlarPorVoz) {
           resposta = await speech.listen();
 
           switch (resposta) {
@@ -224,65 +223,63 @@ class _ConfiguracaoState extends State<Configuracao> {
       }
 
       if (speech.controlarPorVoz) {
-
         await speech.speak("Do you want to perform any further configuration?");
         respostaInvalida = true;
+      }
 
-        while (respostaInvalida) {
-          resposta = await speech.listen();
-          switch(resposta) {
-            case "yes":
-              await speech.speak("And what do you want to configure? Voice control? The speed or volume of my voice?");
-              novaConfiguracao = true;
-              respostaInvalida = false;
-              break;
+      while (respostaInvalida && speech.controlarPorVoz) {
+        resposta = await speech.listen();
+        switch(resposta) {
+          case "yes":
+            await speech.speak("And what do you want to configure? Voice control? The speed or volume of my voice?");
+            novaConfiguracao = true;
+            respostaInvalida = false;
+            break;
 
-            case "no":
-              respostaInvalida = false;
-              novaConfiguracao = false;
-              break;
-              
-            default:
-              await speech.speak("Hmmm I didn't hear you right, repeat that again?");
-          }
+          case "no":
+            respostaInvalida = false;
+            novaConfiguracao = false;
+            break;
+            
+          default:
+            await speech.speak("Hmmm I didn't hear you right, repeat that again?");
         }
       }
-    } while (novaConfiguracao);
+    } while (novaConfiguracao && speech.controlarPorVoz);
 
     if (speech.controlarPorVoz) {
       await speech.speak("Which section do you want to go to now?");
       respostaInvalida = true;
-      
-      do {
-        resposta = await speech.listen();
-
-        switch (resposta) {
-          case "menu":
-            _irUIMenu(0);
-            respostaInvalida = false;
-            break;
-
-          case "devices":
-            _irUIMenu(1);
-            respostaInvalida = false;
-            break;
-
-          case "settings":
-            await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
-            respostaInvalida = false;
-            break;
-
-          case "information":
-            _irUIMenu(2);
-            respostaInvalida = false;
-            break;
-
-          default:
-            await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
-        }
-        
-      } while (respostaInvalida);
     }
+      
+    while (respostaInvalida && speech.controlarPorVoz) {
+      resposta = await speech.listen();
+
+      switch (resposta) {
+        case "menu":
+          _irUIMenu(0);
+          respostaInvalida = false;
+          break;
+
+        case "devices":
+          _irUIMenu(1);
+          respostaInvalida = false;
+          break;
+
+        case "settings":
+          await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
+          respostaInvalida = false;
+          break;
+
+        case "information":
+          _irUIMenu(2);
+          respostaInvalida = false;
+          break;
+
+        default:
+          await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
+      }
+    } 
   }
 
   void _irUIMenu(int index) {
@@ -412,6 +409,9 @@ class _ConfiguracaoState extends State<Configuracao> {
                           setState(() {
                             _ativarVoz = valor;
                             speech.controlarPorVoz = _ativarVoz;
+                            if(valor) {
+                              _dialogo();
+                            }
                           });
                         }
                       ),
