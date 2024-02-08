@@ -81,7 +81,9 @@ class _SobreState extends State<Sobre> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
+              speech.controlarPorVoz 
+                ? const SizedBox(height: 0,)
+                : Container(
                 padding: const EdgeInsets.only(top: 45, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
