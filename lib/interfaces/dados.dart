@@ -120,12 +120,12 @@ class _DadosState extends State<Dados> {
       nenhumDadoColetado = false;
     }
     if (usuario.altura > 0) {
-      await speech.speak("Your height is ${usuario.altura} meters");
+      await speech.speak("Your high is ${usuario.altura} meters");
       
       nenhumDadoColetado = false;
     }
     if (usuario.peso > 0) {
-      await speech.speak("Your weight is ${usuario.peso} kilograms");
+      await speech.speak("Your weight is ${usuario.peso} kilos");
       
       nenhumDadoColetado = false;
     }
@@ -138,7 +138,7 @@ class _DadosState extends State<Dados> {
       await speech.speak("There is no information collected here yet, go to the devices section to get started.");
     }
 
-    await speech.speak("Which section do you want to go to now?");
+    await speech.speak("Which section would you like to go to now?");
     
     do {
       resposta = await speech.listen();
@@ -149,23 +149,26 @@ class _DadosState extends State<Dados> {
           respostaInvalida = false;
           break;
 
+        case "device":
         case "devices":
           _irUIMenu(1);
           respostaInvalida = false;
           break;
 
+        case "setting":
         case "settings":
           _irUIMenu(3);
           respostaInvalida = false;
           break;
 
         case "information":
-          await speech.speak("You are already in this section, tell me another section. If you are unsure which option you want, choose the menu option. So which section do you want to go to now?");
-          respostaInvalida = false;
+        case "informations":
+          await speech.speak("You're already in this section, tell me another section. If you're unsure which option you want, choose the main menu section. So, which section would you like to go to now?");
           break;
 
         default:
-          await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
+          await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
+      
       }
       
     } while (respostaInvalida);

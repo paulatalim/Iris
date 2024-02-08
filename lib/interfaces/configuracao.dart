@@ -92,7 +92,7 @@ class _ConfiguracaoState extends State<Configuracao> {
     bool controleVoz = false;
     bool novaConfiguracao = false;
 
-    await speech.speak("What do you want to configure? The speed at which I speak or the volume of my voice? Or disable voice control?");
+    await speech.speak("Let's set up my voice. What would you like to adjust? The speed or the volume of my voice? Or disable voice control?");
     
     do {
       respostaInvalida = true;
@@ -101,6 +101,7 @@ class _ConfiguracaoState extends State<Configuracao> {
         resposta = await speech.listen();
 
         switch (resposta) {
+          case "disable voice control":
           case "voice control":
             respostaInvalida = false;
             controleVoz = true;
@@ -110,14 +111,22 @@ class _ConfiguracaoState extends State<Configuracao> {
             configurarVelocidade = true;
             respostaInvalida = false;
             break;
+          case "the speed":
+            configurarVelocidade = true;
+            respostaInvalida = false;
+            break;
 
-          case "volume":
+          case "the volume":
+            configurarVolume = true;
+            respostaInvalida= false;
+            break;
+           case "volume":
             configurarVolume = true;
             respostaInvalida= false;
             break;
 
           default:
-            await speech.speak("Hmmm I didn't hear you right, what do you want to configure?");
+            await speech.speak("Hmm, I didn't hear you properly, what do you want to configure?");
         }
       }
 
@@ -150,7 +159,7 @@ class _ConfiguracaoState extends State<Configuracao> {
       }
       
       if (configurarVelocidade) {
-        await speech.speak("Let's configure the speed I say. Would you prefer me to speak at 0.5X speed, 1X, 2X or 3x?");
+        await speech.speak("Let's adjust the speed. Do you prefer me to speak at 0.5X, 1X, 2X, 3X speed?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
@@ -175,7 +184,7 @@ class _ConfiguracaoState extends State<Configuracao> {
             respostaInvalida= false;
           
           } else {
-            await speech.speak("Hmmm I didn't hear you right, can you repeat that again?");
+            await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
           }
         }
         configurarVelocidade = false;
@@ -183,7 +192,7 @@ class _ConfiguracaoState extends State<Configuracao> {
 
 
       if (configurarVolume) {
-        await speech.speak("Let's set the height of my voice. Would you prefer me to speak high, medium or low?");
+        await speech.speak("Let's adjust the volume. Do you prefer me to speak in a high, medium, or low volume?");
 
         while (respostaInvalida) {
           resposta = await speech.listen();
@@ -208,7 +217,7 @@ class _ConfiguracaoState extends State<Configuracao> {
               break;
 
             default:
-              await speech.speak("Hmmm I didn't hear you right, repeat that again?");
+              await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
           }
         }
         configurarVolume = false;

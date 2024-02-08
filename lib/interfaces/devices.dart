@@ -44,7 +44,7 @@ class _DevicesState extends State<Devices> {
       await Future.delayed(const Duration(seconds: 1));
     }
 
-    await speech.speak("So far, I can read temperature, height, and measure weight. What do you want me to measure?");
+    await speech.speak("Up to now, I can read temperature, height, and measure weight. What would you like me to measure?");
     
     do {
       respostaInvalida = true;
@@ -97,12 +97,12 @@ class _DevicesState extends State<Devices> {
             break;
 
           default:
+            _dispositivoSelecionado = dispositivo[0];
             await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
             respostaInvalida = true; 
         }
       }
 
-      _dispositivoSelecionado = dispositivo[0];
       await speech.speak("Do you want to perform a new reading?");
 
       respostaInvalida = true;
@@ -112,7 +112,7 @@ class _DevicesState extends State<Devices> {
 
         switch(resposta) {
           case "yes":
-            await speech.speak("And what do you want me to measure now? Your weight? Your Height? Or your temperature?");
+            await speech.speak("What would you like me to measure now? Your weight? Your height? Or your temperature?");
             respostaInvalida = false;
           
           case "no":
@@ -120,13 +120,12 @@ class _DevicesState extends State<Devices> {
             respostaInvalida = false;
           
           default:
-            await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
-
+            await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
         }
       }
     } while (fazerNovaLeitura);
     
-    await speech.speak("Which section do you want to go to now?");
+    await speech.speak("Which section would you like to go to now");
     
     respostaInvalida = true;
 
@@ -154,7 +153,7 @@ class _DevicesState extends State<Devices> {
           break;
 
         default:
-          await speech.speak("Hmm, I didn't hear you clearly. What do you want me to measure?");
+          await speech.speak("Hmm, I didn't hear you. Can you repeat that again?");
       }
     } while (respostaInvalida);
   }
