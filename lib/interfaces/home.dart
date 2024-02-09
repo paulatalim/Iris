@@ -186,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                   iconSize: 30,
                   onPressed: () {
-                    if(speech.controlarPorVoz) {
+                    if(!speech.controlarPorVoz) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Sobre()),
