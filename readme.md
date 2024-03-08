@@ -1,17 +1,21 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=A000FF&fontColor=ffffff&height=220&section=header&text=Iris&fontSize=50&animation=fadeIn&fontAlignY=38&desc=Aplicativo%20de%20Saúde%20para%20Deficientes%20Visuais&descAlignY=55)
 
+<img src="./documentation/screenshots/home_page.jpg" width="30%">
+<img src="./documentation/screenshots/devices.jpg" width="30%">
+<img src="./documentation/screenshots/information.jpg" width="30%">
+
 ## Sumário
 
 - [Sobre o projeto](#sobre-o-projeto)
-- [Rascunho das Interfaces](#rascunho-das-interfaces)
-- [Clonar projeto](#clonar-o-projeto)
+- [Imagens do projeto](#imagens-do-projeto)
+- [Modo desenvolvedor](#modo-desenvolvedor)
 - [Créditos](#créditos)
 
 ## Sobre o projeto
 
 ### Objetivo
 
-Iris está sendo desenvolvida em um trabalho acadêmico da matéria de Laboratório de Desenvolvimento para Dispositivos Móveis do curso de graduação de Engenharia de Computação, ela é um aplicativo mobile para ajudar deficientes visuais a controlar saúde.
+Irisé trabalho acadêmico da matéria de Laboratório de Desenvolvimento para Dispositivos Móveis do curso de graduação de Engenharia de ComputaçãO, que concorreu ao concurso Imagine Cup 2024, ela é um aplicativo mobile para ajudar deficientes visuais a controlar saúde.
 
 Iris funciona a partir de um sistema de áudio que possibilita o controle da saúde de pessoas com deficiência visual através de hardwares que geram dados sobre altura, peso e temperatura do usuário.
 
@@ -25,19 +29,47 @@ Pessoas com deficiência visual.
 - Gerar novos dados a partir de dados obtidos (como IMC);
 - Comunicar todos os dados obtidos e gerado através de áudio.
 
-## Rascunho das Interfaces
+## Imagens do projeto
 
-As interfaces estão sendo desenvolvidas no figma, a seguir está o link para acessa-lo
+### Intefaces
 
-- [Projeto no figma](https://www.figma.com/file/QOylwkU2tY26jnc1m1FKEZ/LDDM_app?type=design&node-id=0%3A1&mode=design&t=tBReYkEVQZiF4Mb0-1)
+<img src="./documentation/screenshots/home_page.jpg" width="30%">
+<img src="./documentation/screenshots/about.jpg" width="30%">
+<img src="./documentation/screenshots/devices.jpg" width="30%">
+<img src="./documentation/screenshots/information.jpg" width="30%">
+<img src="./documentation/screenshots/settings.jpg" width="30%">
 
-## Clonar o projeto
+### Hardware
 
-### Baixar o projeto no pc
+<img alt="Hardware" src="./documentation/photos/hardware_foto2.jpg">
+<img alt="Sensor de Temperatura" src="./documentation/photos/hardware_foto1.jpg" width="40%">
+<img alt="Sensor ultrassônico" src="./documentation/photos/hardware_foto3.jpg" width="40%">
 
-Isso serve para você possuir o projeto no seu computador e conseguir programar nele
+### Fluxograma do programa
 
-Para isso coloque os seguintes comando em seu git bash
+![Fluxograma do sistema](./documentation/Fluxograma%20sistema.png)
+
+## Instalação
+
+Para instalar o aplicativo em seu celular, abra o link e baixe o arquivo apk
+
+- [Link para o arquivo apk](https://drive.google.com/file/d/1NWOhdup8y5AraOV6iu96ClMejNaK75El/view)
+
+Depois que baixar, intale o aplicativo, lembre-se de selecionar a opção `baixar mesmo assim` apos o aviso de segurança
+
+> O aplicativo está diponível somente para android
+
+## Modo desenvolvedor
+
+### 1. Configuração do ambiente
+
+Configure o Framework Flutter em seu computador
+
+- [Link para instalação do Flutter](https://docs.flutter.dev/get-started/install)
+
+### 2. Clonar o projeto
+
+Coloque os seguintes comando em seu git bash para obter o projeto em seu computador
 
 ```
 git clone https://github.com/paulatalim/Iris.git
@@ -45,6 +77,28 @@ git clone https://github.com/paulatalim/Iris.git
 ```
 cd iris
 ```
+
+> Obs: Baixe o [git](https://git-scm.com/) para obter o git bash e executar os comandos
+
+### 3. Executar projeto
+
+Para executar o projeto siga as instruções:
+
+**a. Insira no terminal os seguintes comandos**
+
+```
+flutter clean
+```
+
+```
+flutter pub get
+```
+
+**b. Ative o emulador android em seu computador**
+
+**c. Execute o código no VS Code**
+
+> Caso não tenha o VS Code, instale no clicando no [link](https://code.visualstudio.com/download)
 
 ## Créditos
 
