@@ -7,7 +7,7 @@
 ## Sumário
 
 - [Sobre o projeto](#sobre-o-projeto)
-- [Imagens do projeto](#imagens-do-projeto)
+- [Instalação](#instalação)
 - [Modo desenvolvedor](#modo-desenvolvedor)
 - [Créditos](#créditos)
 
@@ -29,8 +29,6 @@ Pessoas com deficiência visual.
 - Gerar novos dados a partir de dados obtidos (como IMC);
 - Comunicar todos os dados obtidos e gerado através de áudio.
 
-## Imagens do projeto
-
 ### Intefaces
 
 <img src="./documentation/screenshots/home_page.jpg" width="30%">
@@ -45,7 +43,7 @@ Pessoas com deficiência visual.
 <img alt="Sensor de Temperatura" src="./documentation/photos/hardware_foto1.jpg" width="40%">
 <img alt="Sensor ultrassônico" src="./documentation/photos/hardware_foto3.jpg" width="40%">
 
-### Fluxograma do programa
+### Fluxograma do projeto
 
 ![Fluxograma do sistema](./documentation/Fluxograma%20sistema.png)
 
