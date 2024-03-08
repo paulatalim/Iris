@@ -63,9 +63,11 @@ Depois que baixar, intale o aplicativo, lembre-se de selecionar a opção `baixa
 
 ### 1. Configuração do ambiente
 
-Configure o Framework Flutter em seu computador
+Instale o Framework Flutter em seu computador e os ambientes de desvolvedor com os links a seguir:
 
-- [Link para instalação do Flutter](https://docs.flutter.dev/get-started/install)
+- [Flutter](https://docs.flutter.dev/get-started/install)
+- [VS Code](https://code.visualstudio.com/download)
+- [Git](https://git-scm.com/)
 
 ### 2. Clonar o projeto
 
@@ -77,8 +79,6 @@ git clone https://github.com/paulatalim/Iris.git
 ```
 cd iris
 ```
-
-> Obs: Baixe o [git](https://git-scm.com/) para obter o git bash e executar os comandos
 
 ### 3. Executar projeto
 
@@ -97,8 +97,6 @@ flutter pub get
 **b. Ative o emulador android em seu computador**
 
 **c. Execute o código no VS Code**
-
-> Caso não tenha o VS Code, instale no clicando no [link](https://code.visualstudio.com/download)
 
 ## Créditos
 
