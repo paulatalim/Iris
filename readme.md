@@ -1,8 +1,8 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=A000FF&fontColor=ffffff&height=220&section=header&text=Iris&fontSize=50&animation=fadeIn&fontAlignY=38&desc=Aplicativo%20de%20Saúde%20para%20Deficientes%20Visuais&descAlignY=55)
 
-<img src="./documentation/screenshots/home_page.jpg" width="30%">
-<img src="./documentation/screenshots/devices.jpg" width="30%">
-<img src="./documentation/screenshots/information.jpg" width="30%">
+<img src="./documentation/screenshots/home_page.jpg" width="30%">&nbsp;
+<img src="./documentation/screenshots/devices.jpg" width="30%">&nbsp;
+<img src="./documentation/screenshots/information.jpg" width="30%">&nbsp;
 
 ## Sumário
 
@@ -31,17 +31,17 @@ Pessoas com deficiência visual.
 
 ### Intefaces
 
-<img src="./documentation/screenshots/home_page.jpg" width="30%">
-<img src="./documentation/screenshots/about.jpg" width="30%">
-<img src="./documentation/screenshots/devices.jpg" width="30%">
-<img src="./documentation/screenshots/information.jpg" width="30%">
-<img src="./documentation/screenshots/settings.jpg" width="30%">
+<img src="./documentation/screenshots/home_page.jpg" width="30%">&nbsp;
+<img src="./documentation/screenshots/about.jpg" width="30%">&nbsp;
+<img src="./documentation/screenshots/devices.jpg" width="30%">&nbsp;
+<img src="./documentation/screenshots/information.jpg" width="30%">&nbsp;
+<img src="./documentation/screenshots/settings.jpg" width="30%">&nbsp;
 
 ### Hardware
 
-<img alt="Hardware" src="./documentation/photos/hardware_foto2.jpg">
-<img alt="Sensor de Temperatura" src="./documentation/photos/hardware_foto1.jpg" width="40%">
-<img alt="Sensor ultrassônico" src="./documentation/photos/hardware_foto3.jpg" width="40%">
+<img alt="Hardware" src="./documentation/photos/hardware_foto2.jpg">&nbsp;
+<img alt="Sensor de Temperatura" src="./documentation/photos/hardware_foto1.jpg" width="40%">&nbsp;
+<img alt="Sensor ultrassônico" src="./documentation/photos/hardware_foto3.jpg" width="40%">&nbsp;
 
 ### Fluxograma do projeto
 
