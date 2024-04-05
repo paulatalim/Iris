@@ -15,7 +15,7 @@
 
 ### Objetivo
 
-Irisé trabalho acadêmico da matéria de Laboratório de Desenvolvimento para Dispositivos Móveis do curso de graduação de Engenharia de ComputaçãO, que concorreu ao concurso Imagine Cup 2024, ela é um aplicativo mobile para ajudar deficientes visuais a controlar saúde.
+Iris é um trabalho acadêmico da matéria de Laboratório de Desenvolvimento para Dispositivos Móveis do curso de graduação de Engenharia de ComputaçãO, que concorreu ao concurso Imagine Cup 2024, ela é um aplicativo mobile para ajudar deficientes visuais a controlar saúde.
 
 Iris funciona a partir de um sistema de áudio que possibilita o controle da saúde de pessoas com deficiência visual através de hardwares que geram dados sobre altura, peso e temperatura do usuário.
 
